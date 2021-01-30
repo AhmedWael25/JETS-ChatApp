@@ -1,0 +1,20 @@
+
+.bgimage{
+    /*-fx-background-image: url("images/3.jpg");*/
+    /*-fx-background-color: red;*/
+}
+#bgimage{
+    /*-fx-background-color: red;*/
+    /*-fx-background-image: url("E:/EWD/Project/ChatProject/JETS-ChatApp/ClientSide/src/main/resources/images/3.jpg");*/
+    /*-fx-background-image: url("../images/3_600_2.jpg");*/
+    -fx-background-color: #ED6B2D;
+
+
+}
+#trial{
+    -fx-border-color: #636b61;
+    -fx-border-color: #FFFFFF;
+    -fx-border-color: #1C3E86;
+    -fx-border-color: #ED6B2D;
+    -fx-border-color: #20A4F3;
+}
