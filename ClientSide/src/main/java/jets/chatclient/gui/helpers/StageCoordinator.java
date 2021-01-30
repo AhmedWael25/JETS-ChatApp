@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import jets.chatclient.App;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -80,26 +81,28 @@ public class StageCoordinator {
         }
     }
 
-    public void switchToChatScene() {
+    public void switchToChatDashBoard() {
         if (primaryStage == null) {
             throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
         }
 
-        if (!scenes.containsKey("chat")) {
+        if (!scenes.containsKey("chatdashboard")) {
             try {
                 System.out.println("Created New Scene");
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/ChatView.fxml"));
-                Parent chatView = fxmlLoader.load();
-                Scene chatScene = new Scene(chatView);
-                SceneData chatSceneData = new SceneData(fxmlLoader, chatView, chatScene);
-                scenes.put("chat", chatSceneData);
-                primaryStage.setScene(chatScene);
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/views/ChatDashBoardView.fxml"));
+                Parent chatDashBoardView = fxmlLoader.load();
+                Scene chatDashBoardScene = new Scene(chatDashBoardView);
+                SceneData chatDashBoardSceneData = new SceneData(fxmlLoader, chatDashBoardView, chatDashBoardScene);
+                scenes.put("chatdashboard", chatDashBoardSceneData);
+                primaryStage.setScene(chatDashBoardScene);
             } catch (IOException e) {
-                System.out.println("IO Exception: Couldn't load 'Chat View' FXML file");
+                //TODO remove stack trace after debugging
+                e.printStackTrace();
+                System.out.println("IO Exception: Couldn't load 'Chat Dash Board View' FXML file");
             }
         } else {
             System.out.println("Loaded Existing Scene");
-            SceneData chatSceneData = scenes.get("chat");
+            SceneData chatSceneData = scenes.get("chatdashboard");
             Scene chatScene = chatSceneData.getScene();
             primaryStage.setScene(chatScene);
         }

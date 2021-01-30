@@ -34,7 +34,7 @@ public class LoginController implements Initializable {
 
     public void handleLoginBtnClick(ActionEvent e) {
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-        stageCoordinator.switchToChatScene();
+        stageCoordinator.switchToChatDashBoard();
     }
 
     public void handleSignupBtnClick(ActionEvent e) {
