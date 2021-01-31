@@ -20,7 +20,6 @@
         <tilesfx.version>11.47</tilesfx.version>
     </properties>
 
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>

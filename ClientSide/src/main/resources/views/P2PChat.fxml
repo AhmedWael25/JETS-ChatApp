@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<SplitPane dividerPositions="0.40636042402826855" prefHeight="388.0" prefWidth="583.0" xmlns="http://javafx.com/javafx/15.0.1"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.P2PChatController">
+   <items>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="386.0" prefWidth="219.0" style="-fx-background-color: #3f403f;" stylesheets="@../styles/application.css" SplitPane.resizableWithParent="false">
+         <children>
+            <VBox AnchorPane.bottomAnchor="-4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.799999999999983" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="63.0" prefWidth="226.0" style="-fx-background-color: #5c635f;" stylesheets="@../styles/application.css">
+                     <children>
+                        <FontIcon iconColor="#75767c" iconLiteral="fas-search" text="" textAlignment="CENTER" wrappingWidth="24.199951171875" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </FontIcon>
+                        <JFXTextField focusColor="#616369" prefHeight="26.0" prefWidth="175.0" promptText="Search" unFocusColor="#75767c" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="15.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </HBox>
+                  <StackPane prefHeight="327.0" prefWidth="226.0">
+                     <children>
+                        <ListView prefHeight="163.0" prefWidth="226.0" style="-fx-background-color: #3f403f;" stylesheets="@../styles/application.css" />
+                        <VBox prefHeight="301.0" prefWidth="226.0" spacing="5.0">
+                           <children>
+                              <AnchorPane prefHeight="46.0" prefWidth="227.0">
+                                 <children>
+                                    <StackPane alignment="TOP_LEFT" layoutX="8.0" maxHeight="1.7976931348623157E308" prefHeight="26.0" prefWidth="32.0">
+                                       <children>
+                                          <Circle fx:id="userImageCircle1" fill="#554282" radius="21.0" stroke="#554282" strokeType="INSIDE" StackPane.alignment="TOP_RIGHT" />
+                                          <Circle fx:id="userStatusCircle1" fill="#159a20" stroke="#159a20" strokeType="OUTSIDE" strokeWidth="5.0" StackPane.alignment="BOTTOM_RIGHT" />
+                                       </children>
+                                    </StackPane>
+                                    <Label fx:id="user1" contentDisplay="CENTER" layoutX="64.0" layoutY="1.0" prefHeight="26.0" prefWidth="92.0" text="Ahmed Galal" textFill="#e8e5e5">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lastMsgTime1" alignment="CENTER" layoutX="163.0" layoutY="5.0" prefHeight="18.0" prefWidth="46.0" text="12:45 PM" textFill="#f5f4f4">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </AnchorPane>
+                              <AnchorPane prefHeight="46.0" prefWidth="198.0">
+                                 <children>
+                                    <StackPane alignment="TOP_LEFT" layoutX="8.0" maxHeight="1.7976931348623157E308" prefHeight="26.0" prefWidth="32.0">
+                                       <children>
+                                          <Circle fx:id="userImageCircle" fill="#554282" radius="21.0" stroke="#554282" strokeType="INSIDE" StackPane.alignment="TOP_RIGHT" />
+                                          <Circle fx:id="userStatusCircle" fill="#159a20" stroke="#159a20" strokeType="OUTSIDE" strokeWidth="5.0" StackPane.alignment="BOTTOM_RIGHT" />
+                                       </children>
+                                    </StackPane>
+                                    <Label fx:id="user" contentDisplay="CENTER" layoutX="64.0" layoutY="2.0" prefHeight="26.0" prefWidth="92.0" text="Ahmed Wael" textFill="#e8e5e5">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lastMsgTime" alignment="CENTER" layoutX="163.0" layoutY="5.0" prefHeight="18.0" prefWidth="46.0" text="9:33 PM" textFill="#f5f4f4">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </AnchorPane>
+                              <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="46.0" prefWidth="227.0">
+                                 <children>
+                                    <StackPane alignment="TOP_LEFT" layoutX="8.0" maxHeight="1.7976931348623157E308" prefHeight="26.0" prefWidth="32.0">
+                                       <children>
+                                          <Circle fx:id="userImageCircle11" fill="#554282" radius="21.0" stroke="#554282" strokeType="INSIDE" StackPane.alignment="TOP_RIGHT" />
+                                          <Circle fx:id="userStatusCircle11" fill="#159a20" stroke="#159a20" strokeType="OUTSIDE" strokeWidth="5.0" StackPane.alignment="BOTTOM_RIGHT" />
+                                       </children>
+                                    </StackPane>
+                                    <Label fx:id="user11" contentDisplay="CENTER" layoutX="64.0" layoutY="2.0" prefHeight="26.0" prefWidth="92.0" text="Ahmed Sayed" textFill="#e8e5e5">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="lastMsgTime11" alignment="CENTER" layoutX="163.0" layoutY="5.0" prefHeight="18.0" prefWidth="46.0" text="1:18 PM" textFill="#f5f4f4">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets top="10.0" />
+                     </padding>
+                  </StackPane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <BorderPane prefWidth="292.0" style="-fx-background-color: #5c635f;" stylesheets="@../styles/application.css">
+         <bottom>
+            <HBox alignment="CENTER" prefHeight="35.0" prefWidth="349.0" style="-fx-background-color: #ffffff;" stylesheets="@../styles/application.css">
+               <children>
+                  <JFXTextArea focusColor="#87250f" prefHeight="40.0" prefWidth="252.0" promptText="Type a message" style="-fx-background-color: #ffffff;" unFocusColor="#3f403f" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="30.0" top="5.0" />
+                     </HBox.margin>
+                     <padding>
+                        <Insets right="15.0" />
+                     </padding>
+                  </JFXTextArea>
+                  <JFXButton prefHeight="46.0" prefWidth="84.0" style="-fx-background-color: #5c635f;" stylesheets="@../styles/application.css" text="Send" textFill="WHITE" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <padding>
+                        <Insets left="-5.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+               <BorderPane.margin>
+                  <Insets left="-20.0" />
+               </BorderPane.margin>
+            </HBox>
+         </bottom>
+         <top>
+            <AnchorPane prefHeight="46.0" prefWidth="334.0" style="-fx-background-color: #5c635f;" BorderPane.alignment="CENTER">
+               <children>
+                  <StackPane alignment="TOP_LEFT" layoutX="8.0" maxHeight="1.7976931348623157E308" prefHeight="26.0" prefWidth="32.0">
+                     <children>
+                        <Circle fx:id="userImageCircle12" fill="#554282" radius="21.0" stroke="#554282" strokeType="INSIDE" StackPane.alignment="TOP_RIGHT" />
+                        <Circle fx:id="userStatusCircle12" fill="#159a20" stroke="#159a20" strokeType="OUTSIDE" strokeWidth="5.0" StackPane.alignment="BOTTOM_RIGHT" />
+                     </children>
+                  </StackPane>
+                  <Label fx:id="user12" contentDisplay="CENTER" layoutX="64.0" layoutY="7.0" prefHeight="26.0" prefWidth="92.0" text="Ahmed Galal" textFill="#fffcfc">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <BorderPane.margin>
+                  <Insets top="10.0" />
+               </BorderPane.margin>
+            </AnchorPane>
+         </top>
+         <center>
+            <ScrollPane style="-fx-background-color: #c1c9c9;" stylesheets="@../styles/application.css" BorderPane.alignment="CENTER">
+               <content>
+                  <ListView prefHeight="274.0" prefWidth="340.0" style="-fx-background-color: #c1c9c9;" />
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </items>
+</SplitPane>
