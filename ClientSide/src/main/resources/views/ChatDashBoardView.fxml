@@ -14,9 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="626.0" prefWidth="931.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.ChatDashBoardController">
+<StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="669.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.ChatDashBoardController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
+      <BorderPane fx:id="borderContainer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
          <left>
             <GridPane fx:id="sideMenu" alignment="CENTER" prefHeight="626.0" prefWidth="87.0" style="-fx-background-color: #636b61;" BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -37,7 +37,7 @@
                            <graphic>
                               <StackPane prefWidth="62.0">
                                  <children>
-                                    <Circle fx:id="userImageCircle" fill="DODGERBLUE" radius="35.0" stroke="WHITE" strokeType="INSIDE" />
+                                    <Circle fx:id="userImageCircle" fill="#fcfcfc" radius="35.0" stroke="WHITE" strokeType="INSIDE" />
                                     <Circle fx:id="userStatusCircle" fill="#d00d30" radius="9.0" stroke="#ddcfcf" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="BOTTOM_RIGHT" />
                                  </children>
                               </StackPane>
