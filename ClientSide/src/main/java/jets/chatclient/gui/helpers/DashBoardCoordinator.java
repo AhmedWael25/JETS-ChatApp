@@ -39,7 +39,7 @@ public class DashBoardCoordinator {
         if(!dashboardScreens.containsKey("chatscreen")){
             System.out.println("Created New Chat Screen");
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/testchatview.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/P2PChat.fxml"));
                 Parent chatScreen = fxmlLoader.load();
                 dashboardScreens.put("chatscreen",chatScreen);
                 ((BorderPane)dashboardContainer).setCenter(chatScreen);
