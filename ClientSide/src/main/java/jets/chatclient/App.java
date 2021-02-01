@@ -18,6 +18,8 @@ public class App extends Application {
         primaryStage.show();
     }
 
+
+
     @Override
     public void init() {
         // Initialize Database & Network Connections
