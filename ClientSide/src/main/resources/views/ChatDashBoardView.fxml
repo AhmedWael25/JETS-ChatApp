@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="669.0" prefWidth="1081.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.ChatDashBoardController">
+<StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="669.0" prefWidth="1081.0" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.ChatDashBoardController">
    <children>
       <BorderPane fx:id="borderContainer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
          <left>
@@ -31,34 +31,14 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <AnchorPane>
-                     <children>
-                        <JFXButton fx:id="profileBtn" buttonType="RAISED" contentDisplay="TOP" ellipsisString="" focusTraversable="false" onAction="#switchedToUserProfilePane" ripplerFill="#d0c1c1" text="Profile" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                           <graphic>
-                              <StackPane prefWidth="62.0">
-                                 <children>
-                                    <Circle fx:id="userImageCircle" fill="#fcfcfc" radius="35.0" stroke="WHITE" strokeType="INSIDE" />
-                                    <Circle fx:id="userStatusCircle" fill="#d00d30" radius="9.0" stroke="#ddcfcf" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="BOTTOM_RIGHT" />
-                                 </children>
-                              </StackPane>
-                           </graphic>
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </JFXButton>
-                     </children>
-                  </AnchorPane>
                   <AnchorPane GridPane.rowIndex="1">
                      <children>
-                        <JFXButton fx:id="chatBtn" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToP2PChatPane" ripplerFill="#ddd7d7" style="-fx-border-style: solid none none none; -fx-border-color: grey;" text="Chat" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <JFXButton fx:id="chatBtn" alignment="CENTER" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToP2PChatPane" ripplerFill="#ddd7d7" style="-fx-border-style: solid none none none; -fx-border-color: grey;" text="Chat" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <graphic>
-                              <FontIcon iconColor="WHITE" iconLiteral="fab-rocketchat" iconSize="40" />
+                              <FontIcon iconColor="WHITE" iconLiteral="fab-rocketchat" iconSize="40" styleClass="btnFont" />
                            </graphic>
                            <font>
-                              <Font size="18.0" />
+                              <Font size="15.0" />
                            </font>
                            <padding>
                               <Insets top="10.0" />
@@ -71,12 +51,12 @@
                   </AnchorPane>
                   <AnchorPane GridPane.rowIndex="2">
                      <children>
-                        <JFXButton fx:id="groupChatBtn" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToGPChatPane" ripplerFill="#ddd7d7" style="-fx-border-style: solid none none none; -fx-border-color: grey;" text="Group Chat" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <JFXButton fx:id="groupChatBtn" alignment="CENTER" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToGPChatPane" ripplerFill="#ddd7d7" style="-fx-border-style: solid none none none; -fx-border-color: grey;" text="Group Chat" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="far-comments" iconSize="40" />
                            </graphic>
                            <font>
-                              <Font size="14.0" />
+                              <Font size="15.0" />
                            </font>
                            <padding>
                               <Insets top="10.0" />
@@ -89,12 +69,12 @@
                   </AnchorPane>
                   <AnchorPane GridPane.rowIndex="3">
                      <children>
-                        <JFXButton fx:id="groupsBtn" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToGroupsPane" ripplerFill="#ddd7d7" style="-fx-border-style: solid none none none; -fx-border-color: grey;" text="Groups" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <JFXButton fx:id="groupsBtn" alignment="CENTER" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToGroupsPane" ripplerFill="#ddd7d7" style="-fx-border-style: solid none none none; -fx-border-color: grey;" text="Groups" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="fas-users" iconSize="40" />
                            </graphic>
                            <font>
-                              <Font size="14.0" />
+                              <Font size="15.0" />
                            </font>
                            <padding>
                               <Insets top="10.0" />
@@ -110,7 +90,7 @@
                   </AnchorPane>
                   <AnchorPane GridPane.rowIndex="5">
                      <children>
-                        <JFXButton fx:id="settingsBtn" alignment="CENTER" buttonType="RAISED" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToSettingsPane" ripplerFill="#ddd7d7" style="-fx-border-style: solid none none none; -fx-border-color: grey;" text="Settings" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <JFXButton fx:id="settingsBtn" alignment="CENTER" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToSettingsPane" ripplerFill="#ddd7d7" style="-fx-border-style: solid none none none; -fx-border-color: grey;" text="Settings" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <graphic>
                               <FontIcon iconColor="WHITE" iconLiteral="fas-cog" iconSize="30" />
                            </graphic>
@@ -120,6 +100,26 @@
                            <padding>
                               <Insets top="10.0" />
                            </padding>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane>
+                     <children>
+                        <JFXButton fx:id="profileBtn" alignment="CENTER" contentDisplay="TOP" ellipsisString="" focusTraversable="false" graphicTextGap="10.0" onAction="#switchedToUserProfilePane" prefHeight="166.0" prefWidth="104.0" ripplerFill="#ddd7d7" text="Profile" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <graphic>
+                              <StackPane>
+                                 <children>
+                                    <Circle fx:id="userImageCircle" fill="#fcfcfc" radius="30.0" stroke="WHITE" strokeType="INSIDE" />
+                                    <Circle fx:id="userStatusCircle" fill="#d00d30" radius="9.0" stroke="#ddcfcf" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="BOTTOM_RIGHT" />
+                                 </children>
+                              </StackPane>
+                           </graphic>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
