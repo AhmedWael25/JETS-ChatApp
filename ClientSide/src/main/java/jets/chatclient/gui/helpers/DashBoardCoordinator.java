@@ -54,10 +54,46 @@ public class DashBoardCoordinator {
         }
     }
     public  void switchToGpChatScreen(){
-
+        if(dashboardContainer == null){
+            throw  new RuntimeException("DashBoard Container havenot ben init.");
+        }
+        if(!dashboardScreens.containsKey("gpchatscreen")){
+            System.out.println("Created New gp chat Screen");
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/testgpchatview.fxml"));
+                Parent gpChatScreen = fxmlLoader.load();
+                dashboardScreens.put("gpchatscreen",gpChatScreen);
+                ((BorderPane)dashboardContainer).setCenter(gpChatScreen);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Coudlnt load Prof screen");
+            }
+        }else {
+            System.out.println("Loading New gp chat screen");
+            Parent gpChatScreen = dashboardScreens.get("gpchatscreen");
+            ((BorderPane)dashboardContainer).setCenter(gpChatScreen);
+        }
     }
     public void switchToGroupScreen(){
-
+        if(dashboardContainer == null){
+            throw  new RuntimeException("DashBoard Container havenot ben init.");
+        }
+        if(!dashboardScreens.containsKey("groupscreen")){
+            System.out.println("Created groups Screen");
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/testgroupsview.fxml"));
+                Parent groupsScreen = fxmlLoader.load();
+                dashboardScreens.put("groupscreen",groupsScreen);
+                ((BorderPane)dashboardContainer).setCenter(groupsScreen);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Coudlnt load Prof screen");
+            }
+        }else {
+            System.out.println("Loading New Group screen");
+            Parent groupsScreen = dashboardScreens.get("groupscreen");
+            ((BorderPane)dashboardContainer).setCenter(groupsScreen);
+        }
     }
     public  void switchToProfileScreen(){
         if(dashboardContainer == null){
@@ -81,10 +117,9 @@ public class DashBoardCoordinator {
         }
     }
 
+
     public  void switchToSettingsScreen(){
 
     }
-
-
 
 }
