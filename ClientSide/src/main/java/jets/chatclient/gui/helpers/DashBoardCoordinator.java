@@ -60,7 +60,7 @@ public class DashBoardCoordinator {
         if(!dashboardScreens.containsKey("gpchatscreen")){
             System.out.println("Created New gp chat Screen");
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/testgpchatview.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/groupChat.fxml"));
                 Parent gpChatScreen = fxmlLoader.load();
                 dashboardScreens.put("gpchatscreen",gpChatScreen);
                 ((BorderPane)dashboardContainer).setCenter(gpChatScreen);

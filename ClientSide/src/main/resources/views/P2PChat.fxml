@@ -45,9 +45,9 @@
                               </JFXTextField>
                            </children>
                         </HBox>
-                        <JFXScrollPane prefHeight="325.0" prefWidth="233.0" VBox.vgrow="NEVER">
+                        <JFXScrollPane prefHeight="376.0" prefWidth="235.0" VBox.vgrow="NEVER">
                            <children>
-                              <JFXListView fx:id="chatListView" prefHeight="325.0" prefWidth="233.0" style="-fx-background-color: #3f403f;" />
+                              <JFXListView fx:id="chatListView" prefHeight="352.0" prefWidth="235.0" style="-fx-background-color: #3f403f;" />
                            </children>
                         </JFXScrollPane>
                      </children>
