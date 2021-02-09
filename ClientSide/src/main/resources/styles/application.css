@@ -1,0 +1,18 @@
+#loginpane{
+    -fx-background-image: url("../images/orangeback.jpg");
+}
+#loginRightPane{
+    -fx-background-color: #636b61
+}
+#btnLogin{
+    -fx-background-color: #1C3E86;
+}
+
+#tfUserPhone {
+    -fx-font-style:#636b61 ;
+}
+
+#getPasswordpane{
+    -fx-background-image: url("../images/orangeback.jpg");
+
+}

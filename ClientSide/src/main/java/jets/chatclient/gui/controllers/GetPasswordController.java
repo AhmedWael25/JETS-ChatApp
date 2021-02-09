@@ -1,4 +1,4 @@
 package jets.chatclient.gui.controllers;
 
-public class ConfirmPasswordController {
+public class GetPasswordController {
 }

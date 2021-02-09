@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
-import jets.chatclient.gui.models.CurrentUserModel;
+// import jets.chatclient.gui.models.CurrentUserModel;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,16 +25,15 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
-        CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
-
-        tfUsername.textProperty().bindBidirectional(currentUserModel.usernameProperty());
-        tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
+     //   CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
+      //  tfUsername.textProperty().bindBidirectional(currentUserModel.usernameProperty());
+      //  tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
         btnLogin.requestFocus();
     }
 
     public void handleLoginBtnClick(ActionEvent e) {
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-        stageCoordinator.switchToChatScene();
+        stageCoordinator.switchToGetPasswordScene();
     }
 
     public void handleSignupBtnClick(ActionEvent e) {

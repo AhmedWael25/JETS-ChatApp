@@ -1,7 +1,7 @@
 package jets.chatclient.gui.helpers;
 
-
 import jets.chatclient.gui.models.CurrentUserModel;
+
 
 public class ModelsFactory {
 

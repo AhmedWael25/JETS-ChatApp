@@ -16,9 +16,11 @@ module jets.chatclient {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
     requires org.kordamp.ikonli.materialdesign2;
+    requires javafx.graphics;
 
-//    opens  jets.chatclient;
+     //opens  jets.chatclient;
     opens jets.chatclient.gui.controllers to javafx.fxml;
+    opens jets.chatclient.gui.models to helpers;
 
     exports jets.chatclient;
 }
