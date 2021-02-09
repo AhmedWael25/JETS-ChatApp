@@ -31,6 +31,7 @@
                   <HBox fx:id="searchChatContainer" alignment="CENTER" maxHeight="54.0" prefHeight="54.0" prefWidth="340.0" spacing="2.0" style="-fx-background-color: #D9E8F5; -fx-border-color: grey; -fx-border-width: 0.5px; -fx-border-style: hidden solid hidden hidden;" BorderPane.alignment="CENTER">
                      <children>
                         <JFXButton fx:id="searchChatBtn" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" prefHeight="28.0" prefWidth="26.0" ripplerFill="#f26101" textFill="#f26101">
+
                            <font>
                               <Font size="1.0" />
                            </font>
@@ -92,6 +93,7 @@
                         <JFXButton fx:id="sendMsgBtn" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" layoutX="332.0" layoutY="20.0" prefHeight="51.0" prefWidth="46.0" textFill="#f26101">
                            <graphic>
                               <FontIcon iconColor="#304269" iconLiteral="fab-telegram-plane" iconSize="25" text="" wrappingWidth="20.799925327301025" />
+
                            </graphic>
                            <font>
                               <Font size="1.0" />
@@ -113,6 +115,7 @@
                      </BorderPane.margin>
                      <children>
                         <JFXButton fx:id="groupMembers" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="284.0" layoutY="10.0" prefHeight="42.0" prefWidth="16.0" ripplerFill="#f26101" textFill="#f26101" HBox.hgrow="ALWAYS">
+
                            <font>
                               <Font size="1.0" />
                            </font>
@@ -124,6 +127,7 @@
                            </HBox.margin>
                         </JFXButton>
                         <JFXButton fx:id="leaveBtn" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" prefHeight="42.0" prefWidth="16.0" textFill="#f26101" HBox.hgrow="ALWAYS">
+
                            <font>
                               <Font size="1.0" />
                            </font>
@@ -135,6 +139,7 @@
                            </graphic>
                         </JFXButton>
                         <JFXButton fx:id="chatOption" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="309.0" layoutY="10.0" prefHeight="42.0" prefWidth="34.0" textFill="#f26101" HBox.hgrow="ALWAYS">
+
                            <font>
                               <Font size="1.0" />
                            </font>
