@@ -10,6 +10,7 @@ module jets.chatclient {
 
     requires org.controlsfx.controls;
     requires com.jfoenix;
+    requires java.rmi;
 
 
     requires org.kordamp.ikonli.core;

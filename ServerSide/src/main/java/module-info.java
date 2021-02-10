@@ -10,6 +10,7 @@ module jets.chatserver {
 
     requires org.controlsfx.controls;
     requires com.jfoenix;
+    requires java.rmi;
 
 
     requires org.kordamp.ikonli.core;
@@ -17,7 +18,7 @@ module jets.chatserver {
     requires org.kordamp.ikonli.fontawesome5;
     requires org.kordamp.ikonli.materialdesign2;
 
-    opens jets.chatserver.gui.controllers to javafx.fxml;
+//    opens jets.chatserver.gui.controllers to javafx.fxml;
 
     exports jets.chatserver;
 }

@@ -81,7 +81,7 @@ public class DashBoardCoordinator {
         if(!dashboardScreens.containsKey("groupscreen")){
             System.out.println("Created groups Screen");
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/testgroupsview.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/contactsView.fxml"));
                 Parent groupsScreen = fxmlLoader.load();
                 dashboardScreens.put("groupscreen",groupsScreen);
                 ((BorderPane)dashboardContainer).setCenter(groupsScreen);
