@@ -1,10 +1,11 @@
 package jets.chatserver.network.rmi;
 
+
+import commons.remotes.server.AddFriendInt;
 import jets.chatserver.database.dao.FriendsDao;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
-import jets.chatserver.sharedModels.AddFriendInt;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

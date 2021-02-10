@@ -1,18 +1,14 @@
 package jets.chatserver.network;
 
-import jets.chatserver.database.dao.FriendsDao;
-import jets.chatserver.database.dao.UserDao;
-import jets.chatserver.database.daoImpl.FriendsDaoImpl;
-import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.network.rmi.AddFriendImpl;
-import jets.chatserver.sharedModels.DBUser;
+import jets.chatserver.database.dao.FriendsDao;
+import jets.chatserver.database.daoImpl.FriendsDaoImpl;
+import jets.chatserver.DBModels.DBUser;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 
 public class ServerInit   {
@@ -24,6 +20,7 @@ public class ServerInit   {
 
             //Bind Services
             reg.rebind("AddFriendService",new AddFriendImpl());
+
 
             System.out.println("Server Up And Running");
 

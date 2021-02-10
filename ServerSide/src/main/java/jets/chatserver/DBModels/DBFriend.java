@@ -1,4 +1,4 @@
-package jets.chatserver.sharedModels;
+package jets.chatserver.DBModels;
 
 public class DBFriend {
 

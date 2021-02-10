@@ -1,4 +1,4 @@
-package jets.chatserver.sharedModels;
+package commons.remotes.server;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

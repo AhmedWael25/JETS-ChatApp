@@ -1,6 +1,6 @@
 package jets.chatserver.database.dao;
 
-import jets.chatserver.sharedModels.DBUser;
+import jets.chatserver.DBModels.DBUser;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -9,6 +9,14 @@
 
     <name>Chat App Server Side</name>
 
+    <dependencies>
+        <dependency>
+            <groupId>jets.chatappcommons</groupId>
+            <artifactId>ChatAppCommons</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 
     <build>

@@ -1,9 +1,35 @@
-package jets.chatserver.sharedModels;
+package jets.chatserver.DBModels;
 
 import java.io.Serializable;
 
-enum UserAvail{ONLINE, OFFLINE};
-enum UserStatus{FREE,BUSY,AWAY}
+enum UserAvail{ONLINE(1), OFFLINE(0);
+
+    private final int value;
+    UserAvail(int value) {
+        this.value = value;
+    }
+    public int getValue() {
+        return value;
+    }
+    @Override
+    public String toString(){
+        return  ""+value;
+    }
+};
+enum UserStatus{FREE(1),BUSY(2),AWAY(3);
+
+    private final int value;
+    UserStatus(int value) {
+        this.value = value;
+    }
+    public int getValue() {
+        return value;
+    }
+    @Override
+    public String toString(){
+        return  ""+value;
+    }
+};
 
 public class DBUser implements Serializable {
     private String phone;

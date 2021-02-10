@@ -2,10 +2,9 @@ package jets.chatserver.database.daoImpl;
 
 import jets.chatserver.database.DataSourceFactory;
 import jets.chatserver.database.dao.UserDao;
-import jets.chatserver.sharedModels.DBUser;
+import jets.chatserver.DBModels.DBUser;
 
 import javax.sql.DataSource;
-import javax.sql.RowSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

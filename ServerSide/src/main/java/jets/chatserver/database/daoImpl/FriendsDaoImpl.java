@@ -3,8 +3,7 @@ package jets.chatserver.database.daoImpl;
 import jets.chatserver.database.DataSourceFactory;
 import jets.chatserver.database.dao.FriendsDao;
 import jets.chatserver.database.dao.UserDao;
-import jets.chatserver.sharedModels.DBFriend;
-import jets.chatserver.sharedModels.DBUser;
+import jets.chatserver.DBModels.DBUser;
 
 import javax.sql.DataSource;
 import java.sql.*;

@@ -1,6 +1,7 @@
-module jets.chatserver {
+module ChatAppCommons {
+
     requires javafx.fxml;
-    requires  javafx.media;
+    requires javafx.media;
     requires javafx.controls;
     requires javafx.base;
 
@@ -19,12 +20,7 @@ module jets.chatserver {
     requires org.kordamp.ikonli.materialdesign2;
 
 
-    requires ChatAppCommons;
 
-//    opens jets.chatserver.gui.controllers to javafx.fxml;
-
-    exports  jets.chatserver.DBModels to java.rmi;
-
-    exports jets.chatserver.database.dao ;
-    exports jets.chatserver;
+//    exports  commons.remotes.server.impl;
+    exports commons.remotes.server;
 }

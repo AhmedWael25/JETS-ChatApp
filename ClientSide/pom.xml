@@ -9,6 +9,17 @@
 
     <name>Chat App Client Side</name>
 
+
+    <dependencies>
+        <dependency>
+            <groupId>jets.chatappcommons</groupId>
+            <artifactId>ChatAppCommons</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+
+
     <build>
         <plugins>
             <plugin>
