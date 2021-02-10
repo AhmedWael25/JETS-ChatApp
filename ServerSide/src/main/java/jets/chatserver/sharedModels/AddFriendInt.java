@@ -1,8 +1,10 @@
 package jets.chatserver.sharedModels;
 
-public interface AddFriendInt{
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 
-    boolean addFriend(String friendId);
-    boolean isFriendExist(String friendId);
+public interface AddFriendInt extends Remote {
+
+    boolean addFriend(String userId,String friendId) throws RemoteException;
 
 }

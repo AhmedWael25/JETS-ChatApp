@@ -140,6 +140,7 @@
     <modules>
         <module>ClientSide</module>
         <module>ServerSide</module>
+        <module>ChatAppCommons</module>
     </modules>
 
 </project>

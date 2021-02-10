@@ -1,9 +1,14 @@
 package jets.chatserver.network.rmi;
 
+import jets.chatserver.database.dao.FriendsDao;
+import jets.chatserver.database.dao.UserDao;
+import jets.chatserver.database.daoImpl.FriendsDaoImpl;
+import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.sharedModels.AddFriendInt;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.sql.SQLException;
 
 public class AddFriendImpl extends UnicastRemoteObject implements AddFriendInt {
 
@@ -13,14 +18,24 @@ public class AddFriendImpl extends UnicastRemoteObject implements AddFriendInt {
     }
 
     @Override
-    public boolean addFriend(String friendId) {
-        System.out.println("Friend Added Succefully");
+    public boolean addFriend(String  userId ,String friendId) throws  RemoteException{
+
+        try{
+            UserDao userDao = UserDaoImpl.getUserDaoInstance();
+            boolean isUserExists   = userDao.isUserExist(friendId);
+
+            if(!isUserExists){
+                return  false;
+            }
+            FriendsDao friendsDao = FriendsDaoImpl.getFriendsDaoInstance();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
         return true;
     }
 
-    @Override
-    public boolean isFriendExist(String friendId) {
-        System.out.println("Yes he does");
-        return true;
-    }
+
 }

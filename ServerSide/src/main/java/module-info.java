@@ -20,5 +20,7 @@ module jets.chatserver {
 
 //    opens jets.chatserver.gui.controllers to javafx.fxml;
 
+    exports  jets.chatserver.sharedModels to java.rmi;
+
     exports jets.chatserver;
 }
