@@ -6,15 +6,46 @@
 #bgimage{
     /*-fx-background-color: red;*/
     /*-fx-background-image: url("E:/EWD/Project/ChatProject/JETS-ChatApp/ClientSide/src/main/resources/images/3.jpg");*/
-    /*-fx-background-image: url("../images/3_600_2.jpg");*/
-    -fx-background-color: #ED6B2D;
+    /*-fx-background-image: url("../images/1_600.jpg");*/
+    /*-fx-background-color: #ED6B2D;*/
+}
+.errorColor{
+    -fx-prompt-text-fill: red;
+}
+.validColor{
+    -fx-prompt-text-fill: green;
+}
+.lBGImage{
+    -fx-background-image: url("../images/1_600.jpg");
+}
+.rBGImage{
+    -fx-background-image: url("../images/2_600.jpg");
+}
 
+
+
+.jfx-text-field:error, .jfx-password-field:error, .jfx-text-area:error {
+    -jfx-focus-color: #D34336;
+    -jfx-unfocus-color: #D34336;
+    -fx-prompt-text-fill: #D34336;
 
 }
+
+.jfx-text-field .error-label, .jfx-password-field .error-label, .jfx-text-area .error-label {
+    -fx-text-fill: #D34336;
+    -fx-font-size: 0.75em;
+}
+
+.jfx-text-field .error-icon, .jfx-password-field .error-icon, .jfx-text-area .error-icon {
+    -fx-text-fill: #D34336;
+    -fx-font-size: 1em;
+}
+
 #trial{
-    -fx-border-color: #636b61;
+    -fx-border-color: #304269;
+    -fx-border-color: #91BED4;
+    -fx-border-color: #D9E8F5;
     -fx-border-color: #FFFFFF;
-    -fx-border-color: #1C3E86;
-    -fx-border-color: #ED6B2D;
-    -fx-border-color: #20A4F3;
+    -fx-border-color: #F26101;
+    -fx-border-color: #636b61;
 }

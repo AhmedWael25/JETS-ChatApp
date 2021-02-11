@@ -4,6 +4,8 @@ package jets.chatclient.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RegexValidator;
+import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +16,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
+import jets.chatclient.gui.helpers.Validators;
 import jets.chatclient.gui.models.CurrentUserModel;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
@@ -22,22 +26,31 @@ import java.util.ResourceBundle;
 
 public class SignupController implements Initializable {
 
-    @FXML private AnchorPane bgimage;
-    @FXML private JFXTextField tfDisplayname;
-    @FXML private JFXTextField tfPhonenumber;
-    @FXML private JFXPasswordField pfPassword;
-    @FXML private JFXPasswordField pfConfirmPassword;
-    @FXML private JFXButton btnRegister;
-    @FXML private FontIcon fiDisplayName;
-    @FXML private FontIcon fiPhoneNumber;
-    @FXML private FontIcon fiPassword;
-    @FXML private FontIcon fiPasswordConfirm;
+    @FXML
+    private AnchorPane bgimage;
+    @FXML
+    private JFXTextField tfDisplayname;
+    @FXML
+    private JFXTextField tfPhonenumber;
+    @FXML
+    private JFXPasswordField pfPassword;
+    @FXML
+    private JFXPasswordField pfConfirmPassword;
+    @FXML
+    private JFXButton btnRegister;
+    @FXML
+    private FontIcon fiDisplayName;
+    @FXML
+    private FontIcon fiPhoneNumber;
+    @FXML
+    private FontIcon fiPassword;
+    @FXML
+    private FontIcon fiPasswordConfirm;
+
     @FXML
     void handleRegister(ActionEvent event) {
 
     }
-
-
 
 
     @Override
@@ -46,15 +59,18 @@ public class SignupController implements Initializable {
         CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
 
         //setting colors of icons due to text fields
-        tfDisplayname.focusedProperty().addListener((o, old, foucs) -> fiDisplayName.setIconColor(foucs?tfDisplayname.getFocusColor():tfDisplayname.getUnFocusColor()));
-        tfPhonenumber.focusedProperty().addListener((o, old, foucs) -> fiPhoneNumber.setIconColor(foucs?tfPhonenumber.getFocusColor():tfPhonenumber.getUnFocusColor()));
-        pfPassword.focusedProperty().addListener((o, old, foucs) -> fiPassword.setIconColor(foucs?pfPassword.getFocusColor():pfPassword.getUnFocusColor()));
-        pfConfirmPassword.focusedProperty().addListener((o, old, foucs) -> fiPasswordConfirm.setIconColor(foucs?pfConfirmPassword.getFocusColor():pfConfirmPassword.getUnFocusColor()));
+        //fiDisplayName.setIconColor(foucs ? tfDisplayname.getFocusColor() : tfDisplayname.getUnFocusColor());
 
+        Validators.addPhoneNumberValidator(tfPhonenumber);
 
+        pfConfirmPassword.focusedProperty().addListener((o, old, foucs) -> fiPasswordConfirm.setIconColor(foucs ? pfConfirmPassword.getFocusColor() : pfConfirmPassword.getUnFocusColor()));
+
+        // binding data of current user
 //        tfUsername.textProperty().bindBidirectional(currentUserModel.usernameProperty());
 //        tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
 //        tfEmail.textProperty().bindBidirectional(currentUserModel.emailProperty());
+
+
     }
 
     public void handleLoginBtnClick() {
@@ -65,6 +81,7 @@ public class SignupController implements Initializable {
     public void handleSignupBtnClick() {
         System.out.println("Send to Server Signup data and show errors if any");
     }
+
 
 
 }
