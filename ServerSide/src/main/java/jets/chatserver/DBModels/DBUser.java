@@ -1,6 +1,5 @@
 package jets.chatserver.DBModels;
 
-import java.io.Serializable;
 
 enum UserAvail{ONLINE(1), OFFLINE(0);
 
@@ -31,7 +30,7 @@ enum UserStatus{FREE(1),BUSY(2),AWAY(3);
     }
 };
 
-public class DBUser implements Serializable {
+public class DBUser   {
     private String phone;
     private String displayedName;
     private int id;

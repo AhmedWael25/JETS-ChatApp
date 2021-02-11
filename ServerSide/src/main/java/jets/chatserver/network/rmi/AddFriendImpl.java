@@ -1,6 +1,7 @@
 package jets.chatserver.network.rmi;
 
 
+import commons.remotes.client.ClientInterface;
 import commons.remotes.server.AddFriendInt;
 import jets.chatserver.database.dao.FriendsDao;
 import jets.chatserver.database.dao.UserDao;
@@ -10,12 +11,19 @@ import jets.chatserver.database.daoImpl.UserDaoImpl;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.Map;
 
 public class AddFriendImpl extends UnicastRemoteObject implements AddFriendInt {
 
+    Map<String, ClientInterface> currentConnectedUsers = null;
 
     public AddFriendImpl() throws RemoteException {
         super();
+    }
+
+    public AddFriendImpl(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {
+        super();
+        this.currentConnectedUsers = currentConnectedUsers;
     }
 
     @Override
@@ -33,7 +41,6 @@ public class AddFriendImpl extends UnicastRemoteObject implements AddFriendInt {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
         return true;
     }

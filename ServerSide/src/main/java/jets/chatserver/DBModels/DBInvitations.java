@@ -1,11 +1,10 @@
 package jets.chatserver.DBModels;
 
-import java.io.Serializable;
 
-public class DBInvitations implements Serializable {
+public class DBInvitations   {
 
     private int invitationId;
-    private String invitationData;
+    private String invitationDate;
     private String senderId;
     private String receiverId;
     private String content;
@@ -19,12 +18,12 @@ public class DBInvitations implements Serializable {
         this.invitationId = invitationId;
     }
 
-    public String getInvitationData() {
-        return invitationData;
+    public String getInvitationDate() {
+        return invitationDate;
     }
 
-    public void setInvitationData(String invitationData) {
-        this.invitationData = invitationData;
+    public void setInvitationDate(String invitationDate) {
+        this.invitationDate = invitationDate;
     }
 
     public String getSenderId() {
@@ -57,7 +56,7 @@ public class DBInvitations implements Serializable {
     public String toString() {
         return "DBInvitations{" +
                 "invitationId=" + invitationId +
-                ", invitationData='" + invitationData + '\'' +
+                ", invitationData='" + invitationDate + '\'' +
                 ", senderId='" + senderId + '\'' +
                 ", receiverId='" + receiverId + '\'' +
                 ", content='" + content + '\'' +
