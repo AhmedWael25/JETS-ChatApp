@@ -16,6 +16,8 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
     protected InvitationServiceImpl() throws RemoteException {
         super();
     }
+
+
     public InvitationServiceImpl(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {
         super();
         this.currentConnectedUsers = currentConnectedUsers;
@@ -23,16 +25,19 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
 
     @Override
     public List<Invitation> getAllUserInvitations(String userId) throws RemoteException {
+        System.out.println("Got All User Invitations");
         return null;
     }
 
     @Override
     public boolean deleteInvitation(Invitation invitation) throws RemoteException {
+        System.out.println("Invitation Deleted sa7");
         return false;
     }
 
     @Override
     public boolean sendInvitation(Invitation invitation, String receiverId) throws RemoteException {
+        System.out.println("Invitation Sent sa7");
         return false;
     }
 }

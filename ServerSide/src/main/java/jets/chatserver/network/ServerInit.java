@@ -4,11 +4,9 @@ import commons.remotes.client.ClientInterface;
 import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.database.dao.InvitationsDao;
 import jets.chatserver.database.daoImpl.InvitationDaoImpl;
-import jets.chatserver.network.rmi.AddFriendImpl;
-import jets.chatserver.database.dao.FriendsDao;
-import jets.chatserver.database.daoImpl.FriendsDaoImpl;
-import jets.chatserver.DBModels.DBUser;
+import jets.chatserver.network.rmi.AddFriendServiceImpl;
 import jets.chatserver.network.rmi.InvitationServiceImpl;
+import jets.chatserver.network.rmi.RegisteringServiceImpl;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -28,8 +26,9 @@ public class ServerInit   {
             Registry reg = LocateRegistry.createRegistry(3000);
 
             //=========This is Where you will bind all your services>
-            reg.rebind("AddFriendService",new AddFriendImpl(currentConnectedUsers));
+            reg.rebind("AddFriendService",new AddFriendServiceImpl(currentConnectedUsers));
             reg.rebind("InvitationService",new InvitationServiceImpl(currentConnectedUsers));
+            reg.rebind("RegisteringService",new RegisteringServiceImpl(currentConnectedUsers));
 
 
             System.out.println("Server Up And Running");

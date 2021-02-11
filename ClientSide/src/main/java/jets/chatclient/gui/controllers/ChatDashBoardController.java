@@ -1,6 +1,7 @@
 package jets.chatclient.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
+import commons.remotes.server.RegisteringClientInt;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +17,10 @@ import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 public class ChatDashBoardController implements Initializable {
@@ -43,6 +48,7 @@ public class ChatDashBoardController implements Initializable {
 
 
     private DashBoardCoordinator dashBoardCoordinator;
+    private RegisteringClientInt registeringClientService;
 
     @FXML
     void switchedToGPChatPane(ActionEvent event) {
@@ -85,6 +91,21 @@ public class ChatDashBoardController implements Initializable {
         dashBoardCoordinator.initScreen(borderContainer);
 
         activateBtn(chatBtn);
+
+        //Register Client With Server
+        //First Get Our Registry Through models factory
+        //Then look up the service we require
+        try {
+            Registry reg = modelsFactory.getRegistry();
+            registeringClientService = (RegisteringClientInt) reg.lookup("RegisteringService");
+
+            //TODO Remove this ==> U Assumed the current user ID(Phone) is 1 Only For testing purposes
+            //TODO SHOULD be replaced with current user model
+            registeringClientService.registerClient(modelsFactory.getClient(), "1");
+
+         } catch (RemoteException  | NotBoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void activateBtn(JFXButton btn){
