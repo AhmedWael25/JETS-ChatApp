@@ -1,8 +1,7 @@
 package jets.chatserver.DBModels;
 
-import java.io.Serializable;
 
-public class DBP2PChat implements Serializable {
+public class DBP2PChat   {
 
     private int chatId;
     private String chatStartDate;

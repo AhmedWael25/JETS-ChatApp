@@ -13,5 +13,8 @@ public interface UserDao {
     boolean isUserExist(String userId) throws  SQLException;
     //Get All Users from a given list of IDs
     List<DBUser>getUsersFromIds(List<String> userIds) throws SQLException;
-
+    //Get the encoded image string from userId
+    String getUserEncodedImg(String  userId) throws  SQLException;
+    //Get User Name By Id
+    String getUserNameById(String userId) throws  SQLException;
 }

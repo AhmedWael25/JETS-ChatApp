@@ -90,7 +90,9 @@ public class UserDaoImpl implements UserDao {
         buff.append("69966996"); //TODO RMV, BUT NOT NOW
         String query = "SELECT * FROM user WHERE phone IN("+buff.toString()+")";
 
-        PreparedStatement pd = conn.prepareStatement(query);
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
         ResultSet rs = pd.executeQuery();
 
         while (rs.next()){
@@ -99,6 +101,42 @@ public class UserDaoImpl implements UserDao {
         }
         pd.close();
         return users;
+    }
+
+    @Override
+    public String getUserEncodedImg(String userId) throws SQLException {
+
+        String query = "SELECT image FROM user WHERE phone = ?";
+
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,userId);
+
+        ResultSet rs =pd.executeQuery();
+
+        String str = null;
+        while (rs.next()){
+            str = rs.getString("image");
+        }
+        return  str;
+    }
+
+    @Override
+    public String getUserNameById(String userId) throws SQLException {
+        String query = "SELECT name FROM user WHERE phone = ?";
+
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,userId);
+
+        ResultSet rs =pd.executeQuery();
+        String str = null;
+        while (rs.next()){
+            str = rs.getString("name");
+        }
+        return  str;
     }
 
 
@@ -116,5 +154,6 @@ public class UserDaoImpl implements UserDao {
 
         return  user;
     }
+
 
 }

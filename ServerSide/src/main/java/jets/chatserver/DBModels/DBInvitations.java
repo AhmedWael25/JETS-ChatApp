@@ -1,15 +1,31 @@
 package jets.chatserver.DBModels;
 
-import java.io.Serializable;
 
-public class DBInvitations implements Serializable {
+public class DBInvitations   {
 
     private int invitationId;
-    private String invitationData;
+    private String invitationDate;
     private String senderId;
     private String receiverId;
     private String content;
+    private String senderName;
+    private String receiverName;
 
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
 
     public int getInvitationId() {
         return invitationId;
@@ -19,12 +35,12 @@ public class DBInvitations implements Serializable {
         this.invitationId = invitationId;
     }
 
-    public String getInvitationData() {
-        return invitationData;
+    public String getInvitationDate() {
+        return invitationDate;
     }
 
-    public void setInvitationData(String invitationData) {
-        this.invitationData = invitationData;
+    public void setInvitationDate(String invitationDate) {
+        this.invitationDate = invitationDate;
     }
 
     public String getSenderId() {
@@ -52,16 +68,16 @@ public class DBInvitations implements Serializable {
     }
 
 
-
     @Override
     public String toString() {
         return "DBInvitations{" +
                 "invitationId=" + invitationId +
-                ", invitationData='" + invitationData + '\'' +
+                ", invitationDate='" + invitationDate + '\'' +
                 ", senderId='" + senderId + '\'' +
                 ", receiverId='" + receiverId + '\'' +
                 ", content='" + content + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", receiverName='" + receiverName + '\'' +
                 '}';
     }
-
 }

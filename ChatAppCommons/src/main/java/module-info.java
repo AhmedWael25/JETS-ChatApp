@@ -23,4 +23,6 @@ module ChatAppCommons {
 
 //    exports  commons.remotes.server.impl;
     exports commons.remotes.server;
+    exports commons.sharedmodels;
+    exports commons.remotes.client;
 }

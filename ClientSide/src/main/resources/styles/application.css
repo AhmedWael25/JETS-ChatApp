@@ -10,3 +10,11 @@
     -fx-background-color:  white;
     -fx-text-fill:  #636b61;
 }
+
+.acceptInvitationBtn{
+    -fx-background-color: #198754;;
+}
+
+.rejectInvitationBtn{
+    -fx-background-color:  #dc3545;;
+}
