@@ -10,6 +10,7 @@ import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.models.CurrentUserModel;
 
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -30,12 +31,16 @@ public class LoginController implements Initializable {
 
         tfUsername.textProperty().bindBidirectional(currentUserModel.userNameProperty());
         tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
+
         btnLogin.requestFocus();
     }
 
     public void handleLoginBtnClick(ActionEvent e) {
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
+        //TODO change the flow, passoword>> chatDashboard
         stageCoordinator.switchToChatDashBoard();
+
+//        stageCoordinator.switchToGetPasswordScene();
     }
 
     public void handleSignupBtnClick(ActionEvent e) {

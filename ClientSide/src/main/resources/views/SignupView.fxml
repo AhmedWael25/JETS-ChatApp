@@ -1,123 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import org.kordamp.ikonli.javafx.*?>
 
-<BorderPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.SignupController">
-    <center>
-        <HBox>
-            <children>
-                <AnchorPane prefHeight="440.0" prefWidth="340.0" style="-fx-background-color: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12); -fx-background-radius: 1em;">
-                    <children>
-                        <VBox alignment="CENTER_LEFT" layoutX="76.0" layoutY="84.0" prefHeight="228.0" prefWidth="236.0" style="-fx-background-radius: 1em;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <children>
-                                <FontIcon iconColor="#e4f3ff" iconLiteral="fab-telegram-plane" iconSize="150" />
-                                <Label text="ChetChat" textFill="WHITE">
-                                    <font>
-                                        <Font name="JetBrains Mono Regular" size="28.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </VBox>
-                    </children>
-                    <effect>
-                        <DropShadow />
-                    </effect>
-                </AnchorPane>
-                <VBox spacing="15.0" HBox.hgrow="ALWAYS">
-                    <children>
-                        <Label prefHeight="25.0" text="Signup" textFill="#9c99ae">
-                            <font>
-                                <Font name="JetBrains Mono Regular" size="30.0" />
-                            </font>
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </Label>
-                        <Region layoutX="15.0" layoutY="255.0" VBox.vgrow="ALWAYS" />
-                        <HBox>
-                            <children>
-                                <Label prefHeight="40.0" prefWidth="100.0" text="Username">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="tfUsername" prefHeight="40.0" HBox.hgrow="ALWAYS">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </TextField>
-                            </children>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+<AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="800.0" styleClass=".bgimage" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.SignupController">
+   <children>
+      <HBox prefHeight="458.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="458.0" prefWidth="263.0" styleClass="lBGImage" HBox.hgrow="ALWAYS" />
+            <VBox alignment="BOTTOM_CENTER" fillWidth="false" spacing="15.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+               <children>
+                  <ImageView fitHeight="102.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/connect2.png" />
+                     </image>
+                  </ImageView>
+                  <GridPane alignment="BOTTOM_CENTER" hgap="10.0" prefHeight="294.0" prefWidth="387.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.6666259765625" minWidth="10.0" prefWidth="90.66662343343098" />
+                        <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="460.6666946411133" minWidth="10.0" prefWidth="286.00004323323566" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="126.33331425984701" minHeight="10.0" prefHeight="57.333309173583984" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="119.33330535888672" minHeight="10.0" prefHeight="53.000035603841134" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="117.99998474121094" minHeight="10.0" prefHeight="56.33335367838542" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="97.6666310628255" minHeight="10.0" prefHeight="42.33331298828125" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="116.66666666666669" minHeight="10.0" prefHeight="43.33331298828125" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="116.66666158040363" minHeight="10.0" prefHeight="42.66668701171875" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#handleRegister" prefHeight="35.0" prefWidth="104.0" ripplerFill="#d9e8f5" style="-fx-background-color: #304269;" text="Register" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                           <GridPane.margin>
+                              <Insets right="10.0" />
+                           </GridPane.margin>
+                        </JFXButton>
+                        <JFXTextField fx:id="tfDisplayname" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="275.0" promptText="Display Name" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <FontIcon fx:id="fiDisplayName" iconColor="#636b61" iconLiteral="far-user" iconSize="25" styleClass="fonticon" wrappingWidth="18.666664123535156" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="53.0" prefWidth="279.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                           <children>
+                              <JFXComboBox fx:id="cbCountry" promptText="Country">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </JFXComboBox>
+                              <JFXTextField fx:id="tfPhonenumber" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="218.0" promptText="Phone Number" unFocusColor="#636b61" />
+                           </children>
                         </HBox>
-                        <HBox>
-                            <children>
-                                <Label prefHeight="40.0" prefWidth="100.0" text="Email">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <TextField fx:id="tfEmail" prefHeight="40.0" prefWidth="217.0" HBox.hgrow="ALWAYS">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </TextField>
-                            </children>
-                        </HBox>
-                        <HBox>
-                            <children>
-                                <Label prefHeight="40.0" prefWidth="100.0" text="Password">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <PasswordField fx:id="tfPassword" prefHeight="40.0" prefWidth="217.0" HBox.hgrow="ALWAYS">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font>
-                                </PasswordField>
-                            </children>
-                        </HBox>
-                        <Region VBox.vgrow="ALWAYS" />
-                        <HBox>
-                            <children>
-                                <Button defaultButton="true" layoutX="460.0" layoutY="10.0" onAction="#handleLoginBtnClick" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: lightgray; -fx-background-radius: 1em;" text="Login" textFill="#545454">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                    <effect>
-                                        <DropShadow />
-                                    </effect>
-                                </Button>
-                                <Region HBox.hgrow="ALWAYS" />
-                                <Button defaultButton="true" onAction="#handleSignupBtnClick" prefHeight="40.0" prefWidth="130.0" style="-fx-background-color: lightblue; -fx-background-radius: 1em;" text="  Register" textFill="#545454">
-                                    <font>
-                                        <Font name="System Bold" size="18.0" />
-                                    </font>
-                                    <graphic>
-                                        <FontIcon iconColor="#545454" iconLiteral="fab-telegram-plane" iconSize="25" textOrigin="CENTER" />
-                                    </graphic>
-                                    <effect>
-                                        <DropShadow />
-                                    </effect>
-                                </Button>
-                            </children>
-                        </HBox>
-                    </children>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-                    <HBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                    </HBox.margin>
-                </VBox>
-            </children>
-            <padding>
-                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-            </padding>
-        </HBox>
-    </center>
-</BorderPane>
+                        <JFXPasswordField fx:id="pfPassword" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="275.0" promptText="Password" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                        <JFXDatePicker fx:id="dpBirthdate" defaultColor="#304269" editable="false" prefHeight="28.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <JFXComboBox fx:id="cbGender" prefHeight="25.0" prefWidth="72.0" promptText="Gender" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <FontIcon fx:id="fiPhoneNumber" iconColor="#636b61" iconLiteral="fas-phone" iconSize="25" layoutX="20.0" layoutY="127.0" wrappingWidth="25.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
+                        <FontIcon fx:id="fiPassword" iconColor="#636b61" iconLiteral="fas-lock" iconSize="25" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                        <FontIcon fx:id="fiCalendar" iconColor="#636b61" iconLiteral="fas-calendar-alt" iconSize="25" layoutX="10.0" layoutY="127.0" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                        <FontIcon fx:id="fiGender" iconColor="#636b61" iconLiteral="fas-venus-mars" iconSize="25" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                     </children>
+                  </GridPane>
+                  <JFXButton fx:id="btnSignIn" onAction="#handeSignIn" prefHeight="39.0" prefWidth="294.0" ripplerFill="#d9e8f5" text="already have an account? signin" textFill="#304269">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </JFXButton>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

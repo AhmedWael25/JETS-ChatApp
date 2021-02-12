@@ -2,13 +2,14 @@ package jets.chatclient.gui.helpers;
 
 
 import commons.remotes.client.ClientInterface;
-import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+
 import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.network.rmi.ClientInterfaceImpl;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+
 
 public class ModelsFactory {
 

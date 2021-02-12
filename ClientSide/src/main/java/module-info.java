@@ -3,6 +3,7 @@ module jets.chatclient {
     requires  javafx.media;
     requires javafx.controls;
     requires javafx.base;
+    requires javafx.graphics;
 
     requires java.sql;
     requires mysql.connector.java;
@@ -19,8 +20,10 @@ module jets.chatclient {
     requires org.kordamp.ikonli.materialdesign2;
     requires ChatAppCommons;
 
-//    opens  jets.chatclient;
+
+     //opens  jets.chatclient;
     opens jets.chatclient.gui.controllers to javafx.fxml;
+    opens jets.chatclient.gui.models to helpers;
 
     exports jets.chatclient;
 }
