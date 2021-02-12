@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -108,8 +110,6 @@ public class userProfileController {
     void openPasswordDialog(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PasswordDialog.fxml"));
         Parent parent = fxmlLoader.load();
-        //PasswordDialogController dialogController = fxmlLoader.< PasswordDialogController>getController();
-        //dialogController.setAppMainObservableList(tvObservableList);
 
         Scene scene = new Scene(parent, 350, 240);
 
@@ -121,6 +121,18 @@ public class userProfileController {
 
     }
 
+    @FXML
+    void changeProfilePic(ActionEvent event) throws IOException {
+        try {
+
+            FileChooser fileChooser = new FileChooser();
+            File newImageFile = fileChooser.showOpenDialog(null);
+            setProfilePic(newImageFile.getCanonicalPath());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Please choose an file");
+        }
+    }
 
 
 
@@ -130,30 +142,19 @@ public class userProfileController {
     void initialize() {
         userDataBox.setDisable(true);
        //----------------- load the default pic -------------------//
-        Image im = new Image("file:\\" + "F:\\iti\\Project\\UserProfile\\src\\main\\resources\\images\\user.png",false);
-        profilePic.setFill(new ImagePattern(im));
+        URL imageUrl = this.getClass().getResource("/images/userDefaultImage.png");
+        setProfilePic(imageUrl.getPath());
 
-        rightSidePane.getStyleClass().add("Bg");
-
-//        Image backgroundImage = new Image("file:\\" + "F:\\iti\\Project\\UserProfile\\src\\main\\resources\\images\\nature.jpg",false);
-//        BackgroundImage rightSideBackgroundImage = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT,
-//                BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-//
-//        rightSidePane.setBackground(new Background(rightSideBackgroundImage));
-//
-//        Image leftVBoxImage = new Image("file:\\" + "F:\\iti\\Project\\UserProfile\\src\\main\\resources\\images\\Blue.jpg",false);
-
-//        BackgroundSize backgroundSize = new BackgroundSize(1836,
-//                3264,
-//                true,
-//                true,
-//                true,
-//                false);
 
         //----------------- Populate ComboBox with Countries -------------------//
         countriesComboBox.setItems(populateWithCountries());
 
 
+    }
+
+    private void setProfilePic(String imagePath) {
+        Image im = new Image("file:"+ imagePath,false);
+        profilePic.setFill(new ImagePattern(im));
     }
 
     public ObservableList<String> populateWithCountries() {
