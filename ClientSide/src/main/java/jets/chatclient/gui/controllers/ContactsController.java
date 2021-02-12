@@ -11,13 +11,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.util.Callback;
 import jets.chatclient.gui.helpers.ModelsFactory;
-import jets.chatclient.gui.helpers.adapters.DTOToObjAdapter;
+import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.guimodels.InvitationViewCell;
 
@@ -86,19 +85,12 @@ public class ContactsController implements Initializable {
     public void addInvitationToList(InvitationDto invitationDto){
         new Thread(()->{
             Invitation inv = new Invitation();
-            DTOToObjAdapter adapter =  modelsFactory.getDtoToObjAdapter();
-            inv = adapter.convertDtoToObj(invitationDto);
+            inv = DTOObjAdapter.convertDtoToObj(invitationDto);
             Invitation finalInv = inv;
             Platform.runLater(() -> {
                 invitations.addAll(finalInv);
                 invitationsListView.setItems(invitations);
-
-                invitationsListView.setCellFactory(new Callback<ListView<Invitation>, ListCell<Invitation>>() {
-                    @Override
-                    public ListCell<Invitation> call(ListView<Invitation> param) {
-                        return new InvitationViewCell();
-                    }
-                });
+//                invitationsListView.setCellFactory(param  -> new InvitationViewCell());
             });
         }).start();
     }
@@ -117,13 +109,13 @@ public class ContactsController implements Initializable {
         if(!phoneTxtField.getText().equals(""))  {
 
             phoneTxtField.setDisable(true);
-            DTOToObjAdapter adapter =  modelsFactory.getDtoToObjAdapter();
             Invitation inv = new Invitation();
             inv.setSenderId(userIdDummy);
             inv.setSenderName(userNameDummy);
             inv.setReceiverId(phoneTxtField.getText());
+            inv.setInvitationContent("You Got a new Friend Request !");
             try {
-               isSent =  invitationService.sendInvitation(adapter.convertObjToDto(inv));
+               isSent =  invitationService.sendInvitation(DTOObjAdapter.convertObjToDto(inv));
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -139,8 +131,7 @@ public class ContactsController implements Initializable {
         List<Invitation> myInvitations = null;
         try {
             //TODO Should be Changed to Current User model ID(PHONE)
-            DTOToObjAdapter adapter =  modelsFactory.getDtoToObjAdapter();
-            myInvitations = adapter.convertDtoList(invitationService.getAllUserInvitations(userIdDummy));
+            myInvitations = DTOObjAdapter.convertDtoList(invitationService.getAllUserInvitations(userIdDummy));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -152,13 +143,7 @@ public class ContactsController implements Initializable {
         Platform.runLater(() ->{
             invitations.addAll(finalMyInvitations);
             invitationsListView.setItems(invitations);
-
-            invitationsListView.setCellFactory(new Callback<ListView<Invitation>, ListCell<Invitation>>() {
-                @Override
-                public ListCell<Invitation> call(ListView<Invitation> param) {
-                    return new InvitationViewCell();
-                }
-            });
+            invitationsListView.setCellFactory(param  -> new InvitationViewCell());
         });
     };
 

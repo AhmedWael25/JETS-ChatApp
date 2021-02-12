@@ -6,11 +6,10 @@ import jets.chatclient.gui.models.Invitation;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DTOToObjAdapter {
+public class DTOObjAdapter {
 
-    public DTOToObjAdapter() {}
 
-    public  Invitation convertDtoToObj(InvitationDto invitationDto){
+    public static Invitation convertDtoToObj(InvitationDto invitationDto){
         Invitation inv = new Invitation();
         inv.setSenderId(invitationDto.getSenderId());
         inv.setReceiverId(invitationDto.getReceiverId());
@@ -21,7 +20,7 @@ public class DTOToObjAdapter {
         inv.setInvitationContent(invitationDto.getInvitationContent());
         return inv;
     }
-    public  InvitationDto convertObjToDto(Invitation inv){
+    public static InvitationDto convertObjToDto(Invitation inv){
         InvitationDto invDto = new InvitationDto();
         invDto.setSenderId(inv.getSenderId());
         invDto.setReceiverId(inv.getReceiverId());
@@ -33,7 +32,7 @@ public class DTOToObjAdapter {
         System.out.println("INV DTO:"+ invDto);
         return  invDto;
     }
-    public   List<Invitation> convertDtoList(List<InvitationDto> invitationDtoList){
+    public static List<Invitation> convertDtoList(List<InvitationDto> invitationDtoList){
 
         List<Invitation> invitations = invitationDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
                 .collect(Collectors.toList());

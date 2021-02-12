@@ -7,6 +7,7 @@ import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.database.dao.InvitationsDao;
 import jets.chatserver.database.daoImpl.InvitationDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.network.adapters.EntityObjAdapter;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -36,31 +37,12 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
 
         List<InvitationDto> invitationDtos = null;
         try {
-            //==================== TODO Refactor To An Adapter ============
-            //TODO SO UGLY DONT FORGET TO REFACTOR =====
             invitationsDao = InvitationDaoImpl.getInvitationDaoInstance();
             List<DBInvitations> dbInvitations =  invitationsDao.getAllUserReceivedInvitations(userId);
 
+           invitationDtos =  dbInvitations.parallelStream().map(EntityObjAdapter::convertEntityToDto)
+                   .collect(Collectors.toList());
 
-           invitationDtos =  dbInvitations.parallelStream().map(DBinvitation -> {
-               InvitationDto invitationDto = new InvitationDto();
-
-               //Mapping Done Here
-               invitationDto.setInvitationId(DBinvitation.getInvitationId());
-               invitationDto.setInvitationContent(DBinvitation.getContent());
-               invitationDto.setReceiverId(DBinvitation.getReceiverId());
-               invitationDto.setSenderId(DBinvitation.getSenderId());
-               invitationDto.setSenderName(DBinvitation.getSenderName());
-               invitationDto.setReceiverName(DBinvitation.getReceiverName());
-
-               try {
-                   invitationDto.setSenderImg(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(DBinvitation.getSenderId()));
-               } catch (SQLException throwables) {
-                   throwables.printStackTrace();
-               }
-
-               return invitationDto;
-           }).collect(Collectors.toList());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -84,17 +66,16 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
             boolean isInviteExists = invitationsDao.isInviteExists(senderId,receiverId);
             if(isInviteExists) return  false;
 
-            DBInvitations dbInv = new DBInvitations();
-            dbInv.setSenderId(senderId);
-            dbInv.setReceiverId(receiverId);
-            dbInv.setSenderName(invitationDto.getSenderName());
-            dbInv.setReceiverName(UserDaoImpl.getUserDaoInstance().getUserNameById(invitationDto.getReceiverId()));
 
+
+            //Convert DTO To Entity
+            DBInvitations dbInv = EntityObjAdapter.convertDtoToEntity(invitationDto);
             invitationsDao.addNewInvitation(dbInv);
 
             //Now it's Time To Call Back The User who was sent the Invitation
             //TODO Adapter First Thing Morning
             ClientInterface clientInterface = currentConnectedUsers.get(receiverId);
+            //Attaching the SenderImg with DTO
             invitationDto.setSenderImg(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(senderId));
             clientInterface.sendNewInvToUser(invitationDto);
 
