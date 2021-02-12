@@ -1,6 +1,6 @@
 package commons.remotes.server;
 
-import commons.sharedmodels.Invitation;
+import commons.sharedmodels.InvitationDto;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface InvitationServiceInt extends Remote {
 
-    List<Invitation> getAllUserInvitations(String userId)  throws RemoteException;
-    boolean  deleteInvitation(Invitation invitation)  throws RemoteException;
-    boolean sendInvitation(Invitation invitation,String receiverId)  throws RemoteException;
+    List<InvitationDto> getAllUserInvitations(String userId)  throws RemoteException;
+    boolean  deleteInvitation(InvitationDto invitationDto)  throws RemoteException;
+    boolean sendInvitation(InvitationDto invitationDto)  throws RemoteException;
 
 }

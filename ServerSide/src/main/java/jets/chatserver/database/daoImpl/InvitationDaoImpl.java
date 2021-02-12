@@ -44,7 +44,8 @@ public class InvitationDaoImpl implements InvitationsDao {
         boolean isInviteExists = isInviteExists(invitation.getSenderId(),invitation.getReceiverId());
 
         if (isInviteExists) return false; //returning false denoting that the invitation already exists
-        String query = "INSERT INTO invitations(senderid,receiverid,content) VALUES(?,?,?)";
+
+        String query = "INSERT INTO invitations(senderid,receiverid,content,sendername,receivername) VALUES(?,?,?,?,?)";
 
         PreparedStatement pd = conn.prepareStatement(query,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -56,6 +57,8 @@ public class InvitationDaoImpl implements InvitationsDao {
         //TODO To Be Changed To the dynamic invitation content
         pd.setString(3,"You got a new Friend Request ");
 //        pd.setString(3,invitation.getContent());
+        pd.setString(4,invitation.getSenderName());
+        pd.setString(5,invitation.getReceiverName());
 
         int rowCount = pd.executeUpdate();
         if (rowCount == 1){
@@ -164,6 +167,8 @@ public class InvitationDaoImpl implements InvitationsDao {
         invitation.setReceiverId(rs.getString("receiverid"));
         invitation.setContent(rs.getString("content"));
         invitation.setInvitationDate(rs.getString("invitationtime"));
+        invitation.setSenderName(rs.getString("sendername"));
+        invitation.setReceiverName(rs.getString("receivername"));
 
         return invitation;
     }

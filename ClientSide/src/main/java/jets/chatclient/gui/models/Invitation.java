@@ -1,15 +1,22 @@
-package commons.sharedmodels;
+package jets.chatclient.gui.models;
 
-import java.io.Serializable;
-
-public class Invitation  implements Serializable {
+public class Invitation {
 
     private int invitationId;
     private String senderId;
     private String senderImg;
     private String senderName;
+    private String receiverName;
     private String receiverId;
     private String invitationContent;
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
 
     public String getSenderImg() {
         return senderImg;
@@ -57,5 +64,18 @@ public class Invitation  implements Serializable {
 
     public void setSenderId(String senderId) {
         this.senderId = senderId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Invitation{" +
+                "invitationId=" + invitationId +
+                ", senderId='" + senderId + '\'' +
+                ", senderImg='" + "IMG" + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", receiverId='" + receiverId + '\'' +
+                ", invitationContent='" + invitationContent + '\'' +
+                '}';
     }
 }

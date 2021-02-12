@@ -101,7 +101,7 @@ public class ChatDashBoardController implements Initializable {
 
             //TODO Remove this ==> U Assumed the current user ID(Phone) is 1 Only For testing purposes
             //TODO SHOULD be replaced with current user model
-            registeringClientService.registerClient(modelsFactory.getClient(), "1");
+            registeringClientService.registerClient(modelsFactory.getClient(), "7");
 
          } catch (RemoteException  | NotBoundException e) {
             e.printStackTrace();

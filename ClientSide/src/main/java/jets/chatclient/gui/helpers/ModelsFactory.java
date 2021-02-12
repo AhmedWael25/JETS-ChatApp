@@ -2,6 +2,7 @@ package jets.chatclient.gui.helpers;
 
 
 import commons.remotes.client.ClientInterface;
+import jets.chatclient.gui.helpers.adapters.DTOToObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.network.rmi.ClientInterfaceImpl;
 
@@ -16,6 +17,7 @@ public class ModelsFactory {
     private CurrentUserModel currentUserModel = null;
     private ClientInterface clientInterface = null;
     private Registry registry = null;
+    private DTOToObjAdapter dtoToObjAdapter = null;
 
     private ModelsFactory () { }
 
@@ -51,6 +53,13 @@ public class ModelsFactory {
             }
         }
         return  clientInterface;
+    }
+
+    public DTOToObjAdapter getDtoToObjAdapter(){
+        if(dtoToObjAdapter == null){
+            dtoToObjAdapter = new DTOToObjAdapter();
+        }
+        return dtoToObjAdapter;
     }
 
 }

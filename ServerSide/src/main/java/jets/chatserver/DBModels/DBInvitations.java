@@ -8,7 +8,24 @@ public class DBInvitations   {
     private String senderId;
     private String receiverId;
     private String content;
+    private String senderName;
+    private String receiverName;
 
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
 
     public int getInvitationId() {
         return invitationId;
@@ -51,16 +68,16 @@ public class DBInvitations   {
     }
 
 
-
     @Override
     public String toString() {
         return "DBInvitations{" +
                 "invitationId=" + invitationId +
-                ", invitationData='" + invitationDate + '\'' +
+                ", invitationDate='" + invitationDate + '\'' +
                 ", senderId='" + senderId + '\'' +
                 ", receiverId='" + receiverId + '\'' +
                 ", content='" + content + '\'' +
+                ", senderName='" + senderName + '\'' +
+                ", receiverName='" + receiverName + '\'' +
                 '}';
     }
-
 }

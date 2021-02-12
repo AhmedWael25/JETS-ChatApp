@@ -3,7 +3,9 @@ package jets.chatserver.network;
 import commons.remotes.client.ClientInterface;
 import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.database.dao.InvitationsDao;
+import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.InvitationDaoImpl;
+import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.network.rmi.AddFriendServiceImpl;
 import jets.chatserver.network.rmi.InvitationServiceImpl;
 import jets.chatserver.network.rmi.RegisteringServiceImpl;
@@ -35,22 +37,19 @@ public class ServerInit   {
 
             //===================Testing AREA for all DAOS
             System.out.println("=================================== TESTING INVITAATIONS==================");
-            InvitationsDao invitationsDao = InvitationDaoImpl.getInvitationDaoInstance();
-            DBInvitations inv = new DBInvitations();
-            inv.setSenderId("1");
-            inv.setReceiverId("6");
+//            InvitationsDao invitationsDao = InvitationDaoImpl.getInvitationDaoInstance();
+//
+//
+////            invitationsDao.addNewInvitation(inv);
+//
+//            List<DBInvitations> sender = invitationsDao.getAllUserReceivedInvitations("1");
+//
+//            for(DBInvitations userin : sender){
+//                System.out.println(userin);
+//            }
 
-            invitationsDao.addNewInvitation(inv);
-
-            List<DBInvitations> sender = invitationsDao.getAllUserReceivedInvitations("3");
-
-            for(DBInvitations userin : sender){
-                System.out.println(userin);
-            }
-
-
-        }catch (RemoteException | SQLException e){
-
+        }catch (RemoteException e){
+            e.printStackTrace();
         }
 
     }
