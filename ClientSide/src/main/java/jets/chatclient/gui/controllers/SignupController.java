@@ -40,23 +40,12 @@ public class SignupController implements Initializable {
     public FontIcon fiGender;
 
 
-    @FXML
-    void handeSignIn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void handleRegister(ActionEvent event) {
-
-    }
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
 
-
+        btnRegister.requestFocus();
         //binding isn't finished Yet **********************************************
 //        ColorBinder.BindColor(tfDisplayname,fiDisplayName);
 //        ColorBinder.BindColor(tfPhonenumber,fiPhoneNumber);
@@ -67,10 +56,7 @@ public class SignupController implements Initializable {
 //        ColorBinder.BindColor(cbGender,fiGender);
 
 
-
-
-
-        Validators.addNameValidator(tfDisplayname,fiDisplayName);
+        Validators.addNameValidator(tfDisplayname, fiDisplayName);
         Validators.addPhoneNumberValidator(tfPhonenumber);
         Validators.addPasswordValidator(pfPassword);
         Validators.addRequiredValidator(cbCountry);
@@ -88,16 +74,18 @@ public class SignupController implements Initializable {
 
     }
 
-    public void handleLoginBtnClick() {
+    public void handleLoginBtnClick(ActionEvent e) {
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         stageCoordinator.switchToLoginScene();
-    }
 
-    public void handleSignupBtnClick() {
-        System.out.println("Send to Server Signup data and show errors if any");
     }
 
 
+    public void handleSignupBtnClick(ActionEvent e) {
+        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
+        //TODO add db validation then mv to signin
+        stageCoordinator.switchToLoginScene();
+    }
 
 }
 

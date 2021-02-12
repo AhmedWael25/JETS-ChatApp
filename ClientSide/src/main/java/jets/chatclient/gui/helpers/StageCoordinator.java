@@ -111,7 +111,7 @@ public class StageCoordinator {
 
 
     /////
-    public void switchToGetPasswordScene() {
+    public void switchToPasswordScene() {
         if (primaryStage == null) {
             throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
         }
@@ -119,14 +119,14 @@ public class StageCoordinator {
         if (!scenes.containsKey("password")) {
             try {
                 System.out.println("Created New Scene");
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/GetPasswordView.fxml"));
-                Parent getPassView = fxmlLoader.load();
-                Scene getPassScene = new Scene(getPassView);
-                SceneData PasswordSceneData = new SceneData(fxmlLoader, getPassView, getPassScene);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PasswordView.fxml"));
+                Parent passwordView = fxmlLoader.load();
+                Scene passwordScene = new Scene(passwordView);
+                SceneData PasswordSceneData = new SceneData(fxmlLoader, passwordView, passwordScene);
                 scenes.put("password", PasswordSceneData);
-                primaryStage.setScene(getPassScene);
+                primaryStage.setScene(passwordScene);
             } catch (IOException e) {
-                System.out.println("IO Exception: Couldn't load 'Get Password View' FXML file");
+                System.out.println("IO Exception: Couldn't load 'Password View' FXML file");
             }
         } else {
             System.out.println("Loaded Existing Scene");

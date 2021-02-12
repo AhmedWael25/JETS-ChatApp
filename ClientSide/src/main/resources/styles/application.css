@@ -96,3 +96,17 @@
     -fx-background-image: url("../images/1_600.jpg");
 
 }
+.testbutton2{
+    -fx-border-color: blue;
+    -fx-background-color: blue;
+}
+.testbutton1{
+    -fx-border-color: yellow;
+    -fx-background-color: yellow;
+
+}
+
+.testbutton1 +.testbutton2{
+    -fx-border-color: green;
+    -fx-background-color: green;
+}
