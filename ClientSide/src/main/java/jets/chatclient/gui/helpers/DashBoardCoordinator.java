@@ -34,7 +34,7 @@ public class DashBoardCoordinator {
 
     public void switchToChatScreen(){
         if(dashboardContainer == null){
-            throw  new RuntimeException("DashBoard Container havenot ben init.");
+            throw  new RuntimeException("DashBoard Container haven't been init.");
         }
         if(!dashboardScreens.containsKey("chatscreen")){
             System.out.println("Created New Chat Screen");
@@ -45,7 +45,7 @@ public class DashBoardCoordinator {
                 ((BorderPane)dashboardContainer).setCenter(chatScreen);
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Coudlnt load chat screen");
+                System.out.println("Couldn't load chat screen");
             }
         }else {
             System.out.println("loading new CHt screen");
@@ -55,7 +55,7 @@ public class DashBoardCoordinator {
     }
     public  void switchToGpChatScreen(){
         if(dashboardContainer == null){
-            throw  new RuntimeException("DashBoard Container havenot ben init.");
+            throw  new RuntimeException("DashBoard Container haven't been init.");
         }
         if(!dashboardScreens.containsKey("gpchatscreen")){
             System.out.println("Created New gp chat Screen");
@@ -66,7 +66,7 @@ public class DashBoardCoordinator {
                 ((BorderPane)dashboardContainer).setCenter(gpChatScreen);
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Coudlnt load Prof screen");
+                System.out.println("Couldn't load Prof screen");
             }
         }else {
             System.out.println("Loading New gp chat screen");
@@ -76,7 +76,7 @@ public class DashBoardCoordinator {
     }
     public void switchToGroupScreen(){
         if(dashboardContainer == null){
-            throw  new RuntimeException("DashBoard Container havenot ben init.");
+            throw  new RuntimeException("DashBoard Container haven't been init.");
         }
         if(!dashboardScreens.containsKey("groupscreen")){
             System.out.println("Created groups Screen");
@@ -87,7 +87,7 @@ public class DashBoardCoordinator {
                 ((BorderPane)dashboardContainer).setCenter(groupsScreen);
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Coudlnt load Prof screen");
+                System.out.println("Couldn't load Prof screen");
             }
         }else {
             System.out.println("Loading New Group screen");
@@ -97,21 +97,21 @@ public class DashBoardCoordinator {
     }
     public  void switchToProfileScreen(){
         if(dashboardContainer == null){
-            throw  new RuntimeException("DashBoard Container havenot ben init.");
+            throw  new RuntimeException("DashBoard Container haven't been init.");
         }
         if(!dashboardScreens.containsKey("profilescreen")){
             System.out.println("Created New Profile Screen");
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/testprofileview.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/userProfile.fxml"));
                 Parent profileScreen = fxmlLoader.load();
                 dashboardScreens.put("profilescreen",profileScreen);
                 ((BorderPane)dashboardContainer).setCenter(profileScreen);
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Coudlnt load Prof screen");
+                System.out.println("Couldn't load Prof screen");
             }
         }else {
-            System.out.println("Loading New Profil screen");
+            System.out.println("Loading New Profile screen");
             Parent profileScreen = dashboardScreens.get("profilescreen");
             ((BorderPane)dashboardContainer).setCenter(profileScreen);
         }
