@@ -106,4 +106,31 @@ public class StageCoordinator {
         }
     }
 
+
+    /////
+    public void switchToGetPasswordScene() {
+        if (primaryStage == null) {
+            throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
+        }
+
+        if (!scenes.containsKey("password")) {
+            try {
+                System.out.println("Created New Scene");
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/GetPasswordView.fxml"));
+                Parent getPassView = fxmlLoader.load();
+                Scene getPassScene = new Scene(getPassView);
+                SceneData PasswordSceneData = new SceneData(fxmlLoader, getPassView, getPassScene);
+                scenes.put("password", PasswordSceneData);
+                primaryStage.setScene(getPassScene);
+            } catch (IOException e) {
+                System.out.println("IO Exception: Couldn't load 'Get Password View' FXML file");
+            }
+        } else {
+            System.out.println("Loaded Existing Scene");
+            SceneData PasswordSceneData = scenes.get("password");
+            Scene PasswordScene = PasswordSceneData.getScene();
+            primaryStage.setScene(PasswordScene);
+        }
+    }
+
 }
