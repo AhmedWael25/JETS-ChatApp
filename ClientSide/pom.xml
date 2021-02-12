@@ -54,8 +54,8 @@
                         <option>--add-exports</option>
                         <option>javafx.graphics/com.sun.javafx.css=org.controlsfx.controls</option>
                         <!--===============================================JFOENIX CONFIGS========================================-->
-                        <option>--add-exports</option>
-                        <option>javafx.controls/com.jfoenix.controls.base=com.jfoenix</option>
+<!--                        <option>&#45;&#45;add-exports</option>-->
+<!--                        <option>javafx.controls/com.jfoenix.controls.base=com.jfoenix</option>-->
                         <option>--add-opens</option>
                         <option>java.base/java.lang.reflect=com.jfoenix</option>
                         <option>--add-opens</option>
