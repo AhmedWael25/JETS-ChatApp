@@ -60,7 +60,7 @@ public class ContactsController implements Initializable {
         //Init the Invitation And Friend Adding Services
         try {
 
-            Registry reg = LocateRegistry.getRegistry(3000);
+            Registry reg = LocateRegistry.getRegistry(3000);//TODO change
             invitationService = (InvitationServiceInt) reg.lookup("InvitationService");
             addFriendService = (AddFriendServiceInt) reg.lookup("AddFriendService");
 

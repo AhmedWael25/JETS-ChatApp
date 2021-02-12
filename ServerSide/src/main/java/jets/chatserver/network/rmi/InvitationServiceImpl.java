@@ -67,7 +67,6 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
             if(isInviteExists) return  false;
 
 
-
             //Convert DTO To Entity
             DBInvitations dbInv = EntityObjAdapter.convertDtoToEntity(invitationDto);
             invitationsDao.addNewInvitation(dbInv);
