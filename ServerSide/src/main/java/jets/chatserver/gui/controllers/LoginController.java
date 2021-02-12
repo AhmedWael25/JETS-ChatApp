@@ -28,7 +28,7 @@ public class LoginController implements Initializable {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
 
-        tfUsername.textProperty().bindBidirectional(currentUserModel.usernameProperty());
+        tfUsername.textProperty().bindBidirectional(currentUserModel.userNameProperty());
         tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
         btnLogin.requestFocus();
     }

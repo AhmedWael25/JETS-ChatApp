@@ -27,9 +27,9 @@ public class SignupController implements Initializable {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
 
-        tfUsername.textProperty().bindBidirectional(currentUserModel.usernameProperty());
+        tfUsername.textProperty().bindBidirectional(currentUserModel.userNameProperty());
         tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
-        tfEmail.textProperty().bindBidirectional(currentUserModel.emailProperty());
+        tfEmail.textProperty().bindBidirectional(currentUserModel.emailAddressProperty());
     }
 
     public void handleLoginBtnClick() {
