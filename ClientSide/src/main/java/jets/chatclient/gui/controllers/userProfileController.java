@@ -26,14 +26,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.kordamp.ikonli.javafx.FontIcon;
+
 
 public class userProfileController {
 
@@ -107,7 +106,7 @@ public class userProfileController {
 
     @FXML
     void openPasswordDialog(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/PasswordDialog.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PasswordDialog.fxml"));
         Parent parent = fxmlLoader.load();
         //PasswordDialogController dialogController = fxmlLoader.< PasswordDialogController>getController();
         //dialogController.setAppMainObservableList(tvObservableList);
