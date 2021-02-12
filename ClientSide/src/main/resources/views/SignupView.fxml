@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
@@ -16,51 +18,66 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="800.0" styleClass=".bgimage" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.SignupController">
+<AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="521.0" prefWidth="800.0" styleClass=".bgimage" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.SignupController">
    <children>
       <HBox prefHeight="458.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Pane prefHeight="415.0" prefWidth="340.0" styleClass="lBGImage" HBox.hgrow="ALWAYS" />
-            <VBox alignment="BOTTOM_CENTER" fillWidth="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="458.0" prefWidth="417.0" spacing="15.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+            <Pane prefHeight="458.0" prefWidth="263.0" styleClass="lBGImage" HBox.hgrow="ALWAYS" />
+            <VBox alignment="BOTTOM_CENTER" fillWidth="false" spacing="15.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="102.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/connect2.png" />
                      </image>
                   </ImageView>
-                  <GridPane alignment="BOTTOM_CENTER" hgap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="386.0">
+                  <GridPane alignment="BOTTOM_CENTER" hgap="10.0" prefHeight="294.0" prefWidth="387.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.6666259765625" minWidth="10.0" prefWidth="90.66662343343098" />
                         <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="460.6666946411133" minWidth="10.0" prefWidth="286.00004323323566" />
                      </columnConstraints>
                      <rowConstraints>
-                        <RowConstraints maxHeight="76.66667429606119" minHeight="10.0" prefHeight="48.0000025431315" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="106.66668446858725" minHeight="10.0" prefHeight="49.99998982747396" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="96.66667683919269" minHeight="10.0" prefHeight="53.99997965494791" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="97.6666310628255" minHeight="10.0" prefHeight="54.00002034505209" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="89.33333333333331" minHeight="10.0" prefHeight="86.66664632161456" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="126.33331425984701" minHeight="10.0" prefHeight="57.333309173583984" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="119.33330535888672" minHeight="10.0" prefHeight="53.000035603841134" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="117.99998474121094" minHeight="10.0" prefHeight="56.33335367838542" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="97.6666310628255" minHeight="10.0" prefHeight="42.33331298828125" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="116.66666666666669" minHeight="10.0" prefHeight="43.33331298828125" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="116.66666158040363" minHeight="10.0" prefHeight="42.66668701171875" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <JFXTextField fx:id="tfDisplayname" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="275.0" promptText="Display Name" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                        <JFXTextField fx:id="tfPhonenumber" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="275.0" promptText="Phone Number" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                        <JFXPasswordField fx:id="pfPassword" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="275.0" promptText="Password" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                        <JFXPasswordField fx:id="pfConfirmPassword" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="275.0" promptText="Confirm Password" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-                        <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#handleRegister" prefHeight="35.0" prefWidth="104.0" ripplerFill="#d9e8f5" style="-fx-background-color: #304269;" text="Register" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                        <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#handleRegister" prefHeight="35.0" prefWidth="104.0" ripplerFill="#d9e8f5" style="-fx-background-color: #304269;" text="Register" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                            <GridPane.margin>
                               <Insets right="10.0" />
                            </GridPane.margin>
                         </JFXButton>
-                        <FontIcon fx:id="fiDisplayName" iconColor="#636b61" iconLiteral="far-user" iconSize="25" wrappingWidth="18.666664123535156" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <JFXTextField fx:id="tfDisplayname" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="275.0" promptText="Display Name" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <FontIcon fx:id="fiDisplayName" iconColor="#636b61" iconLiteral="far-user" iconSize="25" styleClass="fonticon" wrappingWidth="18.666664123535156" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
+                        <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="53.0" prefWidth="279.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                           <children>
+                              <JFXComboBox fx:id="cbCountry" promptText="Country">
+                                 <HBox.margin>
+                                    <Insets right="5.0" />
+                                 </HBox.margin>
+                              </JFXComboBox>
+                              <JFXTextField fx:id="tfPhonenumber" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="218.0" promptText="Phone Number" unFocusColor="#636b61" />
+                           </children>
+                        </HBox>
+                        <JFXPasswordField fx:id="pfPassword" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="275.0" promptText="Password" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                        <JFXDatePicker fx:id="dpBirthdate" defaultColor="#304269" editable="false" prefHeight="28.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <JFXComboBox fx:id="cbGender" prefHeight="25.0" prefWidth="72.0" promptText="Gender" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <FontIcon fx:id="fiPhoneNumber" iconColor="#636b61" iconLiteral="fas-phone" iconSize="25" layoutX="20.0" layoutY="127.0" wrappingWidth="25.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS" />
-                        <FontIcon fx:id="fiPassword" iconColor="#636b61" iconLiteral="fas-lock-open" iconSize="25" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
-                        <FontIcon fx:id="fiPasswordConfirm" iconColor="#636b61" iconLiteral="fas-lock" iconSize="25" layoutX="10.0" layoutY="127.0" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
-                        <JFXButton ripplerFill="#d9e8f5" text="Sign in?" textFill="#304269" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </JFXButton>
+                        <FontIcon fx:id="fiPassword" iconColor="#636b61" iconLiteral="fas-lock" iconSize="25" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />
+                        <FontIcon fx:id="fiCalendar" iconColor="#636b61" iconLiteral="fas-calendar-alt" iconSize="25" layoutX="10.0" layoutY="127.0" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
+                        <FontIcon fx:id="fiGender" iconColor="#636b61" iconLiteral="fas-venus-mars" iconSize="25" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                      </children>
                   </GridPane>
+                  <JFXButton fx:id="btnSignIn" onAction="#handeSignIn" prefHeight="39.0" prefWidth="294.0" ripplerFill="#d9e8f5" text="already have an account? signin" textFill="#304269">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="40.0" />
+                     </VBox.margin>
+                  </JFXButton>
                </children>
             </VBox>
          </children>

@@ -9,35 +9,42 @@
     /*-fx-background-image: url("../images/1_600.jpg");*/
     /*-fx-background-color: #ED6B2D;*/
 }
-.errorColor{
-    -fx-prompt-text-fill: red;
-}
-.validColor{
-    -fx-prompt-text-fill: green;
-}
+
+/*side Image*/
 .lBGImage{
     -fx-background-image: url("../images/1_600.jpg");
 }
+/*not used*/
 .rBGImage{
     -fx-background-image: url("../images/2_600.jpg");
 }
 
 
-
-.jfx-text-field:error, .jfx-password-field:error, .jfx-text-area:error {
-    -jfx-focus-color: #D34336;
-    -jfx-unfocus-color: #D34336;
-    -fx-prompt-text-fill: #D34336;
+/*Handling Error style in validation*/
+.jfx-text-field:error, .jfx-password-field:error, .jfx-text-area:error,.jfx-combo-box:error {
+    -jfx-focus-color:  #F26101;
+    -jfx-unfocus-color:  #F26101;
+    -fx-prompt-text-fill:  #F26101;
 
 }
 
-.jfx-text-field .error-label, .jfx-password-field .error-label, .jfx-text-area .error-label {
-    -fx-text-fill: #D34336;
+
+
+/*.jfx-text-field:error,.jfx-text-field:error + .fonticon  {*/
+/*    -jfx-focus-color:  #F26101;*/
+/*    -jfx-unfocus-color:  #F26101;*/
+/*    -fx-prompt-text-fill:  #F26101;*/
+
+/*}*/
+
+
+ .error-label {
+    -fx-text-fill: #F26101;
     -fx-font-size: 0.75em;
 }
 
-.jfx-text-field .error-icon, .jfx-password-field .error-icon, .jfx-text-area .error-icon {
-    -fx-text-fill: #D34336;
+ .error-icon {
+    -fx-text-fill: #F26101;
     -fx-font-size: 1em;
 }
 

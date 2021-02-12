@@ -1,51 +1,49 @@
 package jets.chatclient.gui.controllers;
 
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.RegexValidator;
-import com.jfoenix.validation.RequiredFieldValidator;
+import com.jfoenix.controls.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
-import jets.chatclient.gui.helpers.Validators;
+import jets.chatclient.gui.utils.ColorBinder;
+import jets.chatclient.gui.utils.Validators;
 import jets.chatclient.gui.models.CurrentUserModel;
-import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SignupController implements Initializable {
 
+
+    public AnchorPane bgimage;
+
+    public JFXTextField tfDisplayname;
+    public JFXComboBox<?> cbCountry;
+    public JFXTextField tfPhonenumber;
+    public JFXPasswordField pfPassword;
+    public JFXDatePicker dpBirthdate;
+    public JFXComboBox cbGender;
+
+    public JFXButton btnRegister;
+    public JFXButton btnSignIn;
+
+    public FontIcon fiDisplayName;
+    public FontIcon fiPhoneNumber;
+    public FontIcon fiPassword;
+    public FontIcon fiCalendar;
+    public FontIcon fiGender;
+
+
     @FXML
-    private AnchorPane bgimage;
-    @FXML
-    private JFXTextField tfDisplayname;
-    @FXML
-    private JFXTextField tfPhonenumber;
-    @FXML
-    private JFXPasswordField pfPassword;
-    @FXML
-    private JFXPasswordField pfConfirmPassword;
-    @FXML
-    private JFXButton btnRegister;
-    @FXML
-    private FontIcon fiDisplayName;
-    @FXML
-    private FontIcon fiPhoneNumber;
-    @FXML
-    private FontIcon fiPassword;
-    @FXML
-    private FontIcon fiPasswordConfirm;
+    void handeSignIn(ActionEvent event) {
+
+    }
 
     @FXML
     void handleRegister(ActionEvent event) {
@@ -58,12 +56,28 @@ public class SignupController implements Initializable {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
 
-        //setting colors of icons due to text fields
-        //fiDisplayName.setIconColor(foucs ? tfDisplayname.getFocusColor() : tfDisplayname.getUnFocusColor());
+        //binding isn't finished Yet **********************************************
+//        ColorBinder.BindColor(tfDisplayname,fiDisplayName);
+//        ColorBinder.BindColor(tfPhonenumber,fiPhoneNumber);
+//        ColorBinder.BindColor(pfPassword,fiPassword);
+//        ColorBinder.BindColor(cbCountry,fiPhoneNumber);
+//        //we have to bind comoboBox to phoneNumber
+//        ColorBinder.BindColor(dpBirthdate,fiCalendar);
+//        ColorBinder.BindColor(cbGender,fiGender);
 
+
+
+
+
+        Validators.addNameValidator(tfDisplayname,fiDisplayName);
         Validators.addPhoneNumberValidator(tfPhonenumber);
+        Validators.addPasswordValidator(pfPassword);
+        Validators.addRequiredValidator(cbCountry);
+        Validators.addRequiredValidator(cbGender);
+        Validators.addRequiredValidator(dpBirthdate);
 
-        pfConfirmPassword.focusedProperty().addListener((o, old, foucs) -> fiPasswordConfirm.setIconColor(foucs ? pfConfirmPassword.getFocusColor() : pfConfirmPassword.getUnFocusColor()));
+
+//        pfConfirmPassword.focusedProperty().addListener((o, old, foucs) -> fiPasswordConfirm.setIconColor(foucs ? pfConfirmPassword.getFocusColor() : pfConfirmPassword.getUnFocusColor()));
 
         // binding data of current user
 //        tfUsername.textProperty().bindBidirectional(currentUserModel.usernameProperty());
