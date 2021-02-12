@@ -7,8 +7,6 @@ package jets.chatclient.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
@@ -34,6 +32,9 @@ import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.models.CurrentUserModel;
 
 
 public class userProfileController {
@@ -72,8 +73,8 @@ public class userProfileController {
     @FXML // fx:id="userDataBox"
     private VBox userDataBox; // Value injected by FXMLLoader
 
-    @FXML // fx:id="firstName"
-    private JFXTextField firstName; // Value injected by FXMLLoader
+    @FXML // fx:id="userName"
+    private JFXTextField userName; // Value injected by FXMLLoader
 
     @FXML // fx:id="phoneNumber"
     private JFXTextField phoneNumber; // Value injected by FXMLLoader
@@ -149,6 +150,8 @@ public class userProfileController {
         //----------------- Populate ComboBox with Countries -------------------//
         countriesComboBox.setItems(populateWithCountries());
 
+        bindNodes();
+
 
     }
 
@@ -169,6 +172,23 @@ public class userProfileController {
             countryNameList.add(obj.getDisplayCountry());
         }
         return FXCollections.observableList(countryNameList);
+
+    }
+
+    void bindNodes(){
+        // get an instance of current user through model factory.
+        ModelsFactory modelsFactory = ModelsFactory.getInstance();
+        CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
+
+        //--------------------------Start binding----------------------------//
+        displayName.textProperty().bindBidirectional(currentUserModel.userNameProperty());
+        bioTextArea.textProperty().bindBidirectional(currentUserModel.bioProperty());
+        userName.textProperty().bindBidirectional(currentUserModel.userNameProperty());
+        phoneNumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
+        emailAddress.textProperty().bindBidirectional(currentUserModel.emailAddressProperty());
+        countriesComboBox.valueProperty().bindBidirectional(currentUserModel.countryProperty());
+        birtdayPicker.valueProperty().bindBidirectional(currentUserModel.birthdayDateProperty());
+
 
     }
 
