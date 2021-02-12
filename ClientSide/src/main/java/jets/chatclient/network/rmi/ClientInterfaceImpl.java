@@ -23,4 +23,9 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
         contactsController.addInvitationToList(invitationDto);
         System.out.println("Awesome CallBack");
     }
+
+    @Override
+    public void deleteInv(InvitationDto invitationDto) throws RemoteException {
+
+    }
 }

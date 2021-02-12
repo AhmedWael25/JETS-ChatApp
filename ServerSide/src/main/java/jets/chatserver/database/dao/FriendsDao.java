@@ -8,9 +8,9 @@ import java.util.List;
 public interface FriendsDao {
 
 
-    boolean addFriend(String userId,String friendId);
+    boolean addFriend(String userId,String friendId) throws SQLException;
     List<DBUser> getAllFriends(String userId) throws SQLException;
     List<String> getAllFriendsIds(String userId) throws SQLException;
-
+    boolean areFriends(String userId,String friendId) throws SQLException;
 
 }

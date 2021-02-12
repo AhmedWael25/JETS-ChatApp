@@ -13,6 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import jets.chatclient.gui.helpers.DashBoardCoordinator;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -96,12 +97,11 @@ public class ChatDashBoardController implements Initializable {
         //First Get Our Registry Through models factory
         //Then look up the service we require
         try {
-            Registry reg = modelsFactory.getRegistry();
-            registeringClientService = (RegisteringClientInt) reg.lookup("RegisteringService");
-
+            ServicesFactory servicesFactory = ServicesFactory.getInstance();
+            registeringClientService = (RegisteringClientInt) servicesFactory.getRegisterClientService();
             //TODO Remove this ==> U Assumed the current user ID(Phone) is 1 Only For testing purposes
             //TODO SHOULD be replaced with current user model
-            registeringClientService.registerClient(modelsFactory.getClient(), "7");
+            registeringClientService.registerClient(modelsFactory.getClient(), "1");
 
          } catch (RemoteException  | NotBoundException e) {
             e.printStackTrace();

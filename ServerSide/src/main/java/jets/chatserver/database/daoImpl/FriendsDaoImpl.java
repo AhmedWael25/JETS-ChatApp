@@ -34,11 +34,24 @@ public class FriendsDaoImpl  implements FriendsDao {
         return friendsDao;
     }
 
+
     @Override
-    public boolean addFriend(String userId,String friendId) {
+    public boolean addFriend(String userId,String friendId) throws SQLException {
 
+        String query = "INSERT INTO friends(friendid,userid) VALUES(?,?)";
 
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,friendId);
+        pd.setString(2,userId);
+        pd.executeUpdate();
 
+        pd.setString(1,userId);
+        pd.setString(2,friendId);
+        pd.executeUpdate();
+
+        pd.close();
         return  true;
     }
 
@@ -73,5 +86,22 @@ public class FriendsDaoImpl  implements FriendsDao {
         }
         pd.close();
         return friendIds;
+    }
+
+    @Override
+    public boolean areFriends(String userId, String friendId) throws SQLException {
+
+        String query = "SELECT * FROM friends WHERE userid = ? AND friendid = ?";
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,userId);
+        pd.setString(2,friendId);
+
+        ResultSet rs = pd.executeQuery();
+        while (rs.next()){
+            return  true;
+        }
+        return  false;
     }
 }

@@ -2,8 +2,10 @@ package jets.chatserver.network;
 
 import commons.remotes.client.ClientInterface;
 import jets.chatserver.DBModels.DBInvitations;
+import jets.chatserver.database.dao.FriendsDao;
 import jets.chatserver.database.dao.InvitationsDao;
 import jets.chatserver.database.dao.UserDao;
+import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.InvitationDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.network.rmi.AddFriendServiceImpl;
@@ -48,7 +50,10 @@ public class ServerInit   {
 //                System.out.println(userin);
 //            }
 
-        }catch (RemoteException e){
+            FriendsDao f = FriendsDaoImpl.getFriendsDaoInstance();
+            System.out.println(f.areFriends("1","7"));
+
+        }catch (RemoteException | SQLException e){
             e.printStackTrace();
         }
 

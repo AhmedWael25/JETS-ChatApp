@@ -14,11 +14,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.guimodels.InvitationViewCell;
+import org.controlsfx.control.NotificationPane;
+import org.controlsfx.control.action.Action;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -34,6 +39,8 @@ public class ContactsController implements Initializable {
 
     public Button dummybtn;
     @FXML
+    public AnchorPane contactsScreenContainer;
+    @FXML
     private JFXButton sendInvitationBtn;
 
     @FXML
@@ -43,14 +50,15 @@ public class ContactsController implements Initializable {
     private ListView<Invitation> invitationsListView;
 
 
+
     private InvitationServiceInt invitationService;
     private AddFriendServiceInt addFriendService;
     private ModelsFactory modelsFactory = ModelsFactory.getInstance();
     private ObservableList<Invitation> invitations = FXCollections.observableArrayList();
 
     //TODO Remove When  Current User Mode Is Ready ===
-    private  String userIdDummy = "7";
-    private  String userNameDummy = "user7";
+    private  String userIdDummy = "1";
+    private  String userNameDummy = "asd";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -60,18 +68,18 @@ public class ContactsController implements Initializable {
         //Init the Invitation And Friend Adding Services
         try {
 
-            Registry reg = LocateRegistry.getRegistry(3000);//TODO change
-            invitationService = (InvitationServiceInt) reg.lookup("InvitationService");
-            addFriendService = (AddFriendServiceInt) reg.lookup("AddFriendService");
+            ServicesFactory servicesFactory = ServicesFactory.getInstance();
+            invitationService = (InvitationServiceInt) servicesFactory.getInvitationService();
+            addFriendService = (AddFriendServiceInt) servicesFactory.getAddFriendService();
 
             new Thread(fetchUserInvitations).start();
-
 
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
+//=======================================================================================
 
-//        /==============================================================
+
 
     }
 
@@ -93,6 +101,11 @@ public class ContactsController implements Initializable {
 //                invitationsListView.setCellFactory(param  -> new InvitationViewCell());
             });
         }).start();
+    }
+
+    public void deleteInvite(Invitation invitation){
+        invitations.remove(invitation);
+        invitationsListView.setItems(invitations);
     }
 
 
@@ -148,7 +161,22 @@ public class ContactsController implements Initializable {
     };
 
 
-    public void dumdum(ActionEvent actionEvent) {
-        new Thread(fetchUserInvitations).start();
+    public void dumdum(ActionEvent actionEvent){
+
+
     }
+
+//    private void initNotificationPane(){
+//        friendAddedNotificationPane = new NotificationPane();
+//        friendAddedNotificationPane.setText("Test ya m3alem");
+//        FontIcon f = new FontIcon("far-bell");
+//        friendAddedNotificationPane.setGraphic(f);
+//        friendAddedNotificationPane.setCloseButtonVisible(true);
+//        friendAddedNotificationPane.setShowFromTop(true);
+//        friendAddedNotificationPane.getStyleClass().add(NotificationPane.STYLE_CLASS_DARK);
+//        friendAddedNotificationPane.getActions().addAll(new Action("Done",actionEvent -> {
+//            friendAddedNotificationPane.hide();
+//        }));
+//        friendAddedNotificationPane.setContent(contactsScreenContainer);
+//    }
 }

@@ -51,7 +51,19 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
 
     @Override
     public boolean deleteInvitation(InvitationDto invitationDto) throws RemoteException {
-        System.out.println("Invitation Deleted sa7");
+
+        String senderId = invitationDto.getSenderId();
+        String receiverId = invitationDto.getReceiverId();
+
+        try {
+            invitationsDao = InvitationDaoImpl.getInvitationDaoInstance();
+            invitationsDao.deleteInvitation(senderId,receiverId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //CallBack To Remove The Invitation Card From The List
+
         return false;
     }
 

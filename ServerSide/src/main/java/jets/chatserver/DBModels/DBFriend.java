@@ -4,9 +4,7 @@ public class DBFriend {
 
     String friendId;
     String friendName;
-    String friendImgEncoded;
-//    String befriendedData;
-
+    String friendReqDate;
 
     public String getFriendId() {
         return friendId;
@@ -24,11 +22,11 @@ public class DBFriend {
         this.friendName = friendName;
     }
 
-    public String getFriendImgEncoded() {
-        return friendImgEncoded;
+    public String getFriendReqDate() {
+        return friendReqDate;
     }
 
-    public void setFriendImgEncoded(String friendImgEncoded) {
-        this.friendImgEncoded = friendImgEncoded;
+    public void setFriendReqDate(String friendReqDate) {
+        this.friendReqDate = friendReqDate;
     }
 }

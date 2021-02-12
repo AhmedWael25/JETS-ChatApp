@@ -80,7 +80,7 @@ public class DashBoardCoordinator {
         if(dashboardContainer == null){
             throw  new RuntimeException("DashBoard Container haven't been init.");
         }
-        if(!dashboardScreens.containsKey("")){
+        if(!dashboardScreens.containsKey("contactsscreen")){
             System.out.println("Created Contacts Screen");
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/contactsView.fxml"));

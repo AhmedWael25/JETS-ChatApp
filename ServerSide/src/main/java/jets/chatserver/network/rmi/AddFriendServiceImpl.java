@@ -4,6 +4,7 @@ package jets.chatserver.network.rmi;
 import commons.remotes.client.ClientInterface;
 import commons.remotes.server.AddFriendServiceInt;
 import jets.chatserver.database.dao.FriendsDao;
+import jets.chatserver.database.dao.InvitationsDao;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
@@ -16,6 +17,7 @@ import java.util.Map;
 public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFriendServiceInt {
 
     Map<String, ClientInterface> currentConnectedUsers = null;
+    FriendsDao friendsDao = null;
 
     public AddFriendServiceImpl() throws RemoteException {
         super();
@@ -24,26 +26,28 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
     public AddFriendServiceImpl(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {
         super();
         this.currentConnectedUsers = currentConnectedUsers;
+        try {
+            friendsDao = FriendsDaoImpl.getFriendsDaoInstance();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public boolean addFriend(String  userId ,String friendId) throws  RemoteException{
+        boolean areFriends = false;
+        try {
+            areFriends =  friendsDao.areFriends(userId,friendId);
+            if (areFriends) return  false;
 
-        try{
-            UserDao userDao = UserDaoImpl.getUserDaoInstance();
-            boolean isUserExists   = userDao.isUserExist(friendId);
+            friendsDao.addFriend(userId,friendId);
 
-            if(!isUserExists){
-                return  false;
-            }
-            FriendsDao friendsDao = FriendsDaoImpl.getFriendsDaoInstance();
+            //TODO Call Back Client And Add Chat To List Of Current Running Chats.
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-
-        return true;
+        return  true;
     }
-
 
 }

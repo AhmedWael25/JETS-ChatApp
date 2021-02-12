@@ -62,7 +62,7 @@ public class UserDaoImpl implements UserDao {
     public boolean isUserExist(String userId) throws  SQLException{
 
         DBUser user = new DBUser();
-        String query = "Select * from user WHERE id = ?";
+        String query = "Select * from user WHERE phone = ?";
 
         PreparedStatement pd = conn.prepareStatement(query,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -151,7 +151,6 @@ public class UserDaoImpl implements UserDao {
         user.setGender(rs.getString("gender"));
         user.setImgEncoded(rs.getString("image"));
         user.setCountry(rs.getString("country"));
-
         return  user;
     }
 
