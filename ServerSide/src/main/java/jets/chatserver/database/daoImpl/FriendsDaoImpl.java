@@ -23,7 +23,6 @@ public class FriendsDaoImpl  implements FriendsDao {
     }
 
     public static FriendsDaoImpl getFriendsDaoInstance() throws SQLException {
-
         if(friendsDao == null){
             synchronized (FriendsDaoImpl.class){
                 if(friendsDao == null){

@@ -58,7 +58,7 @@ public class ContactsController implements Initializable {
 
     //TODO Remove When  Current User Mode Is Ready ===
     private  String userIdDummy = "1";
-    private  String userNameDummy = "asd";
+    private  String userNameDummy = "MyMain";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -19,13 +19,12 @@ public class InvitationDaoImpl implements InvitationsDao {
     DataSource dataSource = DataSourceFactory.getDataSourceInstance();
     Connection conn;
 
-    private InvitationDaoImpl()throws SQLException {
+    private InvitationDaoImpl() throws SQLException {
         conn = dataSource.getConnection();
         conn.isClosed();
     }
 
     public static InvitationDaoImpl getInvitationDaoInstance() throws SQLException {
-
         if(invitationDao == null){
             synchronized (InvitationDaoImpl.class){
                 if(invitationDao == null){
@@ -128,6 +127,7 @@ public class InvitationDaoImpl implements InvitationsDao {
 
         ResultSet rs = pd.executeQuery();
         if (rs.next()){
+            pd.close();
             return true;
         }
         pd.close();

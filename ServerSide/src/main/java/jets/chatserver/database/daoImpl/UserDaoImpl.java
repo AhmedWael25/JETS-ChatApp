@@ -61,7 +61,6 @@ public class UserDaoImpl implements UserDao {
 
     public boolean isUserExist(String userId) throws  SQLException{
 
-        DBUser user = new DBUser();
         String query = "Select * from user WHERE phone = ?";
 
         PreparedStatement pd = conn.prepareStatement(query,
@@ -73,6 +72,7 @@ public class UserDaoImpl implements UserDao {
         ResultSet rs = pd.executeQuery();
 
         while(rs.next()){
+            pd.close();
            return true;
         }
         pd.close();
@@ -119,6 +119,7 @@ public class UserDaoImpl implements UserDao {
         while (rs.next()){
             str = rs.getString("image");
         }
+        pd.close();
         return  str;
     }
 
@@ -136,6 +137,7 @@ public class UserDaoImpl implements UserDao {
         while (rs.next()){
             str = rs.getString("name");
         }
+        pd.close();
         return  str;
     }
 

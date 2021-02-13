@@ -7,7 +7,7 @@ import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.database.dao.InvitationsDao;
 import jets.chatserver.database.daoImpl.InvitationDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
-import jets.chatserver.network.adapters.EntityObjAdapter;
+import jets.chatserver.network.adapters.EntityDTOAdapter;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -40,7 +40,7 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
             invitationsDao = InvitationDaoImpl.getInvitationDaoInstance();
             List<DBInvitations> dbInvitations =  invitationsDao.getAllUserReceivedInvitations(userId);
 
-           invitationDtos =  dbInvitations.parallelStream().map(EntityObjAdapter::convertEntityToDto)
+           invitationDtos =  dbInvitations.parallelStream().map(EntityDTOAdapter::convertEntityToDto)
                    .collect(Collectors.toList());
 
         } catch (SQLException e) {
@@ -80,13 +80,13 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
 
 
             //Convert DTO To Entity
-            DBInvitations dbInv = EntityObjAdapter.convertDtoToEntity(invitationDto);
+            DBInvitations dbInv = EntityDTOAdapter.convertDtoToEntity(invitationDto);
             invitationsDao.addNewInvitation(dbInv);
 
             //Now it's Time To Call Back The User who was sent the Invitation
             //TODO Adapter First Thing Morning
             ClientInterface clientInterface = currentConnectedUsers.get(receiverId);
-            //Attaching the SenderImg with DTO
+            //Attaching the SenderImg with DTO-
             invitationDto.setSenderImg(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(senderId));
             clientInterface.sendNewInvToUser(invitationDto);
 

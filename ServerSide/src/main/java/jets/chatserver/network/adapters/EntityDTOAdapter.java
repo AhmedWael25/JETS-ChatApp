@@ -1,12 +1,14 @@
 package jets.chatserver.network.adapters;
 
 import commons.sharedmodels.InvitationDto;
+import commons.sharedmodels.P2PChatDto;
 import jets.chatserver.DBModels.DBInvitations;
+import jets.chatserver.DBModels.DBP2PChat;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 
 import java.sql.SQLException;
 
-public class EntityObjAdapter {
+public class EntityDTOAdapter {
 
     public static DBInvitations convertDtoToEntity(InvitationDto invitationDto) {
 
@@ -26,7 +28,7 @@ public class EntityObjAdapter {
         }
         return dbInv;
     }
-    public  static  InvitationDto convertEntityToDto(DBInvitations dbinv){
+    public static InvitationDto convertEntityToDto(DBInvitations dbinv){
         InvitationDto invitationDto = new InvitationDto();
 
         //Mapping Done Here
@@ -43,6 +45,21 @@ public class EntityObjAdapter {
             throwables.printStackTrace();
         }
         return  invitationDto;
+    }
+    public static P2PChatDto convertEntityToDto(DBP2PChat dbChat){
+        P2PChatDto chatDto = new P2PChatDto();
+
+        String friendId = dbChat.getSecondParticipant();
+        chatDto.setChatId(dbChat.getChatId());
+        chatDto.setChatStartDate(dbChat.getChatStartDate());
+        chatDto.setFriendId(friendId);
+        try {
+            chatDto.setFriendName(UserDaoImpl.getUserDaoInstance().getUserNameById(friendId));
+            chatDto.setFriendImg(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(friendId));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return chatDto;
     }
 
 }
