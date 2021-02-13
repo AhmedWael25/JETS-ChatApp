@@ -1,14 +1,20 @@
-package jets.chatserver.DBModels;
+package jets.chatclient.gui.models;
 
-
-public class DBP2PChat   {
+public class P2PChatModel {
 
     private int chatId;
-    private String chatStartDate;
     private String firstParticipant;
     private String secondParticipant;
+    private String msgContent;
+    private String msgTime;
 
-
+    public P2PChatModel(int chatId, String firstParticipant, String secondParticipant, String msgContent, String msgTime) {
+        this.chatId = chatId;
+        this.firstParticipant = firstParticipant;
+        this.secondParticipant = secondParticipant;
+        this.msgContent = msgContent;
+        this.msgTime = msgTime;
+    }
 
     public int getChatId() {
         return chatId;
@@ -16,14 +22,6 @@ public class DBP2PChat   {
 
     public void setChatId(int chatId) {
         this.chatId = chatId;
-    }
-
-    public String getChatStartDate() {
-        return chatStartDate;
-    }
-
-    public void setChatStartDate(String chatStartDate) {
-        this.chatStartDate = chatStartDate;
     }
 
     public String getFirstParticipant() {
@@ -42,13 +40,29 @@ public class DBP2PChat   {
         this.secondParticipant = secondParticipant;
     }
 
+    public String getMsgContent() {
+        return msgContent;
+    }
+
+    public void setMsgContent(String msgContent) {
+        this.msgContent = msgContent;
+    }
+
+    public String getMsgTime() {
+        return msgTime;
+    }
+
+    public void setMsgTime(String msgTime) {
+        this.msgTime = msgTime;
+    }
+
     @Override
     public String toString() {
-        return "DBP2PChat{" +
+        return "P2PChat{" +
                 "chatId=" + chatId +
-                ", chatStartDate='" + chatStartDate + '\'' +
                 ", firstParticipant='" + firstParticipant + '\'' +
                 ", secondParticipant='" + secondParticipant + '\'' +
                 '}';
     }
+
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="56.0" prefWidth="239.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane layoutX="1.0" layoutY="5.0" prefHeight="42.0" prefWidth="46.0">
+         <children>
+            <Circle fx:id="userImg" fill="DODGERBLUE" radius="21.0" stroke="BLACK" strokeType="INSIDE">
+               <StackPane.margin>
+                  <Insets left="5.0" />
+               </StackPane.margin>
+            </Circle>
+            <Circle fx:id="userStatus" fill="#ff1f23" radius="6.0" stroke="BLACK" strokeType="INSIDE" StackPane.alignment="BOTTOM_RIGHT">
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+            </Circle>
+         </children>
+      </StackPane>
+      <Label fx:id="userName" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="56.0" layoutY="8.0" prefHeight="40.0" prefWidth="171.0" style="-fx-background-color: #587dc5; -fx-background-radius: 20px;" text="Name" textFill="#304269">
+         <font>
+            <Font name="Britannic Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

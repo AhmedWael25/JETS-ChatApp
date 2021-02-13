@@ -14,4 +14,6 @@ public interface P2PChatDao {
     List<DBP2PChat> fetchAllChatsByUserId(String userId) throws SQLException;
     DBP2PChat fetchChatBetweenUsers(String participant1,String participant2) throws  SQLException;
     boolean addChat(String participant1 , String participant2) throws  SQLException;
+
+
 }
