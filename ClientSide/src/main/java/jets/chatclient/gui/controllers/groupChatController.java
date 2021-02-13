@@ -2,6 +2,7 @@ package jets.chatclient.gui.controllers;
 
 import com.jfoenix.controls.*;
 import javafx.fxml.FXML;
+import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -10,6 +11,7 @@ import javafx.scene.layout.HBox;
 public class groupChatController {
 
 
+    public ListView chatCardListView;
     @FXML
     private JFXButton groupMembers;
     @FXML
