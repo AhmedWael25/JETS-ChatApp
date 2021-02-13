@@ -2,6 +2,7 @@ package jets.chatclient.gui.helpers;
 
 import commons.remotes.server.AddFriendServiceInt;
 import commons.remotes.server.InvitationServiceInt;
+import commons.remotes.server.P2PChatServiceInt;
 import commons.remotes.server.RegisteringClientInt;
 
 import java.rmi.NotBoundException;
@@ -33,5 +34,8 @@ public class ServicesFactory {
     }
     public AddFriendServiceInt getAddFriendService() throws  RemoteException, NotBoundException{
         return (AddFriendServiceInt) reg.lookup("AddFriendService");
+    }
+    public P2PChatServiceInt getP2PChatService() throws  RemoteException, NotBoundException{
+        return (P2PChatServiceInt) reg.lookup("P2PChatService");
     }
 }
