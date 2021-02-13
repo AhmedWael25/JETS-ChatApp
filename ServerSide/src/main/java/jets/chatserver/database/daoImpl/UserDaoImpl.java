@@ -1,5 +1,6 @@
 package jets.chatserver.database.daoImpl;
 
+import jets.chatserver.DBModels.DBUserCredintials;
 import jets.chatserver.database.DataSourceFactory;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.DBModels.DBUser;
@@ -62,7 +63,7 @@ public class UserDaoImpl implements UserDao {
     public boolean isUserExist(String userId) throws  SQLException{
 
         DBUser user = new DBUser();
-        String query = "Select * from user WHERE id = ?";
+        String query = "Select * from user WHERE phone = ?";
 
         PreparedStatement pd = conn.prepareStatement(query,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -137,6 +138,24 @@ public class UserDaoImpl implements UserDao {
             str = rs.getString("name");
         }
         return  str;
+    }
+    @Override
+    public DBUserCredintials getUserCredentials(String userId) throws SQLException {
+        DBUserCredintials userCredintials = new DBUserCredintials();
+        String query = "SELECT * FROM user WHERE phone = ?";
+
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,userId);
+
+        ResultSet rs =pd.executeQuery();
+        while (rs.next()){
+            userCredintials.setUserPassword(rs.getString("password"));
+            userCredintials.setUserName(rs.getString("name"));
+        }
+        userCredintials.setUserId(userId);
+        return userCredintials;
     }
 
 

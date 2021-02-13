@@ -9,6 +9,7 @@ import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.network.rmi.AddFriendServiceImpl;
 import jets.chatserver.network.rmi.InvitationServiceImpl;
 import jets.chatserver.network.rmi.RegisteringServiceImpl;
+import jets.chatserver.network.rmi.SignInServiceImpl;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -31,6 +32,9 @@ public class ServerInit   {
             reg.rebind("AddFriendService",new AddFriendServiceImpl(currentConnectedUsers));
             reg.rebind("InvitationService",new InvitationServiceImpl(currentConnectedUsers));
             reg.rebind("RegisteringService",new RegisteringServiceImpl(currentConnectedUsers));
+
+            //registering users services
+            reg.rebind("SignInService",new SignInServiceImpl());
 
 
             System.out.println("Server Up And Running");

@@ -6,6 +6,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -37,21 +38,34 @@ public class Validators {
         field.getValidators().add(dispalynameValidator);
         field.focusedProperty().addListener((o, old, foucs) -> {
 //            field.textProperty().addListener((observable, oldValue, newValue) -> field.setText(newValue.length() > 20 ? newValue.substring(0, 20) : newValue));
-            System.out.println( foucs);
-            System.out.println(old);
-            System.out.println("fcolor " + field.getFocusColor());
-            System.out.println("unf clolr " + field.getUnFocusColor());
-            System.out.println("icon clolor " + fi.getIconColor());
+//            System.out.println( foucs);
+//            System.out.println(old);
+//            System.out.println("fcolor " + field.getFocusColor());
+//            System.out.println("unf clolr " + field.getUnFocusColor());
+//            System.out.println("icon clolor " + fi.getIconColor());
             if (!foucs){
                 field.validate();
-                fi.setIconColor( field.getUnFocusColor());
+                new Thread(()->{
+                    try {
+                        //TODO handle this configration to all other Validators
+                        //TODO separate Validatio with thread thing
+                        //TODO return Color Binding to its class
+                        //TODO wirte onTextChange methods again(check related performance)
+                        //TODO try logo moving thing using position (SHERBO)
+                        Thread.sleep(50);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(()->fi.setIconColor( field.getUnFocusColor()));
+                }).start();
+//                fi.setIconColor( field.getUnFocusColor());
             }
             else {
                 fi.setIconColor( field.getFocusColor());
             }
-            System.out.println("fcolor " + field.getTextFormatter());
-            System.out.println("unf clolr " + field.getUnFocusColor());
-            System.out.println("icon clolor " + fi.getIconColor());
+//            System.out.println("fcolor " + field.getTextFormatter());
+//            System.out.println("unf clolr " + field.getUnFocusColor());
+//            System.out.println("icon clolor " + fi.getIconColor());
 
 
         });

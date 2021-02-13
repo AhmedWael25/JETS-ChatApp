@@ -1,6 +1,9 @@
 package jets.chatclient.gui.helpers.adapters;
 
+import commons.sharedmodels.CurrentUserDto;
 import commons.sharedmodels.InvitationDto;
+import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.Invitation;
 
 import java.util.List;
@@ -37,6 +40,32 @@ public class DTOObjAdapter {
         List<Invitation> invitations = invitationDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
                 .collect(Collectors.toList());
         return  invitations;
+    }
+
+    public static CurrentUserModel convertDtoToCurrentUser(CurrentUserDto currentUserDto){
+        ModelsFactory modelsFactory = ModelsFactory.getInstance();
+        CurrentUserModel currentUser = modelsFactory.getCurrentUserModel();
+
+        currentUser.setPhoneNumber(currentUserDto.getUserPhone());
+        currentUser.setUserName(currentUserDto.getUserName());
+        currentUser.setCountry(currentUserDto.getUserCountry());
+        currentUser.setGender(currentUserDto.getUserGender());
+        currentUser.setEmailAddress(currentUserDto.getUserEmail());
+        currentUser.setBio(currentUserDto.getUserBio());
+        //TODO handle user Image, user  BD
+        return currentUser;
+    }
+    public static CurrentUserDto convertObjToDto(CurrentUserModel currentUser){
+        CurrentUserDto userDto = new CurrentUserDto();
+
+        userDto.setUserPhone(currentUser.getPhoneNumber());
+        userDto.setUserName(currentUser.getUserName());
+        userDto.setUserCountry(currentUser.getCountry());
+        userDto.setUserGender(currentUser.getGender());
+        userDto.setUserEmail(currentUser.getEmailAddress());
+        userDto.setUserBio(currentUser.getBio());
+        //TODO handle user Image & BD
+        return userDto;
     }
 
 }

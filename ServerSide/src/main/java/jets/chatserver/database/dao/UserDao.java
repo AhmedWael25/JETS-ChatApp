@@ -1,6 +1,7 @@
 package jets.chatserver.database.dao;
 
 import jets.chatserver.DBModels.DBUser;
+import jets.chatserver.DBModels.DBUserCredintials;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -17,4 +18,6 @@ public interface UserDao {
     String getUserEncodedImg(String  userId) throws  SQLException;
     //Get User Name By Id
     String getUserNameById(String userId) throws  SQLException;
+    //Get User Credentials (UserId,Password)
+    DBUserCredintials getUserCredentials(String userId) throws SQLException;
 }

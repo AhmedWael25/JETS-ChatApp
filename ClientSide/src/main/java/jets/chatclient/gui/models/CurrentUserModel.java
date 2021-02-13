@@ -10,7 +10,8 @@ import javafx.beans.property.StringProperty;
 public class CurrentUserModel {
 
     private StringProperty userName = new SimpleStringProperty();
-    private StringProperty password = new SimpleStringProperty();
+    //TODO handle password availability,shouldn't be stored here
+
     private StringProperty phoneNumber = new SimpleStringProperty();
     private StringProperty displayName = new SimpleStringProperty();
     private StringProperty emailAddress = new SimpleStringProperty();
@@ -19,6 +20,16 @@ public class CurrentUserModel {
     private StringProperty country = new SimpleStringProperty();
     private ObjectProperty<LocalDate> birthdayDate = new SimpleObjectProperty<LocalDate>();
     private StringProperty bio = new SimpleStringProperty();
+
+//    private static CurrentUserModel currentUser_instance = null;
+//
+//    private CurrentUserModel(){}
+//
+//    public static CurrentUserModel getInstance(){
+//        if (currentUser_instance == null)
+//            currentUser_instance = new CurrentUserModel();
+//        return currentUser_instance;
+//    }
 
 
     public String getUserName() {
@@ -31,18 +42,6 @@ public class CurrentUserModel {
 
     public void setUserName(String userName) {
         this.userName.set(userName);
-    }
-
-    public String getPassword() {
-        return password.get();
-    }
-
-    public StringProperty passwordProperty() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password.set(password);
     }
 
     public String getPhoneNumber() {
