@@ -7,7 +7,6 @@ import java.rmi.RemoteException;
 
 public interface RegisteringClientInt extends Remote {
 
-
     //These Will firstly Register the Client into the server hashmap
     //Also a method to disconnect tha client
 

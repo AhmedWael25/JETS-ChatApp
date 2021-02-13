@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import jets.chatclient.gui.models.P2PChatModel;
 
@@ -13,11 +13,11 @@ import java.io.IOException;
 public class P2PChatCardController {
 
     @FXML
-    private Circle userImg;
+    private Circle friendImg;
     @FXML
-    private Circle userStatus;
+    private Circle friendStatus;
     @FXML
-    private Label userName;
+    private Label friendName;
     @FXML
     public AnchorPane chatCardContainer;
 
@@ -35,7 +35,8 @@ public class P2PChatCardController {
     }
 
     public void setData(P2PChatModel chat){
-        userName.setText(chat.getSecondParticipant());
+        friendName.setText(chat.getFriendName());
+        friendImg.setFill(new ImagePattern(chat.getFriendImg()));
     }
 
     public AnchorPane getChatCard(){

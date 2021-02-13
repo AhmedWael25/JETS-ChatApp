@@ -42,8 +42,8 @@ public class DBUser   {
     private String bio;
     private String registerData;
     private String imgEncoded;
-    private UserStatus userStatus ;
-    private UserAvail userAvail;
+    private UserStatus userStatus  = UserStatus.FREE;
+    private UserAvail userAvail = UserAvail.ONLINE;
 
     public DBUser() {}
 
@@ -135,16 +135,16 @@ public class DBUser   {
         this.imgEncoded = imgEncoded;
     }
 
-    public UserStatus getUserStatus() {
-        return userStatus;
+    public int getUserStatus() {
+        return userStatus.getValue();
     }
 
     public void setUserStatus(UserStatus userStatus) {
         this.userStatus = userStatus;
     }
 
-    public UserAvail getUserAvail() {
-        return userAvail;
+    public int getUserAvail() {
+        return userAvail.getValue();
     }
 
     public void setUserAvail(UserAvail userAvail) {

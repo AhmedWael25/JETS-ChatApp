@@ -1,8 +1,13 @@
 package jets.chatclient.gui.helpers.adapters;
 
 import commons.sharedmodels.InvitationDto;
+import commons.sharedmodels.P2PChatDto;
+import javafx.scene.image.Image;
 import jets.chatclient.gui.models.Invitation;
+import jets.chatclient.gui.models.P2PChatModel;
 
+import java.io.ByteArrayInputStream;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,9 +37,34 @@ public class DTOObjAdapter {
         System.out.println("INV DTO:"+ invDto);
         return  invDto;
     }
-    public static List<Invitation> convertDtoList(List<InvitationDto> invitationDtoList){
+
+    public static P2PChatModel convertDtoToObj(P2PChatDto chatDto){
+
+        P2PChatModel p2pchat = new P2PChatModel();
+
+        p2pchat.setChatId(chatDto.getChatId());
+        p2pchat.setChatStartDate(chatDto.getChatStartDate());
+        p2pchat.setFriendStatus(chatDto.getStatus());
+        p2pchat.setFriendAvailability(chatDto.getAvailability());
+        p2pchat.setFriendName(chatDto.getFriendName());
+        p2pchat.setFriendId(chatDto.getFriendId());
+
+        //TODO Refactor INTO img utils
+        System.out.println("asdasdasd" + chatDto.getFriendImg());
+        byte[] dst = Base64.getDecoder().decode(chatDto.getFriendImg());
+        Image img = new Image(new ByteArrayInputStream(dst));
+        p2pchat.setFriendImg(img);
+        return  p2pchat;
+    }
+
+    public static List<Invitation> convertDtoInvitationList(List<InvitationDto> invitationDtoList){
 
         List<Invitation> invitations = invitationDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
+                .collect(Collectors.toList());
+        return  invitations;
+    }
+    public static List<P2PChatModel> convertDtop2pChatList(List<P2PChatDto> p2PChatDtoList){
+        List<P2PChatModel> invitations = p2PChatDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
                 .collect(Collectors.toList());
         return  invitations;
     }

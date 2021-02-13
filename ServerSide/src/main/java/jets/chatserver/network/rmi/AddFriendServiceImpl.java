@@ -4,6 +4,7 @@ package jets.chatserver.network.rmi;
 import commons.remotes.client.ClientInterface;
 import commons.remotes.server.AddFriendServiceInt;
 import commons.sharedmodels.P2PChatDto;
+import jets.chatserver.DBModels.DBP2PChat;
 import jets.chatserver.database.dao.FriendsDao;
 import jets.chatserver.database.dao.InvitationsDao;
 import jets.chatserver.database.dao.P2PChatDao;
@@ -11,6 +12,7 @@ import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.P2PChatDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.network.adapters.EntityDTOAdapter;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -54,8 +56,14 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
             ClientInterface client1 = currentConnectedUsers.get(participant1);
             ClientInterface client2 = currentConnectedUsers.get(participant2);
 
-            client1.forTesting(participant1);
-            client2.forTesting(participant2);
+            DBP2PChat dbChat1 = p2pChatDao.fetchChatBetweenUsers(participant1, participant2);
+            DBP2PChat dbChat2 = p2pChatDao.fetchChatBetweenUsers(participant2, participant1);
+
+            P2PChatDto chatDto1 = EntityDTOAdapter.convertEntityToDto(dbChat1);
+            P2PChatDto chatDto2 = EntityDTOAdapter.convertEntityToDto(dbChat2);
+
+            client1.sendNewChatToUser(chatDto1);
+            client2.sendNewChatToUser(chatDto2);
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

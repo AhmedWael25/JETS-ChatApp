@@ -68,6 +68,7 @@ public class InvitationCardController {
             try {
                 invitationService.deleteInvitation(DTOObjAdapter.convertObjToDto(invitation));
 
+                //todo thread l7whda
                 addFriendService.addFriend(invitation.getSenderId(),invitation.getReceiverId());
 
                 ContactsController ctrl = controllersGetter.getContactsController();

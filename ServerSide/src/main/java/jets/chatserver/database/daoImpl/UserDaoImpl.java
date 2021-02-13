@@ -54,6 +54,9 @@ public class UserDaoImpl implements UserDao {
             user.setId(rs.getInt("id"));
             user.setDisplayedName(rs.getString("name"));
             user.setPhone(rs.getString("phone"));
+            user.setImgEncoded(rs.getString("image"));
+            user.setCountry(rs.getString("country"));
+
         }
         pd.close();
         return  user;

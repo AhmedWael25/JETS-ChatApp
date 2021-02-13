@@ -4,6 +4,7 @@ import commons.sharedmodels.InvitationDto;
 import commons.sharedmodels.P2PChatDto;
 import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.DBModels.DBP2PChat;
+import jets.chatserver.DBModels.DBUser;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 
 import java.sql.SQLException;
@@ -53,9 +54,14 @@ public class EntityDTOAdapter {
         chatDto.setChatId(dbChat.getChatId());
         chatDto.setChatStartDate(dbChat.getChatStartDate());
         chatDto.setFriendId(friendId);
+        chatDto.setUserId(dbChat.getFirstParticipant());
+
         try {
-            chatDto.setFriendName(UserDaoImpl.getUserDaoInstance().getUserNameById(friendId));
-            chatDto.setFriendImg(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(friendId));
+            DBUser user = UserDaoImpl.getUserDaoInstance().getUserById(friendId);
+            chatDto.setFriendName(user.getDisplayedName());
+            chatDto.setFriendImg(user.getImgEncoded());
+            chatDto.setAvailability(user.getUserAvail());
+            chatDto.setStatus(user.getUserStatus());
         } catch (SQLException e) {
             e.printStackTrace();
         }

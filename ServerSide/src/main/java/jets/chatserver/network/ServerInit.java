@@ -61,17 +61,6 @@ public class ServerInit   {
             FriendsDao f = FriendsDaoImpl.getFriendsDaoInstance();
             System.out.println(f.areFriends("1","2"));
 
-            P2PChatDao p = P2PChatDaoImpl.getP2PChatDaoInstance();
-            List<DBP2PChat> as = p.fetchAllChatsByUserId("1");
-            for(DBP2PChat userin : as){
-                System.out.println(userin);
-                System.out.println(EntityDTOAdapter.convertEntityToDto(userin));
-            }
-
-            System.out.println(p.isUserHasChat("1"));
-
-            System.out.println(p.addChat("1","7"));
-
         }catch (RemoteException | SQLException e){
             e.printStackTrace();
         }

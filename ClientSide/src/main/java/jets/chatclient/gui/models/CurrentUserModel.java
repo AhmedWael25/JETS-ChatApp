@@ -2,10 +2,13 @@ package jets.chatclient.gui.models;
 
 import java.time.LocalDate;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
+import javafx.scene.shape.Circle;
 
 public class CurrentUserModel {
 
@@ -17,8 +20,9 @@ public class CurrentUserModel {
     private StringProperty photoPath = new SimpleStringProperty();
     private StringProperty gender = new SimpleStringProperty();
     private StringProperty country = new SimpleStringProperty();
-    private ObjectProperty<LocalDate> birthdayDate = new SimpleObjectProperty<LocalDate>();
+    private ObjectProperty<LocalDate> birthdayDate = new SimpleObjectProperty<>();
     private StringProperty bio = new SimpleStringProperty();
+
 
 
     public String getUserName() {

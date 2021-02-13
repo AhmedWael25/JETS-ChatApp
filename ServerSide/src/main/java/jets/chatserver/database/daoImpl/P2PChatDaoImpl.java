@@ -102,8 +102,20 @@ public class P2PChatDaoImpl implements P2PChatDao {
     }
 
     @Override
-    public DBP2PChat fetchChatBetweenUsers(String participant1, String participant2) {
-        return null;
+    public DBP2PChat fetchChatBetweenUsers(String participant1, String participant2) throws SQLException {
+        DBP2PChat dbp2PChat = null;
+        String query = "SELECT * FROM p2pchats WHERE part1_id = ? AND part2_id = ?";
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,participant1);
+        pd.setString(2,participant2);
+
+        ResultSet rs = pd.executeQuery();
+        while (rs.next()){
+            dbp2PChat = getP2PChatFromRs(rs);
+        }
+        return dbp2PChat;
     }
 
     @Override

@@ -2,6 +2,7 @@ package jets.chatclient.gui.helpers;
 
 import javafx.scene.Parent;
 import jets.chatclient.gui.controllers.ContactsController;
+import jets.chatclient.gui.controllers.P2PChatController;
 
 import java.util.Map;
 
@@ -22,7 +23,11 @@ public class ControllersGetter {
 
 
     public ContactsController  getContactsController(){
-        return  screens.get("contactsscreen").getLoader().getController();
+        return screens.get("contactsscreen").getLoader().getController();
+    }
+
+    public P2PChatController getP2PChatController(){
+        return screens.get("chatscreen").getLoader().getController();
     }
 
 

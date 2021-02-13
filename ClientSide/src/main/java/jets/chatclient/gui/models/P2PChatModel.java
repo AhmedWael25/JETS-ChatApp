@@ -1,20 +1,18 @@
 package jets.chatclient.gui.models;
 
+import javafx.scene.image.Image;
+
 public class P2PChatModel {
 
     private int chatId;
-    private String firstParticipant;
-    private String secondParticipant;
-    private String msgContent;
+    private int friendStatus;
+    private int friendAvailability;
     private String msgTime;
-
-    public P2PChatModel(int chatId, String firstParticipant, String secondParticipant, String msgContent, String msgTime) {
-        this.chatId = chatId;
-        this.firstParticipant = firstParticipant;
-        this.secondParticipant = secondParticipant;
-        this.msgContent = msgContent;
-        this.msgTime = msgTime;
-    }
+    private String friendName;
+    private  String friendId;
+    private String msgContent;
+    private String chatStartDate;
+    private Image friendImg;
 
     public int getChatId() {
         return chatId;
@@ -24,28 +22,28 @@ public class P2PChatModel {
         this.chatId = chatId;
     }
 
-    public String getFirstParticipant() {
-        return firstParticipant;
+    public int getFriendStatus() {
+        return friendStatus;
     }
 
-    public void setFirstParticipant(String firstParticipant) {
-        this.firstParticipant = firstParticipant;
+    public String getFriendId() {
+        return friendId;
     }
 
-    public String getSecondParticipant() {
-        return secondParticipant;
+    public void setFriendId(String friendId) {
+        this.friendId = friendId;
     }
 
-    public void setSecondParticipant(String secondParticipant) {
-        this.secondParticipant = secondParticipant;
+    public void setFriendStatus(int friendStatus) {
+        this.friendStatus = friendStatus;
     }
 
-    public String getMsgContent() {
-        return msgContent;
+    public int getFriendAvailability() {
+        return friendAvailability;
     }
 
-    public void setMsgContent(String msgContent) {
-        this.msgContent = msgContent;
+    public void setFriendAvailability(int friendAvailability) {
+        this.friendAvailability = friendAvailability;
     }
 
     public String getMsgTime() {
@@ -56,13 +54,49 @@ public class P2PChatModel {
         this.msgTime = msgTime;
     }
 
-    @Override
-    public String toString() {
-        return "P2PChat{" +
-                "chatId=" + chatId +
-                ", firstParticipant='" + firstParticipant + '\'' +
-                ", secondParticipant='" + secondParticipant + '\'' +
-                '}';
+    public String getFriendName() {
+        return friendName;
     }
 
+    public void setFriendName(String friendName) {
+        this.friendName = friendName;
+    }
+
+    public String getMsgContent() {
+        return msgContent;
+    }
+
+    public void setMsgContent(String msgContent) {
+        this.msgContent = msgContent;
+    }
+
+    public String getChatStartDate() {
+        return chatStartDate;
+    }
+
+    public void setChatStartDate(String chatStartDate) {
+        this.chatStartDate = chatStartDate;
+    }
+
+    public Image getFriendImg() {
+        return friendImg;
+    }
+
+    public void setFriendImg(Image friendImg) {
+        this.friendImg = friendImg;
+    }
+
+    @Override
+    public String toString() {
+        return "P2PChatModel{" +
+                "chatId=" + chatId +
+                ", friendStatus=" + friendStatus +
+                ", friendAvailability=" + friendAvailability +
+                ", msgTime='" + msgTime + '\'' +
+                ", friendName='" + friendName + '\'' +
+                ", msgContent='" + msgContent + '\'' +
+                ", chatStartDate='" + chatStartDate + '\'' +
+                ", friendImg=" + "friendImg" +
+                '}';
+    }
 }

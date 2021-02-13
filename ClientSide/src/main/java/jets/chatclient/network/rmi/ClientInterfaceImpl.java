@@ -4,6 +4,7 @@ import commons.remotes.client.ClientInterface;
 import commons.sharedmodels.InvitationDto;
 import commons.sharedmodels.P2PChatDto;
 import jets.chatclient.gui.controllers.ContactsController;
+import jets.chatclient.gui.controllers.P2PChatController;
 import jets.chatclient.gui.helpers.ControllersGetter;
 
 import javax.naming.ldap.Control;
@@ -22,7 +23,7 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
         ControllersGetter controllersGetter = ControllersGetter.getInstance();
         ContactsController contactsController = controllersGetter.getContactsController();
         contactsController.addInvitationToList(invitationDto);
-        System.out.println("Awesome CallBack");
+        System.out.println("Awesome CallBack To Add Invite");
     }
 
     @Override
@@ -31,6 +32,10 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     @Override
     public void sendNewChatToUser(P2PChatDto chatDto) throws RemoteException {
 
+        ControllersGetter controllersGetter = ControllersGetter.getInstance();
+        P2PChatController p2pChatController = controllersGetter.getP2PChatController();
+        p2pChatController.addNewChatToList(chatDto);
+        System.out.println("Awesome CallBack To Add CHAT");
     }
 
     @Override

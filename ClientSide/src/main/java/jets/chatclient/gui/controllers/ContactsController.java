@@ -12,24 +12,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Callback;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.guimodels.InvitationViewCell;
-import org.controlsfx.control.NotificationPane;
-import org.controlsfx.control.action.Action;
-import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -57,8 +50,10 @@ public class ContactsController implements Initializable {
     private ObservableList<Invitation> invitations = FXCollections.observableArrayList();
 
     //TODO Remove When  Current User Mode Is Ready ===
-    private  String userIdDummy = "1";
-    private  String userNameDummy = "MyMain";
+//    private  String userIdDummy = "7";
+    private  String userIdDummy = "3";
+    private  String userNameDummy = "THIRD";
+//    private  String userNameDummy = "MySC";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -117,9 +112,9 @@ public class ContactsController implements Initializable {
 
 
     Runnable sendInvitation = () -> {
-        //TODO Phone Validation
+        //TODO Phone Validation ---Validation Imp.
         boolean isSent;
-        if(!phoneTxtField.getText().equals(""))  {
+        if(!phoneTxtField.getText().equals("") && !phoneTxtField.getText().equals(userIdDummy))  {
 
             phoneTxtField.setDisable(true);
             Invitation inv = new Invitation();
@@ -144,7 +139,7 @@ public class ContactsController implements Initializable {
         List<Invitation> myInvitations = null;
         try {
             //TODO Should be Changed to Current User model ID(PHONE)
-            myInvitations = DTOObjAdapter.convertDtoList(invitationService.getAllUserInvitations(userIdDummy));
+            myInvitations = DTOObjAdapter.convertDtoInvitationList(invitationService.getAllUserInvitations(userIdDummy));
         } catch (RemoteException e) {
             e.printStackTrace();
         }

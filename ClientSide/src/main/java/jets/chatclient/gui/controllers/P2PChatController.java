@@ -1,30 +1,25 @@
 package jets.chatclient.gui.controllers;
 
 import com.jfoenix.controls.*;
-import commons.remotes.server.AddFriendServiceInt;
-import commons.remotes.server.InvitationServiceInt;
+import commons.remotes.server.P2PChatServiceInt;
+import commons.sharedmodels.P2PChatDto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.P2PChatModel;
-import jets.chatclient.gui.models.guimodels.InvitationViewCell;
 import jets.chatclient.gui.models.guimodels.P2PChatViewCell;
 
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -57,35 +52,56 @@ public class P2PChatController implements Initializable {
     private JFXListView<P2PChatModel> chatCardListView;
 
     private ObservableList<P2PChatModel> chats = FXCollections.observableArrayList();
+    private P2PChatServiceInt p2pChatService;
 
-    P2PChatModel chat1 = new P2PChatModel(1, "Trika", "Ahmed Galal",
-            "Welcome to chat", "12:44");
-
-    P2PChatModel chat2 = new P2PChatModel(2, "Muller", "Ahmed Wael",
-            "See you Soon", "12:10");
+    private String userIdDummy = "3";
+//    private String userIdDummy = "7";
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        chatCardListView.setStyle("-fx-control-inner-background: #304269;");
 
         try {
+
+            ServicesFactory servicesFactory = ServicesFactory.getInstance();
+            p2pChatService =  servicesFactory.getP2PChatService();
+
             new Thread(fetchChatList).start();
-        } catch (Exception e) {
+        } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
-
     }
 
+
+    public void addNewChatToList(P2PChatDto chatDto){
+        new Thread(() -> {
+            P2PChatModel p2pChatModel = new P2PChatModel();
+            p2pChatModel = DTOObjAdapter.convertDtoToObj(chatDto);
+            P2PChatModel finalp2pChatModel = p2pChatModel;
+            Platform.runLater(()->{
+                chats.addAll(finalp2pChatModel);
+                chatCardListView.setItems(chats);
+            });
+        }).start();
+    }
+
+
+
     Runnable fetchChatList = () -> {
-
-        List<P2PChatModel> chatList = new ArrayList<>();
-
-        chatList.add(chat1);
-        chatList.add(chat2);
-
+        List<P2PChatModel> p2pChatModels = null;
+        try {
+            //TODO Should be Changed to Current User model ID(PHONE)
+            p2pChatModels = DTOObjAdapter.convertDtop2pChatList(p2pChatService.fetchAllUserP2PChats(userIdDummy));
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        for (P2PChatModel fd : p2pChatModels){
+            System.out.println("FROM CHAT SCREEN"+fd);
+        }
+        List<P2PChatModel> finalP2pChatModels = p2pChatModels;
         Platform.runLater(() ->{
-            chats.addAll(chatList);
-            chatCardListView.setStyle("-fx-control-inner-background: #304269;");
+            chats.addAll(finalP2pChatModels);
             chatCardListView.setItems(chats);
             chatCardListView.setCellFactory(param -> new P2PChatViewCell());
         });
