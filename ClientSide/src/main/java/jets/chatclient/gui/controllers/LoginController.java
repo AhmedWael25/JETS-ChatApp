@@ -46,14 +46,10 @@ public class LoginController implements Initializable {
 
         try {
             signInService = (SignInServiceInt) reg.lookup("SignInService");
-        } catch (RemoteException e) {
+        } catch (RemoteException|NotBoundException e) {
             System.out.println("can't find Service");
             e.printStackTrace();
-        } catch (NotBoundException e) {
-            System.out.println("can't wallahy");
-            e.printStackTrace();
         }
-
         tfPhonenumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
         btnSignIn.requestFocus();
     }

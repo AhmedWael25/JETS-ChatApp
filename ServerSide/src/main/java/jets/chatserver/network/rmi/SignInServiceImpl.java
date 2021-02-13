@@ -34,12 +34,9 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
     }
 
 
-
-    DBUserCredintials userCredintials = null;
-
     public SignInServiceImpl() throws RemoteException {
         super();
-        System.out.println("service Intialized");
+        System.out.println("SignIn service Intialized");
     }
 
 
@@ -49,7 +46,7 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
         try {
             UserDao userDao = UserDaoImpl.getUserDaoInstance();
             if (userDao.isUserExist(userPhone)) {
-                userCredintials = userDao.getUserCredentials(userPhone);
+                DBUserCredintials userCredintials = userDao.getUserCredentials(userPhone);
                 if (userCredintials.getUserPassword().equals(null))
                     return registrationStatus.NotFullyRegistered.getValue();
                 else
@@ -64,11 +61,17 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
 
     @Override
     public boolean checkUserCredentials(String userPhone, String userPassword) throws RemoteException {
+        DBUserCredintials userCredintials = new DBUserCredintials();
+        try {
+            UserDao userDao = UserDaoImpl.getUserDaoInstance();
+             userCredintials = userDao.getUserCredentials(userPhone);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         if (userCredintials.getUserPassword().equals(userPassword))
             return true;
         else return false;
     }
-    //TODO(sayed) check if case moves to register before adding password, will credentials be affected?
 
     @Override
     public CurrentUserDto signUserIn(String userPhone) throws RemoteException {
