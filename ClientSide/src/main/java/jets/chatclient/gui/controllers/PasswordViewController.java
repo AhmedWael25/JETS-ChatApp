@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -21,6 +22,9 @@ public class PasswordViewController implements Initializable {
     public JFXButton btnSignIn;
     public JFXButton btnSignup;
 
+    private RegisterLoginCoordinator registerLoginCoordinator;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
@@ -30,19 +34,16 @@ public class PasswordViewController implements Initializable {
 //        tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
 
         btnSignIn.requestFocus();
+        registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
 
     }
 
-    public void handleSignIn(ActionEvent event) {
-        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-        stageCoordinator.switchToChatDashBoard();
+    public void handleSignIn(){
 
     }
 
     public void handleSignUp(ActionEvent event) {
-        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-        stageCoordinator.switchToSignupScene();
-
+      registerLoginCoordinator.switchToSignupScreen();
     }
 
 

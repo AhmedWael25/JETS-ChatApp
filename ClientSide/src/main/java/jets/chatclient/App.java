@@ -15,7 +15,8 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         stageCoordinator.initStage(primaryStage);
-        stageCoordinator.switchToLoginScene();
+       // stageCoordinator.switchToLoginScene();
+           stageCoordinator.switchToMainScene();
         primaryStage.setTitle("Connect ChatApp");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/symbol.png").toExternalForm()) );
         primaryStage.show();

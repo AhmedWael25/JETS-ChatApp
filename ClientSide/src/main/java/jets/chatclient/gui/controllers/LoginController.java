@@ -9,7 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -25,10 +28,14 @@ public class LoginController implements Initializable {
 
     public JFXTextField tfPhonenumber;
     public JFXButton btnSignUp;
+    @FXML
+    public HBox HBox;
 
     public JFXButton btnSignIn;
 
+    public MainController mainController;
 
+   private RegisterLoginCoordinator registerLoginCoordinator;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -38,20 +45,19 @@ public class LoginController implements Initializable {
 //        tfUsername.textProperty().bindBidirectional(currentUserModel.userNameProperty());
 //        tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
 
-        btnSignIn.requestFocus();
+           registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
+
+           btnSignIn.requestFocus();
     }
 
     public void handleLoginBtnClick(ActionEvent e) {
-        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         //TODO change the flow, passoword>> chatDashboard
-        stageCoordinator.switchToPasswordScene();
-
+        registerLoginCoordinator.switchToGetPasswordScreen();
     }
 
 
     public void handleSignupBtnClick(ActionEvent e) {
-        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-        stageCoordinator.switchToSignupScene();
+        registerLoginCoordinator.switchToSignupScreen();
     }
 
 }

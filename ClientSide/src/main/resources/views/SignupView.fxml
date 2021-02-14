@@ -17,13 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
-
-<AnchorPane fx:id="bgimage" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="800.0" styleClass=".bgimage" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.SignupController">
-   <children>
-      <HBox prefHeight="458.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Pane prefHeight="460.0" prefWidth="400.0" styleClass="lBGImage" HBox.hgrow="ALWAYS" />
-            <VBox alignment="BOTTOM_CENTER" fillWidth="false" spacing="15.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+            <VBox stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="jets.chatclient.gui.controllers.SignupController" alignment="BOTTOM_CENTER" fillWidth="false" spacing="15.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="102.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -53,7 +47,7 @@
                         <FontIcon fx:id="fiDisplayName" iconColor="#636b61" iconLiteral="far-user" iconSize="25" styleClass="fonticon" wrappingWidth="18.666664123535156" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                         <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="53.0" prefWidth="279.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
                            <children>
-                              <JFXComboBox fx:id="cbCountry" promptText="Country">
+                              <JFXComboBox fx:id="cbCountry"  >
                                  <HBox.margin>
                                     <Insets right="5.0" />
                                  </HBox.margin>
@@ -80,7 +74,4 @@
                   </JFXButton>
                </children>
             </VBox>
-         </children>
-      </HBox>
-   </children>
-</AnchorPane>
+
