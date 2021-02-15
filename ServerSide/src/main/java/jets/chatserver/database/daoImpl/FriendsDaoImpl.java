@@ -19,7 +19,6 @@ public class FriendsDaoImpl  implements FriendsDao {
 
     private FriendsDaoImpl()throws SQLException {
         conn = dataSource.getConnection();
-        conn.isClosed();
     }
 
     public static FriendsDaoImpl getFriendsDaoInstance() throws SQLException {

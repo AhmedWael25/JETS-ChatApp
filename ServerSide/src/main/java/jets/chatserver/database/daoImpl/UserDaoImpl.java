@@ -5,10 +5,7 @@ import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.DBModels.DBUser;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +45,7 @@ public class UserDaoImpl implements UserDao {
         pd.setString(1,userId);
 
         ResultSet rs = pd.executeQuery();
+
 
         //TODO Not Fully Implemented only has what i need right now, IMPL it Later
         while(rs.next()){

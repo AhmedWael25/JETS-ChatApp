@@ -1,22 +1,11 @@
 package jets.chatserver.network;
 
 import commons.remotes.client.ClientInterface;
-import commons.sharedmodels.P2PChatDto;
-import jets.chatserver.DBModels.DBInvitations;
-import jets.chatserver.DBModels.DBP2PChat;
-import jets.chatserver.database.dao.FriendsDao;
-import jets.chatserver.database.dao.InvitationsDao;
-import jets.chatserver.database.dao.P2PChatDao;
-import jets.chatserver.database.dao.UserDao;
-import jets.chatserver.database.daoImpl.FriendsDaoImpl;
-import jets.chatserver.database.daoImpl.InvitationDaoImpl;
-import jets.chatserver.database.daoImpl.P2PChatDaoImpl;
-import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.DBModels.DBGpChat;
+import jets.chatserver.database.dao.*;
+import jets.chatserver.database.daoImpl.*;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
-import jets.chatserver.network.rmi.AddFriendServiceImpl;
-import jets.chatserver.network.rmi.InvitationServiceImpl;
-import jets.chatserver.network.rmi.P2PChatServiceImpl;
-import jets.chatserver.network.rmi.RegisteringServiceImpl;
+import jets.chatserver.network.rmi.*;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -41,6 +30,7 @@ public class ServerInit   {
             reg.rebind("InvitationService",new InvitationServiceImpl(currentConnectedUsers));
             reg.rebind("RegisteringService",new RegisteringServiceImpl(currentConnectedUsers));
             reg.rebind("P2PChatService",new P2PChatServiceImpl(currentConnectedUsers));
+            reg.rebind("GroupChatService",new GpChatServiceImpl(currentConnectedUsers));
 
 
             System.out.println("Server Up And Running");
@@ -60,6 +50,24 @@ public class ServerInit   {
 
             FriendsDao f = FriendsDaoImpl.getFriendsDaoInstance();
             System.out.println(f.areFriends("1","2"));
+
+
+            GpChatDao g = GpChatDaoImpl.getGpChatDaoInstance();
+            List<String> xd = g.getAllParticipantsIdsByChatId(3);
+
+            List<DBGpChat> gp =  g.getAllGpChatsOfUser("1");
+
+
+
+
+            for(DBGpChat userin : gp ){
+                System.out.println(userin);
+                System.out.println("=================== BUT THE DTO IS ===============");
+                System.out.println(EntityDTOAdapter.convertEntityToDto(userin));
+            }
+
+
+            System.out.println(g.doesUserHasGpChats("5"));
 
         }catch (RemoteException | SQLException e){
             e.printStackTrace();

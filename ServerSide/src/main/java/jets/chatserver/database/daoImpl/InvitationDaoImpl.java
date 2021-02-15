@@ -21,7 +21,6 @@ public class InvitationDaoImpl implements InvitationsDao {
 
     private InvitationDaoImpl() throws SQLException {
         conn = dataSource.getConnection();
-        conn.isClosed();
     }
 
     public static InvitationDaoImpl getInvitationDaoInstance() throws SQLException {

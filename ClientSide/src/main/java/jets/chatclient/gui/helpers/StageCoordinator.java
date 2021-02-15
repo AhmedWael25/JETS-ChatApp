@@ -109,7 +109,6 @@ public class StageCoordinator {
         }
     }
 
-
     /////
     public void switchToGetPasswordScene() {
         if (primaryStage == null) {

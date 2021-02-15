@@ -36,7 +36,7 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
 
         List<P2PChatDto> p2pChatsDtos = null;
         try {
-            chatDao = P2PChatDaoImpl.getP2PChatDaoInstance();
+            P2PChatDao  chatDao = P2PChatDaoImpl.getP2PChatDaoInstance();
             List<DBP2PChat> DBp2pChats = chatDao.fetchAllChatsByUserId(userId);
 
             p2pChatsDtos =  DBp2pChats.parallelStream().map(EntityDTOAdapter::convertEntityToDto)

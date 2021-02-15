@@ -51,8 +51,8 @@ public class ContactsController implements Initializable {
 
     //TODO Remove When  Current User Mode Is Ready ===
 //    private  String userIdDummy = "7";
-    private  String userIdDummy = "3";
-    private  String userNameDummy = "THIRD";
+    private  String userIdDummy = "1";
+    private  String userNameDummy = "sayed2";
 //    private  String userNameDummy = "MySC";
 
     @Override

@@ -1,13 +1,18 @@
 package jets.chatserver.network.adapters;
 
+import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.InvitationDto;
 import commons.sharedmodels.P2PChatDto;
+import commons.sharedmodels.ParticipantDto;
+import jets.chatserver.DBModels.DBGpChat;
 import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.DBModels.DBP2PChat;
 import jets.chatserver.DBModels.DBUser;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityDTOAdapter {
 
@@ -67,5 +72,30 @@ public class EntityDTOAdapter {
         }
         return chatDto;
     }
+    public static GpChatDto convertEntityToDto(DBGpChat dbGpChat){
+        GpChatDto gpChatDto = new GpChatDto();
 
+        gpChatDto.setGpChatId(dbGpChat.getGpChatId());
+        gpChatDto.setGpChatName(dbGpChat.getGpChatName());
+        gpChatDto.setGpChatImage(dbGpChat.getGpChatImg());
+        gpChatDto.setGpChatStartDate(dbGpChat.getGpChatStartDate());
+        gpChatDto.setGrpChatAdminId(dbGpChat.getGpChatAdminId());
+        gpChatDto.setGrpChatDesc(dbGpChat.getGpChatDesc());
+
+        try{
+            List<ParticipantDto> participantsDto = new ArrayList<>();
+            for(String participantId:  dbGpChat.getParticipantsId()){
+                ParticipantDto participant = new ParticipantDto();
+                participant.setParticipantId(participantId);
+                participant.setParticipantName(UserDaoImpl.getUserDaoInstance().getUserNameById(participantId));
+                participant.setParticipantImage(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(participantId));
+                participantsDto.add(participant);
+            }
+            gpChatDto.setGpParticipants(participantsDto);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return  gpChatDto;
+    }
 }

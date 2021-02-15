@@ -54,7 +54,7 @@ public class P2PChatController implements Initializable {
     private ObservableList<P2PChatModel> chats = FXCollections.observableArrayList();
     private P2PChatServiceInt p2pChatService;
 
-    private String userIdDummy = "3";
+    private String userIdDummy = "1";
 //    private String userIdDummy = "7";
 
 
@@ -74,6 +74,7 @@ public class P2PChatController implements Initializable {
     }
 
 
+//===========================Methods That Will BE Called Through call backs ============
     public void addNewChatToList(P2PChatDto chatDto){
         new Thread(() -> {
             P2PChatModel p2pChatModel = new P2PChatModel();
@@ -85,6 +86,7 @@ public class P2PChatController implements Initializable {
             });
         }).start();
     }
+//===================================RUNNABLES==========================
 
 
 

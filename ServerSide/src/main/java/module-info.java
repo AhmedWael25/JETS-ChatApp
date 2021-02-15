@@ -10,6 +10,7 @@ module jets.chatserver {
 
     requires org.controlsfx.controls;
     requires com.jfoenix;
+    requires java.sql.rowset;
     requires java.rmi;
 
 

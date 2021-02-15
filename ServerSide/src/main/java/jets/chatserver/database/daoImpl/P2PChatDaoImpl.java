@@ -23,12 +23,11 @@ public class P2PChatDaoImpl implements P2PChatDao {
 
     private P2PChatDaoImpl() throws SQLException {
         conn = dataSource.getConnection();
-        conn.isClosed();
     }
 
     public static P2PChatDaoImpl getP2PChatDaoInstance() throws SQLException {
         if(p2pChatDao == null){
-            synchronized (FriendsDaoImpl.class){
+            synchronized (P2PChatDaoImpl.class){
                 if(p2pChatDao == null){
                     p2pChatDao = new P2PChatDaoImpl();
                 }

@@ -27,7 +27,6 @@ public class RegisteringServiceImpl extends UnicastRemoteObject implements Regis
             currentConnectedUsers.put(userId,clientInterface);
             System.out.println("Client of id ("+userId+") Registered");
         }
-
     }
 
     @Override
@@ -37,4 +36,8 @@ public class RegisteringServiceImpl extends UnicastRemoteObject implements Regis
             System.out.println("Client of id ("+userId+") Disconnected");
         }
     }
+
 }
+
+
+

@@ -1,14 +1,24 @@
 package jets.chatclient.gui.controllers;
 
 import com.jfoenix.controls.*;
+import commons.remotes.server.GpChatServiceInt;
+import commons.sharedmodels.GpChatDto;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import jets.chatclient.gui.helpers.ServicesFactory;
 
-public class groupChatController {
+import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class groupChatController  implements Initializable {
 
 
     public ListView chatCardListView;
@@ -43,8 +53,42 @@ public class groupChatController {
     @FXML
     private JFXListView msgListView;
 
+
+    private GpChatServiceInt gpChatService;
+
+
+    private String userIdDummy = "1";
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ServicesFactory servicesFactory = null;
+        try {
+            servicesFactory = ServicesFactory.getInstance();
+            gpChatService =    servicesFactory.getGpChatService();
+
+            new Thread(fetchGpChats).start();
+
+            } catch (RemoteException | NotBoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void sendMsg(KeyEvent keyEvent) {
 
     }
+
+//    ================= RUNNABLES =====================
+    Runnable fetchGpChats = () -> {
+        List<GpChatDto> gpChatDtos = null;
+    try {
+        gpChatDtos = gpChatService.fetchAllUserGpChats(userIdDummy);
+        System.out.println(gpChatDtos);
+    } catch (RemoteException e) {
+        e.printStackTrace();
+    }
+};
+
 
 }

@@ -1,9 +1,6 @@
 package jets.chatclient.gui.helpers;
 
-import commons.remotes.server.AddFriendServiceInt;
-import commons.remotes.server.InvitationServiceInt;
-import commons.remotes.server.P2PChatServiceInt;
-import commons.remotes.server.RegisteringClientInt;
+import commons.remotes.server.*;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -37,5 +34,8 @@ public class ServicesFactory {
     }
     public P2PChatServiceInt getP2PChatService() throws  RemoteException, NotBoundException{
         return (P2PChatServiceInt) reg.lookup("P2PChatService");
+    }
+    public GpChatServiceInt getGpChatService() throws RemoteException, NotBoundException{
+        return (GpChatServiceInt) reg.lookup("GroupChatService");
     }
 }
