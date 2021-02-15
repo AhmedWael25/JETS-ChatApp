@@ -13,11 +13,17 @@ import com.jfoenix.controls.JFXTextField;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import commons.remotes.server.SignInServiceInt;
+import commons.remotes.server.UserProfileServiceInt;
+import commons.sharedmodels.CurrentUserDto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,10 +40,17 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
+import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 
 
-public class userProfileController {
+public class UserProfileController {
+
+
+    UserProfileServiceInt userProfileService;
+    CurrentUserModel currentUserModel;
+    ModelsFactory modelsFactory;
 
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -104,6 +117,27 @@ public class userProfileController {
 
     @FXML
     void saveChanges(ActionEvent event) {
+        // fill the new data in userModel
+        CurrentUserModel updatedUserModel = new CurrentUserModel();
+
+        updatedUserModel.setUserName(userName.getText());
+        updatedUserModel.setPhoneNumber(phoneNumber.getText());
+        updatedUserModel.setEmailAddress(emailAddress.getText());
+        updatedUserModel.setBirthdayDate(birtdayPicker.getValue());
+        updatedUserModel.setCountry(countriesComboBox.getValue());
+        updatedUserModel.setBio(bioTextArea.getText());
+
+        // Convert userModel to DTO (use DTOObjAdapter
+        CurrentUserDto updatedUserDto = DTOObjAdapter.convertObjToDto(updatedUserModel);
+
+        // Call the service and send your data.
+        try {
+            userProfileService.updateUserData(updatedUserDto);
+        }catch (RemoteException e){
+            System.out.println("Failed to send data to server.");
+        }
+
+
 
     }
 
@@ -141,6 +175,22 @@ public class userProfileController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
+        // get an instance of current user through model factory.
+        modelsFactory = ModelsFactory.getInstance();
+        currentUserModel = modelsFactory.getCurrentUserModel();
+        //Lookup for server services
+        Registry reg = modelsFactory.getRegistry();
+
+        try {
+            userProfileService = (UserProfileServiceInt) reg.lookup("UserProfileService");
+        } catch (RemoteException | NotBoundException e) {
+            System.out.println("can't find Service");
+            e.printStackTrace();
+        }
+
+
+
+
         userDataBox.setDisable(true);
        //----------------- load the default pic -------------------//
         URL imageUrl = this.getClass().getResource("/images/userDefaultImage.png");
@@ -150,7 +200,8 @@ public class userProfileController {
         //----------------- Populate ComboBox with Countries -------------------//
         countriesComboBox.setItems(populateWithCountries());
 
-        bindNodes();
+        bindNodes(currentUserModel);
+
 
 
     }
@@ -175,10 +226,7 @@ public class userProfileController {
 
     }
 
-    void bindNodes(){
-        // get an instance of current user through model factory.
-        ModelsFactory modelsFactory = ModelsFactory.getInstance();
-        CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
+    void bindNodes(CurrentUserModel currentUserModel){
 
         //--------------------------Start binding----------------------------//
         displayName.textProperty().bindBidirectional(currentUserModel.userNameProperty());
