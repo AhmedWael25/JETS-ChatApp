@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -30,6 +31,10 @@ public class PasswordViewController implements Initializable {
     ModelsFactory modelsFactory;
     StageCoordinator stageCoordinator;
 
+
+    private RegisterLoginCoordinator registerLoginCoordinator;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         modelsFactory = ModelsFactory.getInstance();
@@ -46,13 +51,14 @@ public class PasswordViewController implements Initializable {
 
         //TODO check why password is cached?!
         btnSignIn.requestFocus();
+        registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
 
     }
 
     public void handleSignIn(ActionEvent event) {
         stageCoordinator = StageCoordinator.getInstance();
         try {
-            boolean verified = signInService.checkUserCredentials(currentUserModel.getPhoneNumber(),pfPassword.getText());
+            boolean verified = signInService.checkUserCredentials(currentUserModel.getPhoneNumber(), pfPassword.getText());
             System.out.println(verified);
             if (verified)
                 stageCoordinator.switchToChatDashBoard();
@@ -62,15 +68,10 @@ public class PasswordViewController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
     public void handleSignUp(ActionEvent event) {
-        stageCoordinator = StageCoordinator.getInstance();
-        stageCoordinator.switchToSignupScene();
-
+      registerLoginCoordinator.switchToSignupScreen();
     }
 
 

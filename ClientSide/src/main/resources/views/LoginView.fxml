@@ -13,12 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="loginpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="800.0" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.LoginController">
-   <children>
-      <HBox layoutX="10.0" layoutY="10.0" prefHeight="458.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Pane prefHeight="460.0" prefWidth="400.0" styleClass="lBGImage" HBox.hgrow="ALWAYS" />
-            <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="458.0" prefWidth="399.0" spacing="15.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+            <VBox stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="jets.chatclient.gui.controllers.LoginController"  alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="458.0" prefWidth="399.0" spacing="15.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
                <children>
                   <ImageView fitHeight="102.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -47,7 +42,4 @@
                   </JFXButton>
                </children>
             </VBox>
-         </children>
-      </HBox>
-   </children>
-</AnchorPane>
+

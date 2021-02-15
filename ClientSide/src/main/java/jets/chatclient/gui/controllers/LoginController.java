@@ -3,15 +3,23 @@ package jets.chatclient.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.skins.JFXTextFieldSkin;
+import com.jfoenix.skins.ValidationPane;
 import commons.remotes.server.RegisteringClientInt;
 import commons.remotes.server.SignInServiceInt;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -30,27 +38,32 @@ public class LoginController implements Initializable {
     public FontIcon fiPhoneNumber;
     public JFXTextField tfPhonenumber;
     public JFXButton btnSignUp;
+
+
     public JFXButton btnSignIn;
 
     public SignInServiceInt signInService;
     CurrentUserModel currentUserModel;
     ModelsFactory modelsFactory;
     StageCoordinator stageCoordinator;
+    private RegisterLoginCoordinator registerLoginCoordinator;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         modelsFactory = ModelsFactory.getInstance();
         currentUserModel = modelsFactory.getCurrentUserModel();
-       Registry reg = modelsFactory.getRegistry();
+        registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
+        Registry reg = modelsFactory.getRegistry();
 
         try {
             signInService = (SignInServiceInt) reg.lookup("SignInService");
-        } catch (RemoteException|NotBoundException e) {
+        } catch (RemoteException | NotBoundException e) {
             System.out.println("can't find Service");
             e.printStackTrace();
         }
         tfPhonenumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
+        btnSignIn.requestFocus();
         btnSignIn.requestFocus();
     }
 
@@ -58,16 +71,18 @@ public class LoginController implements Initializable {
         stageCoordinator = StageCoordinator.getInstance();
 
         try {
+            System.out.println(currentUserModel.getPhoneNumber());
             int UserRegStatus = signInService.checkUserCredentials(currentUserModel.getPhoneNumber());
-            switch (UserRegStatus){
+            System.out.println(UserRegStatus);
+            switch (UserRegStatus) {
                 case 1: //user registered // redirect to password
-                    stageCoordinator.switchToPasswordScene();
+                    registerLoginCoordinator.switchToGetPasswordScreen();
                     break;
                 case 2: //user not registered // redirect to sign up
                     handleinvalidPhoneNumber(currentUserModel.getPhoneNumber());
                     break;
                 case 3://user registered by admin(no data saved for user)
-                    stageCoordinator.switchToSignupScene();
+                    registerLoginCoordinator.switchToSignupScreen();
                     break;
             }
 
@@ -81,13 +96,18 @@ public class LoginController implements Initializable {
     }
 
     private void handleinvalidPhoneNumber(String phoneNumber) {
-        System.out.println("There's no user with phone number: "+phoneNumber);
+        System.out.println("There's no user with phone number: " + phoneNumber);
+        //TODO change the flow, passoword>> chatDashboard
+
+//        registerLoginCoordinator.switchToGetPasswordScreen();
     }
 
 
     public void handleSignupBtnClick(ActionEvent e) {
-        stageCoordinator = StageCoordinator.getInstance();
-        stageCoordinator.switchToSignupScene();
+
+        registerLoginCoordinator.switchToSignupScreen();
     }
 
 }
+
+

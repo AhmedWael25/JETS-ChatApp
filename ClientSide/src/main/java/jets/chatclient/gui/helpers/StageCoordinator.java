@@ -28,7 +28,7 @@ public class StageCoordinator {
     public static StageCoordinator getInstance() {
         return stageCoordinator;
     }
-
+    //not Used
     public void switchToLoginScene() {
         if (primaryStage == null) {
             throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
@@ -55,7 +55,7 @@ public class StageCoordinator {
         }
 
     }
-
+    //not Used
     public void switchToSignupScene() {
         if (primaryStage == null) {
             throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
@@ -107,33 +107,38 @@ public class StageCoordinator {
             Scene chatScene = chatSceneData.getScene();
             primaryStage.setScene(chatScene);
         }
+        //TODO refactor
+        primaryStage.setResizable(true);
     }
 
 
     /////
-    public void switchToPasswordScene() {
+    public void switchToMainScene() {
         if (primaryStage == null) {
             throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
         }
 
-        if (!scenes.containsKey("password")) {
+        if (!scenes.containsKey("MainScene")) {
             try {
-                System.out.println("Created New Scene");
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PasswordView.fxml"));
-                Parent passwordView = fxmlLoader.load();
-                Scene passwordScene = new Scene(passwordView);
-                SceneData PasswordSceneData = new SceneData(fxmlLoader, passwordView, passwordScene);
-                scenes.put("password", PasswordSceneData);
-                primaryStage.setScene(passwordScene);
+                System.out.println("Created New Main Scene");
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/MainView.fxml"));
+                Parent MainView = fxmlLoader.load();
+                Scene MainScene = new Scene(MainView);
+                SceneData MainSceneData = new SceneData(fxmlLoader, MainView, MainScene);
+                scenes.put("MainScene", MainSceneData);
+                primaryStage.setScene(MainScene);
+
             } catch (IOException e) {
-                System.out.println("IO Exception: Couldn't load 'Password View' FXML file");
+                System.out.println("IO Exception: Couldn't load 'Main Scene View' FXML file");
             }
         } else {
             System.out.println("Loaded Existing Scene");
-            SceneData PasswordSceneData = scenes.get("password");
-            Scene PasswordScene = PasswordSceneData.getScene();
-            primaryStage.setScene(PasswordScene);
+            SceneData MainSceneData = scenes.get("MainScene");
+            Scene MainScene = MainSceneData.getScene();
+            primaryStage.setScene(MainScene);
         }
+        primaryStage.setHeight(600);
+        primaryStage.setResizable(false);
     }
 
 }
