@@ -11,6 +11,7 @@ import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.utils.ComboBoxUtils;
 import jets.chatclient.gui.utils.Countries;
+import jets.chatclient.gui.utils.HashEncoder;
 import jets.chatclient.gui.utils.Validators;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -66,6 +67,18 @@ public class SignupController implements Initializable {
         ComboBoxUtils.fillComboBox(cbCountry,countries);
         ComboBoxUtils.makeComboSearchable(cbCountry);
 
+//        String s="";
+//        String p;
+//        Optional<String> salt = HashEncoder.generateSalt(20);
+//        if (salt.isPresent())
+//            s= salt.get();
+//        System.out.println(s);
+//        Optional<String> password = HashEncoder.hashPassword("asdasda55",s);
+//        if(password.isPresent());
+//            p=password.get();
+//        System.out.println(p);
+//        boolean valid = HashEncoder.verifyPassword("asdasda55",p,s);
+//        System.out.println(valid);
 
 
 
