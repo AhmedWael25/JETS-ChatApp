@@ -55,7 +55,7 @@ public class FriendsDaoImpl  implements FriendsDao {
 
     @Override
     public List<DBUser> getAllFriends(String userId) throws SQLException {
-        List<DBUser> friends = new ArrayList<>();
+        List<DBUser> friends = null;
         List<String> friendIds = getAllFriendsIds(userId);
 
         UserDao userDao = UserDaoImpl.getUserDaoInstance();

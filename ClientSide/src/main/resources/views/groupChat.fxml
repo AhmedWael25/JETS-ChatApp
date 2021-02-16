@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.groupChatController">
+<AnchorPane fx:id="gpChatMainContainer" prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.groupChatController">
    <children>
       <GridPane prefHeight="434.0" prefWidth="583.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -62,7 +62,7 @@
                <center>
                   <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                      <children>
-                        <JFXButton contentDisplay="RIGHT" graphicTextGap="10.0" prefHeight="50.0" prefWidth="294.0" style="-fx-border-color: grey; -fx-border-width: 0.5px; -fx-border-style: hidden solid hidden hidden;" text="Create Group Chat">
+                        <JFXButton fx:id="createGpChatBtn" contentDisplay="RIGHT" graphicTextGap="10.0" onAction="#createGpChat" prefHeight="50.0" prefWidth="294.0" style="-fx-border-color: grey; -fx-border-width: 0.5px; -fx-border-style: hidden solid hidden hidden;" text="Create Group Chat">
                            <graphic>
                               <FontIcon iconLiteral="fas-plus" iconSize="20" />
                            </graphic>
@@ -72,7 +72,7 @@
                         </JFXButton>
                         <AnchorPane maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                            <children>
-                              <ListView focusTraversable="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <ListView fx:id="gpChatListView" focusTraversable="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>

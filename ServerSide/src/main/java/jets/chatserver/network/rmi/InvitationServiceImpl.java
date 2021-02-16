@@ -74,6 +74,7 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
         String receiverId =invitationDto.getReceiverId();
 
         try {
+            //TODO if Friends Donot Send Invitation.
 
             boolean isInviteExists = invitationsDao.isInviteExists(senderId,receiverId);
             if(isInviteExists) return  false;

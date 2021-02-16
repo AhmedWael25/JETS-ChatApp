@@ -1,13 +1,11 @@
 package jets.chatserver.network.adapters;
 
-import commons.sharedmodels.GpChatDto;
-import commons.sharedmodels.InvitationDto;
-import commons.sharedmodels.P2PChatDto;
-import commons.sharedmodels.ParticipantDto;
+import commons.sharedmodels.*;
 import jets.chatserver.DBModels.DBGpChat;
 import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.DBModels.DBP2PChat;
 import jets.chatserver.DBModels.DBUser;
+import jets.chatserver.database.dao.FriendsDao;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 
 import java.sql.SQLException;
@@ -98,4 +96,14 @@ public class EntityDTOAdapter {
 
         return  gpChatDto;
     }
+    public static FriendDto convertEntityToDto(DBUser user){
+        FriendDto friendDto = new FriendDto();
+
+        friendDto.setFriendId(user.getPhone());
+        friendDto.setFriendImage(user.getImgEncoded());
+        friendDto.setFriendName(user.getDisplayedName());
+
+        return friendDto;
+    }
+
 }
