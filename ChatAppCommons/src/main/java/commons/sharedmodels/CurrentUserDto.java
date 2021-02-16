@@ -8,8 +8,38 @@ public class CurrentUserDto implements Serializable {
     private String userGender;
     private String userEmail;
     private String userCountry;
+    private String userBirthDate;
     private String userBio;
     private String userImage;
+    private int userStatus;
+    private int userAvail;
+
+    public int getUserAvail() {
+        return userAvail;
+    }
+
+    public void setUserAvail(int userAvail) {
+        this.userAvail = userAvail;
+    }
+
+    public int getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(int userStatus) {
+        this.userStatus = userStatus;
+    }
+
+
+
+    public String getUserBirthDate() {
+        return userBirthDate;
+    }
+
+    public void setUserBirthDate(String userBirthDate) {
+        this.userBirthDate = userBirthDate;
+    }
+
 
     public String getUserPhone() {
         return userPhone;

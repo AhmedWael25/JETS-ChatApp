@@ -31,9 +31,9 @@ enum UserStatus{FREE(1),BUSY(2),AWAY(3);
 };
 
 public class DBUser   {
+    private int id;
     private String phone;
     private String displayedName;
-    private int id;
     private String gender;
     private String password;
     private String email;

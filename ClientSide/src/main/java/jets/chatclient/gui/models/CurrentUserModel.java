@@ -2,25 +2,26 @@ package jets.chatclient.gui.models;
 
 import java.time.LocalDate;
 
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
 
 public class CurrentUserModel {
 
     private StringProperty userName = new SimpleStringProperty();
     //TODO handle password availability,shouldn't be stored here
-
     private StringProperty phoneNumber = new SimpleStringProperty();
     private StringProperty displayName = new SimpleStringProperty();
     private StringProperty emailAddress = new SimpleStringProperty();
-    private StringProperty photoPath = new SimpleStringProperty();
+    private ObjectProperty<Image> image = new SimpleObjectProperty<Image>();
     private StringProperty gender = new SimpleStringProperty();
     private StringProperty country = new SimpleStringProperty();
     private ObjectProperty<LocalDate> birthdayDate = new SimpleObjectProperty<LocalDate>();
     private StringProperty bio = new SimpleStringProperty();
+
+
 
 //    private static CurrentUserModel currentUser_instance = null;
 //
@@ -81,17 +82,6 @@ public class CurrentUserModel {
         this.emailAddress.set(emailAddress);
     }
 
-    public String getPhotoPath() {
-        return photoPath.get();
-    }
-
-    public StringProperty photoPathProperty() {
-        return photoPath;
-    }
-
-    public void setPhotoPath(String photoPath) {
-        this.photoPath.set(photoPath);
-    }
 
     public String getGender() {
         return gender.get();
@@ -117,19 +107,32 @@ public class CurrentUserModel {
         this.country.set(country);
     }
 
-    public LocalDate getBirthdayDate() {
-        return birthdayDate.get();
+    public Image getImage() {
+        return image.get();
+    }
+
+    public ObjectProperty<Image> imageProperty() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image.set(image);
     }
 
     public ObjectProperty<LocalDate> birthdayDateProperty() {
         return birthdayDate;
     }
 
+    public LocalDate getBirthdayDate() {
+        return birthdayDate.get();
+    }
+
     public void setBirthdayDate(LocalDate birthdayDate) {
         this.birthdayDate.set(birthdayDate);
     }
 
-	public String getBio() {
+
+    public String getBio() {
         return bio.get();
     }
 
@@ -139,6 +142,21 @@ public class CurrentUserModel {
 
     public void setBio(String bio) {
         this.bio.set(bio);
+    }
+
+    @Override
+    public String toString() {
+        return "CurrentUserModel{" +
+                "userName=" + userName +
+                ", phoneNumber=" + phoneNumber +
+                ", displayName=" + displayName +
+                ", emailAddress=" + emailAddress +
+                ", image=" + image +
+                ", gender=" + gender +
+                ", country=" + country +
+                ", birthdayDate=" + birthdayDate +
+                ", bio=" + bio +
+                '}';
     }
 
 }

@@ -48,18 +48,22 @@ public class EntityObjAdapter {
     }
 
     //convert DBUSERModel From/to currentUserDTO
+
     public static DBUser convertDtoToEntity(CurrentUserDto currentUserDto) {
 
         DBUser dbUser = new DBUser();
 
         dbUser.setPhone(currentUserDto.getUserPhone());
         dbUser.setDisplayedName(currentUserDto.getUserName());
-        dbUser.setCountry(currentUserDto.getUserCountry());
-        dbUser.setEmail(currentUserDto.getUserEmail());
-        dbUser.setBio(currentUserDto.getUserBio());
         dbUser.setGender(currentUserDto.getUserGender());
+        dbUser.setEmail(currentUserDto.getUserEmail());
+        dbUser.setCountry(currentUserDto.getUserCountry());
+        dbUser.setDob(currentUserDto.getUserBirthDate());
+        dbUser.setBio(currentUserDto.getUserBio());
 
         //TODO handle user Image seralization
+        //needs refactoring
+        dbUser.setImgEncoded(currentUserDto.getUserImage());
         return dbUser;
     }
     public  static  CurrentUserDto convertEntityToDto(DBUser dbUser){
@@ -67,10 +71,11 @@ public class EntityObjAdapter {
         //one to one mapping
         userDto.setUserPhone(dbUser.getPhone());
         userDto.setUserName(dbUser.getDisplayedName());
-        userDto.setUserCountry(dbUser.getCountry());
-        userDto.setUserEmail(dbUser.getEmail());
-        userDto.setUserBio(dbUser.getBio());
         userDto.setUserGender(dbUser.getGender());
+        userDto.setUserEmail(dbUser.getEmail());
+        userDto.setUserCountry(dbUser.getCountry());
+        userDto.setUserBirthDate(dbUser.getDob());
+        userDto.setUserBio(dbUser.getBio());
 
         try {
             userDto.setUserImage(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(dbUser.getPhone()));

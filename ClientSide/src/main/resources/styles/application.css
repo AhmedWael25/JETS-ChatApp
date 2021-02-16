@@ -48,7 +48,15 @@
     -fx-prompt-text-fill:  #F26101;
 
 }
+.error-label {
+    -fx-text-fill: #F26101;
+    -fx-font-size: 0.75em;
+}
 
+.error-icon {
+    -fx-text-fill: #F26101;
+    -fx-font-size: 1em;
+}
 
 
 /*.jfx-text-field:error,.jfx-text-field:error + .fonticon  {*/
@@ -59,15 +67,7 @@
 /*}*/
 
 
- .error-label {
-    -fx-text-fill: #F26101;
-    -fx-font-size: 0.75em;
-}
 
- .error-icon {
-    -fx-text-fill: #F26101;
-    -fx-font-size: 1em;
-}
 
 #trial{
     -fx-border-color: #304269;

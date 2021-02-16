@@ -3,6 +3,7 @@ package jets.chatclient.gui.controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import commons.remotes.server.SignInServiceInt;
+import commons.sharedmodels.CurrentUserDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.StageCoordinator;
+import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -60,10 +62,15 @@ public class PasswordViewController implements Initializable {
         try {
             boolean verified = signInService.checkUserCredentials(currentUserModel.getPhoneNumber(), pfPassword.getText());
             System.out.println(verified);
-            if (verified)
+            if (verified) {
+                CurrentUserDto userDto= signInService.signUserIn(currentUserModel.getPhoneNumber());
+                DTOObjAdapter.convertDtoToCurrentUser(userDto);
                 stageCoordinator.switchToChatDashBoard();
-//            else ;
-            //handle wrong password here
+            }
+            else{
+                //TODO handle wrong password here
+
+            }
 
         } catch (RemoteException e) {
             e.printStackTrace();

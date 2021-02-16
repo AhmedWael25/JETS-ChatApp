@@ -146,10 +146,12 @@ public class Validators {
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        Platform.runLater(() -> fi.setIconColor(((JFXDatePicker) field).getDefaultColor()));
+                        fi.setIconColor(new Color(0.388, 0.419, 0.38, 1.0));
+//                        Platform.runLater(() -> fi.setIconColor(((JFXDatePicker) field).getDefaultColor()));
                     }).start();
                 } else {
-                    fi.setIconColor(new Color(0.388, 0.419, 0.38, 1.0));
+                    Platform.runLater(() -> fi.setIconColor(((JFXDatePicker) field).getDefaultColor()));
+//                    fi.setIconColor(new Color(0.388, 0.419, 0.38, 1.0));
                 }
             });
 
