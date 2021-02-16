@@ -111,7 +111,6 @@ public class groupChatController  implements Initializable {
         List<GpChatDto> gpChatDtos = null;
     try {
         gpChatDtos = gpChatService.fetchAllUserGpChats(userIdDummy);
-        System.out.println(gpChatDtos);
     } catch (RemoteException e) {
         e.printStackTrace();
     }

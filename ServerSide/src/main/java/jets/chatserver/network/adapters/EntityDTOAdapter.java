@@ -5,7 +5,6 @@ import jets.chatserver.DBModels.DBGpChat;
 import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.DBModels.DBP2PChat;
 import jets.chatserver.DBModels.DBUser;
-import jets.chatserver.database.dao.FriendsDao;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 
 import java.sql.SQLException;
@@ -96,14 +95,14 @@ public class EntityDTOAdapter {
 
         return  gpChatDto;
     }
-    public static FriendDto convertEntityToDto(DBUser user){
-        FriendDto friendDto = new FriendDto();
+    public static FriendGpDto convertEntityToDto(DBUser user){
+        FriendGpDto friendGpDto = new FriendGpDto();
 
-        friendDto.setFriendId(user.getPhone());
-        friendDto.setFriendImage(user.getImgEncoded());
-        friendDto.setFriendName(user.getDisplayedName());
+        friendGpDto.setFriendId(user.getPhone());
+        friendGpDto.setFriendImage(user.getImgEncoded());
+        friendGpDto.setFriendName(user.getDisplayedName());
 
-        return friendDto;
+        return friendGpDto;
     }
 
 }

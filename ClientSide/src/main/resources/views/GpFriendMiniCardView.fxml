@@ -7,12 +7,11 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane fx:id="gpFriendMiniCardContainer" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" layoutX="-30.0" layoutY="-39.0" maxWidth="1.7976931348623157E308" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Circle fx:id="friendImg" fill="DODGERBLUE" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="friendImg" fill="DODGERBLUE" radius="13.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
             <Label fx:id="friendName" text="Label">
                <font>
                   <Font size="14.0" />

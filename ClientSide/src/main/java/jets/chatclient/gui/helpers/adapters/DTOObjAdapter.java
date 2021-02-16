@@ -1,8 +1,11 @@
 package jets.chatclient.gui.helpers.adapters;
 
+import commons.sharedmodels.FriendGpDto;
 import commons.sharedmodels.InvitationDto;
 import commons.sharedmodels.P2PChatDto;
+import commons.utils.ImageEncoderDecoder;
 import javafx.scene.image.Image;
+import jets.chatclient.gui.models.FriendModel;
 import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.P2PChatModel;
 
@@ -57,6 +60,18 @@ public class DTOObjAdapter {
         return  p2pchat;
     }
 
+    public  static FriendModel convertDtoToObj(FriendGpDto friendGpDto){
+
+        FriendModel friend = new FriendModel();
+
+        friend.setFriendId(friendGpDto.getFriendId());
+        friend.setFriendName(friendGpDto.getFriendName());
+
+        Image img = ImageEncoderDecoder.getDecodedImage(friendGpDto.getFriendImage());
+        friend.setFriendImg(img);
+        return  friend;
+    }
+
     public static List<Invitation> convertDtoInvitationList(List<InvitationDto> invitationDtoList){
 
         List<Invitation> invitations = invitationDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
@@ -67,6 +82,16 @@ public class DTOObjAdapter {
         List<P2PChatModel> invitations = p2PChatDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
                 .collect(Collectors.toList());
         return  invitations;
+    }
+
+    public static  List<FriendModel> convertDtoGpFriendList(List<FriendGpDto> friendGpDtoList){
+
+
+        List<FriendModel> friendModelList = null;
+        friendModelList = friendGpDtoList.parallelStream().map(DTOObjAdapter::convertDtoToObj)
+                .collect(Collectors.toList());
+
+        return friendModelList;
     }
 
 }

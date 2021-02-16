@@ -69,6 +69,7 @@ public class ServerInit   {
 
             System.out.println(g.doesUserHasGpChats("5"));
 
+
         }catch (RemoteException | SQLException e){
             e.printStackTrace();
         }

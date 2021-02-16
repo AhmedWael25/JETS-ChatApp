@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -25,11 +24,7 @@
                <children>
                   <StackPane layoutX="242.0" layoutY="11.0" prefHeight="84.0" prefWidth="73.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="242.0" AnchorPane.topAnchor="11.0">
                      <children>
-                        <Circle fx:id="gpChatImg" fill="DODGERBLUE" radius="48.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0">
-                           <effect>
-                              <DropShadow height="26.69" radius="9.1375" width="11.86" />
-                           </effect>
-                        </Circle>
+                        <Circle fx:id="gpChatImg" fill="DODGERBLUE" radius="48.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
                         <JFXButton fx:id="gpImgChangeBtn" alignment="BOTTOM_RIGHT" buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" onAction="#gpImgChange" prefHeight="28.0" prefWidth="12.0" style="-fx-background-radius: 50px; -fx-border-radius: 50px; -fx-background-color: white;" text=" " StackPane.alignment="BOTTOM_RIGHT">
                            <graphic>
                               <FontIcon iconLiteral="fas-image" iconSize="15" />
@@ -37,6 +32,10 @@
                         </JFXButton>
                      </children>
                   </StackPane>
+                  <Label ellipsisString="" layoutX="346.0" layoutY="79.0" prefHeight="28.0" prefWidth="129.0" text="Max Size 1MB." AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="346.0" AnchorPane.rightAnchor="105.0" AnchorPane.topAnchor="79.0">
+                     <font>
+                        <Font size="11.0" />
+                     </font></Label>
                </children>
             </AnchorPane>
             <GridPane prefHeight="54.0" prefWidth="580.0">
@@ -69,19 +68,22 @@
             </Label>
             <AnchorPane prefHeight="0.0" prefWidth="580.0">
                <children>
-                  <ListSelectionView fx:id="friendsListView" focusTraversable="false" layoutX="2.0" prefHeight="167.0" prefWidth="600.0" AnchorPane.bottomAnchor="-13.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ListSelectionView fx:id="friendsListView" focusTraversable="false" layoutX="2.0" prefHeight="167.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
-            <Label fx:id="errorLabel" alignment="CENTER" prefHeight="26.0" prefWidth="580.0">
+            <Label fx:id="errorLabel" alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="26.0" prefWidth="591.0" textFill="#f26101" wrapText="true">
                <VBox.margin>
-                  <Insets />
+                  <Insets bottom="5.0" />
                </VBox.margin>
                <padding>
-                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-               </padding></Label>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <font>
+                  <Font size="11.0" />
+               </font></Label>
             <HBox alignment="CENTER" prefHeight="44.0" prefWidth="580.0">
                <children>
-                  <JFXButton fx:id="createGpChatBtn" alignment="CENTER" buttonType="RAISED" onAction="#createGpChat" prefHeight="44.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Create Group!" textFill="#fcfcfc">
+                  <JFXButton fx:id="createGpChatBtn" alignment="CENTER" buttonType="RAISED" onAction="#createGpChat" prefHeight="44.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Create Group!" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

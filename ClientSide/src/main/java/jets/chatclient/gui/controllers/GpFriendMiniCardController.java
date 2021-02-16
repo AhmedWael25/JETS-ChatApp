@@ -52,6 +52,7 @@ public class GpFriendMiniCardController  {
     public void setData(FriendModel friend){
         this.friend = friend;
         friendName.setText(friend.getFriendName());
+        friendImg.setFill(new ImagePattern(friend.getFriendImg()));
     }
 
     public AnchorPane getCard(){
