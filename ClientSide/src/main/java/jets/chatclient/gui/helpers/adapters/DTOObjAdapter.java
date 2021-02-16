@@ -5,6 +5,7 @@ import commons.sharedmodels.InvitationDto;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.Invitation;
+import jets.chatclient.gui.models.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -64,6 +65,24 @@ public class DTOObjAdapter {
         userDto.setUserGender(currentUser.getGender());
         userDto.setUserEmail(currentUser.getEmailAddress());
         userDto.setUserBio(currentUser.getBio());
+        //TODO handle user Image & BD
+        return userDto;
+    }
+
+    public static CurrentUserDto convertToUserDto(User user){
+        CurrentUserDto userDto = new CurrentUserDto();
+
+        userDto.setUserPhone(user.getUserPhone());
+        userDto.setUserName(user.getUserName());
+        userDto.setUserCountry(user.getUserCountry());
+        userDto.setUserGender(user.getUserGender());
+      //  userDto.setUserEmail(user.getUserEmail());
+      //  userDto.setUserBio(user.getUserBio());
+        userDto.setPassword(user.getUserPassword());
+        userDto.setUserImage(user.getUserImage());
+        userDto.setDataOfBirth(user.getUserDateOfBirth());
+         userDto.setUserStatus(user.getUserStatus());
+         userDto.setUserAvailability(user.geUserAvailability());
         //TODO handle user Image & BD
         return userDto;
     }

@@ -2,6 +2,9 @@ package jets.chatclient.gui.controllers;
 
 
 import com.jfoenix.controls.*;
+import commons.utils.ImageEncoderDecoder;
+import commons.remotes.server.SignUpServiceInt;
+import commons.sharedmodels.CurrentUserDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -9,13 +12,21 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
+import jets.chatclient.gui.helpers.StageCoordinator;
+import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+import jets.chatclient.gui.models.User;
 import jets.chatclient.gui.utils.Countries;
 import jets.chatclient.gui.utils.Validators;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.*;
 import java.util.ResourceBundle;
 import java.util.Arrays;
@@ -43,18 +54,28 @@ public class SignupController implements Initializable {
     public FontIcon fiCalendar;
     public FontIcon fiGender;
     private RegisterLoginCoordinator registerLoginCoordinator;
+    public SignUpServiceInt signUpService;
+
+    CurrentUserModel currentUserModel;
+    ModelsFactory modelsFactory;
+    StageCoordinator stageCoordinator;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ModelsFactory modelsFactory = ModelsFactory.getInstance();
-        CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
+        modelsFactory = ModelsFactory.getInstance();
+        currentUserModel = modelsFactory.getCurrentUserModel();
+        Registry reg = modelsFactory.getRegistry();
 
-//        Country[] listCountry = createCountryList();
-//        final ObservableList<Country> countries = FXCollections.observableArrayList(listCountry);
-//        cbCountry.getItems().addAll(countries);
-//
-//       cbCountry.setButtonCell(new CountryButtonCell());
+        try {
+            signUpService = (SignUpServiceInt) reg.lookup("SignUpService");
+        } catch (RemoteException | NotBoundException e) {
+            System.out.println("can't find sign up Service");
+            e.printStackTrace();
+        }
+        tfPhonenumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
+
+
 
        registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
 
@@ -73,7 +94,7 @@ public class SignupController implements Initializable {
 //        Validators.addRequiredValidator(tfPhonenumber, fiPhoneNumber);
         Validators.addPasswordValidator(pfPassword, fiPassword);
         Validators.addRequiredValidator(cbCountry, fiCountry);
-        Validators.addRequiredValidator(cbGender, fiGender);
+       // Validators.addRequiredValidator(cbGender, fiGender);
         Validators.addRequiredValidator(dpBirthdate, fiCalendar);
 
 
@@ -95,9 +116,41 @@ public class SignupController implements Initializable {
 
 
     public void handleSignupBtnClick(ActionEvent e) {
-       // StageCoordinator stageCoordinator = StageCoordinator.getInstance();
+        User user ;
+        try {
+
+            System.out.println(currentUserModel.getPhoneNumber());
+            int UserRegStatus = signUpService.checkUserExist(currentUserModel.getPhoneNumber(),tfDisplayname.getText());
+            System.out.println(UserRegStatus);
+            switch (UserRegStatus) {
+                case 1: //user registered // redirect to password
+               System.out.println("User already registered");
+                    break;
+                case 2: //user not registered
+                    user = getUserData();
+                    CurrentUserDto currentUserDto = DTOObjAdapter.convertToUserDto(user);
+                    if(signUpService.signUpUser(currentUserDto))
+                        System.out.println("user Registered Successfully");
+                    else System.out.println("user registration failed");
+                    break;
+
+                case 3://user registered by admin(no data saved for user)
+                    user = getUserData();
+                    currentUserDto = DTOObjAdapter.convertToUserDto(user);
+                    if(signUpService.signUpUser(currentUserDto))
+                    System.out.println("user updated Successfully");
+                    else System.out.println("user registration failed");
+                    break;
+
+                case 4:
+                    System.out.println("username already exist");
+            }
+
+        } catch (RemoteException remoteException) {
+            System.out.println("can't check credentials");
+            remoteException.printStackTrace();
+        }
         registerLoginCoordinator.switchToLoginScreen();
-        //TODO add db validation then mv to signin
     }
 
     public void fillComboBox(JFXComboBox<String> comboBox , List<String> values){
@@ -144,27 +197,30 @@ public class SignupController implements Initializable {
 
 
 
-//||||||| e62eee9
-//=======
-//
-//
-//    private Country[] createCountryList() {
-//        String[] countryCodes = Locale.getISOCountries();
-//        Country[] listCountry = new Country[countryCodes.length];
-//
-//        for (int i = 0; i < countryCodes.length; i++) {
-//            Locale locale = new Locale("", countryCodes[i]);
-//            String code = locale.getCountry();
-//            String name = locale.getDisplayCountry();
-//
-//            listCountry[i] = new Country(code, name);
-//        }
-//
-//        Arrays.sort(listCountry);
-//
-//        return listCountry;
-//    }
-//>>>>>>> signup-updates
+  public User getUserData (){
+      String userDefaultImage ="";
+      ImageEncoderDecoder imageEncoderDecoder = new ImageEncoderDecoder();
+      try {
+          File f = new File(getClass().getResource("/images/userDefaultImage.png").getPath());
+         userDefaultImage = imageEncoderDecoder.getEncodedImage(f);
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+      User user = new User();
+        user.setUserPhone(tfPhonenumber.getText());
+        user.setUserName(tfDisplayname.getText());
+        user.setUserCountry(cbCountry.getValue());
+        user.setUserGender("female");
+        user.setUserImage(userDefaultImage);
+
+        user.setUserDateOfBirth(dpBirthdate.getValue().toString());
+        user.setUserPassword(pfPassword.getText());
+        user.setUserAvailability(1);
+        user.setUserStatus(1);
+
+      return user;
+
+    }
 }
 
 

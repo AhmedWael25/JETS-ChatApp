@@ -174,5 +174,84 @@ public class UserDaoImpl implements UserDao {
         return  user;
     }
 
+    public boolean isUserNameExist(String userName) throws  SQLException{
+
+        String query = "Select * from user WHERE name = ?";
+
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+
+        pd.setString(1,userName);
+
+        ResultSet rs = pd.executeQuery();
+
+        while(rs.next()){
+            return true;
+        }
+        pd.close();
+        return  false;
+    }
+
+    @Override
+    public boolean addUser(DBUser dbUser) throws SQLException {
+
+
+  String query = "INSERT INTO user(phone,name,gender,password,country,dob, image,status,availability) VALUES(?,?,?,?,?,?,?,?,?)";
+
+   PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+
+        pd.setString(1,dbUser.getPhone());
+        pd.setString(2,dbUser.getDisplayedName());
+        pd.setString(3,dbUser.getGender());
+        pd.setString(4,dbUser.getPassword());
+        pd.setString(5,dbUser.getCountry());
+        pd.setString(6,dbUser.getDob());
+        pd.setString(7,dbUser.getImgEncoded());
+        pd.setInt(8,dbUser.getUserStatus());
+        pd.setInt(9,dbUser.getUserAvail());
+
+        int rowCount = pd.executeUpdate();
+        if (rowCount == 1){
+            pd.close();
+            return  true;
+        }
+        pd.close();
+        return false;
+
+
+    }
+
+    @Override
+    public boolean updateUser(DBUser dbUser) throws SQLException {
+        String query = "UPDATE user set  name=?,gender=?,password=?,country=?,dob=?, image=?,status=?,availability=? WHERE phone=?";
+
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,dbUser.getDisplayedName());
+        pd.setString(2,dbUser.getGender());
+        pd.setString(3,dbUser.getPassword());
+        pd.setString(4,dbUser.getCountry());
+        pd.setString(5,dbUser.getDob());
+        pd.setString(6,dbUser.getImgEncoded());
+        pd.setInt(7,dbUser.getUserStatus());
+        pd.setInt(8,dbUser.getUserAvail());
+        pd.setString(9,dbUser.getPhone());
+
+        int rowCount = pd.executeUpdate();
+        if (rowCount == 1){
+            pd.close();
+            return  true;
+        }
+        pd.close();
+        return false;
+
+
+
+    }
+
 
 }

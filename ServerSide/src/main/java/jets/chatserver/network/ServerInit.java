@@ -6,10 +6,7 @@ import jets.chatserver.database.dao.InvitationsDao;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.InvitationDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
-import jets.chatserver.network.rmi.AddFriendServiceImpl;
-import jets.chatserver.network.rmi.InvitationServiceImpl;
-import jets.chatserver.network.rmi.RegisteringServiceImpl;
-import jets.chatserver.network.rmi.SignInServiceImpl;
+import jets.chatserver.network.rmi.*;
 
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -36,7 +33,7 @@ public class ServerInit   {
             //registering users services
             reg.rebind("SignInService",new SignInServiceImpl());
 
-
+            reg.rebind("SignUpService", new SignUpServiceImpl());
             System.out.println("Server Up And Running");
 
             //===================Testing AREA for all DAOS

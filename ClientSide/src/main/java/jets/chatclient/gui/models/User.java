@@ -1,8 +1,7 @@
-package commons.sharedmodels;
+package jets.chatclient.gui.models;
 
-import java.io.Serializable;
 
-public class CurrentUserDto implements Serializable {
+public class User {
     private String userPhone;
     private String userName;
     private String userGender;
@@ -71,24 +70,30 @@ public class CurrentUserDto implements Serializable {
         this.userImage = userImage;
     }
 
-    public void setDataOfBirth(String dataOfBirth){
-        this.dob = dataOfBirth;
-    }
-    public void setPassword(String password){
-        this.password = password;
+    public void setUserDateOfBirth(String dateOfBirth){
+        this.dob = dateOfBirth;
     }
 
-    public String getPassword(){return password;}
+    public String getUserDateOfBirth(){return dob;}
 
-    public String getDataOfBirth(){
-        return this.dob;
+    public void setUserPassword(String password) {this.password= password;}
+    public String getUserPassword(){return password;}
+
+    public void setUserAvailability(int availability){
+        this.availability=availability;
+    }
+    public void setUserStatus(int status){
+        this.status=status;
     }
 
-    public int getUserStatus(){ return this.status;}
-    public int getUserAvailability(){ return this.availability;}
+    public int getUserStatus(){
+       return status;
+    }
 
-    public void setUserStatus(int status){this.status = status;}
-    public void setUserAvailability(int availability){this.availability= availability;}
+    public int geUserAvailability(){
+        return availability;
+    }
+
 
 
 

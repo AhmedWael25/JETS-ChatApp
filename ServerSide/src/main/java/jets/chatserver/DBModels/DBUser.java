@@ -42,8 +42,9 @@ public class DBUser   {
     private String bio;
     private String registerData;
     private String imgEncoded;
-    private UserStatus userStatus ;
-    private UserAvail userAvail;
+   private int userStatus;
+    private int userAvail;
+
 
     public DBUser() {}
 
@@ -135,19 +136,14 @@ public class DBUser   {
         this.imgEncoded = imgEncoded;
     }
 
-    public UserStatus getUserStatus() {
-        return userStatus;
-    }
+    public int getUserStatus() { return userStatus; }
 
-    public void setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
+    public void setUserStatus(int userStatus){
+        this.userStatus=userStatus;
     }
+    public int getUserAvail() { return userAvail; }
 
-    public UserAvail getUserAvail() {
-        return userAvail;
-    }
-
-    public void setUserAvail(UserAvail userAvail) {
+    public void setUserAvail(int userAvail) {
         this.userAvail = userAvail;
     }
 

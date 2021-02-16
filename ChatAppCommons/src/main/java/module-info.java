@@ -18,12 +18,13 @@ module ChatAppCommons {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;
     requires org.kordamp.ikonli.materialdesign2;
-
+    requires java.desktop;
 
 
 //    exports  commons.remotes.server.impl;
     exports commons.remotes.server;
     exports commons.sharedmodels;
     exports commons.remotes.client;
+    exports commons.utils;
 
 }
