@@ -12,10 +12,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
+import jets.chatclient.gui.utils.ComboBoxUtils;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.User;
 import jets.chatclient.gui.utils.Countries;
+import jets.chatclient.gui.utils.HashEncoder;
 import jets.chatclient.gui.utils.Validators;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -42,7 +44,7 @@ public class SignupController implements Initializable {
     public JFXTextField tfPhonenumber;
     public JFXPasswordField pfPassword;
     public JFXDatePicker dpBirthdate;
-    public JFXComboBox<Label> cbGender;
+    public JFXComboBox<String> cbGender;
 
     public JFXButton btnRegister;
     public JFXButton btnSignIn;
@@ -81,11 +83,23 @@ public class SignupController implements Initializable {
 
         btnRegister.requestFocus();
         List<String> genders = Arrays.asList("male","female");
-//        fillComboBox(cbGender,genders);
+        ComboBoxUtils.fillComboBox(cbGender,genders);
         List<String> countries = Countries.getAll();
-        fillComboBox(cbCountry,countries);
-        searchComboBox(cbCountry);
+        ComboBoxUtils.fillComboBox(cbCountry,countries);
+        ComboBoxUtils.makeComboSearchable(cbCountry);
 
+//        String s="";
+//        String p;
+//        Optional<String> salt = HashEncoder.generateSalt(20);
+//        if (salt.isPresent())
+//            s= salt.get();
+//        System.out.println(s);
+//        Optional<String> password = HashEncoder.hashPassword("asdasda55",s);
+//        if(password.isPresent());
+//            p=password.get();
+//        System.out.println(p);
+//        boolean valid = HashEncoder.verifyPassword("asdasda55",p,s);
+//        System.out.println(valid);
 
 
 

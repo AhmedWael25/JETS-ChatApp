@@ -2,11 +2,15 @@ package jets.chatclient.gui.helpers.adapters;
 
 import commons.sharedmodels.CurrentUserDto;
 import commons.sharedmodels.InvitationDto;
+import javafx.scene.image.Image;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.User;
 
+import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,22 +53,34 @@ public class DTOObjAdapter {
 
         currentUser.setPhoneNumber(currentUserDto.getUserPhone());
         currentUser.setUserName(currentUserDto.getUserName());
-        currentUser.setCountry(currentUserDto.getUserCountry());
         currentUser.setGender(currentUserDto.getUserGender());
         currentUser.setEmailAddress(currentUserDto.getUserEmail());
+        currentUser.setCountry(currentUserDto.getUserCountry());
+        //TODO handle the problem with Local date
+        //the problem is birth date isn't stored
+//        currentUser.setBirthdayDate(LocalDate.parse(currentUserDto.getUserBirthDate()) );
         currentUser.setBio(currentUserDto.getUserBio());
-        //TODO handle user Image, user  BD
+
+
+
+        //handling Image conversion
+        byte[] imgBytes = Base64.getDecoder().decode(currentUserDto.getUserImage());
+        currentUser.setImage(new Image(new ByteArrayInputStream(imgBytes)));
+
+
         return currentUser;
     }
     public static CurrentUserDto convertObjToDto(CurrentUserModel currentUser){
         CurrentUserDto userDto = new CurrentUserDto();
-
+        //TODO complete conversion methods
         userDto.setUserPhone(currentUser.getPhoneNumber());
         userDto.setUserName(currentUser.getUserName());
-        userDto.setUserCountry(currentUser.getCountry());
         userDto.setUserGender(currentUser.getGender());
         userDto.setUserEmail(currentUser.getEmailAddress());
+        userDto.setUserCountry(currentUser.getCountry());
+        userDto.setUserBirthDate(currentUser.getBirthdayDate().toString());
         userDto.setUserBio(currentUser.getBio());
+
         //TODO handle user Image & BD
         return userDto;
     }

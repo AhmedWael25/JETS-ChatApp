@@ -84,9 +84,11 @@ public class ChatDashBoardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //TODO REMOVE After debugging
         System.out.println("Chat Dash Board Initialized");
+
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
-
+        //TODO rmv after Debugging
+        System.out.println(currentUserModel);
         dashBoardCoordinator= DashBoardCoordinator.getInstance();
         dashBoardCoordinator.initScreen(borderContainer);
 

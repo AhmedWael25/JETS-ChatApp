@@ -53,8 +53,17 @@ public class UserDaoImpl implements UserDao {
         //TODO Not Fully Implemented only has what i need right now, IMPL it Later
         while(rs.next()){
             user.setId(rs.getInt("id"));
-            user.setDisplayedName(rs.getString("name"));
             user.setPhone(rs.getString("phone"));
+            user.setDisplayedName(rs.getString("name"));
+            user.setGender(rs.getString("gender"));
+            // we don't fetch password
+//            user.setPassword(rs.getString("password"));
+            user.setEmail(rs.getString("email"));
+            user.setCountry(rs.getString("country"));
+            user.setDob(rs.getString("dob"));
+            user.setBio(rs.getString("bio"));
+            user.setImgEncoded(rs.getString("image"));
+
         }
         pd.close();
         return  user;
