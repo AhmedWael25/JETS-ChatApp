@@ -43,6 +43,8 @@ import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
+import jets.chatclient.gui.utils.Validators;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 
 public class UserProfileController {
@@ -101,6 +103,16 @@ public class UserProfileController {
     @FXML // fx:id="countriesComboBox"
     private JFXComboBox<String> countriesComboBox; // Value injected by FXMLLoader
 
+    @FXML
+    private FontIcon nameIcon;
+
+    @FXML
+    private FontIcon phoneIcon;
+
+    @FXML
+    private FontIcon emailIcon;
+
+
 
 
     @FXML
@@ -132,7 +144,12 @@ public class UserProfileController {
 
         // Call the service and send your data.
         try {
-            userProfileService.updateUserData(updatedUserDto);
+            // The phone number is the id of users in data base.
+            userProfileService.updateUserData(updatedUserDto, currentUserModel.getPhoneNumber());
+
+            // hard code this value for testing
+
+            System.out.println("send Data to server.");
         }catch (RemoteException e){
             System.out.println("Failed to send data to server.");
         }
@@ -202,11 +219,14 @@ public class UserProfileController {
 
         bindNodes(currentUserModel);
 
+        validateFields();
+
 
 
     }
 
     private void setProfilePic(String imagePath) {
+        //ToDO: Bind With profile
         Image im = new Image("file:"+ imagePath,false);
         profilePic.setFill(new ImagePattern(im));
     }
@@ -238,6 +258,16 @@ public class UserProfileController {
         birtdayPicker.valueProperty().bindBidirectional(currentUserModel.birthdayDateProperty());
 
 
+    }
+
+    void validateFields(){
+        Validators.addNameValidator(userName, nameIcon);
+        Validators.addPhoneNumberValidator(phoneNumber, phoneIcon);
+////        Validators.addRequiredValidator(tfPhonenumber, fiPhoneNumber);
+//        Validators.addPasswordValidator(pfPassword, fiPassword);
+//        Validators.addRequiredValidator(cbCountry, fiCountry);
+//        Validators.addRequiredValidator(cbGender, fiGender);
+//        Validators.addRequiredValidator(dpBirthdate, fiCalendar);
     }
 
 }

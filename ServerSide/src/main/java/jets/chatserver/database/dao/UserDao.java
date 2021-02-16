@@ -20,4 +20,6 @@ public interface UserDao {
     String getUserNameById(String userId) throws  SQLException;
     //Get User Credentials (UserId,Password)
     DBUserCredintials getUserCredentials(String userId) throws SQLException;
+    //Update user profile
+    boolean updateUserTable(DBUser updatedUser, String userId) throws SQLException;
 }

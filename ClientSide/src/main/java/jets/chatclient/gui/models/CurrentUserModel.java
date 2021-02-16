@@ -7,6 +7,8 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 
 public class CurrentUserModel {
 
@@ -21,6 +23,7 @@ public class CurrentUserModel {
     private StringProperty country = new SimpleStringProperty();
     private ObjectProperty<LocalDate> birthdayDate = new SimpleObjectProperty<LocalDate>();
     private StringProperty bio = new SimpleStringProperty();
+    private ObjectProperty<ImagePattern> imagePattern = new SimpleObjectProperty<ImagePattern>();
 
 //    private static CurrentUserModel currentUser_instance = null;
 //
@@ -140,5 +143,18 @@ public class CurrentUserModel {
     public void setBio(String bio) {
         this.bio.set(bio);
     }
+
+    public ImagePattern getImagePattern() {
+        return imagePattern.get();
+    }
+
+    public ObjectProperty<ImagePattern> imagePatternProperty() {
+        return imagePattern;
+    }
+
+    public void setImagePattern(ImagePattern imagePattern) {
+        this.imagePattern.set(imagePattern);
+    }
+
 
 }

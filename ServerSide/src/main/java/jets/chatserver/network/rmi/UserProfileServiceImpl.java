@@ -7,6 +7,7 @@ import jets.chatserver.DBModels.DBUser;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.network.adapters.EntityObjAdapter;
+ import jets.chatserver.database.dao.UserDao;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -35,9 +36,18 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
     }
 
     @Override
-    public boolean updateUserData(CurrentUserDto currentUserDto) throws RemoteException {
+    public boolean updateUserData(CurrentUserDto currentUserDto, String userId) throws RemoteException {
         DBUser receivedUpdatedUser = EntityObjAdapter.convertDtoToEntity(currentUserDto);
         //TODO: use this DBUser to set the data in DB.
+        System.out.println("New send DBUser to DAO to update the database");
+        try {
+            return UserDaoImpl.getUserDaoInstance().updateUserTable(receivedUpdatedUser, userId);
+        } catch (SQLException e) {
+            System.out.println("Unable to update user in database.");
+            e.printStackTrace();
+        }
         return false;
     }
+
+
 }

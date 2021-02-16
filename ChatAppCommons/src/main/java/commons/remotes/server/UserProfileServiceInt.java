@@ -9,5 +9,5 @@ public interface UserProfileServiceInt extends Remote {
 
     // takes user phone or user instance ??
     CurrentUserDto getUserData(String userPhone) throws RemoteException;
-    boolean updateUserData(CurrentUserDto currentUserDto) throws  RemoteException;
+    boolean updateUserData(CurrentUserDto currentUserDto, String userId) throws  RemoteException;
 }
