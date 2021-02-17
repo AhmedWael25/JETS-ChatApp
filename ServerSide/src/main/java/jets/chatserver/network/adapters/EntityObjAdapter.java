@@ -58,10 +58,10 @@ public class EntityObjAdapter {
         dbUser.setEmail(currentUserDto.getUserEmail());
         dbUser.setBio(currentUserDto.getUserBio());
         dbUser.setGender(currentUserDto.getUserGender());
-        dbUser.setUserStatus(currentUserDto.getUserStatus());
-        dbUser.setUserAvail(currentUserDto.getUserAvailability());
+        dbUser.setUserStatus(currentUserDto.getStatus());
+        dbUser.setUserAvail(currentUserDto.getAvailability());
         dbUser.setImgEncoded(currentUserDto.getUserImage());
-        dbUser.setDob(currentUserDto.getDataOfBirth());
+        dbUser.setDob(currentUserDto.getDob());
         dbUser.setPassword(currentUserDto.getPassword());
 
         //TODO handle user Image seralization

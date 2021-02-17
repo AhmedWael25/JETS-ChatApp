@@ -78,7 +78,7 @@ public class DTOObjAdapter {
         userDto.setUserGender(currentUser.getGender());
         userDto.setUserEmail(currentUser.getEmailAddress());
         userDto.setUserCountry(currentUser.getCountry());
-        userDto.setUserBirthDate(currentUser.getBirthdayDate().toString());
+        userDto.setDob(currentUser.getBirthdayDate().toString());
         userDto.setUserBio(currentUser.getBio());
 
         //TODO handle user Image & BD
@@ -96,9 +96,9 @@ public class DTOObjAdapter {
       //  userDto.setUserBio(user.getUserBio());
         userDto.setPassword(user.getUserPassword());
         userDto.setUserImage(user.getUserImage());
-        userDto.setDataOfBirth(user.getUserDateOfBirth());
-         userDto.setUserStatus(user.getUserStatus());
-         userDto.setUserAvailability(user.geUserAvailability());
+        userDto.setDob(user.getUserDateOfBirth());
+         userDto.setStatus(user.getUserStatus());
+         userDto.setAvailability(user.geUserAvailability());
         //TODO handle user Image & BD
         return userDto;
     }

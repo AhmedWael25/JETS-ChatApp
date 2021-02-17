@@ -71,24 +71,40 @@ public class CurrentUserDto implements Serializable {
         this.userImage = userImage;
     }
 
-    public void setDataOfBirth(String dataOfBirth){
-        this.dob = dataOfBirth;
+    public String getPassword() {
+        return password;
     }
-    public void setPassword(String password){
+
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getPassword(){return password;}
-
-    public String getDataOfBirth(){
-        return this.dob;
+    public String getDob() {
+        return dob;
     }
 
-    public int getUserStatus(){ return this.status;}
-    public int getUserAvailability(){ return this.availability;}
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
 
-    public void setUserStatus(int status){this.status = status;}
-    public void setUserAvailability(int availability){this.availability= availability;}
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(int availability) {
+        this.availability = availability;
+    }
+
+
+
 
 
 
