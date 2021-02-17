@@ -59,6 +59,7 @@ public class EntityObjAdapter {
         dbUser.setBio(currentUserDto.getUserBio());
         dbUser.setGender(currentUserDto.getUserGender());
 
+
         //TODO handle user Image seralization
         return dbUser;
     }

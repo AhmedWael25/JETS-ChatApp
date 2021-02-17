@@ -16,12 +16,8 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
-import commons.remotes.server.SignInServiceInt;
 import commons.remotes.server.UserProfileServiceInt;
 import commons.sharedmodels.CurrentUserDto;
 import javafx.collections.FXCollections;
@@ -40,9 +36,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import jets.chatclient.gui.helpers.ModelsFactory;
-import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
+import jets.chatclient.gui.utils.ImageEncoderDecoder;
 import jets.chatclient.gui.utils.Validators;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -112,15 +108,19 @@ public class UserProfileController {
     @FXML
     private FontIcon emailIcon;
 
+    @FXML
+    private FontIcon countryIcon;
 
+    @FXML
+    private FontIcon dateIcon;
 
 
     @FXML
     void activateprofileBox(ActionEvent event) {
-        if(userDataBox.isDisable()){
+        if (userDataBox.isDisable()) {
             userDataBox.setDisable(false);
             editProfileBtn.setText("Exit Edit");
-        }else{
+        } else {
             userDataBox.setDisable(true);
             editProfileBtn.setText("Edit Profile");
         }
@@ -150,10 +150,9 @@ public class UserProfileController {
             // hard code this value for testing
 
             System.out.println("send Data to server.");
-        }catch (RemoteException e){
+        } catch (RemoteException e) {
             System.out.println("Failed to send data to server.");
         }
-
 
 
     }
@@ -174,23 +173,39 @@ public class UserProfileController {
     }
 
     @FXML
-    void changeProfilePic(ActionEvent event) throws IOException {
+    void changeProfilePic(ActionEvent event) {
         try {
 
             FileChooser fileChooser = new FileChooser();
             File newImageFile = fileChooser.showOpenDialog(null);
-            setProfilePic(newImageFile.getCanonicalPath());
-        } catch (Exception ex) {
+            //------------------Update Image In Database ----------------------//
+            //if the window is closed without choosing any file return.
+            if(newImageFile == null){
+                System.out.println("You have not choose any file!");
+                return;
+            }
+            // Encode Image to Send It
+            String encodedImage = ImageEncoderDecoder.getEncodedImage(newImageFile);
+            // Call server service and send your photo
+            boolean updateState = userProfileService.updateProfilePic(encodedImage, currentUserModel.getPhoneNumber());
+            //check the returned boolean and update your user model depends on it.
+            if (updateState) {
+                System.out.println("Photo updated Successfully.");
+                setProfilePic(newImageFile.getCanonicalPath());
+            }
+        } catch (RemoteException remEx) {
+            System.out.println(remEx.getMessage());
+            System.out.println("Faild to Update Image in database");
+        } catch (IOException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Please choose an file");
+            System.out.println("Please choose a valid image file");
         }
+
     }
 
 
-
-
-
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         // get an instance of current user through model factory.
         modelsFactory = ModelsFactory.getInstance();
@@ -206,10 +221,9 @@ public class UserProfileController {
         }
 
 
-
-
         userDataBox.setDisable(true);
-       //----------------- load the default pic -------------------//
+
+        //----------------- load the default pic -------------------//
         URL imageUrl = this.getClass().getResource("/images/userDefaultImage.png");
         setProfilePic(imageUrl.getPath());
 
@@ -222,14 +236,15 @@ public class UserProfileController {
         validateFields();
 
 
-
     }
 
     private void setProfilePic(String imagePath) {
         //ToDO: Bind With profile
-        Image im = new Image("file:"+ imagePath,false);
+        Image im = new Image("file:" + imagePath, false);
+
         profilePic.setFill(new ImagePattern(im));
     }
+
 
     public ObservableList<String> populateWithCountries() {
 
@@ -246,7 +261,7 @@ public class UserProfileController {
 
     }
 
-    void bindNodes(CurrentUserModel currentUserModel){
+    void bindNodes(CurrentUserModel currentUserModel) {
 
         //--------------------------Start binding----------------------------//
         displayName.textProperty().bindBidirectional(currentUserModel.userNameProperty());
@@ -260,14 +275,11 @@ public class UserProfileController {
 
     }
 
-    void validateFields(){
+    void validateFields() {
         Validators.addNameValidator(userName, nameIcon);
         Validators.addPhoneNumberValidator(phoneNumber, phoneIcon);
-////        Validators.addRequiredValidator(tfPhonenumber, fiPhoneNumber);
-//        Validators.addPasswordValidator(pfPassword, fiPassword);
-//        Validators.addRequiredValidator(cbCountry, fiCountry);
-//        Validators.addRequiredValidator(cbGender, fiGender);
-//        Validators.addRequiredValidator(dpBirthdate, fiCalendar);
+        Validators.addRequiredValidator(countriesComboBox, countryIcon);
+        Validators.addRequiredValidator(birtdayPicker, dateIcon);
     }
 
 }

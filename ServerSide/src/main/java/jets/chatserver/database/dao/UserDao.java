@@ -22,4 +22,6 @@ public interface UserDao {
     DBUserCredintials getUserCredentials(String userId) throws SQLException;
     //Update user profile
     boolean updateUserTable(DBUser updatedUser, String userId) throws SQLException;
+
+    boolean updateDBUserPhoto(String EncodedImage, String userId) throws SQLException;
 }

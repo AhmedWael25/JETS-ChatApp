@@ -3,6 +3,7 @@ package jets.chatserver.network.rmi;
 
 import commons.remotes.server.UserProfileServiceInt;
 import commons.sharedmodels.CurrentUserDto;
+import javafx.scene.image.Image;
 import jets.chatserver.DBModels.DBUser;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
@@ -13,7 +14,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
 
-//import static jets.chatserver.network.adapters.EntityObjAdapter.convertDtoToEntity;
+
 
 public class UserProfileServiceImpl extends UnicastRemoteObject implements UserProfileServiceInt {
     public UserProfileServiceImpl() throws RemoteException {
@@ -49,5 +50,16 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
         return false;
     }
 
+    @Override
+    public boolean updateProfilePic(String newImageString, String userId) throws RemoteException {
+
+        try {
+            return UserDaoImpl.getUserDaoInstance().updateDBUserPhoto(newImageString, userId);
+        } catch (SQLException e) {
+            System.out.println("Unable to User photo.");
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

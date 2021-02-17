@@ -143,7 +143,7 @@
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                        <graphic>
-                                          <FontIcon fx:id="emailIcon" iconLiteral="fas-at" />
+                                          <FontIcon fx:id="emailIcon" iconLiteral="fas-at" text="" />
                                        </graphic>
                                     </Label>
                                     <JFXTextField fx:id="emailAddress" labelFloat="true" maxWidth="400.0" prefHeight="25.0" prefWidth="214.0" promptText="Email Address" HBox.hgrow="ALWAYS" />
@@ -159,7 +159,7 @@
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                        <graphic>
-                                          <FontIcon iconLiteral="fas-birthday-cake" />
+                                          <FontIcon fx:id="dateIcon" iconLiteral="fas-birthday-cake" text="" />
                                        </graphic>
                                        <HBox.margin>
                                           <Insets />
@@ -178,7 +178,7 @@
                                           <Font name="System Bold" size="14.0" />
                                        </font>
                                        <graphic>
-                                          <FontIcon iconLiteral="fas-flag" />
+                                          <FontIcon fx:id="countryIcon" iconLiteral="fas-flag" text="" />
                                        </graphic>
                                     </Label>
                                     <JFXComboBox fx:id="countriesComboBox" maxWidth="400.0" prefHeight="25.0" prefWidth="220.0" promptText="Country Name" HBox.hgrow="ALWAYS" />
