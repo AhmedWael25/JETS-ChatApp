@@ -24,4 +24,6 @@ public interface UserDao {
     boolean updateUserTable(DBUser updatedUser, String userId) throws SQLException;
 
     boolean updateDBUserPhoto(String EncodedImage, String userId) throws SQLException;
+
+    public boolean updateDBUserStatus(int userStatus, String userId) throws SQLException;
 }

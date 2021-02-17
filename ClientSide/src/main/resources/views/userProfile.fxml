@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.ToggleSwitch?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <AnchorPane prefHeight="477.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.UserProfileController">
@@ -32,7 +31,7 @@
                               <Font name="Arial Bold Italic" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="changePicBtn" alignment="CENTER" buttonType="RAISED" ellipsisString="" graphicTextGap="0.0" layoutX="90.0" layoutY="120.0" onAction="#changeProfilePic" prefHeight="22.0" prefWidth="10.0" ripplerFill="BLACK" textAlignment="CENTER">
+                        <JFXButton fx:id="changePicBtn" alignment="CENTER" buttonType="RAISED" ellipsisString="" graphicTextGap="0.0" layoutX="106.0" layoutY="126.0" onAction="#changeProfilePic" prefHeight="22.0" prefWidth="10.0" ripplerFill="BLACK" textAlignment="CENTER">
                            <font>
                               <Font size="1.0" />
                            </font>
@@ -61,6 +60,22 @@
                         <JFXTextArea fx:id="bioTextArea" layoutY="33.0" prefHeight="57.0" prefWidth="164.0" unFocusColor="#4d4d4d" wrapText="true" />
                      </children>
                   </Group>
+                  <HBox fillHeight="false" prefHeight="33.0" prefWidth="358.0" spacing="30.0">
+                     <children>
+                        <Label prefHeight="25.0" prefWidth="80.0" text="Status" textFill="#4b4b5799">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontIcon fx:id="countryIcon" iconLiteral="fas-question-circle" />
+                           </graphic>
+                        </Label>
+                        <JFXComboBox fx:id="statusComboBox" editable="true" maxWidth="110.0" onAction="#updateStatus" prefHeight="25.0" prefWidth="110.0" promptText="Status" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </HBox>
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -75,16 +90,7 @@
                               <Insets />
                            </BorderPane.margin>
                            <children>
-                              <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="27.0" prefWidth="149.0">
-                                 <children>
-                                    <Label prefHeight="20.0" prefWidth="87.0" text="Busy State">
-                                       <graphic>
-                                          <FontIcon iconLiteral="fas-ban" iconSize="20" />
-                                       </graphic>
-                                    </Label>
-                                    <ToggleSwitch />
-                                 </children>
-                              </HBox>
+                              <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="27.0" prefWidth="149.0" />
                               <JFXButton fx:id="editProfileBtn" buttonType="RAISED" onAction="#activateprofileBox" prefHeight="28.0" prefWidth="106.0" text="Edit Profile">
                                  <graphic>
                                     <FontIcon iconLiteral="fas-user-edit" iconSize="20" selectionStart="0" wrappingWidth="23.0" />
@@ -181,7 +187,7 @@
                                           <FontIcon fx:id="countryIcon" iconLiteral="fas-flag" text="" />
                                        </graphic>
                                     </Label>
-                                    <JFXComboBox fx:id="countriesComboBox" maxWidth="400.0" prefHeight="25.0" prefWidth="220.0" promptText="Country Name" HBox.hgrow="ALWAYS" />
+                                    <JFXComboBox fx:id="countriesComboBox" editable="true" maxWidth="400.0" prefHeight="25.0" prefWidth="220.0" promptText="Country Name" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

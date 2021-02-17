@@ -25,6 +25,8 @@ public class CurrentUserModel {
     private StringProperty bio = new SimpleStringProperty();
     private ObjectProperty<ImagePattern> imagePattern = new SimpleObjectProperty<ImagePattern>();
 
+    private ObjectProperty<Image> userImage = new SimpleObjectProperty<Image>();
+
 //    private static CurrentUserModel currentUser_instance = null;
 //
 //    private CurrentUserModel(){}
@@ -154,6 +156,18 @@ public class CurrentUserModel {
 
     public void setImagePattern(ImagePattern imagePattern) {
         this.imagePattern.set(imagePattern);
+    }
+
+    public Image getUserImage() {
+        return userImage.get();
+    }
+
+    public ObjectProperty<Image> userImageProperty() {
+        return userImage;
+    }
+
+    public void setUserImage(Image userImage) {
+        this.userImage.set(userImage);
     }
 
 

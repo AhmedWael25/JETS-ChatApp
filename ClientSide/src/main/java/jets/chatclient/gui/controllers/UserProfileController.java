@@ -4,11 +4,7 @@
 
 package jets.chatclient.gui.controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.ImagePattern;
@@ -113,6 +110,9 @@ public class UserProfileController {
 
     @FXML
     private FontIcon dateIcon;
+
+    @FXML
+    private JFXComboBox<String> statusComboBox;
 
 
     @FXML
@@ -204,6 +204,43 @@ public class UserProfileController {
     }
 
 
+
+    @FXML
+    void updateStatus(ActionEvent event) {
+        try {
+            // enum UserStatus{FREE(1),BUSY(2),AWAY(3);
+            boolean successUpdate = false;
+
+            // Call server service and send the status
+            switch (statusComboBox.getValue()) {
+                case "Free":
+                    successUpdate = userProfileService.updateUserStatus(1, currentUserModel.getPhoneNumber());
+                    System.out.println("Free");
+                    break;
+                case "Busy":
+                    successUpdate = userProfileService.updateUserStatus(2, currentUserModel.getPhoneNumber());
+                    System.out.println("Busy");
+                    break;
+                case "Away":
+                    successUpdate = userProfileService.updateUserStatus(3, currentUserModel.getPhoneNumber());
+                    System.out.println("Away");
+                    break;
+                default:
+                    System.out.println("no match");
+            }
+
+            //check the returned boolean and update your user model depending on it.
+            if (successUpdate) {
+                //TODO: Set Current User status
+            }
+        } catch (RemoteException remEx) {
+            System.out.println(remEx.getMessage());
+            System.out.println("Faild to Update Status in database");
+
+        }
+    }
+
+
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -224,12 +261,21 @@ public class UserProfileController {
         userDataBox.setDisable(true);
 
         //----------------- load the default pic -------------------//
-        URL imageUrl = this.getClass().getResource("/images/userDefaultImage.png");
-        setProfilePic(imageUrl.getPath());
+        if(currentUserModel.getUserImage() == null){
+            URL imageUrl = this.getClass().getResource("/images/userDefaultImage.png");
+            setProfilePic(imageUrl.getPath());
+        }
 
 
-        //----------------- Populate ComboBox with Countries -------------------//
+
+        //----------------- Populate ComboBoxes-------------------//
         countriesComboBox.setItems(populateWithCountries());
+        statusComboBox.setItems(populateStatus());
+
+        //Make combo boxes searchable
+        searchComboBox(countriesComboBox);
+        searchComboBox(statusComboBox);
+
 
         bindNodes(currentUserModel);
 
@@ -239,10 +285,22 @@ public class UserProfileController {
     }
 
     private void setProfilePic(String imagePath) {
-        //ToDO: Bind With profile
-        Image im = new Image("file:" + imagePath, false);
 
+        Image im = new Image("file:" + imagePath, false);
         profilePic.setFill(new ImagePattern(im));
+        //Update the current user value
+        currentUserModel.setUserImage(im);
+
+    }
+
+    public ObservableList<String> populateStatus(){
+        List<String> statusList = new ArrayList<String>();
+        statusList.add("Free");
+        statusList.add("Busy");
+        statusList.add("Away");
+
+        return FXCollections.observableList(statusList);
+
     }
 
 
@@ -280,6 +338,33 @@ public class UserProfileController {
         Validators.addPhoneNumberValidator(phoneNumber, phoneIcon);
         Validators.addRequiredValidator(countriesComboBox, countryIcon);
         Validators.addRequiredValidator(birtdayPicker, dateIcon);
+//        Validators.addEmailValidator(emailAddress, emailIcon);
+//
+    }
+
+    public void searchComboBox(JFXComboBox<String> comboBox){
+        JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
+        autoCompletePopup.getSuggestions().addAll(comboBox.getItems());
+        autoCompletePopup.hide();
+
+//SelectionHandler sets the value of the comboBox
+        autoCompletePopup.setSelectionHandler(event -> {
+            comboBox.setValue(event.getObject());
+        });
+
+        TextField editor = comboBox.getEditor();
+        editor.textProperty().addListener(observable -> {
+            //The filter method uses the Predicate to filter the Suggestions defined above
+            //I choose to use the contains method while ignoring cases
+            autoCompletePopup.filter(item -> item.toLowerCase().startsWith(editor.getText().toLowerCase()));
+            //Hide the autocomplete popup if the filtered suggestions is empty or when the box's original popup is open
+            if (autoCompletePopup.getFilteredSuggestions().isEmpty() || comboBox.showingProperty().get()) {
+                autoCompletePopup.hide();
+            }
+            else {
+                autoCompletePopup.show(editor);
+            }
+        });
     }
 
 }
