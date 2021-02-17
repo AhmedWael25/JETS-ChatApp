@@ -18,7 +18,7 @@ public class ImageEncoderDecoder {
         byte [] data = null;
         BufferedImage bImage = ImageIO.read(f);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(bImage, "jpg", bos );
+        ImageIO.write(bImage, getFileExtension(f), bos );
         data= bos.toByteArray();
 
         String encoded = Base64.getEncoder().encodeToString(data);
@@ -30,5 +30,12 @@ public class ImageEncoderDecoder {
         Image img = new Image(new ByteArrayInputStream(dst));
         return  img;
     }
-
+      private static String getFileExtension(File file) {
+        String name = file.getName();
+        int lastIndexOf = name.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return name.substring(lastIndexOf+1);
+    }
 }

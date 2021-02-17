@@ -98,9 +98,6 @@ public class P2PChatController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        for (P2PChatModel fd : p2pChatModels){
-            System.out.println("FROM CHAT SCREEN"+fd);
-        }
         List<P2PChatModel> finalP2pChatModels = p2pChatModels;
         Platform.runLater(() ->{
             chats.addAll(finalP2pChatModels);

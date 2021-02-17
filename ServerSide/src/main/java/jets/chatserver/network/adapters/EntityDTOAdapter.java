@@ -105,4 +105,17 @@ public class EntityDTOAdapter {
         return friendGpDto;
     }
 
+    public  static DBGpChat convertDtoToEntity(GpChatUserDto chatUserDto){
+
+        DBGpChat dbGpChat = new DBGpChat();
+        dbGpChat.setGpChatImg(chatUserDto.getChatImage());
+        dbGpChat.setGpChatName(chatUserDto.getChatName());
+        dbGpChat.setGpChatAdminId(chatUserDto.getAdminId());
+
+        List<String> participants = new ArrayList(chatUserDto.getGpUserIds());
+        dbGpChat.setParticipantsId(participants);
+
+        return dbGpChat;
+    }
+
 }

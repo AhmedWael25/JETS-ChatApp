@@ -5,10 +5,7 @@ import jets.chatserver.database.DataSourceFactory;
 import jets.chatserver.database.dao.GpChatDao;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,10 +113,66 @@ public class GpChatDaoImpl implements GpChatDao {
         return  hasGpChats;
     }
 
+    @Override
+    public synchronized int createGroupChat(DBGpChat dbGpChat) throws SQLException {
+
+        //Fetch Last ID In Table
+        String query = "SELECT id FROM gpchats ORDER BY id DESC LIMIT 1";
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+
+        ResultSet rs = pd.executeQuery();
+        rs.next();
+        int lastId = rs.getInt("id");
+
+
+        query = "INSERT INTO gpchats(id,gpname,gpadmin,gpphoto) VALUES(?,?,?,?)";
+         pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+
+         pd.setInt(1,lastId+1);
+        pd.setString(2,dbGpChat.getGpChatName());
+        pd.setString(3,dbGpChat.getGpChatAdminId());
+        System.out.println("oadmkasdmsad ===>>>"+dbGpChat.getGpChatImg());
+        pd.setString(4,dbGpChat.getGpChatImg());
+
+
+        int affectedRows = pd.executeUpdate();
+        int chatId = lastId +1;
+        //Insert Participants
+        query = "INSERT  INTO gpchats_part(gpchats_part_id,part_id) VALUES(?,?) ";
+        pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+
+        for(String userId : dbGpChat.getParticipantsId()){
+            pd.setInt(1,chatId);
+            pd.setString(2,userId);
+            pd.executeUpdate();
+        }
+
+        pd.close();
+        return chatId;
+    }
+
 
     @Override
-    public DBGpChat getGpChatById(int gpChatId) {
-        return null;
+    public DBGpChat getGpChatById(int gpChatId) throws SQLException {
+
+        String query = "SELECT * FROM gpchats INNER JOIN gpchats_part ON id=gpchats_part_id WHERE id = ? ";
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setInt(1,gpChatId);
+
+        ResultSet rs = pd.executeQuery();
+        rs.next();
+
+        DBGpChat gpchat = getChatFromRs(rs);
+
+        return gpchat;
     }
 
     @Override
@@ -131,9 +184,6 @@ public class GpChatDaoImpl implements GpChatDao {
     public String getGpChatImageById(int gpChatId) {
         return  null;
     }
-
-
-
 
     private DBGpChat getChatFromRs(ResultSet rs) throws SQLException {
         DBGpChat dbGpChat = new DBGpChat();

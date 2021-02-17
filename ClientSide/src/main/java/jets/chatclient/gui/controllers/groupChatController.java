@@ -3,6 +3,9 @@ package jets.chatclient.gui.controllers;
 import com.jfoenix.controls.*;
 import commons.remotes.server.GpChatServiceInt;
 import commons.sharedmodels.GpChatDto;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +19,11 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jets.chatclient.gui.helpers.ServicesFactory;
+import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+import jets.chatclient.gui.models.FriendModel;
+import jets.chatclient.gui.models.GpChatModel;
+import jets.chatclient.gui.models.P2PChatModel;
+import jets.chatclient.gui.models.guimodels.GpChatViewCell;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,7 +55,7 @@ public class groupChatController  implements Initializable {
     @FXML
     private JFXTextField searchChatField;
     @FXML
-    private JFXListView chatListView;
+    private JFXListView<GpChatModel> chatListView;
     @FXML
     private BorderPane chatViewPane;
     @FXML
@@ -63,9 +71,9 @@ public class groupChatController  implements Initializable {
 
 
     private GpChatServiceInt gpChatService;
+    private ObservableList<GpChatModel> chats = FXCollections.observableArrayList();
 
-
-    private String userIdDummy = "1";
+    private String userIdDummy = "7";
 
 
     @Override
@@ -106,12 +114,28 @@ public class groupChatController  implements Initializable {
 
     }
 
+    public void addGpChatToList(GpChatDto gpChatDto){
+        new Thread(() -> {
+            GpChatModel gpChatModel = DTOObjAdapter.convertDtoToObj(gpChatDto);
+            System.out.println("EL7AMAAAMDULLAAAAH");
+            Platform.runLater(() ->{
+                chats.add(gpChatModel);
+                chatListView.setItems(chats);
+            });
+        }).start();
+    }
 //    ================= RUNNABLES =====================
     Runnable fetchGpChats = () -> {
-        List<GpChatDto> gpChatDtos = null;
+        List<GpChatModel> gpChatModelList = null;
     try {
-        gpChatDtos = gpChatService.fetchAllUserGpChats(userIdDummy);
-    } catch (RemoteException e) {
+        gpChatModelList = DTOObjAdapter.convertDtoGpChat(gpChatService.fetchAllUserGpChats(userIdDummy));
+        List<GpChatModel> finalGpChatModelList = gpChatModelList;
+        Platform.runLater(() -> {
+            chats.addAll(finalGpChatModelList);
+            chatListView.setItems(chats);
+            chatListView.setCellFactory(param -> new GpChatViewCell());
+        });
+        } catch (RemoteException e) {
         e.printStackTrace();
     }
 };

@@ -2,6 +2,10 @@ package jets.chatclient.gui.controllers;
 
 
 import commons.remotes.server.AddFriendServiceInt;
+import commons.remotes.server.GpChatServiceInt;
+import commons.sharedmodels.GpChatDto;
+import commons.sharedmodels.GpChatUserDto;
+import commons.utils.ImageEncoderDecoder;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,10 +22,12 @@ import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.LineNumberInputStream;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -51,23 +57,25 @@ public class GpChatCreationController implements  Initializable {
     private JFXButton createGpChatBtn;
 
     private AddFriendServiceInt friendService;
+    private GpChatServiceInt gpChatService;
     List<FriendModel> userFriends;
     List<FriendModel> groupTargetFriends;
     List<FriendModel> groupSourceFriends;
     private String errorMsg = "";
     private File imgFile;
-
+    private String encodedImg;
 
     private String userDummyId = "1";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        imgFile = new File(getClass().getResource("/images/def-gpImg.jpg").getPath());
+        imgFile = new File(getClass().getResource("/images/van.jpg").getPath());
         gpChatImg.setFill(new ImagePattern(new Image(imgFile.toURI().toString())));
 
         new Thread(fetchFriends).start();
 
+        setGpNameMax(gpNameField, 15);
     }
 
 
@@ -75,12 +83,24 @@ public class GpChatCreationController implements  Initializable {
     void createGpChat(ActionEvent event) {
         boolean isValid = validateAllFields();
         if(!isValid) {
-            System.out.println("not valid");
             errorMsg = "";
         }else {
             errorLabel.setText("");
+
         }
         //TODO If Valid Creat Chat Through Services
+        try {
+
+            GpChatUserDto dto = collectDataIntoDto();
+//            System.out.println(dto);
+
+            ServicesFactory servicesFactory = ServicesFactory.getInstance();
+            gpChatService  = servicesFactory.getGpChatService();
+            gpChatService.createGroupChat(dto);
+
+        } catch (IOException | NotBoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -102,34 +122,26 @@ public class GpChatCreationController implements  Initializable {
         errorLabel.setText("");
         gpChatImg.setFill(new ImagePattern(new Image(imgFile.toURI().toString())));
 
-        setGpNameMax(gpNameField, 15);
     }
-
 
     private boolean validateAllFields() {
 
 
         boolean gpNameFieldValidation = validateGpNameField();
         boolean minGpUsersValidation = validateMinGpUsers();
-        System.out.println(gpNameFieldValidation +""+ minGpUsersValidation);
-        System.out.println(errorMsg);
         String errorMsg = "";
 
         if(!gpNameFieldValidation){
             errorMsg += "Group Name Is Empty ,";
-            System.out.println(errorMsg);
         }
 
         if(!minGpUsersValidation){
             errorMsg +="You Need 2 Friends To Start a Group Chat ,";
-            System.out.println(errorMsg);
         }
-        System.out.println(errorMsg);
         //If ANy of Them is false, User as to Check What's Wrong
         if(!gpNameFieldValidation || !minGpUsersValidation){
             errorMsg +="Please Fix Them And Re-Submit";
             showErrorMsg(errorMsg);
-            System.out.println(errorMsg);
             return false;
         }
         return true;
@@ -148,20 +160,34 @@ public class GpChatCreationController implements  Initializable {
         return  true;
     }
     private void showErrorMsg(String str){
-        System.out.println("STRS"+ str);
         errorLabel.setText("*"+str);
     }
     private void setGpNameMax(JFXTextField jfxTextField, int LIMIT){
         jfxTextField.lengthProperty().addListener((observable, oldValue, newValue) -> {
-            // Check if the new character is greater than LIMIT
             if (jfxTextField.getText().length() >= LIMIT) {
-
-            // if it's 11th character then just setText to previous
-            // one
-                jfxTextField.setText(jfxTextField.getText().substring(0, LIMIT));
-                }
+                    jfxTextField.setText(jfxTextField.getText().substring(0, LIMIT));
+            }
         });
     }
+
+    private GpChatUserDto collectDataIntoDto() throws IOException {
+        GpChatUserDto gpUserDto = new GpChatUserDto();
+
+        gpUserDto.setChatName(gpNameField.getText());
+        String str = ImageEncoderDecoder.getEncodedImage(imgFile);
+        System.out.println(str);
+        gpUserDto.setChatImage(str);
+        gpUserDto.setAdminId(userDummyId); //TODO CHANGE TO CUURENT
+
+        List<String> userIds = new ArrayList<>();
+        userIds.add(userDummyId); //TODO CHANGE TO CUURENT
+        for(FriendModel user : groupTargetFriends){
+            userIds.add(user.getFriendId());
+        }
+        gpUserDto.setGpUserIds(userIds);
+        return  gpUserDto;
+    }
+
 
 
     //    ================== RUNNABLES =================
@@ -170,6 +196,7 @@ public class GpChatCreationController implements  Initializable {
         try {
             ServicesFactory servicesFactory = ServicesFactory.getInstance();
             friendService = servicesFactory.getAddFriendService();
+            //TODO Refactor into user obj model
             userFriends = DTOObjAdapter.convertDtoGpFriendList(friendService.fetchAllFriendsByUserId(userDummyId));
 
             Platform.runLater(() -> {

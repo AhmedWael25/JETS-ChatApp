@@ -13,4 +13,5 @@ public interface RegisteringClientInt extends Remote {
     //These Methods Take the Client Interface Ref + this User Unique Id (The phone in our case)
     void registerClient(ClientInterface clientInterface , String UserId) throws RemoteException;
     void disconnectClient(ClientInterface clientInterface , String UserId) throws RemoteException;
+    boolean isClientRegistered(String userId) throws  RemoteException;
 }

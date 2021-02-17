@@ -3,6 +3,7 @@ package jets.chatclient.gui.helpers;
 import javafx.scene.Parent;
 import jets.chatclient.gui.controllers.ContactsController;
 import jets.chatclient.gui.controllers.P2PChatController;
+import jets.chatclient.gui.controllers.groupChatController;
 
 import java.util.Map;
 
@@ -30,6 +31,9 @@ public class ControllersGetter {
         return screens.get("chatscreen").getLoader().getController();
     }
 
+    public  groupChatController getGpChatController(){
+        return screens.get("gpchatscreen").getLoader().getController();
+    }
 
 
 }

@@ -11,6 +11,8 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,17 +60,15 @@ public class ServerInit   {
             List<DBGpChat> gp =  g.getAllGpChatsOfUser("1");
 
 
+            System.out.println(g.getGpChatById(2));
 
-
-            for(DBGpChat userin : gp ){
-                System.out.println(userin);
-                System.out.println("=================== BUT THE DTO IS ===============");
-                System.out.println(EntityDTOAdapter.convertEntityToDto(userin));
-            }
-
-
-            System.out.println(g.doesUserHasGpChats("5"));
-
+//            System.out.println(g.doesUserHasGpChats("5"));
+//            DBGpChat c = new DBGpChat();
+//            c.setGpChatName("omk");
+//            c.setGpChatAdminId("2");
+//            c.setParticipantsId(new ArrayList<>(Arrays.asList(new String[]{"1","4"})));
+//            c.setGpChatImg("asas");
+//            GpChatDaoImpl.getGpChatDaoInstance().createGroupChat(c);
 
         }catch (RemoteException | SQLException e){
             e.printStackTrace();

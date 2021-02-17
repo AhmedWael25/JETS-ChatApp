@@ -63,7 +63,6 @@ public class InvitationCardController {
             //Accept Invitation===
             //--Add Friend In my Friend List
             //--Create Chat As Well Thru CallBacks
-            System.out.println("Accepted");
 
             try {
                 invitationService.deleteInvitation(DTOObjAdapter.convertObjToDto(invitation));
@@ -81,7 +80,6 @@ public class InvitationCardController {
             //Reject Invitation
             //--Delete Invitation From DB
             //--Remove Invitation Card
-            System.out.println("Rejected");
             try {
                 invitationService.deleteInvitation(DTOObjAdapter.convertObjToDto(invitation));
 

@@ -1,13 +1,14 @@
 package jets.chatclient.gui.helpers.adapters;
 
 import commons.sharedmodels.FriendGpDto;
+import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.InvitationDto;
 import commons.sharedmodels.P2PChatDto;
 import commons.utils.ImageEncoderDecoder;
 import javafx.scene.image.Image;
-import jets.chatclient.gui.models.FriendModel;
-import jets.chatclient.gui.models.Invitation;
-import jets.chatclient.gui.models.P2PChatModel;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import jets.chatclient.gui.models.*;
 
 import java.io.ByteArrayInputStream;
 import java.util.Base64;
@@ -37,7 +38,6 @@ public class DTOObjAdapter {
         invDto.setReceiverName(inv.getReceiverName());
         invDto.setSenderImg(inv.getSenderImg());
         invDto.setInvitationContent(inv.getInvitationContent());
-        System.out.println("INV DTO:"+ invDto);
         return  invDto;
     }
 
@@ -53,7 +53,6 @@ public class DTOObjAdapter {
         p2pchat.setFriendId(chatDto.getFriendId());
 
         //TODO Refactor INTO img utils
-        System.out.println("asdasdasd" + chatDto.getFriendImg());
         byte[] dst = Base64.getDecoder().decode(chatDto.getFriendImg());
         Image img = new Image(new ByteArrayInputStream(dst));
         p2pchat.setFriendImg(img);
@@ -70,6 +69,36 @@ public class DTOObjAdapter {
         Image img = ImageEncoderDecoder.getDecodedImage(friendGpDto.getFriendImage());
         friend.setFriendImg(img);
         return  friend;
+    }
+
+    public static  GpChatModel convertDtoToObj(GpChatDto dto){
+        GpChatModel gpChatModel = new GpChatModel();
+
+        gpChatModel.setGpChatId(dto.getGpChatId());
+        gpChatModel.setGpChatAdminId(dto.getGrpChatAdminId());
+        gpChatModel.setGpChatName(dto.getGpChatName());
+        gpChatModel.setGpChatStartDate(dto.getGpChatStartDate());
+        gpChatModel.setGpChatDesc(dto.getGrpChatDesc());
+
+        Image img = ImageEncoderDecoder.getDecodedImage(dto.getGpChatImage());
+        gpChatModel.setgChatImage(img);
+
+        List<ParticipantModel> participantsList = dto.getGpParticipants().stream().map(participantDto -> {
+            ParticipantModel pModel = new ParticipantModel();
+
+            pModel.setParticipantId(participantDto.getParticipantId());
+            pModel.setParticipantName(participantDto.getParticipantName());
+            Circle circle = new Circle();
+            Image partImg = ImageEncoderDecoder.getDecodedImage(participantDto.getParticipantImage());
+            circle.setFill(new ImagePattern(partImg));
+            pModel.setParticipantImg(circle);
+            pModel.setParticipantImage(partImg);
+
+            return pModel;
+        }).collect(Collectors.toList());
+        gpChatModel.setGpParticipants(participantsList);
+
+        return gpChatModel;
     }
 
     public static List<Invitation> convertDtoInvitationList(List<InvitationDto> invitationDtoList){
@@ -92,6 +121,14 @@ public class DTOObjAdapter {
                 .collect(Collectors.toList());
 
         return friendModelList;
+    }
+
+    public  static  List<GpChatModel> convertDtoGpChat(List<GpChatDto> gpChatDtos){
+        List<GpChatModel> chatModels = null;
+        chatModels = gpChatDtos.parallelStream().map(DTOObjAdapter::convertDtoToObj)
+                .collect(Collectors.toList());
+
+        return chatModels;
     }
 
 }
