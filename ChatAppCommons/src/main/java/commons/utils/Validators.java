@@ -1,4 +1,4 @@
-package jets.chatclient.gui.utils;
+package commons.utils;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -15,7 +15,8 @@ import org.kordamp.ikonli.fontawesome5.FontAwesomeSolid;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 public class Validators {
-
+    //TODO Make mail Validator
+    //TODO Bind validation to Button OnAction
     //acceptable name form {8-20 chars, may contain _,. but not folowing, no Spaces allowed}
     final static String displayNameRegex = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
     final static String invalidDisplayNameMsg = "name must be 8-20 valid letters !";

@@ -1,5 +1,7 @@
 package jets.chatserver.database.daoImpl;
 
+import javafx.scene.image.Image;
+import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.DBModels.DBUserCredintials;
 import jets.chatserver.database.DataSourceFactory;
 import jets.chatserver.database.dao.UserDao;
@@ -263,4 +265,102 @@ public class UserDaoImpl implements UserDao {
     }
 
 
+    @Override
+    public boolean updateUserTable(DBUser dbupdatedUser, String userId) throws SQLException{
+        //Check if the updated phone number is valid or not
+        boolean isUserExist = isUserExist(dbupdatedUser.getPhone());
+        if (!isUserExist){
+            System.out.println("User does not exist.");
+            return false;
+        }
+        //The Query Statement
+        String query = "UPDATE user SET phone=?, name=?, email=?, country=?, bio=? WHERE phone=? ";
+
+        //Set the prepared statement
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1, dbupdatedUser.getPhone());
+        //TODO: make mrthods getDisplayedName() and getUserName() consistence
+        pd.setString(2, dbupdatedUser.getDisplayedName());
+        pd.setString(3, dbupdatedUser.getEmail());
+        pd.setString(4, dbupdatedUser.getCountry());
+        pd.setString(5, dbupdatedUser.getBio());
+
+        //WHERE
+        pd.setString(6, userId);
+
+        //Execute, check the result and return
+        int rowCount = pd.executeUpdate();
+        if (rowCount == 1){
+            pd.close();
+            System.out.println("Database updated successfully.");
+            return  true;
+        }
+        pd.close();
+        return false;
+
+
+    }
+
+
+    @Override
+    public boolean updateDBUserPhoto(String EncodedImage, String userId) throws SQLException{
+        //Check if the updated phone number is valid or not
+        boolean isUserExist = isUserExist(userId);
+        if (!isUserExist){
+            System.out.println("User does not exist.");
+            return false;
+        }
+        //The Query Statement
+        String query = "UPDATE user SET image=? WHERE phone=? ";
+
+        //Set the prepared statement
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1, EncodedImage);
+
+        pd.setString(2, userId);
+
+        //Execute, check the result and return
+        int rowCount = pd.executeUpdate();
+        if (rowCount == 1){
+            pd.close();
+            System.out.println("Database updated successfully.");
+            return  true;
+        }
+        pd.close();
+        return false;
+    }
+
+    @Override
+    public boolean updateDBUserStatus(int userStatus, String userId) throws SQLException {
+        //Check if the updated phone number is valid or not
+        boolean isUserExist = isUserExist(userId);
+        if (!isUserExist){
+            System.out.println("User does not exist.");
+            return false;
+        }
+        //The Query Statement
+        String query = "UPDATE user SET status=? WHERE phone=? ";
+
+        //Set the prepared statement
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setInt(1, userStatus);
+
+        pd.setString(2, userId);
+
+        //Execute, check the result and return
+        int rowCount = pd.executeUpdate();
+        if (rowCount == 1){
+            pd.close();
+            System.out.println("Database updated successfully.");
+            return  true;
+        }
+        pd.close();
+        return false;
+    }
 }

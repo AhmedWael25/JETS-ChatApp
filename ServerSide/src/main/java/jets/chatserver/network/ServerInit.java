@@ -33,7 +33,12 @@ public class ServerInit   {
             //registering users services
             reg.rebind("SignInService",new SignInServiceImpl());
 
+
             reg.rebind("SignUpService", new SignUpServiceImpl());
+
+            //UserProfile Services:
+            reg.rebind("UserProfileService", new UserProfileServiceImpl());
+
             System.out.println("Server Up And Running");
 
             //===================Testing AREA for all DAOS

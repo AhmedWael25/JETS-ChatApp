@@ -7,18 +7,16 @@ import commons.remotes.server.SignUpServiceInt;
 import commons.sharedmodels.CurrentUserDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
-import jets.chatclient.gui.utils.ComboBoxUtils;
+import commons.utils.ComboBoxUtils;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.User;
-import jets.chatclient.gui.utils.Countries;
-import jets.chatclient.gui.utils.HashEncoder;
-import jets.chatclient.gui.utils.Validators;
+import commons.utils.Countries;
+import commons.utils.Validators;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -94,11 +92,11 @@ public class SignupController implements Initializable {
 //        if (salt.isPresent())
 //            s= salt.get();
 //        System.out.println(s);
-//        Optional<String> password = HashEncoder.hashPassword("asdasda55",s);
+//        Optional<String> password = HashEncoder.hashPassword("asdasda55",phoneNumber);
 //        if(password.isPresent());
 //            p=password.get();
 //        System.out.println(p);
-//        boolean valid = HashEncoder.verifyPassword("asdasda55",p,s);
+//        boolean valid = HashEncoder.verifyPassword(newpassworedHased,oldPasswordHshed);
 //        System.out.println(valid);
 
 
@@ -226,7 +224,6 @@ public class SignupController implements Initializable {
         user.setUserCountry(cbCountry.getValue());
         user.setUserGender("female");
         user.setUserImage(userDefaultImage);
-
         user.setUserDateOfBirth(dpBirthdate.getValue().toString());
         user.setUserPassword(pfPassword.getText());
         user.setUserAvailability(1);

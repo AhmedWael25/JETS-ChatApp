@@ -8,6 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
 
+import javafx.scene.paint.ImagePattern;
+
 public class CurrentUserModel {
 
     private StringProperty userName = new SimpleStringProperty();
@@ -18,8 +20,14 @@ public class CurrentUserModel {
     private ObjectProperty<Image> image = new SimpleObjectProperty<Image>();
     private StringProperty gender = new SimpleStringProperty();
     private StringProperty country = new SimpleStringProperty();
-    private ObjectProperty<LocalDate> birthdayDate = new SimpleObjectProperty<LocalDate>();
+
+
+    //    private ObjectProperty<LocalDate> birthdayDate = new SimpleObjectProperty<LocalDate>();
+    private StringProperty birthdayDate = new SimpleStringProperty();
     private StringProperty bio = new SimpleStringProperty();
+    private ObjectProperty<ImagePattern> imagePattern = new SimpleObjectProperty<ImagePattern>();
+
+    private ObjectProperty<Image> userImage = new SimpleObjectProperty<Image>();
 
 
 
@@ -119,19 +127,30 @@ public class CurrentUserModel {
         this.image.set(image);
     }
 
-    public ObjectProperty<LocalDate> birthdayDateProperty() {
-        return birthdayDate;
-    }
+//    public ObjectProperty<LocalDate> birthdayDateProperty() {
+//        return birthdayDate;
+//    }
+//
+//    public LocalDate getBirthdayDate() {
+//        return birthdayDate.get();
+//    }
+//
+//    public void setBirthdayDate(LocalDate birthdayDate) {
+//        this.birthdayDate.set(birthdayDate);
+//    }
 
-    public LocalDate getBirthdayDate() {
+
+    public String getBirthdayDate() {
         return birthdayDate.get();
     }
 
-    public void setBirthdayDate(LocalDate birthdayDate) {
-        this.birthdayDate.set(birthdayDate);
+    public StringProperty birthdayDateProperty() {
+        return birthdayDate;
     }
 
-
+    public void setBirthdayDate(String birthdayDate) {
+        this.birthdayDate.set(birthdayDate);
+    }
     public String getBio() {
         return bio.get();
     }
@@ -158,5 +177,32 @@ public class CurrentUserModel {
                 ", bio=" + bio +
                 '}';
     }
+
+
+    public ImagePattern getImagePattern() {
+        return imagePattern.get();
+    }
+
+    public ObjectProperty<ImagePattern> imagePatternProperty() {
+        return imagePattern;
+    }
+
+    public void setImagePattern(ImagePattern imagePattern) {
+        this.imagePattern.set(imagePattern);
+    }
+
+    public Image getUserImage() {
+        return userImage.get();
+    }
+
+    public ObjectProperty<Image> userImageProperty() {
+        return userImage;
+    }
+
+    public void setUserImage(Image userImage) {
+        this.userImage.set(userImage);
+    }
+
+
 
 }

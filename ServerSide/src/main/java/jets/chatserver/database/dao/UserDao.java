@@ -10,19 +10,36 @@ public interface UserDao {
 
     //Get User By Id
     DBUser getUserById(String userId) throws SQLException;
+
     //Check is User exists
-    boolean isUserExist(String userId) throws  SQLException;
+    boolean isUserExist(String userId) throws SQLException;
+
     //Get All Users from a given list of IDs
-    List<DBUser>getUsersFromIds(List<String> userIds) throws SQLException;
+    List<DBUser> getUsersFromIds(List<String> userIds) throws SQLException;
+
     //Get the encoded image string from userId
-    String getUserEncodedImg(String  userId) throws  SQLException;
+    String getUserEncodedImg(String userId) throws SQLException;
+
     //Get User Name By Id
-    String getUserNameById(String userId) throws  SQLException;
+    String getUserNameById(String userId) throws SQLException;
+
     //Get User Credentials (UserId,Password)
     DBUserCredintials getUserCredentials(String userId) throws SQLException;
 
-     boolean isUserNameExist(String userName) throws SQLException;
-      boolean addUser(DBUser dbUser) throws  SQLException;
-      boolean updateUser(DBUser dbUser) throws  SQLException;
+    boolean isUserNameExist(String userName) throws SQLException;
+
+    boolean addUser(DBUser dbUser) throws SQLException;
+
+    //TODO refactor naming
+    //to add user on condition(Admin registered User)
+    boolean updateUser(DBUser dbUser) throws SQLException;
+
+
+    //Update user profile
+    boolean updateUserTable(DBUser updatedUser, String userId) throws SQLException;
+
+    boolean updateDBUserPhoto(String EncodedImage, String userId) throws SQLException;
+
+    public boolean updateDBUserStatus(int userStatus, String userId) throws SQLException;
 
 }

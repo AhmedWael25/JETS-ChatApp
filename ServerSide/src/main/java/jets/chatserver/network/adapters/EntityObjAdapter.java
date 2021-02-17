@@ -64,6 +64,7 @@ public class EntityObjAdapter {
         dbUser.setDob(currentUserDto.getDob());
         dbUser.setPassword(currentUserDto.getPassword());
 
+
         //TODO handle user Image seralization
         return dbUser;
     }

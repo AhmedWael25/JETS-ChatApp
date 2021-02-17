@@ -1,4 +1,4 @@
-package jets.chatclient.gui.utils;
+package commons.utils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -53,10 +53,8 @@ public class HashEncoder {
             spec.clearPassword();
         }
     }
-    public static boolean verifyPassword (String password, String key, String salt) {
-        Optional<String> optEncrypted = hashPassword(password, salt);
-        if (!optEncrypted.isPresent()) return false;
-        return optEncrypted.get().equals(key);
+    public static boolean verifyPassword (String HashPassword, String HashPassword2) {
+        return HashPassword.equals(HashPassword2);
     }
 
 }

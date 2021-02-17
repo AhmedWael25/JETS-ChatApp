@@ -1,4 +1,4 @@
-package jets.chatclient.gui.utils;
+package commons.utils;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class DTOObjAdapter {
 
 
-    public static Invitation convertDtoToObj(InvitationDto invitationDto){
+    public static Invitation convertDtoToObj(InvitationDto invitationDto) {
         Invitation inv = new Invitation();
         inv.setSenderId(invitationDto.getSenderId());
         inv.setReceiverId(invitationDto.getReceiverId());
@@ -28,7 +28,8 @@ public class DTOObjAdapter {
         inv.setInvitationContent(invitationDto.getInvitationContent());
         return inv;
     }
-    public static InvitationDto convertObjToDto(Invitation inv){
+
+    public static InvitationDto convertObjToDto(Invitation inv) {
         InvitationDto invDto = new InvitationDto();
         invDto.setSenderId(inv.getSenderId());
         invDto.setReceiverId(inv.getReceiverId());
@@ -37,17 +38,18 @@ public class DTOObjAdapter {
         invDto.setReceiverName(inv.getReceiverName());
         invDto.setSenderImg(inv.getSenderImg());
         invDto.setInvitationContent(inv.getInvitationContent());
-        System.out.println("INV DTO:"+ invDto);
-        return  invDto;
+        System.out.println("INV DTO:" + invDto);
+        return invDto;
     }
-    public static List<Invitation> convertDtoList(List<InvitationDto> invitationDtoList){
+
+    public static List<Invitation> convertDtoList(List<InvitationDto> invitationDtoList) {
 
         List<Invitation> invitations = invitationDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
                 .collect(Collectors.toList());
-        return  invitations;
+        return invitations;
     }
 
-    public static CurrentUserModel convertDtoToCurrentUser(CurrentUserDto currentUserDto){
+    public static CurrentUserModel convertDtoToCurrentUser(CurrentUserDto currentUserDto) {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUser = modelsFactory.getCurrentUserModel();
 
@@ -62,7 +64,6 @@ public class DTOObjAdapter {
         currentUser.setBio(currentUserDto.getUserBio());
 
 
-
         //handling Image conversion
         byte[] imgBytes = Base64.getDecoder().decode(currentUserDto.getUserImage());
         currentUser.setImage(new Image(new ByteArrayInputStream(imgBytes)));
@@ -70,7 +71,8 @@ public class DTOObjAdapter {
 
         return currentUser;
     }
-    public static CurrentUserDto convertObjToDto(CurrentUserModel currentUser){
+
+    public static CurrentUserDto convertObjToDto(CurrentUserModel currentUser) {
         CurrentUserDto userDto = new CurrentUserDto();
         //TODO complete conversion methods
         userDto.setUserPhone(currentUser.getPhoneNumber());
@@ -78,27 +80,27 @@ public class DTOObjAdapter {
         userDto.setUserGender(currentUser.getGender());
         userDto.setUserEmail(currentUser.getEmailAddress());
         userDto.setUserCountry(currentUser.getCountry());
-        userDto.setDob(currentUser.getBirthdayDate().toString());
+        userDto.setDob(currentUser.getBirthdayDate());
         userDto.setUserBio(currentUser.getBio());
 
         //TODO handle user Image & BD
         return userDto;
     }
 
-    public static CurrentUserDto convertToUserDto(User user){
+    public static CurrentUserDto convertToUserDto(User user) {
         CurrentUserDto userDto = new CurrentUserDto();
 
         userDto.setUserPhone(user.getUserPhone());
         userDto.setUserName(user.getUserName());
         userDto.setUserCountry(user.getUserCountry());
         userDto.setUserGender(user.getUserGender());
-      //  userDto.setUserEmail(user.getUserEmail());
-      //  userDto.setUserBio(user.getUserBio());
+        //  userDto.setUserEmail(user.getUserEmail());
+        //  userDto.setUserBio(user.getUserBio());
         userDto.setPassword(user.getUserPassword());
         userDto.setUserImage(user.getUserImage());
         userDto.setDob(user.getUserDateOfBirth());
-         userDto.setStatus(user.getUserStatus());
-         userDto.setAvailability(user.geUserAvailability());
+        userDto.setStatus(user.getUserStatus());
+        userDto.setAvailability(user.geUserAvailability());
         //TODO handle user Image & BD
         return userDto;
     }

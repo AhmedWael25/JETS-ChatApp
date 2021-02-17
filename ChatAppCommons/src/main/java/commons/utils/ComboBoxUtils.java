@@ -1,4 +1,4 @@
-package jets.chatclient.gui.utils;
+package commons.utils;
 
 import com.jfoenix.controls.JFXAutoCompletePopup;
 import com.jfoenix.controls.JFXComboBox;

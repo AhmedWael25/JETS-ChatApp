@@ -48,6 +48,7 @@
     -fx-prompt-text-fill:  #F26101;
 
 }
+
 .error-label {
     -fx-text-fill: #F26101;
     -fx-font-size: 0.75em;
