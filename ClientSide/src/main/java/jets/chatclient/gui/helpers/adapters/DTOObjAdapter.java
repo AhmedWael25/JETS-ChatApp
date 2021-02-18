@@ -9,7 +9,6 @@ import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.User;
 
 import java.io.ByteArrayInputStream;
-import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,13 +53,13 @@ public class DTOObjAdapter {
         CurrentUserModel currentUser = modelsFactory.getCurrentUserModel();
 
         currentUser.setPhoneNumber(currentUserDto.getUserPhone());
-        currentUser.setUserName(currentUserDto.getUserName());
+        currentUser.setDisplayName(currentUserDto.getUserName());
         currentUser.setGender(currentUserDto.getUserGender());
         currentUser.setEmailAddress(currentUserDto.getUserEmail());
         currentUser.setCountry(currentUserDto.getUserCountry());
         //TODO handle the problem with Local date
         //the problem is birth date isn't stored
-//        currentUser.setBirthdayDate(LocalDate.parse(currentUserDto.getUserBirthDate()) );
+        currentUser.setBirthdayDate(currentUserDto.getDob());
         currentUser.setBio(currentUserDto.getUserBio());
 
 
@@ -76,7 +75,7 @@ public class DTOObjAdapter {
         CurrentUserDto userDto = new CurrentUserDto();
         //TODO complete conversion methods
         userDto.setUserPhone(currentUser.getPhoneNumber());
-        userDto.setUserName(currentUser.getUserName());
+        userDto.setUserName(currentUser.getDisplayName());
         userDto.setUserGender(currentUser.getGender());
         userDto.setUserEmail(currentUser.getEmailAddress());
         userDto.setUserCountry(currentUser.getCountry());

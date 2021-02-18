@@ -77,6 +77,10 @@ public class EntityObjAdapter {
         userDto.setUserEmail(dbUser.getEmail());
         userDto.setUserBio(dbUser.getBio());
         userDto.setUserGender(dbUser.getGender());
+        userDto.setDob(dbUser.getDob());
+        userDto.setStatus(dbUser.getUserStatus());
+        userDto.setAvailability(dbUser.getUserAvail());
+
 
         try {
             userDto.setUserImage(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(dbUser.getPhone()));

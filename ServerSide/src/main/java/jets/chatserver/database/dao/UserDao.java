@@ -42,6 +42,6 @@ public interface UserDao {
 
     boolean updateDBUserStatus(int userStatus, String userId) throws SQLException;
 
-    boolean updateDBUserPassword(String newPassword, String userId) throws SQLException;
+    boolean updateDBUserPassword(String oldPassword, String newPassword, String userId) throws SQLException;
 
 }

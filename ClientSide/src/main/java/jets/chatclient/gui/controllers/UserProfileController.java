@@ -12,10 +12,12 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.time.LocalDate;
 import java.util.*;
 
 import commons.remotes.server.UserProfileServiceInt;
 import commons.sharedmodels.CurrentUserDto;
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,20 +25,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javafx.util.Duration;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 import commons.utils.ComboBoxUtils;
 import commons.utils.Countries;
-import jets.chatclient.gui.utils.ImageEncoderDecoder;
+import commons.utils.ImageEncoderDecoder;
 import commons.utils.Validators;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -61,11 +66,14 @@ public class UserProfileController {
     @FXML // fx:id="profilePic"
     private Circle profilePic; // Value injected by FXMLLoader
 
+    @FXML
+    private Label phoneNumberLabel;
+
     @FXML // fx:id="changePicBtn"
     private JFXButton changePicBtn; // Value injected by FXMLLoader
 
     @FXML // fx:id="displayName"
-    private JFXTextField displayName; // Value injected by FXMLLoader
+    private Label displayName; // Value injected by FXMLLoader
 
     @FXML // fx:id="bioTextArea"
     private JFXTextArea bioTextArea; // Value injected by FXMLLoader
@@ -85,14 +93,11 @@ public class UserProfileController {
     @FXML // fx:id="userName"
     private JFXTextField userName; // Value injected by FXMLLoader
 
-    @FXML // fx:id="phoneNumber"
-    private JFXTextField phoneNumber; // Value injected by FXMLLoader
-
     @FXML // fx:id="emailAddress"
     private JFXTextField emailAddress; // Value injected by FXMLLoader
 
-    @FXML // fx:id="birtdayPicker"
-    private JFXDatePicker birtdayPicker; // Value injected by FXMLLoader
+    @FXML // fx:id="birthdayPicker"
+    private JFXDatePicker birthdayPicker; // Value injected by FXMLLoader
 
     @FXML // fx:id="countriesComboBox"
     private JFXComboBox<String> countriesComboBox; // Value injected by FXMLLoader
@@ -115,46 +120,78 @@ public class UserProfileController {
     @FXML
     private JFXComboBox<String> statusComboBox;
 
+    @FXML
+    private FontIcon notificationIcon;
+
+    @FXML
+    private Label notificationLabel;
+
+
+
 
     @FXML
     void activateprofileBox(ActionEvent event) {
         if (userDataBox.isDisable()) {
             userDataBox.setDisable(false);
-            editProfileBtn.setText("Exit Edit");
+            editProfileBtn.setText("Exit");
         } else {
             userDataBox.setDisable(true);
-            editProfileBtn.setText("Edit Profile");
+            editProfileBtn.setText("Edit");
         }
 
     }
 
     @FXML
     void saveChanges(ActionEvent event) {
-        // fill the new data in userModel
-        CurrentUserModel updatedUserModel = new CurrentUserModel();
 
-        updatedUserModel.setUserName(userName.getText());
-        updatedUserModel.setPhoneNumber(phoneNumber.getText());
-        updatedUserModel.setEmailAddress(emailAddress.getText());
-        updatedUserModel.setBirthdayDate(birtdayPicker.getValue().toString());
-        updatedUserModel.setCountry(countriesComboBox.getValue());
-        updatedUserModel.setBio(bioTextArea.getText());
 
-        // Convert userModel to DTO (use DTOObjAdapter
-        CurrentUserDto updatedUserDto = DTOObjAdapter.convertObjToDto(updatedUserModel);
+        boolean validName = userName.validate();
+        boolean validEmail = emailAddress.validate();
+        boolean validCountry = countriesComboBox.validate();
+        boolean validDate = birthdayPicker.validate();
 
-        // Call the service and send your data.
-        try {
-            // The phone number is the id of users in data base.
-            userProfileService.updateUserData(updatedUserDto, currentUserModel.getPhoneNumber());
+        if(validName && validEmail && validCountry && validDate){
 
-            // hard code this value for testing
+            // fill the new data in userModel
+            CurrentUserModel updatedUserModel = new CurrentUserModel();
 
-            System.out.println("send Data to server.");
-        } catch (RemoteException e) {
-            System.out.println("Failed to send data to server.");
+            updateUserModelData(updatedUserModel);
+
+            // Convert userModel to DTO (use DTOObjAdapter
+            CurrentUserDto updatedUserDto = DTOObjAdapter.convertObjToDto(updatedUserModel);
+
+            // Call the service and send your data.
+            try {
+                // The phone number is the id of users in data base.
+                boolean updateStatus = false;
+                updateStatus = userProfileService.updateUserData(updatedUserDto, currentUserModel.getPhoneNumber());
+                System.out.println("send Data to server.");
+
+                if(updateStatus){
+                    successNotification("Updated Successfully");
+                    updateUserModelData(currentUserModel);
+
+                    // Close Editing after success
+                    if (!userDataBox.isDisable()) {
+                        userDataBox.setDisable(true);
+                        editProfileBtn.setText("Edit");
+                    }
+
+                }else{
+                    failNotification("Failed to update data.");
+                }
+
+            } catch (RemoteException e) {
+                failNotification("Failed to send data to server.");
+                System.out.println("Failed to send data to server.");
+
+            }
+
+        }else{
+            failNotification("Invalid Data");
+            System.out.println("invalid Data");
+
         }
-
 
     }
 
@@ -163,7 +200,7 @@ public class UserProfileController {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PasswordDialog.fxml"));
         Parent parent = fxmlLoader.load();
 
-        Scene scene = new Scene(parent, 350, 240);
+        Scene scene = new Scene(parent);
 
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -178,6 +215,8 @@ public class UserProfileController {
         try {
 
             FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters()
+                    .add(new FileChooser.ExtensionFilter("images", "*.png", "*.jpg" ,"*.jpeg "));
             File newImageFile = fileChooser.showOpenDialog(null);
             //------------------Update Image In Database ----------------------//
             //if the window is closed without choosing any file return.
@@ -193,6 +232,7 @@ public class UserProfileController {
             if (updateState) {
                 System.out.println("Photo updated Successfully.");
                 setProfilePic(newImageFile.getCanonicalPath());
+
             }
         } catch (RemoteException remEx) {
             System.out.println(remEx.getMessage());
@@ -262,27 +302,30 @@ public class UserProfileController {
         userDataBox.setDisable(true);
 
         //----------------- load the default pic -------------------//
-        if(currentUserModel.getUserImage() == null){
+        if(currentUserModel.getImage() == null){
             URL imageUrl = this.getClass().getResource("/images/userDefaultImage.png");
             setProfilePic(imageUrl.getPath());
+        }else{
+            profilePic.setFill(new ImagePattern(currentUserModel.getImage()));
         }
 
 
 
         //----------------- Populate ComboBoxes-------------------//
-//        countriesComboBox.setItems(populateWithCountries());
+        countriesComboBox.setItems(populateWithCountries());
         statusComboBox.setItems(populateStatus());
-//
+
 //        //Make combo boxes searchable
-////        searchComboBox(countriesComboBox);
-//        searchComboBox(statusComboBox);
         List<String> countries = Countries.getAll();
-        ComboBoxUtils.fillComboBox(countriesComboBox,countries);
+//        ComboBoxUtils.fillComboBox(countriesComboBox,countries);
         ComboBoxUtils.makeComboSearchable(countriesComboBox);
         ComboBoxUtils.makeComboSearchable(statusComboBox);
 
-        bindNodes(currentUserModel);
+       //-----------Fill GUI Fields-------------//
+        displayName.textProperty().bindBidirectional(currentUserModel.displayNameProperty());
+        setGUIData(currentUserModel);
 
+        //Validate data
         validateFields();
 
 
@@ -293,7 +336,7 @@ public class UserProfileController {
         Image im = new Image("file:" + imagePath, false);
         profilePic.setFill(new ImagePattern(im));
         //Update the current user value
-        currentUserModel.setUserImage(im);
+        currentUserModel.setImage(im);
 
     }
 
@@ -308,44 +351,97 @@ public class UserProfileController {
     }
 
 
-//    public ObservableList<String> populateWithCountries() {
-//
-//        String[] locales = Locale.getISOCountries();
-//        List<String> countryNameList = new ArrayList<String>();
-//
-//
-//        for (String countryCode : locales) {
-//
-//            Locale obj = new Locale("", countryCode);
-//            countryNameList.add(obj.getDisplayCountry());
-//        }
-//        return FXCollections.observableList(countryNameList);
-//
-//    }
+    public ObservableList<String> populateWithCountries() {
+
+        String[] locales = Locale.getISOCountries();
+        List<String> countryNameList = new ArrayList<String>();
+
+
+        for (String countryCode : locales) {
+
+            Locale obj = new Locale("", countryCode);
+            countryNameList.add(obj.getDisplayCountry());
+        }
+        return FXCollections.observableList(countryNameList);
+
+    }
 
     void bindNodes(CurrentUserModel currentUserModel) {
 
         //--------------------------Start binding----------------------------//
-        displayName.textProperty().bindBidirectional(currentUserModel.userNameProperty());
+        displayName.textProperty().bindBidirectional(currentUserModel.displayNameProperty());
         bioTextArea.textProperty().bindBidirectional(currentUserModel.bioProperty());
-        userName.textProperty().bindBidirectional(currentUserModel.userNameProperty());
-        phoneNumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
+        userName.textProperty().bindBidirectional(currentUserModel.displayNameProperty());
+        phoneNumberLabel.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
         emailAddress.textProperty().bindBidirectional(currentUserModel.emailAddressProperty());
         countriesComboBox.valueProperty().bindBidirectional(currentUserModel.countryProperty());
-       // birtdayPicker.valueProperty().bindBidirectional(LocalDate.parse(currentUserModel.birthdayDateProperty().getValue()));
 
 
     }
 
     void validateFields() {
         Validators.addNameValidator(userName, nameIcon);
-        Validators.addPhoneNumberValidator(phoneNumber, phoneIcon);
+        Validators.addEmailValidator(emailAddress, emailIcon);
         Validators.addRequiredValidator(countriesComboBox, countryIcon);
-        Validators.addRequiredValidator(birtdayPicker, dateIcon);
-//        Validators.addEmailValidator(emailAddress, emailIcon);
-//
+        Validators.addRequiredValidator(birthdayPicker, dateIcon);
+
     }
 
 
+    void setGUIData(CurrentUserModel currentUserModel){
+        LocalDate localDate = LocalDate.parse(currentUserModel.getBirthdayDate());
+        System.out.println(localDate);
+        userName.setText(currentUserModel.getDisplayName());
+        phoneNumberLabel.setText(currentUserModel.getPhoneNumber());
+        emailAddress.setText(currentUserModel.getEmailAddress());
+        birthdayPicker.setValue(LocalDate.parse(currentUserModel.getBirthdayDate()));
+        countriesComboBox.setValue(currentUserModel.getCountry());
+        bioTextArea.setText(currentUserModel.getBio());
+       // statusComboBox.setPromptText(currentUserModel.getStatus());
+
+    }
+
+    void updateUserModelData(CurrentUserModel userModel){
+        userModel.setDisplayName(userName.getText());
+        userModel.setEmailAddress(emailAddress.getText());
+        userModel.setBirthdayDate(birthdayPicker.getValue().toString());
+        userModel.setCountry(countriesComboBox.getValue());
+        userModel.setBio(bioTextArea.getText());
+    }
+
+    void successNotification(String msg){
+        notificationLabel.setStyle("-fx-text-fill: #36ec0d");
+        notificationIcon.setIconColor(Color.web("#36ec0d"));
+        notificationLabel.setText(msg);
+        notificationLabel.setVisible(true);
+        notificationIcon.setVisible(true);
+
+
+        // Hide Success Notification Label after 5 second
+
+        PauseTransition visiblePause = new PauseTransition(
+                Duration.seconds(5)
+        );
+        visiblePause.setOnFinished(
+                event -> {notificationLabel.setVisible(false);
+                notificationIcon.setVisible(false);}
+        );
+        visiblePause.play();
+
+    }
+
+    void failNotification(String msg){
+        notificationLabel.setStyle("-fx-text-fill: #d73838");
+        notificationIcon.setIconColor(Color.web("#d73838"));
+        notificationLabel.setText(msg);
+        notificationIcon.setVisible(true);
+        notificationLabel.setVisible(true);
+    }
+
+    void resetNotification(){
+        notificationLabel.setStyle("-fx-text-fill: #d73838");
+        notificationIcon.setVisible(false);
+        notificationLabel.setVisible(false);
+    }
 
 }

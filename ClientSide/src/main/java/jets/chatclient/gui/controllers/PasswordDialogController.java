@@ -4,11 +4,15 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import commons.remotes.server.UserProfileServiceInt;
 import commons.utils.Validators;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -50,6 +54,23 @@ public class PasswordDialogController {
     @FXML
     private FontIcon confirmPassIcon;
 
+    @FXML
+    private FontIcon mainIcon;
+
+    @FXML
+    private FontIcon keyIcon;
+
+
+
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+
+        lookupService();
+        validateFields();
+
+    }
+
+
 
 
 
@@ -60,39 +81,51 @@ public class PasswordDialogController {
         final Stage stage = (Stage) source.getScene().getWindow();
         // do what you have to do
         stage.close();
-        
+
     }
 
     @FXML
     void confirmPasswordAndClose(ActionEvent event) {
-        if(isValidPasswords()){
-            try{
-                boolean successUpdate = false;
-                successUpdate = userProfileService.updateUserPassword(newPassField.getText(), currentUserModel.getPhoneNumber());
-                if(successUpdate) {
-                    wrongLabel.setStyle("-fx-text-fill: #36ec0d");
-                    wrongLabel.setText("Updated Successfully");
-                    wrongLabel.setVisible(true);
-                    confirmBtn.setDisable(true);
+        if(oldPassField.validate() && newPassField.validate() && confirmPassField.validate()){
+            if (isValidPasswords()) {
+                try {
+                    boolean successUpdate = false;
+                    successUpdate = userProfileService.updateUserPassword(oldPassField.getText(), newPassField.getText(), currentUserModel.getPhoneNumber());
 
-                }else{
-                    wrongLabel.setStyle("-fx-text-fill: #d73838");
-                    wrongLabel.setText("Failed to update");
-                    wrongIcon.setVisible(true);
-                    wrongLabel.setVisible(true);
+                    if (successUpdate) {
+
+                        successNotification("Updated Successfully");
+                        oldPassField.clear();
+                        newPassField.clear();
+                        confirmPassField.clear();
+                        mainIcon.setIconColor(Color.web("#36ec0d"));
+                        keyIcon.setIconColor(Color.web("#36ec0d"));
+                        // Clear Success Notification after 3 ex and reset mainIcon
+                        PauseTransition visiblePause = new PauseTransition(
+                                Duration.seconds(3)
+                        );
+                        visiblePause.setOnFinished(
+                                ev -> {mainIcon.setIconColor(Color.BLACK);
+                                    keyIcon.setIconColor(Color.BLACK);
+                                    wrongLabel.setVisible(false);
+                                }
+                        );
+                        visiblePause.play();
+
+                    } else {
+                        failNotification("Failed to update");
+                    }
+
+                } catch (RemoteException remEx) {
+                    failNotification("Server Failed");
+
+                    System.out.println(remEx.getMessage());
+                    System.out.println("Failed to Update Status in database");
+
                 }
-
-            } catch (RemoteException remEx) {
-                wrongLabel.setText("Server failed");
-                wrongIcon.setVisible(true);
-                wrongLabel.setVisible(true);
-
-                System.out.println(remEx.getMessage());
-                System.out.println("Faild to Update Status in database");
-
             }
-
         }else{
+            failNotification("Password must be 8-20 chars.!");
             return;
         }
 
@@ -102,46 +135,27 @@ public class PasswordDialogController {
     private boolean isValidPasswords() {
         String oldPass = oldPassField.getText();
         String newPass = newPassField.getText();
-        String confrimPass = confirmPassField.getText();
-        if ((newPass != null) | (confrimPass != null)) {
-            if (!newPass.equals(confrimPass)) {
-//              wrongIcon.setStyle("-fx-background-color: #d73838 ");
-                wrongLabel.setStyle("-fx-text-fill: #d73838");
-                wrongLabel.setText("Does Not Match");
-                wrongIcon.setVisible(true);
-                wrongLabel.setVisible(true);
+        String confirmPass = confirmPassField.getText();
+
+        if((newPass != null) || (confirmPass != null)){
+            if (!newPass.equals(confirmPass)) {
+
+                failNotification("Does Not Match");
 
                 return false;
 
-            } else if (oldPass.isBlank() | newPass.isBlank() | confrimPass.isBlank()) {
-//                wrongIcon.setStyle("-fx-graphic:#d73838");
-                wrongLabel.setStyle("-fx-text-fill: #d73838");
-                wrongLabel.setText("Empty Fields");
-                wrongIcon.setVisible(true);
-                wrongLabel.setVisible(true);
+            } else if (oldPass.isBlank() || newPass.isBlank() || confirmPass.isBlank()) {
+               failNotification("Empty Fields");
 
                 return false;
             } else {
                 System.out.println("Text matches");
-                wrongIcon.setVisible(false);
-                wrongLabel.setVisible(false);
-
                 return true;
             }
         }
         return false;
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-
-        lookupService();
-        validateFields();
-
-
-
-
-    }
 
     void lookupService(){
         // get an instance of current user through model factory.
@@ -162,6 +176,19 @@ public class PasswordDialogController {
         Validators.addPasswordValidator(oldPassField, oldPassIcon);
         Validators.addPasswordValidator(newPassField, newPassIcon);
         Validators.addPasswordValidator(confirmPassField, confirmPassIcon);
+    }
+
+    void successNotification(String msg){
+        wrongLabel.setStyle("-fx-text-fill: #36ec0d");
+        wrongLabel.setText(msg);
+        wrongLabel.setVisible(true);
+    }
+
+    void failNotification(String msg){
+        wrongLabel.setStyle("-fx-text-fill: #d73838");
+        wrongLabel.setText(msg);
+        wrongIcon.setVisible(true);
+        wrongLabel.setVisible(true);
     }
 
 }

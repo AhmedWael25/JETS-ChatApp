@@ -19,7 +19,7 @@
 
 <AnchorPane prefHeight="477.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.UserProfileController">
    <children>
-      <SplitPane dividerPositions="0.3161512027491409" layoutX="-4.599999904632568" layoutY="-6.199999809265137" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.34523809523809523" layoutX="-4.599999904632568" layoutY="-6.199999809265137" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <VBox fx:id="leftVBox" alignment="TOP_CENTER" pickOnBounds="false" prefHeight="434.0" prefWidth="234.0" snapToPixel="false" spacing="30.0" SplitPane.resizableWithParent="false">
                <children>
@@ -31,7 +31,7 @@
                               <Font name="Arial Bold Italic" size="15.0" />
                            </font>
                         </Label>
-                        <JFXButton fx:id="changePicBtn" alignment="CENTER" buttonType="RAISED" ellipsisString="" graphicTextGap="0.0" layoutX="106.0" layoutY="126.0" onAction="#changeProfilePic" prefHeight="22.0" prefWidth="10.0" ripplerFill="BLACK" textAlignment="CENTER">
+                        <JFXButton fx:id="changePicBtn" alignment="CENTER" buttonType="RAISED" ellipsisString="" graphicTextGap="0.0" layoutX="106.0" layoutY="126.0" onAction="#changeProfilePic" prefHeight="22.0" prefWidth="10.0" ripplerFill="BLACK" style="-fx-background-color: lightgrey;" textAlignment="CENTER">
                            <font>
                               <Font size="1.0" />
                            </font>
@@ -46,8 +46,11 @@
                   </AnchorPane>
                   <Group VBox.vgrow="NEVER">
                      <children>
-                        <JFXTextField fx:id="displayName" alignment="CENTER" disable="true" layoutY="21.0" prefHeight="25.0" prefWidth="117.0" text="\@user1950" />
-                        <FontIcon iconLiteral="fas-id-card" iconSize="12" layoutX="13.0" layoutY="35.0" wrappingWidth="19.5" />
+                        <Label fx:id="displayName">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-id-card" iconSize="12" wrappingWidth="19.5" />
+                           </graphic>
+                        </Label>
                      </children>
                   </Group>
                   <Group layoutX="19.0" layoutY="195.0">
@@ -67,10 +70,10 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                            <graphic>
-                              <FontIcon fx:id="countryIcon" iconLiteral="fas-question-circle" />
+                              <FontIcon iconLiteral="fas-question-circle" text="" />
                            </graphic>
                         </Label>
-                        <JFXComboBox fx:id="statusComboBox" editable="true" maxWidth="110.0" onAction="#updateStatus" prefHeight="25.0" prefWidth="110.0" promptText="Status" HBox.hgrow="ALWAYS" />
+                        <JFXComboBox fx:id="statusComboBox" maxWidth="110.0" onAction="#updateStatus" prefHeight="25.0" prefWidth="110.0" promptText="Status" HBox.hgrow="ALWAYS" />
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -83,20 +86,35 @@
             </VBox>
             <AnchorPane>
                <children>
-                  <BorderPane fx:id="rightSidePane" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+                  <BorderPane fx:id="rightSidePane" layoutX="18.0" prefHeight="435.0" prefWidth="399.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                      <top>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="342.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER">
+                        <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="376.0" spacing="15.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER_LEFT">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin>
                            <children>
-                              <HBox alignment="CENTER_LEFT" fillHeight="false" prefHeight="27.0" prefWidth="149.0" />
-                              <JFXButton fx:id="editProfileBtn" buttonType="RAISED" onAction="#activateprofileBox" prefHeight="28.0" prefWidth="106.0" text="Edit Profile">
+                              <Label fx:id="notificationLabel" minWidth="125.0" text="Invalid Data" textFill="#d73838" visible="false">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon fx:id="notificationIcon" iconColor="#d73838" iconLiteral="fas-exclamation-triangle" iconSize="20" visible="false" />
+                                 </graphic>
+                              </Label>
+                              <Label fx:id="phoneNumberLabel" minWidth="125.0" textFill="#4b4b5799">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontIcon fx:id="phoneIcon" iconLiteral="fas-mobile-alt" text="" />
+                                 </graphic>
+                              </Label>
+                              <JFXButton fx:id="editProfileBtn" buttonType="RAISED" contentDisplay="TOP" onAction="#activateprofileBox" text="Edit ">
                                  <graphic>
                                     <FontIcon iconLiteral="fas-user-edit" iconSize="20" selectionStart="0" wrappingWidth="23.0" />
                                  </graphic>
                               </JFXButton>
-                              <JFXButton fx:id="saveEditsBtn" buttonType="RAISED" onAction="#saveChanges" text="Save Edits">
+                              <JFXButton fx:id="saveEditsBtn" buttonType="RAISED" contentDisplay="TOP" onAction="#saveChanges" text="Save">
                                  <graphic>
                                     <FontIcon iconLiteral="far-save" iconSize="20" />
                                  </graphic>
@@ -105,7 +123,7 @@
                         </HBox>
                      </top>
                      <center>
-                        <VBox fx:id="userDataBox" prefHeight="200.0" prefWidth="100.0" spacing="25.0">
+                        <VBox fx:id="userDataBox" prefHeight="381.0" prefWidth="405.0" spacing="25.0">
                            <children>
                               <HBox layoutX="10.0" layoutY="20.0" prefHeight="33.0" prefWidth="358.0" spacing="30.0" VBox.vgrow="ALWAYS">
                                  <children>
@@ -125,22 +143,6 @@
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" top="10.0" />
                                  </VBox.margin>
-                              </HBox>
-                              <HBox layoutX="10.0" layoutY="65.0" prefHeight="33.0" prefWidth="358.0" spacing="30.0" VBox.vgrow="ALWAYS">
-                                 <children>
-                                    <Label prefHeight="25.0" prefWidth="120.0" text="Phone Number" textFill="#4b4b5799">
-                                       <font>
-                                          <Font name="System Bold" size="14.0" />
-                                       </font>
-                                       <graphic>
-                                          <FontIcon fx:id="phoneIcon" iconLiteral="fas-mobile-alt" text="" />
-                                       </graphic>
-                                    </Label>
-                                    <JFXTextField fx:id="phoneNumber" labelFloat="true" maxWidth="400.0" prefHeight="25.0" prefWidth="214.0" promptText="Phone Number" HBox.hgrow="ALWAYS" />
-                                 </children>
-                                 <padding>
-                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                 </padding>
                               </HBox>
                               <HBox layoutX="10.0" layoutY="140.0" prefHeight="33.0" prefWidth="358.0" spacing="30.0" VBox.vgrow="ALWAYS">
                                  <children>
@@ -171,7 +173,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </Label>
-                                    <JFXDatePicker fx:id="birtdayPicker" defaultColor="#304269" editable="false" maxWidth="400.0" prefWidth="220.0" promptText="Pick a Date" HBox.hgrow="ALWAYS" />
+                                    <JFXDatePicker fx:id="birthdayPicker" defaultColor="#304269" editable="false" maxWidth="400.0" prefWidth="220.0" promptText="Pick a Date" HBox.hgrow="ALWAYS" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

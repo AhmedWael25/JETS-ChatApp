@@ -27,11 +27,17 @@ public class Validators {
     final static String invalidPhoneNumberMsg = "phoneNumber must be 11 digit valid phone number !";
 
     //acceptable password form {8 chars at least, contains uppercase,lower case,number, and special char }
-    final static String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+    final static String passwordRegex = "^(?=.*[a-zA-z0-9@#$%^&+=])(?=\\S*$).{8,}$";
     final static String invalidPasswordMsg = "password must be 8-20 chars. !";
+
+    //Email regex
+    final static String emailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+    final static String invalidEmailMsg = "Enter a valid Email. !";
 
     //required Msg
     final static String requiredMsg = "Required";
+
+
 
 
     public static JFXTextField addNameValidator(JFXTextField field, FontIcon fi) {
@@ -59,6 +65,17 @@ public class Validators {
         bindValidation(field, fi);
         return field;
     }
+
+    public static JFXTextField addEmailValidator(JFXTextField field, FontIcon fi) {
+        RegexValidator dispalynameValidator = getRegexValidator(emailRegex, invalidEmailMsg);
+        field.getValidators().add(dispalynameValidator);
+
+        bindValidation(field, fi);
+
+
+        return field;
+    }
+
 
 
     public static void addRequiredValidator(Parent field, FontIcon fi) {
