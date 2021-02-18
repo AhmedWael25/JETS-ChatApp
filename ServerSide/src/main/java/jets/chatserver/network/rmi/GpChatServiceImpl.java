@@ -4,6 +4,7 @@ import commons.remotes.client.ClientInterface;
 import commons.remotes.server.GpChatServiceInt;
 import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.GpChatUserDto;
+import commons.sharedmodels.MessageDto;
 import jets.chatserver.DBModels.DBGpChat;
 import jets.chatserver.database.dao.GpChatDao;
 import jets.chatserver.database.daoImpl.GpChatDaoImpl;
@@ -30,6 +31,10 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
         this.currentConnectedUsers = currentConnectedUsers;
     }
 
+
+
+
+
     @Override
     public List<GpChatDto> fetchAllUserGpChats(String userId) throws RemoteException {
 
@@ -51,17 +56,14 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
     @Override
     public boolean createGroupChat(GpChatUserDto chatDto) throws RemoteException {
 
-
         try {
             gpChatDao = GpChatDaoImpl.getGpChatDaoInstance();
             int newChatId =gpChatDao.createGroupChat(EntityDTOAdapter.convertDtoToEntity(chatDto));
-
 
             //Now Call Back All Clients To Update Their UI with New GP Chat;
 
             List<ClientInterface> clientInterfaces = new ArrayList<>();
             //To Get List Of Clients Connected
-            System.out.println("=======>>>>>>>>>>>>"+chatDto.getGpUserIds());
             for(String userIds : chatDto.getGpUserIds()){
                 if(currentConnectedUsers.get(userIds) != null){
                     clientInterfaces.add(currentConnectedUsers.get(userIds));
@@ -79,4 +81,31 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
         }
         return  true;
     }
+
+    @Override
+    public boolean sendMessage(MessageDto messageDto) throws RemoteException {
+
+        List<String> participants = null;
+        int chatId = messageDto.getChatId();
+
+        try {
+
+            //Get All Participants
+            participants = gpChatDao.getAllParticipantsIdsByChatId(chatId);
+            //Prep to call Back only online users.
+            //Remove Sender From Receivers List
+            for (String part : participants){
+                if(part.equals(messageDto.getSenderId())) continue;
+                ClientInterface ci = currentConnectedUsers.get(part);
+                if(ci != null) {
+                    ci.sendNewGpMsgToUsers(messageDto);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }

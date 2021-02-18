@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="msgcontainer" maxHeight="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="357.0" snapToPixel="false" spacing="10.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Circle fx:id="userImg" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </Circle>
+      <VBox maxHeight="Infinity">
+         <children>
+            <Label fx:id="msgBody" maxHeight="Infinity" maxWidth="1.7976931348623157E308" style="-fx-border-radius: 0 10 10 10; -fx-background-radius: 0 10 10 10; -fx-background-color: #D9E8F5;" text="Label" textAlignment="JUSTIFY" wrapText="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </Label>
+            <HBox spacing="2.0">
+               <children>
+                  <Label fx:id="msgSenderName" text="Label" textFill="#9a9595" wrapText="true">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="msgTimeStamp" text="Label" textFill="#9a9595" wrapText="true">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>

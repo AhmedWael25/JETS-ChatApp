@@ -1,9 +1,6 @@
 package jets.chatclient.gui.helpers.adapters;
 
-import commons.sharedmodels.FriendGpDto;
-import commons.sharedmodels.GpChatDto;
-import commons.sharedmodels.InvitationDto;
-import commons.sharedmodels.P2PChatDto;
+import commons.sharedmodels.*;
 import commons.utils.ImageEncoderDecoder;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -99,6 +96,32 @@ public class DTOObjAdapter {
         gpChatModel.setGpParticipants(participantsList);
 
         return gpChatModel;
+    }
+
+    public  static  MessageModel convertDtoToObj(MessageDto dto){
+        MessageModel msgModel = new MessageModel();
+
+        msgModel.setMsgContent(dto.getMsgContent());
+        msgModel.setMsgType(dto.getMsgType());
+        msgModel.setTimeStamp(dto.getTimeStamp());
+        msgModel.setSenderId(dto.getSenderId());
+        msgModel.setSenderName(dto.getSenderName());
+        msgModel.setChatId(dto.getChatId());
+
+        return  msgModel;
+    }
+
+    public  static  MessageDto convertoObjToDto(MessageModel model){
+        MessageDto dto = new MessageDto();
+
+        dto.setMsgContent(model.getMsgContent());
+        dto.setMsgType(model.getMsgType());
+        dto.setTimeStamp(model.getTimeStamp());
+        dto.setSenderId(model.getSenderId());
+        dto.setSenderName(model.getSenderName());
+        dto.setChatId(model.getChatId());
+
+        return  dto;
     }
 
     public static List<Invitation> convertDtoInvitationList(List<InvitationDto> invitationDtoList){

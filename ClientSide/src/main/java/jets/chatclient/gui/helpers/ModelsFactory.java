@@ -18,6 +18,7 @@ public class ModelsFactory {
     private CurrentUserModel currentUserModel = null;
     private ClientInterface clientInterface = null;
     private Registry registry = null;
+    private  GpChatsManager gpChatsManager = null;
 
     private ModelsFactory () { }
 
@@ -53,6 +54,13 @@ public class ModelsFactory {
             }
         }
         return  clientInterface;
+    }
+
+    public GpChatsManager getGpChatsManager(){
+        if(gpChatsManager == null){
+            gpChatsManager = new GpChatsManager();
+        }
+        return  gpChatsManager;
     }
 
 

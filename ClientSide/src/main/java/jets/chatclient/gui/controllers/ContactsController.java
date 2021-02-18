@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
@@ -33,6 +34,7 @@ public class ContactsController implements Initializable {
     public Button dummybtn;
     @FXML
     public AnchorPane contactsScreenContainer;
+    public Label feedbackLabel;
     @FXML
     private JFXButton sendInvitationBtn;
 
@@ -73,8 +75,9 @@ public class ContactsController implements Initializable {
             e.printStackTrace();
         }
 //=======================================================================================
-
-
+        phoneTxtField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            feedbackLabel.setText("");
+        });
 
     }
 
@@ -114,22 +117,41 @@ public class ContactsController implements Initializable {
     Runnable sendInvitation = () -> {
         //TODO Phone Validation ---Validation Imp.
         boolean isSent;
-        if(!phoneTxtField.getText().equals("") && !phoneTxtField.getText().equals(userIdDummy))  {
-
+        if(phoneTxtField.getText().equals("")  )  {
+            displayFeedBackMsg("You Haven't Entered an Id");
+        }else if(phoneTxtField.getText().equals(userIdDummy)) {
+            displayFeedBackMsg("You Cannot Add Your Self!");
+        }
+        else {
             phoneTxtField.setDisable(true);
+            sendInvitationBtn.setDisable(true);
             Invitation inv = new Invitation();
+            String receiverId = phoneTxtField.getText();
             inv.setSenderId(userIdDummy);
             inv.setSenderName(userNameDummy);
-            inv.setReceiverId(phoneTxtField.getText());
+            inv.setReceiverId(receiverId);
             inv.setInvitationContent("You Got a new Friend Request !");
+            InvitationDto invDto = (DTOObjAdapter.convertObjToDto(inv));
             try {
-               isSent =  invitationService.sendInvitation(DTOObjAdapter.convertObjToDto(inv));
+
+                if(invitationService.isInviteExists(invDto)){
+                    displayFeedBackMsg("You Already Sent an Invitation to Them");
+                } else if (addFriendService.areFriends(invDto.getSenderId(),invDto.getReceiverId())) {
+                    displayFeedBackMsg("You Already Are Friends With Them");
+                }
+                else if(!invitationService.isUserExist(receiverId)){
+                    displayFeedBackMsg("This User Doesn't Exist");
+                }
+                else {
+                    isSent =  invitationService.sendInvitation(DTOObjAdapter.convertObjToDto(inv));
+                    displayFeedBackMsg();
+                    phoneTxtField.clear();
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
             phoneTxtField.setDisable(false);
-        }else {
-
+            sendInvitationBtn.setDisable(false);
         }
     };
 
@@ -158,9 +180,20 @@ public class ContactsController implements Initializable {
 
     public void dumdum(ActionEvent actionEvent){
 
-
     }
 
+    private  void displayFeedBackMsg(String str){
+        Platform.runLater(() ->{
+            feedbackLabel.setStyle("-fx-text-fill: #dc3545");
+            feedbackLabel.setText(str);
+        });
+    }
+    private  void displayFeedBackMsg(){
+        Platform.runLater(() ->{
+            feedbackLabel.setStyle("-fx-text-fill: #198754");
+            feedbackLabel.setText("Invitation Sent !");
+        });
+    }
 //    private void initNotificationPane(){
 //        friendAddedNotificationPane = new NotificationPane();
 //        friendAddedNotificationPane.setText("Test ya m3alem");

@@ -11,5 +11,7 @@ public interface InvitationServiceInt extends Remote {
     List<InvitationDto> getAllUserInvitations(String userId)  throws RemoteException;
     boolean  deleteInvitation(InvitationDto invitationDto)  throws RemoteException;
     boolean sendInvitation(InvitationDto invitationDto)  throws RemoteException;
+    boolean isInviteExists(InvitationDto invitationDto) throws  RemoteException;
+    boolean isUserExist(String  userId) throws  RemoteException;
 
 }

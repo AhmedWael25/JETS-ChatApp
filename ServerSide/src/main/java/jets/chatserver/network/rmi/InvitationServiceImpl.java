@@ -88,13 +88,39 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
             //TODO Adapter First Thing Morning
             ClientInterface clientInterface = currentConnectedUsers.get(receiverId);
             //Attaching the SenderImg with DTO-
-            invitationDto.setSenderImg(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(senderId));
-            clientInterface.sendNewInvToUser(invitationDto);
-
+            if(clientInterface != null){
+                invitationDto.setSenderImg(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(senderId));
+                clientInterface.sendNewInvToUser(invitationDto);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean isInviteExists(InvitationDto invitationDto) throws RemoteException {
+        String senderId = invitationDto.getSenderId();
+        String receiverId =invitationDto.getReceiverId();
+        boolean isInviteExists = false;
+        try {
+             isInviteExists = invitationsDao.isInviteExists(senderId,receiverId);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return  isInviteExists;
+    }
+
+    @Override
+    public boolean isUserExist(String userId) throws RemoteException {
+
+        boolean isUserExist = false;
+        try {
+            isUserExist = UserDaoImpl.getUserDaoInstance().isUserExist(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return  isUserExist;
     }
 }

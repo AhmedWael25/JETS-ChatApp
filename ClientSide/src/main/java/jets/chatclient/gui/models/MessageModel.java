@@ -1,9 +1,8 @@
-package commons.sharedmodels;
+package jets.chatclient.gui.models;
 
-import java.io.Serializable;
+import commons.sharedmodels.MsgType;
 
-
-public class MessageDto implements Serializable {
+public class MessageModel {
 
     private String senderId;
     private String msgContent;
@@ -60,14 +59,16 @@ public class MessageDto implements Serializable {
         this.msgType = msgType;
     }
 
+
     @Override
     public String toString() {
-        return "MessageDto{" +
+        return "MessageModel{" +
                 "senderId='" + senderId + '\'' +
                 ", msgContent='" + msgContent + '\'' +
                 ", timeStamp='" + timeStamp + '\'' +
                 ", senderName='" + senderName + '\'' +
                 ", msgType=" + msgType +
+                ", chatId=" + chatId +
                 '}';
     }
 }

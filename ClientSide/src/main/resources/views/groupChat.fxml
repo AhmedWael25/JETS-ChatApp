@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="gpChatMainContainer" prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.groupChatController">
+<AnchorPane fx:id="gpChatMainContainer" prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.GroupChatController">
    <children>
       <GridPane prefHeight="434.0" prefWidth="583.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -86,7 +86,7 @@
                <bottom>
                   <HBox alignment="CENTER" maxHeight="50.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER">
                      <children>
-                        <JFXTextArea fx:id="typingArea" focusColor="#f26101" focusTraversable="false" onKeyPressed="#sendMsg" prefHeight="35.0" prefWidth="265.0" promptText="Type a Message" unFocusColor="#304269" HBox.hgrow="ALWAYS">
+                        <JFXTextArea fx:id="typingArea" focusColor="#f26101" focusTraversable="false" prefHeight="35.0" prefWidth="265.0" promptText="Type a Message" unFocusColor="#304269" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="20.0" left="10.0" top="5.0" />
                            </HBox.margin>
@@ -106,7 +106,7 @@
                            </font>
                         </JFXButton>
 
-                        <JFXButton fx:id="sendMsgBtn" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" layoutX="332.0" layoutY="20.0" prefHeight="51.0" prefWidth="46.0" textFill="#f26101">
+                        <JFXButton fx:id="sendMsgBtn" contentDisplay="CENTER" ellipsisString="" graphicTextGap="0.0" layoutX="332.0" layoutY="20.0" onAction="#sendMessage" prefHeight="51.0" prefWidth="46.0" textFill="#f26101">
                            <graphic>
                               <FontIcon iconColor="#304269" iconLiteral="fab-telegram-plane" iconSize="25" text="" wrappingWidth="20.799925327301025" />
 
