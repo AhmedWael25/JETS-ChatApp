@@ -1,8 +1,7 @@
-package commons.sharedmodels;
+package jets.chatclient.gui.models;
 
-import java.io.Serializable;
 
-public class MessageDto implements Serializable {
+public class P2PMessageModel {
 
     private String senderId;
     private String receiverId;
@@ -10,12 +9,29 @@ public class MessageDto implements Serializable {
     private String friendImg;
     private String msgTime;
 
+
     private String fontStyle;
     private String fontColor;
     private int fontsSize;
     private Boolean bold;
     private Boolean italic;
     private Boolean underline;
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
 
     public String getMsgBody() {
         return msgBody;
@@ -89,25 +105,9 @@ public class MessageDto implements Serializable {
         this.underline = underline;
     }
 
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
-
-    public String getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(String receiverId) {
-        this.receiverId = receiverId;
-    }
-
     @Override
     public String toString() {
-        return "MessageDto{" +
+        return "P2PMessageModel{" +
                 "senderId='" + senderId + '\'' +
                 ", receiverId='" + receiverId + '\'' +
                 ", msgBody='" + msgBody + '\'' +

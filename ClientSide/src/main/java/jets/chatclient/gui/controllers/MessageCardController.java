@@ -5,12 +5,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import jets.chatclient.gui.models.MessageModel;
-import jets.chatclient.gui.models.P2PChatModel;
+import jets.chatclient.gui.models.P2PMessageModel;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -39,7 +37,7 @@ public class MessageCardController {
         }
     }
 
-    public void setData(MessageModel msg){
+    public void setData(P2PMessageModel msg){
         msgBody.setText(msg.getMsgBody());
         msgTime.setText(new Date().toString());
 

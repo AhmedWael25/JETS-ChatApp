@@ -38,9 +38,9 @@ public class DTOObjAdapter {
         return  invDto;
     }
 
-    public static MessageModel convertDtoToObj(MessageDto msgDto){
+    public static P2PMessageModel convertDtoToObj(P2PMessageDto msgDto){
 
-        MessageModel msg = new MessageModel();
+        P2PMessageModel msg = new P2PMessageModel();
 
         msg.setMsgBody(msgDto.getMsgBody());
         msg.setMsgTime(msgDto.getMsgTime());
@@ -49,9 +49,9 @@ public class DTOObjAdapter {
         return  msg;
     }
 
-    public static MessageDto convertObjToDto(MessageModel msg){
+    public static P2PMessageDto convertObjToDto(P2PMessageModel msg){
 
-        MessageDto msgDto = new MessageDto();
+        P2PMessageDto msgDto = new P2PMessageDto();
 
         msgDto.setMsgBody(msg.getMsgBody());
         msgDto.setMsgTime(msg.getMsgTime());

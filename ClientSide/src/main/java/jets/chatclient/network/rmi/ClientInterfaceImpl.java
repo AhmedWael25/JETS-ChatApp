@@ -3,14 +3,13 @@ package jets.chatclient.network.rmi;
 import commons.remotes.client.ClientInterface;
 import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.InvitationDto;
-import commons.sharedmodels.MessageDto;
+import commons.sharedmodels.P2PMessageDto;
 import commons.sharedmodels.P2PChatDto;
 import jets.chatclient.gui.controllers.ContactsController;
 import jets.chatclient.gui.controllers.P2PChatController;
 import jets.chatclient.gui.controllers.groupChatController;
 import jets.chatclient.gui.helpers.ControllersGetter;
 
-import javax.naming.ldap.Control;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -47,7 +46,7 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     }
 
     @Override
-    public void sendNewMessageToUser(MessageDto msgDto) throws RemoteException {
+    public void sendNewMessageToUser(P2PMessageDto msgDto) throws RemoteException {
 
         ControllersGetter controllersGetter = ControllersGetter.getInstance();
         P2PChatController p2pChatController = controllersGetter.getP2PChatController();

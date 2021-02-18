@@ -1,14 +1,13 @@
-package jets.chatclient.gui.models;
+package commons.sharedmodels;
 
+import java.io.Serializable;
 
-public class MessageModel {
+public class P2PMessageDto implements Serializable {
 
     private String senderId;
     private String receiverId;
     private String msgBody;
-    private String friendImg;
     private String msgTime;
-
 
     private String fontStyle;
     private String fontColor;
@@ -17,36 +16,12 @@ public class MessageModel {
     private Boolean italic;
     private Boolean underline;
 
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
-
-    public String getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(String receiverId) {
-        this.receiverId = receiverId;
-    }
-
     public String getMsgBody() {
         return msgBody;
     }
 
     public void setMsgBody(String msgBody) {
         this.msgBody = msgBody;
-    }
-
-    public String getFriendImg() {
-        return friendImg;
-    }
-
-    public void setFriendImg(String friendImg) {
-        this.friendImg = friendImg;
     }
 
     public String getMsgTime() {
@@ -105,13 +80,28 @@ public class MessageModel {
         this.underline = underline;
     }
 
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
     @Override
     public String toString() {
-        return "MessageModel{" +
+        return "P2PMessageDto{" +
                 "senderId='" + senderId + '\'' +
                 ", receiverId='" + receiverId + '\'' +
                 ", msgBody='" + msgBody + '\'' +
-                ", friendImg='" + "img" + '\'' +
                 ", msgTime='" + msgTime + '\'' +
                 ", fontStyle='" + fontStyle + '\'' +
                 ", fontColor='" + fontColor + '\'' +

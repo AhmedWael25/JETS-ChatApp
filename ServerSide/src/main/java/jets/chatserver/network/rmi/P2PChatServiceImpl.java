@@ -2,13 +2,10 @@ package jets.chatserver.network.rmi;
 
 import commons.remotes.client.ClientInterface;
 import commons.remotes.server.P2PChatServiceInt;
-import commons.sharedmodels.InvitationDto;
-import commons.sharedmodels.MessageDto;
+import commons.sharedmodels.P2PMessageDto;
 import commons.sharedmodels.P2PChatDto;
-import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.DBModels.DBP2PChat;
 import jets.chatserver.database.dao.P2PChatDao;
-import jets.chatserver.database.daoImpl.InvitationDaoImpl;
 import jets.chatserver.database.daoImpl.P2PChatDaoImpl;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 
@@ -50,7 +47,7 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
     }
 
     @Override
-    public void sendMessage(MessageDto msgDto) throws RemoteException {
+    public void sendMessage(P2PMessageDto msgDto) throws RemoteException {
 
         String receiverId = msgDto.getReceiverId();
 

@@ -2,7 +2,7 @@ package commons.remotes.client;
 
 import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.InvitationDto;
-import commons.sharedmodels.MessageDto;
+import commons.sharedmodels.P2PMessageDto;
 import commons.sharedmodels.P2PChatDto;
 
 import java.rmi.Remote;
@@ -17,7 +17,7 @@ public interface ClientInterface extends Remote {
 
     void sendNewGpChatToUsers(GpChatDto gpChatDto) throws RemoteException;
 
-    void sendNewMessageToUser(MessageDto msgDto) throws RemoteException;
+    void sendNewMessageToUser(P2PMessageDto msgDto) throws RemoteException;
 
 
     void forTesting(String userId) throws  RemoteException;
