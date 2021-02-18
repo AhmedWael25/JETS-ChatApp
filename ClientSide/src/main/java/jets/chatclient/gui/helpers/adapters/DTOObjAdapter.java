@@ -1,9 +1,6 @@
 package jets.chatclient.gui.helpers.adapters;
 
-import commons.sharedmodels.FriendGpDto;
-import commons.sharedmodels.GpChatDto;
-import commons.sharedmodels.InvitationDto;
-import commons.sharedmodels.P2PChatDto;
+import commons.sharedmodels.*;
 import commons.utils.ImageEncoderDecoder;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -39,6 +36,28 @@ public class DTOObjAdapter {
         invDto.setSenderImg(inv.getSenderImg());
         invDto.setInvitationContent(inv.getInvitationContent());
         return  invDto;
+    }
+
+    public static MessageModel convertDtoToObj(MessageDto msgDto){
+
+        MessageModel msg = new MessageModel();
+
+        msg.setMsgBody(msgDto.getMsgBody());
+        msg.setMsgTime(msgDto.getMsgTime());
+        msg.setFriendImg(msgDto.getFriendImg());
+
+        return  msg;
+    }
+
+    public static MessageDto convertObjToDto(MessageModel msg){
+
+        MessageDto msgDto = new MessageDto();
+
+        msgDto.setMsgBody(msg.getMsgBody());
+        msgDto.setMsgTime(msg.getMsgTime());
+        msgDto.setFriendImg(msg.getFriendImg());
+
+        return msgDto;
     }
 
     public static P2PChatModel convertDtoToObj(P2PChatDto chatDto){
@@ -100,6 +119,7 @@ public class DTOObjAdapter {
 
         return gpChatModel;
     }
+
 
     public static List<Invitation> convertDtoInvitationList(List<InvitationDto> invitationDtoList){
 

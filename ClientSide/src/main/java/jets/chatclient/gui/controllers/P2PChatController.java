@@ -2,32 +2,33 @@ package jets.chatclient.gui.controllers;
 
 import com.jfoenix.controls.*;
 import commons.remotes.server.P2PChatServiceInt;
+import commons.sharedmodels.MessageDto;
 import commons.sharedmodels.P2PChatDto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.Invitation;
+import jets.chatclient.gui.models.MessageModel;
 import jets.chatclient.gui.models.P2PChatModel;
 import jets.chatclient.gui.models.guimodels.P2PChatViewCell;
 
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class P2PChatController implements Initializable {
 
-    @FXML
-    private JFXScrollPane msgScrollPane;
     @FXML
     private AnchorPane friendChatPane;
     @FXML
@@ -47,15 +48,19 @@ public class P2PChatController implements Initializable {
     @FXML
     private JFXButton optionsBtn;
     @FXML
-    private JFXListView msgListView;
+    private ListView<MessageModel> msgListView;
     @FXML
     private JFXListView<P2PChatModel> chatCardListView;
 
     private ObservableList<P2PChatModel> chats = FXCollections.observableArrayList();
     private P2PChatServiceInt p2pChatService;
 
+    private Map<Integer, ObservableList<MessageModel>> messages = new HashMap<Integer, ObservableList<MessageModel>>();
+
     private String userIdDummy = "1";
 //    private String userIdDummy = "7";
+
+
 
 
     @Override
@@ -86,6 +91,26 @@ public class P2PChatController implements Initializable {
             });
         }).start();
     }
+
+    public void SendMessageToChat(MessageDto msgDto){
+        new Thread(() -> {
+            MessageModel messageModel = new MessageModel();
+            P2PChatModel p2pChatModel = new P2PChatModel();
+
+            ObservableList<MessageModel> msgList = FXCollections.observableArrayList();
+
+            messageModel = DTOObjAdapter.convertDtoToObj(msgDto);
+            MessageModel finalMessageModel = messageModel;
+
+            Platform.runLater(()->{
+                messages.put(p2pChatModel.getChatId(), msgList);
+                msgList.addAll(finalMessageModel);
+                msgListView.setItems(msgList);
+            });
+        }).start();
+    }
+
+
 //===================================RUNNABLES==========================
 
 
@@ -105,4 +130,5 @@ public class P2PChatController implements Initializable {
             chatCardListView.setCellFactory(param -> new P2PChatViewCell());
         });
     };
+
 }
