@@ -2,7 +2,7 @@ package jets.chatclient.gui.controllers;
 
 
 import com.jfoenix.controls.*;
-import commons.utils.ImageEncoderDecoder;
+import commons.utils.*;
 import commons.remotes.server.SignUpServiceInt;
 import commons.sharedmodels.CurrentUserDto;
 import javafx.event.ActionEvent;
@@ -11,12 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
-import commons.utils.ComboBoxUtils;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.User;
-import commons.utils.Countries;
-import commons.utils.Validators;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
@@ -27,6 +24,9 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 import java.util.ResourceBundle;
 import java.util.Arrays;
@@ -75,49 +75,37 @@ public class SignupController implements Initializable {
         }
         tfPhonenumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
 
+        //handling date picker
 
+        //age between 16-60
 
-       registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
+        final LocalDate minDate = LocalDate.now().minusYears(60);
+        final LocalDate maxDate = LocalDate.now().minusYears(16);
+        dpBirthdate.setValue(maxDate.minusYears(1));
+        DatePickerUtils.restrictDatePicker(dpBirthdate, minDate, maxDate);
 
+        registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
+
+        //handling combboxes
         btnRegister.requestFocus();
-        List<String> genders = Arrays.asList("male","female");
-        ComboBoxUtils.fillComboBox(cbGender,genders);
+        List<String> genders = Arrays.asList("male", "female");
+        ComboBoxUtils.fillComboBox(cbGender, genders);
         List<String> countries = Countries.getAll();
-        ComboBoxUtils.fillComboBox(cbCountry,countries);
+        ComboBoxUtils.fillComboBox(cbCountry, countries);
         ComboBoxUtils.makeComboSearchable(cbCountry);
 
-//        String s="";
-//        String p;
-//        Optional<String> salt = HashEncoder.generateSalt(20);
-//        if (salt.isPresent())
-//            s= salt.get();
-//        System.out.println(s);
-//        Optional<String> password = HashEncoder.hashPassword("asdasda55",phoneNumber);
-//        if(password.isPresent());
-//            p=password.get();
-//        System.out.println(p);
-//        boolean valid = HashEncoder.verifyPassword(newpassworedHased,oldPasswordHshed);
-//        System.out.println(valid);
 
-
+        Validators.buttonValidate(btnRegister,tfDisplayname,tfPhonenumber,cbCountry,cbGender,dpBirthdate);
 
         Validators.addNameValidator(tfDisplayname, fiDisplayName);
         Validators.addPhoneNumberValidator(tfPhonenumber, fiPhoneNumber);
-//        Validators.addRequiredValidator(tfPhonenumber, fiPhoneNumber);
         Validators.addPasswordValidator(pfPassword, fiPassword);
         Validators.addRequiredValidator(cbCountry, fiCountry);
-       // Validators.addRequiredValidator(cbGender, fiGender);
+        // Validators.addRequiredValidator(cbGender, fiGender);
         Validators.addRequiredValidator(dpBirthdate, fiCalendar);
 
 
-//        pfConfirmPassword.focusedProperty().addListener((o, old, foucs) -> fiPasswordConfirm.setIconColor(foucs ? pfConfirmPassword.getFocusColor() : pfConfirmPassword.getUnFocusColor()));
-
-        // binding data of current user
-//        tfUsername.textProperty().bindBidirectional(currentUserModel.usernameProperty());
-//        tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
-//        tfEmail.textProperty().bindBidirectional(currentUserModel.emailProperty());
     }
-
 
 
     public void handleLoginBtnClick(ActionEvent e) {
@@ -128,108 +116,86 @@ public class SignupController implements Initializable {
 
 
     public void handleSignupBtnClick(ActionEvent e) {
-        User user ;
+        User user;
         try {
 
             System.out.println(currentUserModel.getPhoneNumber());
-            int UserRegStatus = signUpService.checkUserExist(currentUserModel.getPhoneNumber(),tfDisplayname.getText());
+            int UserRegStatus = signUpService.checkUserExist(currentUserModel.getPhoneNumber(), tfDisplayname.getText());
             System.out.println(UserRegStatus);
             switch (UserRegStatus) {
-                case 1: //user registered // redirect to password
-               System.out.println("User already registered");
+                case 1: //user registered
+                    System.out.println("User already registered");
                     break;
-                case 2: //user not registered
+                case 2: //user registration successful
                     user = getUserData();
                     CurrentUserDto currentUserDto = DTOObjAdapter.convertToUserDto(user);
-                    if(signUpService.signUpUser(currentUserDto))
+                    System.out.println(currentUserDto);
+                    if (signUpService.signUpUser(currentUserDto)) {
                         System.out.println("user Registered Successfully");
-                    else System.out.println("user registration failed");
+                        registerLoginCoordinator.switchToLoginScreen();
+                    } else //user registration failed
+                        System.out.println("user registration failed");
                     break;
 
                 case 3://user registered by admin(no data saved for user)
                     user = getUserData();
                     currentUserDto = DTOObjAdapter.convertToUserDto(user);
-                    if(signUpService.signUpUser(currentUserDto))
-                    System.out.println("user updated Successfully");
+                    if (signUpService.signUpUser(currentUserDto))
+                        System.out.println("user updated Successfully");
                     else System.out.println("user registration failed");
                     break;
 
                 case 4:
                     System.out.println("username already exist");
+
             }
 
         } catch (RemoteException remoteException) {
             System.out.println("can't check credentials");
             remoteException.printStackTrace();
         }
-        registerLoginCoordinator.switchToLoginScreen();
-    }
 
-    public void fillComboBox(JFXComboBox<String> comboBox , List<String> values){
-
-//        values.stream().forEach(o -> comboBox.getItems().add(new Label(o.toString())));
-        values.stream().forEach(o -> comboBox.getItems().add(o));
-        comboBox.setEditable(true);
-//        comboBox.setConverter(new StringConverter<Label>() {
-//            @Override
-//            public String toString(Label object) {
-//                return object==null?"": object.getText();
-//            }
-//            @Override
-//            public Label fromString(String string) {
-//                return new Label(string);
-//            }
-//        });
-    }
-
-    public void searchComboBox(JFXComboBox<String> comboBox){
-        JFXAutoCompletePopup<String> autoCompletePopup = new JFXAutoCompletePopup<>();
-        autoCompletePopup.getSuggestions().addAll(comboBox.getItems());
-        autoCompletePopup.hide();
-
-//SelectionHandler sets the value of the comboBox
-        autoCompletePopup.setSelectionHandler(event -> {
-            comboBox.setValue(event.getObject());
-        });
-
-        TextField editor = comboBox.getEditor();
-        editor.textProperty().addListener(observable -> {
-            //The filter method uses the Predicate to filter the Suggestions defined above
-            //I choose to use the contains method while ignoring cases
-            autoCompletePopup.filter(item -> item.toLowerCase().startsWith(editor.getText().toLowerCase()));
-            //Hide the autocomplete popup if the filtered suggestions is empty or when the box's original popup is open
-            if (autoCompletePopup.getFilteredSuggestions().isEmpty() || comboBox.showingProperty().get()) {
-                autoCompletePopup.hide();
-            }
-            else {
-                autoCompletePopup.show(editor);
-            }
-        });
     }
 
 
+    public User getUserData() {
+        String userDefaultImage = "";
+        ImageEncoderDecoder imageEncoderDecoder = new ImageEncoderDecoder();
+        try {
+            File f = new File(getClass().getResource("/images/userDefaultImage.png").getPath());
+            userDefaultImage = imageEncoderDecoder.getEncodedImage(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        User user = new User();
 
-  public User getUserData (){
-      String userDefaultImage ="";
-      ImageEncoderDecoder imageEncoderDecoder = new ImageEncoderDecoder();
-      try {
-          File f = new File(getClass().getResource("/images/userDefaultImage.png").getPath());
-         userDefaultImage = imageEncoderDecoder.getEncodedImage(f);
-      } catch (IOException e) {
-          e.printStackTrace();
-      }
-      User user = new User();
+        //handle password
+        String salt = "SKgTpccoOReOUvXS/ORKuY1+mC0=";
+        //used in case of making salt field in db
+//      Optional<String> optionalSalt = HashEncoder.generateSalt(LocalDateTime.now().getSecond());
+//      if (optionalSalt.isPresent());
+//      salt=sal.get();
+//
+        String password = "";
+        Optional<String> optionalpassword = HashEncoder.hashPassword(pfPassword.getText(), salt);
+        if (optionalpassword.isPresent()) ;
+        password = optionalpassword.get();
+
         user.setUserPhone(tfPhonenumber.getText());
         user.setUserName(tfDisplayname.getText());
+        user.setUserGender(cbGender.getValue());
+        //to intialize field only
+        user.setUserEmail("");
         user.setUserCountry(cbCountry.getValue());
-        user.setUserGender("female");
+        //to intialize field only
+        user.setUserBio("");
         user.setUserImage(userDefaultImage);
         user.setUserDateOfBirth(dpBirthdate.getValue().toString());
-        user.setUserPassword(pfPassword.getText());
+        user.setUserPassword(password);
         user.setUserAvailability(1);
         user.setUserStatus(1);
 
-      return user;
+        return user;
 
     }
 }

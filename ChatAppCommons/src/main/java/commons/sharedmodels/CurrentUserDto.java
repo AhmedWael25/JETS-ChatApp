@@ -3,6 +3,8 @@ package commons.sharedmodels;
 import java.io.Serializable;
 
 public class CurrentUserDto implements Serializable {
+
+
     private String userPhone;
     private String userName;
     private String userGender;
@@ -106,20 +108,24 @@ public class CurrentUserDto implements Serializable {
 
 
 
-
-
-
-
     @Override
     public String toString() {
         return "CurrentUserDto{" +
-                "userId='" + userPhone + '\'' +
+                "userPhone='" + userPhone + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userGender='" + userGender + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 ", userCountry='" + userCountry + '\'' +
                 ", userBio='" + userBio + '\'' +
-                ", userImage='" + userImage + '\'' +
+                ", userImage='" + "userImage" + '\'' +
+                ", password='" + password + '\'' +
+                ", dob='" + dob + '\'' +
+                ", status=" + status +
+                ", availability=" + availability +
                 '}';
     }
+
+
+
+
 }

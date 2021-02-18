@@ -1,69 +1,48 @@
 package jets.chatclient.gui.models;
 
-import java.time.LocalDate;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.image.Image;
 
 import javafx.scene.paint.ImagePattern;
 
 public class CurrentUserModel {
 
-    private StringProperty userName = new SimpleStringProperty();
+    private StringProperty displayName = new SimpleStringProperty();
     //TODO handle password availability,shouldn't be stored here
     private StringProperty phoneNumber = new SimpleStringProperty();
-    private StringProperty displayName = new SimpleStringProperty();
     private StringProperty emailAddress = new SimpleStringProperty();
     private ObjectProperty<Image> image = new SimpleObjectProperty<Image>();
     private StringProperty gender = new SimpleStringProperty();
     private StringProperty country = new SimpleStringProperty();
-
-
-    //    private ObjectProperty<LocalDate> birthdayDate = new SimpleObjectProperty<LocalDate>();
     private StringProperty birthdayDate = new SimpleStringProperty();
     private StringProperty bio = new SimpleStringProperty();
-    private ObjectProperty<ImagePattern> imagePattern = new SimpleObjectProperty<ImagePattern>();
-
-    private ObjectProperty<Image> userImage = new SimpleObjectProperty<Image>();
-
+    private SimpleIntegerProperty availability = new SimpleIntegerProperty();
+    private SimpleIntegerProperty status = new SimpleIntegerProperty();
 
 
-//    private static CurrentUserModel currentUser_instance = null;
-//
-//    private CurrentUserModel(){}
-//
-//    public static CurrentUserModel getInstance(){
-//        if (currentUser_instance == null)
-//            currentUser_instance = new CurrentUserModel();
-//        return currentUser_instance;
-//    }
-
-
-    public String getUserName() {
-        return userName.get();
+    public Integer getAvailability() {
+        return availability.get();
     }
 
-    public StringProperty userNameProperty() {
-        return userName;
+    public void setAvailability(Integer availability) {
+        this.availability.set(availability);
     }
 
-    public void setUserName(String userName) {
-        this.userName.set(userName);
+    public IntegerProperty availabilityProperty() {
+        return availability;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber.get();
+    public Integer getStatus() {
+        return status.get();
     }
 
-    public StringProperty phoneNumberProperty() {
-        return phoneNumber;
+    public void setStatus(Integer status) {
+        this.status.set(status);
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber.set(phoneNumber);
+    public IntegerProperty statusProperty() {
+        return status;
     }
 
     public String getDisplayName() {
@@ -76,6 +55,18 @@ public class CurrentUserModel {
 
     public void setDisplayName(String displayName) {
         this.displayName.set(displayName);
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber.get();
+    }
+
+    public StringProperty phoneNumberProperty() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber.set(phoneNumber);
     }
 
     public String getEmailAddress() {
@@ -127,19 +118,6 @@ public class CurrentUserModel {
         this.image.set(image);
     }
 
-//    public ObjectProperty<LocalDate> birthdayDateProperty() {
-//        return birthdayDate;
-//    }
-//
-//    public LocalDate getBirthdayDate() {
-//        return birthdayDate.get();
-//    }
-//
-//    public void setBirthdayDate(LocalDate birthdayDate) {
-//        this.birthdayDate.set(birthdayDate);
-//    }
-
-
     public String getBirthdayDate() {
         return birthdayDate.get();
     }
@@ -151,6 +129,7 @@ public class CurrentUserModel {
     public void setBirthdayDate(String birthdayDate) {
         this.birthdayDate.set(birthdayDate);
     }
+
     public String getBio() {
         return bio.get();
     }
@@ -166,7 +145,7 @@ public class CurrentUserModel {
     @Override
     public String toString() {
         return "CurrentUserModel{" +
-                "userName=" + userName +
+                "userName=" + displayName +
                 ", phoneNumber=" + phoneNumber +
                 ", displayName=" + displayName +
                 ", emailAddress=" + emailAddress +
@@ -177,32 +156,5 @@ public class CurrentUserModel {
                 ", bio=" + bio +
                 '}';
     }
-
-
-    public ImagePattern getImagePattern() {
-        return imagePattern.get();
-    }
-
-    public ObjectProperty<ImagePattern> imagePatternProperty() {
-        return imagePattern;
-    }
-
-    public void setImagePattern(ImagePattern imagePattern) {
-        this.imagePattern.set(imagePattern);
-    }
-
-    public Image getUserImage() {
-        return userImage.get();
-    }
-
-    public ObjectProperty<Image> userImageProperty() {
-        return userImage;
-    }
-
-    public void setUserImage(Image userImage) {
-        this.userImage.set(userImage);
-    }
-
-
 
 }

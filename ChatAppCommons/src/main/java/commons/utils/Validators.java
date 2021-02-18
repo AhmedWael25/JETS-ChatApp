@@ -1,9 +1,6 @@
 package commons.utils;
 
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.jfoenix.validation.RegexValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.application.Platform;
@@ -18,21 +15,40 @@ public class Validators {
     //TODO Make mail Validator
     //TODO Bind validation to Button OnAction
     //acceptable name form {8-20 chars, may contain _,. but not folowing, no Spaces allowed}
-    final static String displayNameRegex = "^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+    final static String displayNameRegex = "^(?=.{8,20}$)(?![_. ])(?!.*[_. ]{2})[a-zA-Z0-9 ._]+(?<![_. ])$";
     final static String invalidDisplayNameMsg = "name must be 8-20 valid letters !";
 
     //acceptable phone form {11 numbers, starts with 01, followed by 0/1/2/5}
     //should be changed
     final static String phoneNumberRegex = "^01[0125]\\d{8}$";
-    final static String invalidPhoneNumberMsg = "phoneNumber must be 11 digit valid phone number !";
+    final static String invalidPhoneNumberMsg = "phoneNumber format is 01********* !";
 
     //acceptable password form {8 chars at least, contains uppercase,lower case,number, and special char }
-    final static String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-    final static String invalidPasswordMsg = "password must be 8-20 chars. !";
+    final static String passwordRegex = "^(?=.*[a-zA-z0-9@#$%^&+=])(?=\\S*$).{8,}$";
+    final static String invalidPasswordMsg = "password must be 8 chars at least !";
+
 
     //required Msg
     final static String requiredMsg = "Required";
 
+
+    public static void buttonValidate(JFXButton btn, Parent... fields) {
+        btn.setDisable(true);
+        for (Parent field : fields) {
+            if (field instanceof JFXComboBox) {
+                btn.setDisable(((JFXComboBox<String>) field).validate() ? false : true);
+            }
+            if (field instanceof JFXDatePicker) {
+                btn.setDisable(((JFXDatePicker) field).validate() ? false : true);
+            }
+            if (field instanceof JFXTextField) {
+                btn.setDisable(((JFXTextField) field).validate() ? false : true);
+            }
+            if (field instanceof JFXPasswordField) {
+                btn.setDisable(((JFXPasswordField) field).validate() ? false : true);
+            }
+        }
+    }
 
     public static JFXTextField addNameValidator(JFXTextField field, FontIcon fi) {
         RegexValidator dispalynameValidator = getRegexValidator(displayNameRegex, invalidDisplayNameMsg);

@@ -9,14 +9,13 @@ import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.User;
 
 import java.io.ByteArrayInputStream;
-import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DTOObjAdapter {
 
-
+    //invitation received handling
     public static Invitation convertDtoToObj(InvitationDto invitationDto) {
         Invitation inv = new Invitation();
         inv.setSenderId(invitationDto.getSenderId());
@@ -28,7 +27,7 @@ public class DTOObjAdapter {
         inv.setInvitationContent(invitationDto.getInvitationContent());
         return inv;
     }
-
+    //invitation sent handling
     public static InvitationDto convertObjToDto(Invitation inv) {
         InvitationDto invDto = new InvitationDto();
         invDto.setSenderId(inv.getSenderId());
@@ -53,16 +52,15 @@ public class DTOObjAdapter {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUser = modelsFactory.getCurrentUserModel();
 
+        currentUser.setDisplayName(currentUserDto.getUserName());
         currentUser.setPhoneNumber(currentUserDto.getUserPhone());
-        currentUser.setUserName(currentUserDto.getUserName());
-        currentUser.setGender(currentUserDto.getUserGender());
         currentUser.setEmailAddress(currentUserDto.getUserEmail());
+        currentUser.setGender(currentUserDto.getUserGender());
         currentUser.setCountry(currentUserDto.getUserCountry());
-        //TODO handle the problem with Local date
-        //the problem is birth date isn't stored
-//        currentUser.setBirthdayDate(LocalDate.parse(currentUserDto.getUserBirthDate()) );
+        currentUser.setBirthdayDate(currentUserDto.getDob());
         currentUser.setBio(currentUserDto.getUserBio());
-
+        currentUser.setAvailability(currentUserDto.getAvailability());
+        currentUser.setStatus(currentUserDto.getStatus());
 
         //handling Image conversion
         byte[] imgBytes = Base64.getDecoder().decode(currentUserDto.getUserImage());
@@ -76,7 +74,7 @@ public class DTOObjAdapter {
         CurrentUserDto userDto = new CurrentUserDto();
         //TODO complete conversion methods
         userDto.setUserPhone(currentUser.getPhoneNumber());
-        userDto.setUserName(currentUser.getUserName());
+        userDto.setUserName(currentUser.getDisplayName());
         userDto.setUserGender(currentUser.getGender());
         userDto.setUserEmail(currentUser.getEmailAddress());
         userDto.setUserCountry(currentUser.getCountry());
@@ -87,6 +85,7 @@ public class DTOObjAdapter {
         return userDto;
     }
 
+    //to handle register
     public static CurrentUserDto convertToUserDto(User user) {
         CurrentUserDto userDto = new CurrentUserDto();
 
@@ -94,8 +93,8 @@ public class DTOObjAdapter {
         userDto.setUserName(user.getUserName());
         userDto.setUserCountry(user.getUserCountry());
         userDto.setUserGender(user.getUserGender());
-        //  userDto.setUserEmail(user.getUserEmail());
-        //  userDto.setUserBio(user.getUserBio());
+        userDto.setUserEmail(user.getUserEmail());
+        userDto.setUserBio(user.getUserBio());
         userDto.setPassword(user.getUserPassword());
         userDto.setUserImage(user.getUserImage());
         userDto.setDob(user.getUserDateOfBirth());

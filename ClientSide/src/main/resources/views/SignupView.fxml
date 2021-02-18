@@ -39,11 +39,11 @@
             </rowConstraints>
             <children>
                 <JFXTextField fx:id="tfDisplayname" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="240.0" promptText="Display Name" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
-                <JFXComboBox fx:id="cbCountry" maxWidth="240.0" prefHeight="25.0" prefWidth="240.0" promptText="Country" style="-jfx-label-float: true;" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <JFXComboBox fx:id="cbCountry" editable="true" labelFloat="true" maxWidth="240.0" prefHeight="25.0" prefWidth="240.0" promptText="Country" style="-jfx-label-float: true;" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <JFXTextField fx:id="tfPhonenumber" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="240.0" promptText="Phone Number" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <JFXPasswordField fx:id="pfPassword" focusColor="#304269" labelFloat="true" prefHeight="25.0" prefWidth="240.0" promptText="Password" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
                 <JFXDatePicker fx:id="dpBirthdate" defaultColor="#304269" editable="false" prefHeight="28.0" prefWidth="282.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <JFXComboBox fx:id="cbGender" prefHeight="25.0" prefWidth="83.0" promptText="Gender" style="-jfx-label-float: true;" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <JFXComboBox fx:id="cbGender" labelFloat="true" prefHeight="25.0" prefWidth="83.0" promptText="Gender" style="-jfx-label-float: true;" unFocusColor="#636b61" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                 <FontIcon fx:id="fiDisplayName" iconColor="#636b61" iconLiteral="far-user" iconSize="25" styleClass="fonticon" wrappingWidth="18.666664123535156" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" />
                 <FontIcon fx:id="fiCountry" iconColor="#636b61" iconLiteral="fas-map-marked-alt" iconSize="25" styleClass="fonticon" wrappingWidth="18.666664123535156" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                 <FontIcon fx:id="fiPhoneNumber" iconColor="#636b61" iconLiteral="fas-phone" iconSize="25" layoutX="20.0" layoutY="127.0" wrappingWidth="25.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" />

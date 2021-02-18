@@ -133,7 +133,7 @@ public class UserProfileController {
         // fill the new data in userModel
         CurrentUserModel updatedUserModel = new CurrentUserModel();
 
-        updatedUserModel.setUserName(userName.getText());
+        updatedUserModel.setDisplayName(userName.getText());
         updatedUserModel.setPhoneNumber(phoneNumber.getText());
         updatedUserModel.setEmailAddress(emailAddress.getText());
         updatedUserModel.setBirthdayDate(birtdayPicker.getValue().toString());
@@ -262,7 +262,7 @@ public class UserProfileController {
         userDataBox.setDisable(true);
 
         //----------------- load the default pic -------------------//
-        if(currentUserModel.getUserImage() == null){
+        if(currentUserModel.getImage() == null){
             URL imageUrl = this.getClass().getResource("/images/userDefaultImage.png");
             setProfilePic(imageUrl.getPath());
         }
@@ -293,7 +293,7 @@ public class UserProfileController {
         Image im = new Image("file:" + imagePath, false);
         profilePic.setFill(new ImagePattern(im));
         //Update the current user value
-        currentUserModel.setUserImage(im);
+        currentUserModel.setImage(im);
 
     }
 
@@ -326,9 +326,9 @@ public class UserProfileController {
     void bindNodes(CurrentUserModel currentUserModel) {
 
         //--------------------------Start binding----------------------------//
-        displayName.textProperty().bindBidirectional(currentUserModel.userNameProperty());
+        displayName.textProperty().bindBidirectional(currentUserModel.displayNameProperty());
         bioTextArea.textProperty().bindBidirectional(currentUserModel.bioProperty());
-        userName.textProperty().bindBidirectional(currentUserModel.userNameProperty());
+        userName.textProperty().bindBidirectional(currentUserModel.displayNameProperty());
         phoneNumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
         emailAddress.textProperty().bindBidirectional(currentUserModel.emailAddressProperty());
         countriesComboBox.valueProperty().bindBidirectional(currentUserModel.countryProperty());

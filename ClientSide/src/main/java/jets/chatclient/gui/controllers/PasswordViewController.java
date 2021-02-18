@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import commons.remotes.server.SignInServiceInt;
 import commons.sharedmodels.CurrentUserDto;
+import commons.utils.HashEncoder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,6 +20,7 @@ import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class PasswordViewController implements Initializable {
@@ -60,6 +62,9 @@ public class PasswordViewController implements Initializable {
     public void handleSignIn(ActionEvent event) {
         stageCoordinator = StageCoordinator.getInstance();
         try {
+            //handle password
+            //TODO generate salt automatically
+
             boolean verified = signInService.checkUserCredentials(currentUserModel.getPhoneNumber(), pfPassword.getText());
             System.out.println(verified);
             if (verified) {

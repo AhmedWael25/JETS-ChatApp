@@ -2,6 +2,7 @@ package jets.chatserver.network.rmi;
 
 import commons.remotes.server.SignInServiceInt;
 import commons.sharedmodels.CurrentUserDto;
+import commons.utils.HashEncoder;
 import jets.chatserver.DBModels.DBUser;
 import jets.chatserver.DBModels.DBUserCredintials;
 import jets.chatserver.database.dao.UserDao;
@@ -11,6 +12,7 @@ import jets.chatserver.network.adapters.EntityObjAdapter;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.Optional;
 
 public class SignInServiceImpl extends UnicastRemoteObject implements SignInServiceInt {
 
@@ -69,7 +71,15 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        if (userCredintials.getUserPassword().equals(userPassword))
+        //handling password
+        //TODO fetch salt from DB , and add it to userCredintials class
+        String salt="SKgTpccoOReOUvXS/ORKuY1+mC0=";
+        String password="";
+        Optional<String> optionalpassword = HashEncoder.hashPassword(userPassword,salt);
+        if(optionalpassword.isPresent());
+        password=optionalpassword.get();
+
+        if(HashEncoder.verifyPassword(userCredintials.getUserPassword(),password))
             return true;
         else return false;
     }
