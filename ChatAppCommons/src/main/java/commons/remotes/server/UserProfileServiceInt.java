@@ -12,4 +12,5 @@ public interface UserProfileServiceInt extends Remote {
     boolean updateUserData(CurrentUserDto currentUserDto, String userId) throws  RemoteException;
     boolean updateProfilePic(String newImageString, String userId) throws RemoteException;
     boolean updateUserStatus(int status, String userId) throws RemoteException;
+    boolean updateUserPassword(String newPassword, String userId) throws RemoteException;
 }

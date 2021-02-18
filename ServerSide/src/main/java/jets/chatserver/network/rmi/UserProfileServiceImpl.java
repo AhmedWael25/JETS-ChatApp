@@ -74,6 +74,18 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
             return false;
         }
 
-    };
+    }
+
+    @Override
+    public boolean updateUserPassword(String newPassword, String userId) throws RemoteException {
+
+        try {
+            return UserDaoImpl.getUserDaoInstance().updateDBUserPassword(newPassword, userId);
+        } catch (SQLException e) {
+            System.out.println("Unable to Update Password.");
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

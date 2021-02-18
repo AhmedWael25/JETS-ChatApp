@@ -40,6 +40,8 @@ public interface UserDao {
 
     boolean updateDBUserPhoto(String EncodedImage, String userId) throws SQLException;
 
-    public boolean updateDBUserStatus(int userStatus, String userId) throws SQLException;
+    boolean updateDBUserStatus(int userStatus, String userId) throws SQLException;
+
+    boolean updateDBUserPassword(String newPassword, String userId) throws SQLException;
 
 }
