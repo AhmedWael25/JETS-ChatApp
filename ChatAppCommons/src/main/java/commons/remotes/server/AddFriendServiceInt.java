@@ -10,5 +10,5 @@ public interface AddFriendServiceInt extends Remote {
 
     boolean addFriend(String userId,String friendId) throws RemoteException;
     List<FriendGpDto> fetchAllFriendsByUserId(String userId)throws RemoteException;
-
+    boolean areFriends(String userId, String  friendId)throws  RemoteException;
 }

@@ -53,20 +53,26 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
             P2PChatDao p2pChatDao = P2PChatDaoImpl.getP2PChatDaoInstance();
             p2pChatDao.addChat(participant1,participant2);
 
-            //TODO Call Back Client And Add Chat To List Of Current Running Chats.
-            //TODO The Chat Will be Added to Both Users OFC
+            //Call Back Client And Add Chat To List Of Current Running Chats.
+            // The Chat Will be Added to Both Users OFC
+
+            //First Check if Both Users are online
+
+
+
             ClientInterface client1 = currentConnectedUsers.get(participant1);
             ClientInterface client2 = currentConnectedUsers.get(participant2);
 
-            DBP2PChat dbChat1 = p2pChatDao.fetchChatBetweenUsers(participant1, participant2);
-            DBP2PChat dbChat2 = p2pChatDao.fetchChatBetweenUsers(participant2, participant1);
-
-            P2PChatDto chatDto1 = EntityDTOAdapter.convertEntityToDto(dbChat1);
-            P2PChatDto chatDto2 = EntityDTOAdapter.convertEntityToDto(dbChat2);
-
-            client1.sendNewChatToUser(chatDto1);
-            client2.sendNewChatToUser(chatDto2);
-
+            if(client1 != null){
+                DBP2PChat dbChat1 = p2pChatDao.fetchChatBetweenUsers(participant1, participant2);
+                P2PChatDto chatDto1 = EntityDTOAdapter.convertEntityToDto(dbChat1);
+                client1.sendNewChatToUser(chatDto1);
+            }
+            if(client2 != null){
+                DBP2PChat dbChat2 = p2pChatDao.fetchChatBetweenUsers(participant2, participant1);
+                P2PChatDto chatDto2 = EntityDTOAdapter.convertEntityToDto(dbChat2);
+                client2.sendNewChatToUser(chatDto2);
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -89,6 +95,18 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
             e.printStackTrace();
         }
         return friendGpDtoList;
+    }
+
+    @Override
+    public boolean areFriends(String userId, String friendId) throws RemoteException {
+        boolean areFriend = false;
+        try {
+            FriendsDao friendsDao = FriendsDaoImpl.getFriendsDaoInstance();
+            areFriend = friendsDao.areFriends(userId,friendId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return areFriend;
     }
 
 }

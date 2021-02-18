@@ -1,6 +1,7 @@
 package jets.chatclient.gui.models;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 public class ParticipantModel {
@@ -41,6 +42,11 @@ public class ParticipantModel {
 
     public void setParticipantImage(Image participantImage) {
         this.participantImage = participantImage;
+        participantImg.setFill(new ImagePattern(participantImage));
+    }
+
+    public  void bindToParticipantImg(Circle c){
+        c.fillProperty().bind(this.participantImg.fillProperty());
     }
 
 

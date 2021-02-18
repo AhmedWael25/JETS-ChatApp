@@ -44,7 +44,6 @@ public class DTOObjAdapter {
 
         msg.setMsgBody(msgDto.getMsgBody());
         msg.setMsgTime(msgDto.getMsgTime());
-        msg.setFriendImg(msgDto.getFriendImg());
 
         return  msg;
     }
@@ -55,7 +54,6 @@ public class DTOObjAdapter {
 
         msgDto.setMsgBody(msg.getMsgBody());
         msgDto.setMsgTime(msg.getMsgTime());
-        msgDto.setFriendImg(msg.getFriendImg());
 
         return msgDto;
     }
@@ -120,6 +118,33 @@ public class DTOObjAdapter {
         return gpChatModel;
     }
 
+
+
+    public  static GpMessageModel convertDtoToObj(GpMessageDto dto){
+        GpMessageModel msgModel = new GpMessageModel();
+
+        msgModel.setMsgContent(dto.getMsgContent());
+        msgModel.setMsgType(dto.getMsgType());
+        msgModel.setTimeStamp(dto.getTimeStamp());
+        msgModel.setSenderId(dto.getSenderId());
+        msgModel.setSenderName(dto.getSenderName());
+        msgModel.setChatId(dto.getChatId());
+
+        return  msgModel;
+    }
+
+    public  static GpMessageDto convertoObjToDto(GpMessageModel model){
+        GpMessageDto dto = new GpMessageDto();
+
+        dto.setMsgContent(model.getMsgContent());
+        dto.setMsgType(model.getMsgType());
+        dto.setTimeStamp(model.getTimeStamp());
+        dto.setSenderId(model.getSenderId());
+        dto.setSenderName(model.getSenderName());
+        dto.setChatId(model.getChatId());
+
+        return  dto;
+    }
 
     public static List<Invitation> convertDtoInvitationList(List<InvitationDto> invitationDtoList){
 
