@@ -98,8 +98,8 @@ public class DTOObjAdapter {
         return gpChatModel;
     }
 
-    public  static  MessageModel convertDtoToObj(MessageDto dto){
-        MessageModel msgModel = new MessageModel();
+    public  static GpMessageModel convertDtoToObj(GpMessageDto dto){
+        GpMessageModel msgModel = new GpMessageModel();
 
         msgModel.setMsgContent(dto.getMsgContent());
         msgModel.setMsgType(dto.getMsgType());
@@ -111,8 +111,8 @@ public class DTOObjAdapter {
         return  msgModel;
     }
 
-    public  static  MessageDto convertoObjToDto(MessageModel model){
-        MessageDto dto = new MessageDto();
+    public  static GpMessageDto convertoObjToDto(GpMessageModel model){
+        GpMessageDto dto = new GpMessageDto();
 
         dto.setMsgContent(model.getMsgContent());
         dto.setMsgType(model.getMsgType());

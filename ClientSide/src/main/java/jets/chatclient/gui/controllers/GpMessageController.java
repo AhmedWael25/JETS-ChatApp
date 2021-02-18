@@ -1,39 +1,16 @@
 package jets.chatclient.gui.controllers;
 
-import com.jfoenix.controls.JFXButton;
-import com.mysql.cj.protocol.Message;
-import commons.remotes.server.AddFriendServiceInt;
-import commons.remotes.server.InvitationServiceInt;
-import commons.sharedmodels.MessageDto;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import jets.chatclient.gui.helpers.ControllersGetter;
 import jets.chatclient.gui.helpers.GpChatsManager;
 import jets.chatclient.gui.helpers.ModelsFactory;
-import jets.chatclient.gui.helpers.ServicesFactory;
-import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
-import jets.chatclient.gui.models.FriendModel;
-import jets.chatclient.gui.models.Invitation;
-import jets.chatclient.gui.models.MessageModel;
+import jets.chatclient.gui.models.GpMessageModel;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.URL;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.util.Base64;
-import java.util.ResourceBundle;
-
 
 
 public class GpMessageController {
@@ -64,7 +41,7 @@ public class GpMessageController {
         }
     }
 
-    public void setData(MessageModel msg){
+    public void setData(GpMessageModel msg){
         //TODO If I Am the user Bind on ME
         GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
         Circle participantImg = gpChatsManager.getParticipantImg(msg.getChatId(), msg.getSenderId());

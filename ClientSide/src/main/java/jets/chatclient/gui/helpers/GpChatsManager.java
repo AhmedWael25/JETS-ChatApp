@@ -1,12 +1,12 @@
 package jets.chatclient.gui.helpers;
 
-import commons.sharedmodels.MessageDto;
+import commons.sharedmodels.GpMessageDto;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 import jets.chatclient.gui.controllers.GroupChatController;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.GpChatModel;
-import jets.chatclient.gui.models.MessageModel;
+import jets.chatclient.gui.models.GpMessageModel;
 import jets.chatclient.gui.models.ParticipantModel;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ public class GpChatsManager {
 
 
     private Map<Integer, GpChatModel> chatsMap = new ConcurrentHashMap<>();
-    private Map<Integer, List<MessageModel>> chatMsgs = new ConcurrentHashMap<>();
+    private Map<Integer, List<GpMessageModel>> chatMsgs = new ConcurrentHashMap<>();
     private Integer activeChat ;
 
     public void updateParticipantImg(String id,Image img){
@@ -53,8 +53,8 @@ public class GpChatsManager {
         return  chatsMap.get(chatId);
     }
 
-    public  void addMsg(MessageModel msg){
-        List<MessageModel>msgList = chatMsgs.getOrDefault(msg.getChatId(), new ArrayList<>());
+    public  void addMsg(GpMessageModel msg){
+        List<GpMessageModel>msgList = chatMsgs.getOrDefault(msg.getChatId(), new ArrayList<>());
         msgList.add(msg);
         chatMsgs.put(msg.getChatId(), msgList);
     }
@@ -73,20 +73,20 @@ public class GpChatsManager {
         return activeChat;
     }
 
-    public  List<MessageModel> getActiveChatMsgList(){
-        return chatMsgs.getOrDefault(activeChat,new ArrayList<MessageModel>());
+    public  List<GpMessageModel> getActiveChatMsgList(){
+        return chatMsgs.getOrDefault(activeChat,new ArrayList<GpMessageModel>());
     }
 
-    public  List<MessageModel> getMsgList(Integer chatId){
-        return chatMsgs.getOrDefault(chatId,new ArrayList<MessageModel>());
+    public  List<GpMessageModel> getMsgList(Integer chatId){
+        return chatMsgs.getOrDefault(chatId,new ArrayList<GpMessageModel>());
     }
 
     public void setActiveChat(Integer activeChat) {
         this.activeChat = activeChat;
     }
 
-    public  void addMsg(MessageDto messageDto){
-        MessageModel msg = DTOObjAdapter.convertDtoToObj(messageDto);
+    public  void addMsg(GpMessageDto gpMessageDto){
+        GpMessageModel msg = DTOObjAdapter.convertDtoToObj(gpMessageDto);
         addMsg(msg);
         if(activeChat.equals(msg.getChatId())){
             ControllersGetter controllersGetter = ControllersGetter.getInstance();

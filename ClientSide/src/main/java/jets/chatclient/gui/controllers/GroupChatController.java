@@ -3,7 +3,6 @@ package jets.chatclient.gui.controllers;
 import com.jfoenix.controls.*;
 import commons.remotes.server.GpChatServiceInt;
 import commons.sharedmodels.GpChatDto;
-import commons.sharedmodels.MessageDto;
 import commons.sharedmodels.MsgType;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -18,17 +17,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jets.chatclient.gui.helpers.GpChatsManager;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
-import jets.chatclient.gui.models.FriendModel;
 import jets.chatclient.gui.models.GpChatModel;
-import jets.chatclient.gui.models.MessageModel;
-import jets.chatclient.gui.models.P2PChatModel;
+import jets.chatclient.gui.models.GpMessageModel;
 import jets.chatclient.gui.models.guimodels.GPChatMsgViewCell;
 import jets.chatclient.gui.models.guimodels.GpChatViewCell;
 
@@ -39,7 +35,6 @@ import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class GroupChatController implements Initializable {
@@ -77,7 +72,7 @@ public class GroupChatController implements Initializable {
     @FXML
     private JFXButton optionsBtn;
     @FXML
-    private JFXListView<MessageModel> msgListView;
+    private JFXListView<GpMessageModel> msgListView;
 
     //Map That will hold gpchatId And List of it's Messages;
     private Integer activeChatId;
@@ -85,7 +80,7 @@ public class GroupChatController implements Initializable {
     private GpChatServiceInt gpChatService;
 
     private ObservableList<GpChatModel> chats = FXCollections.observableArrayList();
-    private ObservableList<MessageModel> msgs = FXCollections.observableArrayList();
+    private ObservableList<GpMessageModel> msgs = FXCollections.observableArrayList();
 
     //TODO CHange To curr user model
     private String userIdDummy = "3";
@@ -137,7 +132,7 @@ public class GroupChatController implements Initializable {
     public void sendMessage(ActionEvent actionEvent) {
         new Thread(() ->{
             //--Construct Message Model Object
-            MessageModel msg = createMsgModel();
+            GpMessageModel msg = createMsgModel();
             //--Send Msg Over The Network
             try {
                 gpChatService.sendMessage(DTOObjAdapter.convertoObjToDto(msg));
@@ -150,6 +145,7 @@ public class GroupChatController implements Initializable {
             Platform.runLater(()->{
                 msgs.add(msg);
                 msgListView.setItems(msgs);
+                typingArea.clear();
             });
         }).start();
     }
@@ -177,7 +173,7 @@ public class GroupChatController implements Initializable {
         });
     }
 
-    public void addMsgToUi(MessageModel model){
+    public void addMsgToUi(GpMessageModel model){
         msgs.add(model);
         msgListView.setItems(msgs);
 //        msgListView.setCellFactory(param -> new GPChatMsgViewCell());
@@ -187,8 +183,8 @@ public class GroupChatController implements Initializable {
     public  void closeCreationAlert(){
         alert.hide();
     }
-    private MessageModel createMsgModel(){
-        MessageModel  msg = new MessageModel();
+    private GpMessageModel createMsgModel(){
+        GpMessageModel msg = new GpMessageModel();
 
         msg.setChatId(gpChatsManager.getActiveChat());
         msg.setMsgType(MsgType.TEXT);

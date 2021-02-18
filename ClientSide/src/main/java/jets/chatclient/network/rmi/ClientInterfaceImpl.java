@@ -3,7 +3,7 @@ package jets.chatclient.network.rmi;
 import commons.remotes.client.ClientInterface;
 import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.InvitationDto;
-import commons.sharedmodels.MessageDto;
+import commons.sharedmodels.GpMessageDto;
 import commons.sharedmodels.P2PChatDto;
 import jets.chatclient.gui.controllers.ContactsController;
 import jets.chatclient.gui.controllers.P2PChatController;
@@ -49,9 +49,9 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     }
 
     @Override
-    public void sendNewGpMsgToUsers(MessageDto messageDto) throws RemoteException {
+    public void sendNewGpMsgToUsers(GpMessageDto gpMessageDto) throws RemoteException {
         GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
-        gpChatsManager.addMsg(messageDto);
+        gpChatsManager.addMsg(gpMessageDto);
     }
 
     @Override

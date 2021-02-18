@@ -4,7 +4,7 @@ import commons.remotes.client.ClientInterface;
 import commons.remotes.server.GpChatServiceInt;
 import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.GpChatUserDto;
-import commons.sharedmodels.MessageDto;
+import commons.sharedmodels.GpMessageDto;
 import jets.chatserver.DBModels.DBGpChat;
 import jets.chatserver.database.dao.GpChatDao;
 import jets.chatserver.database.daoImpl.GpChatDaoImpl;
@@ -83,10 +83,10 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
     }
 
     @Override
-    public boolean sendMessage(MessageDto messageDto) throws RemoteException {
+    public boolean sendMessage(GpMessageDto gpMessageDto) throws RemoteException {
 
         List<String> participants = null;
-        int chatId = messageDto.getChatId();
+        int chatId = gpMessageDto.getChatId();
 
         try {
 
@@ -95,10 +95,10 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
             //Prep to call Back only online users.
             //Remove Sender From Receivers List
             for (String part : participants){
-                if(part.equals(messageDto.getSenderId())) continue;
+                if(part.equals(gpMessageDto.getSenderId())) continue;
                 ClientInterface ci = currentConnectedUsers.get(part);
                 if(ci != null) {
-                    ci.sendNewGpMsgToUsers(messageDto);
+                    ci.sendNewGpMsgToUsers(gpMessageDto);
                 }
             }
         } catch (SQLException e) {
