@@ -86,7 +86,7 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
             FriendsDao friendsDao = FriendsDaoImpl.getFriendsDaoInstance();
 
             List<DBUser> dbUsers = friendsDao.getAllFriends(userId);
-            friendGpDtoList = dbUsers.parallelStream().map(EntityDTOAdapter::convertEntityToDto)
+            friendGpDtoList = dbUsers.parallelStream().map(EntityDTOAdapter::convertEntityToFriendDto)
                     .collect(Collectors.toList());
 
         } catch (SQLException e) {

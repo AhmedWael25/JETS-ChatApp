@@ -86,9 +86,12 @@ public class ChatDashBoardController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //TODO REMOVE After debugging
         System.out.println("Chat Dash Board Initialized");
+
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
-
+        currentUserModel.bindToUserAvatar(userImageCircle);
+        //TODO rmv after Debugging
+        System.out.println(currentUserModel);
         dashBoardCoordinator= DashBoardCoordinator.getInstance();
         dashBoardCoordinator.initScreen(borderContainer);
         //TODO
@@ -107,8 +110,7 @@ public class ChatDashBoardController implements Initializable {
             registeringClientService = (RegisteringClientInt) servicesFactory.getRegisterClientService();
             //TODO Remove this ==> U Assumed the current user ID(Phone) is 1 Only For testing purposes
             //TODO SHOULD be replaced with current user model
-            registeringClientService.registerClient(modelsFactory.getClient(), "1");
-//            registeringClientService.registerClient(modelsFactory.getClient(), "3");
+            registeringClientService.registerClient(modelsFactory.getClient(), currentUserModel.getPhoneNumber());
 
          } catch (RemoteException  | NotBoundException e) {
             e.printStackTrace();

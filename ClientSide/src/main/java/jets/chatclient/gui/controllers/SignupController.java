@@ -2,21 +2,35 @@ package jets.chatclient.gui.controllers;
 
 
 import com.jfoenix.controls.*;
+import commons.utils.*;
+import commons.remotes.server.SignUpServiceInt;
+import commons.sharedmodels.CurrentUserDto;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.StageCoordinator;
-import jets.chatclient.gui.utils.ColorBinder;
-import jets.chatclient.gui.utils.Validators;
+import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+import jets.chatclient.gui.models.User;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.*;
 import java.util.ResourceBundle;
+import java.util.Arrays;
+
 
 public class SignupController implements Initializable {
 
@@ -24,80 +38,165 @@ public class SignupController implements Initializable {
     public AnchorPane bgimage;
 
     public JFXTextField tfDisplayname;
-    public JFXComboBox<?> cbCountry;
+    public JFXComboBox<String> cbCountry;
     public JFXTextField tfPhonenumber;
     public JFXPasswordField pfPassword;
     public JFXDatePicker dpBirthdate;
-    public JFXComboBox cbGender;
+    public JFXComboBox<String> cbGender;
 
     public JFXButton btnRegister;
     public JFXButton btnSignIn;
 
     public FontIcon fiDisplayName;
+    public FontIcon fiCountry;
     public FontIcon fiPhoneNumber;
     public FontIcon fiPassword;
     public FontIcon fiCalendar;
     public FontIcon fiGender;
+    private RegisterLoginCoordinator registerLoginCoordinator;
+    public SignUpServiceInt signUpService;
 
-
-    @FXML
-    void handeSignIn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void handleRegister(ActionEvent event) {
-
-    }
+    CurrentUserModel currentUserModel;
+    ModelsFactory modelsFactory;
+    StageCoordinator stageCoordinator;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ModelsFactory modelsFactory = ModelsFactory.getInstance();
-        CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
+        modelsFactory = ModelsFactory.getInstance();
+        currentUserModel = modelsFactory.getCurrentUserModel();
+        Registry reg = modelsFactory.getRegistry();
+
+        try {
+            signUpService = (SignUpServiceInt) reg.lookup("SignUpService");
+        } catch (RemoteException | NotBoundException e) {
+            System.out.println("can't find sign up Service");
+            e.printStackTrace();
+        }
+        tfPhonenumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
+
+        //handling date picker
+        //age between 16-60
+        final LocalDate minDate = LocalDate.now().minusYears(60);
+        final LocalDate maxDate = LocalDate.now().minusYears(16);
+        dpBirthdate.setValue(maxDate.minusYears(1));
+        DatePickerUtils.restrictDatePicker(dpBirthdate, minDate, maxDate);
 
 
-        //binding isn't finished Yet **********************************************
-//        ColorBinder.BindColor(tfDisplayname,fiDisplayName);
-//        ColorBinder.BindColor(tfPhonenumber,fiPhoneNumber);
-//        ColorBinder.BindColor(pfPassword,fiPassword);
-//        ColorBinder.BindColor(cbCountry,fiPhoneNumber);
-//        //we have to bind comoboBox to phoneNumber
-//        ColorBinder.BindColor(dpBirthdate,fiCalendar);
-//        ColorBinder.BindColor(cbGender,fiGender);
+        registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
+
+        //handling combboxes
+        btnRegister.requestFocus();
+        List<String> genders = Arrays.asList("male", "female");
+        ComboBoxUtils.fillComboBox(cbGender, genders);
+        List<String> countries = Countries.getAll();
+        ComboBoxUtils.fillComboBox(cbCountry, countries);
+        ComboBoxUtils.makeComboSearchable(cbCountry);
 
 
+        Validators.buttonValidate(btnRegister,tfDisplayname,tfPhonenumber,cbCountry,cbGender,dpBirthdate);
 
-
-
-        Validators.addNameValidator(tfDisplayname,fiDisplayName);
-        Validators.addPhoneNumberValidator(tfPhonenumber);
-        Validators.addPasswordValidator(pfPassword);
-        Validators.addRequiredValidator(cbCountry);
-        Validators.addRequiredValidator(cbGender);
-        Validators.addRequiredValidator(dpBirthdate);
-
-
-//        pfConfirmPassword.focusedProperty().addListener((o, old, foucs) -> fiPasswordConfirm.setIconColor(foucs ? pfConfirmPassword.getFocusColor() : pfConfirmPassword.getUnFocusColor()));
-
-        // binding data of current user
-//        tfUsername.textProperty().bindBidirectional(currentUserModel.usernameProperty());
-//        tfPassword.textProperty().bindBidirectional(currentUserModel.passwordProperty());
-//        tfEmail.textProperty().bindBidirectional(currentUserModel.emailProperty());
+        Validators.addNameValidator(tfDisplayname, fiDisplayName);
+        Validators.addPhoneNumberValidator(tfPhonenumber, fiPhoneNumber);
+        Validators.addPasswordValidator(pfPassword, fiPassword);
+        Validators.addRequiredValidator(cbCountry, fiCountry);
+        // Validators.addRequiredValidator(cbGender, fiGender);
+        Validators.addRequiredValidator(dpBirthdate, fiCalendar);
 
 
     }
 
-    public void handleLoginBtnClick() {
-        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-        stageCoordinator.switchToLoginScene();
+
+    public void handleLoginBtnClick(ActionEvent e) {
+
+        registerLoginCoordinator.switchToLoginScreen();
+
     }
 
-    public void handleSignupBtnClick() {
-        System.out.println("Send to Server Signup data and show errors if any");
+
+    public void handleSignupBtnClick(ActionEvent e) {
+        User user;
+        try {
+
+            System.out.println(currentUserModel.getPhoneNumber());
+            int UserRegStatus = signUpService.checkUserExist(currentUserModel.getPhoneNumber(), tfDisplayname.getText());
+            System.out.println(UserRegStatus);
+            switch (UserRegStatus) {
+                case 1: //user registered
+                    System.out.println("User already registered");
+                    break;
+                case 2: //user registration successful
+                    user = getUserData();
+                    CurrentUserDto currentUserDto = DTOObjAdapter.convertToUserDto(user);
+                    System.out.println(currentUserDto);
+                    if (signUpService.signUpUser(currentUserDto)) {
+                        System.out.println("user Registered Successfully");
+                        registerLoginCoordinator.switchToLoginScreen();
+                    } else //user registration failed
+                        System.out.println("user registration failed");
+                    break;
+
+                case 3://user registered by admin(no data saved for user)
+                    user = getUserData();
+                    currentUserDto = DTOObjAdapter.convertToUserDto(user);
+                    if (signUpService.signUpUser(currentUserDto))
+                        System.out.println("user updated Successfully");
+                    else System.out.println("user registration failed");
+                    break;
+
+                case 4:
+                    System.out.println("username already exist");
+
+            }
+
+        } catch (RemoteException remoteException) {
+            System.out.println("can't check credentials");
+            remoteException.printStackTrace();
+        }
+
     }
 
 
+    public User getUserData() {
+        String userDefaultImage = "";
+        ImageEncoderDecoder imageEncoderDecoder = new ImageEncoderDecoder();
+        try {
+            File f = new File(getClass().getResource("/images/userDefaultImage.png").getPath());
+            userDefaultImage = imageEncoderDecoder.getEncodedImage(f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        User user = new User();
 
+        //handle password
+        String salt = "SKgTpccoOReOUvXS/ORKuY1+mC0=";
+        //used in case of making salt field in db
+//      Optional<String> optionalSalt = HashEncoder.generateSalt(LocalDateTime.now().getSecond());
+//      if (optionalSalt.isPresent());
+//      salt=sal.get();
+//
+        String password = "";
+        Optional<String> optionalpassword = HashEncoder.hashPassword(pfPassword.getText(), salt);
+        if (optionalpassword.isPresent()) ;
+        password = optionalpassword.get();
+
+        user.setUserPhone(tfPhonenumber.getText());
+        user.setUserName(tfDisplayname.getText());
+        user.setUserGender(cbGender.getValue());
+        //to intialize field only
+        user.setUserEmail("");
+        user.setUserCountry(cbCountry.getValue());
+        //to intialize field only
+        user.setUserBio("");
+        user.setUserImage(userDefaultImage);
+        user.setUserDateOfBirth(dpBirthdate.getValue().toString());
+        user.setUserPassword(password);
+        user.setUserAvailability(1);
+        user.setUserStatus(1);
+
+        return user;
+
+    }
 }
+
 

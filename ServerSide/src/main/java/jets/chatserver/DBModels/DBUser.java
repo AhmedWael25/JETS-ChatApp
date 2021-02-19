@@ -31,9 +31,9 @@ enum UserStatus{FREE(1),BUSY(2),AWAY(3);
 };
 
 public class DBUser   {
+    private int id;
     private String phone;
     private String displayedName;
-    private int id;
     private String gender;
     private String password;
     private String email;
@@ -42,8 +42,10 @@ public class DBUser   {
     private String bio;
     private String registerData;
     private String imgEncoded;
-    private UserStatus userStatus  = UserStatus.FREE;
-    private UserAvail userAvail = UserAvail.ONLINE;
+
+   private int userStatus;
+    private int userAvail;
+
 
     public DBUser() {}
 
@@ -135,19 +137,15 @@ public class DBUser   {
         this.imgEncoded = imgEncoded;
     }
 
-    public int getUserStatus() {
-        return userStatus.getValue();
-    }
 
-    public void setUserStatus(UserStatus userStatus) {
-        this.userStatus = userStatus;
-    }
+    public int getUserStatus() { return userStatus; }
 
-    public int getUserAvail() {
-        return userAvail.getValue();
+    public void setUserStatus(int userStatus){
+        this.userStatus=userStatus;
     }
+    public int getUserAvail() { return userAvail; }
 
-    public void setUserAvail(UserAvail userAvail) {
+    public void setUserAvail(int userAvail) {
         this.userAvail = userAvail;
     }
 

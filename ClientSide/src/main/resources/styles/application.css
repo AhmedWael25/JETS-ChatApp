@@ -49,6 +49,15 @@
 
 }
 
+.error-label {
+    -fx-text-fill: #F26101;
+    -fx-font-size: 0.75em;
+}
+
+.error-icon {
+    -fx-text-fill: #F26101;
+    -fx-font-size: 1em;
+}
 
 
 /*.jfx-text-field:error,.jfx-text-field:error + .fonticon  {*/
@@ -59,15 +68,7 @@
 /*}*/
 
 
- .error-label {
-    -fx-text-fill: #F26101;
-    -fx-font-size: 0.75em;
-}
 
- .error-icon {
-    -fx-text-fill: #F26101;
-    -fx-font-size: 1em;
-}
 
 #trial{
     -fx-border-color: #304269;
@@ -96,3 +97,19 @@
     -fx-background-image: url("../images/1_600.jpg");
 
 }
+.testbutton2{
+    -fx-border-color: blue;
+    -fx-background-color: blue;
+}
+.testbutton1{
+    -fx-border-color: yellow;
+    -fx-background-color: yellow;
+
+}
+
+.testbutton1 +.testbutton2{
+    -fx-border-color: green;
+    -fx-background-color: green;
+}
+
+

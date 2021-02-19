@@ -22,7 +22,6 @@ public class GpChatsManager {
     private Integer activeChat ;
 
 
-
     public void updateParticipantImg(String id,Image img){
         chatsMap.entrySet().forEach(entrySet -> {
             entrySet.getValue().getGpParticipants()
@@ -34,9 +33,6 @@ public class GpChatsManager {
                 });
         });
     }
-
-
-    
 
 
     public Circle getParticipantImg(Integer chatId, String participantId){
@@ -90,6 +86,7 @@ public class GpChatsManager {
     public  void addMsg(GpMessageDto gpMessageDto){
         GpMessageModel msg = DTOObjAdapter.convertDtoToObj(gpMessageDto);
         addMsg(msg);
+        System.out.println("ADD MSG "+ msg);
         if(activeChat.equals(msg.getChatId())){
             ControllersGetter controllersGetter = ControllersGetter.getInstance();
             GroupChatController groupChatController = controllersGetter.getGpChatController();

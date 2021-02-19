@@ -14,8 +14,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.P2PMessageModel;
 import jets.chatclient.gui.models.P2PChatModel;
 import jets.chatclient.gui.models.guimodels.P2PChatViewCell;
@@ -56,14 +58,10 @@ public class P2PChatController implements Initializable {
 
     private Map<Integer, ObservableList<P2PMessageModel>> messages = new HashMap<Integer, ObservableList<P2PMessageModel>>();
 
-    private String userIdDummy = "1";
-//    private String userIdDummy = "7";
-
-
-
-
+    private CurrentUserModel userModel;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        userModel = ModelsFactory.getInstance().getCurrentUserModel();
         chatCardListView.setStyle("-fx-control-inner-background: #304269;");
 
         try {
@@ -118,7 +116,7 @@ public class P2PChatController implements Initializable {
         List<P2PChatModel> p2pChatModels = null;
         try {
             //TODO Should be Changed to Current User model ID(PHONE)
-            p2pChatModels = DTOObjAdapter.convertDtop2pChatList(p2pChatService.fetchAllUserP2PChats(userIdDummy));
+            p2pChatModels = DTOObjAdapter.convertDtop2pChatList(p2pChatService.fetchAllUserP2PChats(userModel.getPhoneNumber()));
         } catch (RemoteException e) {
             e.printStackTrace();
         }

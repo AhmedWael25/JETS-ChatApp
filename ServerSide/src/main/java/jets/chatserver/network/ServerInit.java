@@ -4,7 +4,7 @@ import commons.remotes.client.ClientInterface;
 import jets.chatserver.DBModels.DBGpChat;
 import jets.chatserver.database.dao.*;
 import jets.chatserver.database.daoImpl.*;
-import jets.chatserver.network.adapters.EntityDTOAdapter;
+
 import jets.chatserver.network.rmi.*;
 
 import java.rmi.RemoteException;
@@ -34,6 +34,14 @@ public class ServerInit   {
             reg.rebind("P2PChatService",new P2PChatServiceImpl(currentConnectedUsers));
             reg.rebind("GroupChatService",new GpChatServiceImpl(currentConnectedUsers));
 
+            //registering users services
+            reg.rebind("SignInService",new SignInServiceImpl());
+
+
+            reg.rebind("SignUpService", new SignUpServiceImpl());
+
+            //UserProfile Services:
+            reg.rebind("UserProfileService", new UserProfileServiceImpl());
 
             System.out.println("Server Up And Running");
 
@@ -60,7 +68,6 @@ public class ServerInit   {
             List<DBGpChat> gp =  g.getAllGpChatsOfUser("1");
 
 
-            System.out.println(g.getGpChatById(2));
 
 //            System.out.println(g.doesUserHasGpChats("5"));
 //            DBGpChat c = new DBGpChat();

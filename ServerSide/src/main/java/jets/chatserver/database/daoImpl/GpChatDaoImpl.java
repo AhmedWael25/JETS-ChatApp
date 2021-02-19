@@ -100,7 +100,7 @@ public class GpChatDaoImpl implements GpChatDao {
 
         boolean hasGpChats = false;
 
-        String query = "SELECT 1 FROM gpchats_part WHERE gpchats_part_id = ?";
+        String query = "SELECT 1 FROM gpchats_part WHERE part_id = ?";
         PreparedStatement pd = conn.prepareStatement(query,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
@@ -116,6 +116,8 @@ public class GpChatDaoImpl implements GpChatDao {
     @Override
     public synchronized int createGroupChat(DBGpChat dbGpChat) throws SQLException {
 
+
+
         //Fetch Last ID In Table
         String query = "SELECT id FROM gpchats ORDER BY id DESC LIMIT 1";
         PreparedStatement pd = conn.prepareStatement(query,
@@ -123,9 +125,12 @@ public class GpChatDaoImpl implements GpChatDao {
                 ResultSet.CONCUR_UPDATABLE);
 
         ResultSet rs = pd.executeQuery();
-        rs.next();
-        int lastId = rs.getInt("id");
 
+        int lastId = 0;
+        if (rs.next()) {
+            lastId = rs.getInt("id");
+            System.out.println("FIRST TIME  YASTA");
+        }
 
         query = "INSERT INTO gpchats(id,gpname,gpadmin,gpphoto) VALUES(?,?,?,?)";
          pd = conn.prepareStatement(query,
@@ -135,7 +140,6 @@ public class GpChatDaoImpl implements GpChatDao {
          pd.setInt(1,lastId+1);
         pd.setString(2,dbGpChat.getGpChatName());
         pd.setString(3,dbGpChat.getGpChatAdminId());
-        System.out.println("oadmkasdmsad ===>>>"+dbGpChat.getGpChatImg());
         pd.setString(4,dbGpChat.getGpChatImg());
 
 

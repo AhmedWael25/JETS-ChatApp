@@ -44,8 +44,10 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
             gpChatDao = GpChatDaoImpl.getGpChatDaoInstance();
             List<DBGpChat> dbGpChats = gpChatDao.getAllGpChatsOfUser(userId);
 
+
             gpChatDtos =  dbGpChats.parallelStream().map(EntityDTOAdapter::convertEntityToDto)
                     .collect(Collectors.toList());
+
 
         }catch (SQLException e) {
             e.printStackTrace();

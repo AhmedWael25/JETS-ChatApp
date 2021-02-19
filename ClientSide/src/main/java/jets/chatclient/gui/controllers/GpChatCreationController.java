@@ -74,10 +74,11 @@ public class GpChatCreationController implements  Initializable {
     private File defImg ;
     private String encodedImg;
 
-    private String userDummyId = "1";
+    private CurrentUserModel userModel ;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userModel = ModelsFactory.getInstance().getCurrentUserModel();
 
         defImg = new File(getClass().getResource("/images/van.jpg").getPath());
         imgFile = defImg;
@@ -189,10 +190,10 @@ public class GpChatCreationController implements  Initializable {
             str = ImageEncoderDecoder.getEncodedImage(imgFile);
         }
         gpUserDto.setChatImage(str);
-        gpUserDto.setAdminId(userDummyId); //TODO CHANGE TO CUURENT
+        gpUserDto.setAdminId(userModel.getPhoneNumber() );
 
         List<String> userIds = new ArrayList<>();
-        userIds.add(userDummyId); //TODO CHANGE TO CUURENT
+        userIds.add(userModel.getPhoneNumber());
         for(FriendModel user : groupTargetFriends){
             userIds.add(user.getFriendId());
         }
@@ -207,7 +208,7 @@ public class GpChatCreationController implements  Initializable {
             ServicesFactory servicesFactory = ServicesFactory.getInstance();
             friendService = servicesFactory.getAddFriendService();
             //TODO Refactor into user obj model
-            userFriends = DTOObjAdapter.convertDtoGpFriendList(friendService.fetchAllFriendsByUserId(userDummyId));
+            userFriends = DTOObjAdapter.convertDtoGpFriendList(friendService.fetchAllFriendsByUserId(userModel.getPhoneNumber()));
 
             Platform.runLater(() -> {
                 friendsListView.getSourceItems().addAll(userFriends);

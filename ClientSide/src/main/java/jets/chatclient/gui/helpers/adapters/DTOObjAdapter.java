@@ -6,6 +6,12 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import jets.chatclient.gui.models.*;
+import commons.sharedmodels.CurrentUserDto;
+import commons.sharedmodels.InvitationDto;
+import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.models.CurrentUserModel;
+import jets.chatclient.gui.models.Invitation;
+import jets.chatclient.gui.models.User;
 
 import java.io.ByteArrayInputStream;
 import java.util.Base64;
@@ -14,8 +20,8 @@ import java.util.stream.Collectors;
 
 public class DTOObjAdapter {
 
-
-    public static Invitation convertDtoToObj(InvitationDto invitationDto){
+    //invitation received handling
+    public static Invitation convertDtoToObj(InvitationDto invitationDto) {
         Invitation inv = new Invitation();
         inv.setSenderId(invitationDto.getSenderId());
         inv.setReceiverId(invitationDto.getReceiverId());
@@ -26,7 +32,8 @@ public class DTOObjAdapter {
         inv.setInvitationContent(invitationDto.getInvitationContent());
         return inv;
     }
-    public static InvitationDto convertObjToDto(Invitation inv){
+    //invitation sent handling
+    public static InvitationDto convertObjToDto(Invitation inv) {
         InvitationDto invDto = new InvitationDto();
         invDto.setSenderId(inv.getSenderId());
         invDto.setReceiverId(inv.getReceiverId());
@@ -119,7 +126,6 @@ public class DTOObjAdapter {
     }
 
 
-
     public  static GpMessageModel convertDtoToObj(GpMessageDto dto){
         GpMessageModel msgModel = new GpMessageModel();
 
@@ -146,11 +152,66 @@ public class DTOObjAdapter {
         return  dto;
     }
 
-    public static List<Invitation> convertDtoInvitationList(List<InvitationDto> invitationDtoList){
+    public static List<Invitation> convertDtoList(List<InvitationDto> invitationDtoList) {
 
         List<Invitation> invitations = invitationDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
                 .collect(Collectors.toList());
-        return  invitations;
+        return invitations;
+    }
+
+    public static CurrentUserModel convertDtoToCurrentUser(CurrentUserDto currentUserDto) {
+        ModelsFactory modelsFactory = ModelsFactory.getInstance();
+        CurrentUserModel currentUser = modelsFactory.getCurrentUserModel();
+        currentUser.setDisplayName(currentUserDto.getUserName());
+        currentUser.setPhoneNumber(currentUserDto.getUserPhone());
+        currentUser.setEmailAddress(currentUserDto.getUserEmail());
+        currentUser.setGender(currentUserDto.getUserGender());
+        currentUser.setCountry(currentUserDto.getUserCountry());
+        currentUser.setBirthdayDate(currentUserDto.getDob());
+        currentUser.setBio(currentUserDto.getUserBio());
+        currentUser.setAvailability(currentUserDto.getAvailability());
+        currentUser.setStatus(currentUserDto.getStatus());
+
+        //handling Image conversion
+        byte[] imgBytes = Base64.getDecoder().decode(currentUserDto.getUserImage());
+        currentUser.setImage(new Image(new ByteArrayInputStream(imgBytes)));
+
+
+        return currentUser;
+    }
+
+    public static CurrentUserDto convertObjToDto(CurrentUserModel currentUser) {
+        CurrentUserDto userDto = new CurrentUserDto();
+        //TODO complete conversion methods
+        userDto.setUserPhone(currentUser.getPhoneNumber());
+        userDto.setUserName(currentUser.getDisplayName());
+        userDto.setUserGender(currentUser.getGender());
+        userDto.setUserEmail(currentUser.getEmailAddress());
+        userDto.setUserCountry(currentUser.getCountry());
+        userDto.setDob(currentUser.getBirthdayDate());
+        userDto.setUserBio(currentUser.getBio());
+
+        //TODO handle user Image & BD
+        return userDto;
+    }
+
+    //to handle register
+    public static CurrentUserDto convertToUserDto(User user) {
+        CurrentUserDto userDto = new CurrentUserDto();
+
+        userDto.setUserPhone(user.getUserPhone());
+        userDto.setUserName(user.getUserName());
+        userDto.setUserCountry(user.getUserCountry());
+        userDto.setUserGender(user.getUserGender());
+        userDto.setUserEmail(user.getUserEmail());
+        userDto.setUserBio(user.getUserBio());
+        userDto.setPassword(user.getUserPassword());
+        userDto.setUserImage(user.getUserImage());
+        userDto.setDob(user.getUserDateOfBirth());
+        userDto.setStatus(user.getUserStatus());
+        userDto.setAvailability(user.geUserAvailability());
+        //TODO handle user Image & BD
+        return userDto;
     }
     public static List<P2PChatModel> convertDtop2pChatList(List<P2PChatDto> p2PChatDtoList){
         List<P2PChatModel> invitations = p2PChatDtoList.parallelStream().map(invitationDto -> convertDtoToObj(invitationDto))
@@ -176,4 +237,12 @@ public class DTOObjAdapter {
         return chatModels;
     }
 
+    public static  List<Invitation> convertDtoInvitationList(List<InvitationDto >invitationDtos){
+        List<Invitation> invs = null;
+
+        invs = invitationDtos.parallelStream().map(DTOObjAdapter::convertDtoToObj)
+                .collect(Collectors.toList());
+
+        return invs;
+    }
 }

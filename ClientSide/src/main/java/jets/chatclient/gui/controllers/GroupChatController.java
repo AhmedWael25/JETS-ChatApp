@@ -23,6 +23,7 @@ import jets.chatclient.gui.helpers.GpChatsManager;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.GpChatModel;
 import jets.chatclient.gui.models.GpMessageModel;
 import jets.chatclient.gui.models.guimodels.GPChatMsgViewCell;
@@ -82,30 +83,26 @@ public class GroupChatController implements Initializable {
     private ObservableList<GpChatModel> chats = FXCollections.observableArrayList();
     private ObservableList<GpMessageModel> msgs = FXCollections.observableArrayList();
 
-    //TODO CHange To curr user model
-    private String userIdDummy = "1";
-    private String userName  = "User 1";
+    private CurrentUserModel userModel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        userModel = ModelsFactory.getInstance().getCurrentUserModel();
 
         gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
         try {
             ServicesFactory servicesFactory =  ServicesFactory.getInstance();
             gpChatService = servicesFactory.getGpChatService();
 
+            typingArea.setDisable(true);
+            sendMsgBtn.setDisable(true);
             new Thread(fetchGpChats).start();
-
-            } catch (RemoteException | NotBoundException e) {
+            setUpActiveChat();
+        } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
 
-        setUpActiveChat();
-        activeChatId = 1;
-        gpChatsManager.setActiveChat(1);
-        msgs.setAll(gpChatsManager.getActiveChatMsgList());
-        msgListView.setItems(msgs);
-        msgListView.setCellFactory(param -> new GPChatMsgViewCell());
 
         //TRY
 
@@ -148,6 +145,7 @@ public class GroupChatController implements Initializable {
                 typingArea.clear();
             });
         }).start();
+
     }
 
 
@@ -158,6 +156,8 @@ public class GroupChatController implements Initializable {
             Platform.runLater(() ->{
                 chats.add(gpChatModel);
                 chatListView.setItems(chats);
+                typingArea.setDisable(false);
+                sendMsgBtn.setDisable(false);
             });
         }).start();
     }
@@ -174,9 +174,12 @@ public class GroupChatController implements Initializable {
     }
 
     public void addMsgToUi(GpMessageModel model){
-        msgs.add(model);
-        msgListView.setItems(msgs);
-//        msgListView.setCellFactory(param -> new GPChatMsgViewCell());
+        Platform.runLater(() ->{
+            msgs.add(model);
+            msgListView.setItems(msgs);
+            msgListView.setCellFactory(param -> new GPChatMsgViewCell());
+
+        });
     }
     public void sendMsg(KeyEvent keyEvent) {
     }
@@ -188,8 +191,8 @@ public class GroupChatController implements Initializable {
 
         msg.setChatId(gpChatsManager.getActiveChat());
         msg.setMsgType(MsgType.TEXT);
-        msg.setSenderName(userName);
-        msg.setSenderId(userIdDummy);
+        msg.setSenderName(userModel.getDisplayName());
+        msg.setSenderId(userModel.getPhoneNumber());
         Date currDate = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat(  "dd-MM-yyyy HH:mm:ss");
         msg.setTimeStamp(formatter.format(currDate.getTime()));
@@ -202,13 +205,28 @@ public class GroupChatController implements Initializable {
     Runnable fetchGpChats = () -> {
         List<GpChatModel> gpChatModelList = null;
         try {
-            gpChatModelList = DTOObjAdapter.convertDtoGpChat(gpChatService.fetchAllUserGpChats(userIdDummy));
+            System.out.println(userModel.getPhoneNumber());
+            gpChatModelList = DTOObjAdapter.convertDtoGpChat(gpChatService.fetchAllUserGpChats(userModel.getPhoneNumber()));
             gpChatsManager.addGpChat(gpChatModelList);
             List<GpChatModel> finalGpChatModelList = gpChatModelList;
             Platform.runLater(() -> {
                 chats.addAll(finalGpChatModelList);
                 chatListView.setItems(chats);
                 chatListView.setCellFactory(param -> new GpChatViewCell());
+                if (chats.size() > 0){
+                    typingArea.setDisable(false);
+                    sendMsgBtn.setDisable(false);
+                    activeChatId = 1;
+                    gpChatsManager.setActiveChat(1);
+
+                    msgs.setAll(gpChatsManager.getActiveChatMsgList());
+                    msgListView.setItems(msgs);
+                    msgListView.setCellFactory(param -> new GPChatMsgViewCell());
+                    if (!msgListView.getItems().isEmpty()) {
+                        msgListView.getSelectionModel().select(0);
+                    }
+                }
+
             });
         } catch (RemoteException e) {
             e.printStackTrace();

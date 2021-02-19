@@ -95,7 +95,7 @@ public class EntityDTOAdapter {
 
         return  gpChatDto;
     }
-    public static FriendGpDto convertEntityToDto(DBUser user){
+    public static FriendGpDto convertEntityToFriendDto(DBUser user){
         FriendGpDto friendGpDto = new FriendGpDto();
 
         friendGpDto.setFriendId(user.getPhone());
@@ -104,7 +104,6 @@ public class EntityDTOAdapter {
 
         return friendGpDto;
     }
-
     public  static DBGpChat convertDtoToEntity(GpChatUserDto chatUserDto){
 
         DBGpChat dbGpChat = new DBGpChat();
@@ -117,5 +116,8 @@ public class EntityDTOAdapter {
 
         return dbGpChat;
     }
+
+
+
 
 }

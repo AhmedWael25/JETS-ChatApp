@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import commons.remotes.server.AddFriendServiceInt;
 import commons.remotes.server.InvitationServiceInt;
+import commons.sharedmodels.CurrentUserDto;
 import commons.sharedmodels.InvitationDto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -18,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.Invitation;
 import jets.chatclient.gui.models.guimodels.InvitationViewCell;
 
@@ -52,12 +54,12 @@ public class ContactsController implements Initializable {
     private ModelsFactory modelsFactory = ModelsFactory.getInstance();
     private ObservableList<Invitation> invitations = FXCollections.observableArrayList();
 
-    //TODO Remove When  Current User Mode Is Ready ===
-    private  String userIdDummy = "1";
-    private  String userNameDummy = "sayed2";
+    private CurrentUserModel userModel ;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        userModel = ModelsFactory.getInstance().getCurrentUserModel();
         System.out.println("Test Chat View initialized");
 
         //Initialize Services
@@ -65,8 +67,8 @@ public class ContactsController implements Initializable {
         try {
 
             ServicesFactory servicesFactory = ServicesFactory.getInstance();
-            invitationService = (InvitationServiceInt) servicesFactory.getInvitationService();
-            addFriendService = (AddFriendServiceInt) servicesFactory.getAddFriendService();
+            invitationService =  servicesFactory.getInvitationService();
+            addFriendService = servicesFactory.getAddFriendService();
 
             new Thread(fetchUserInvitations).start();
 
@@ -133,7 +135,7 @@ public class ContactsController implements Initializable {
         boolean isSent;
         if(phoneTxtField.getText().equals("")  )  {
             displayFailFeedBackMsg("You Haven't Entered an Id");
-        }else if(phoneTxtField.getText().equals(userIdDummy)) {
+        }else if(phoneTxtField.getText().equals(userModel.getPhoneNumber())) {
             displayFailFeedBackMsg("You Cannot Add Your Self!");
         }
         else {
@@ -141,8 +143,8 @@ public class ContactsController implements Initializable {
             sendInvitationBtn.setDisable(true);
             Invitation inv = new Invitation();
             String receiverId = phoneTxtField.getText();
-            inv.setSenderId(userIdDummy);
-            inv.setSenderName(userNameDummy);
+            inv.setSenderId(userModel.getPhoneNumber());
+            inv.setSenderName(userModel.getDisplayName());
             inv.setReceiverId(receiverId);
             inv.setInvitationContent("You Got a new Friend Request !");
             InvitationDto invDto = DTOObjAdapter.convertObjToDto(inv);
@@ -183,7 +185,7 @@ public class ContactsController implements Initializable {
         List<Invitation> myInvitations = null;
         try {
             //TODO Should be Changed to Current User model ID(PHONE)
-            myInvitations = DTOObjAdapter.convertDtoInvitationList(invitationService.getAllUserInvitations(userIdDummy));
+            myInvitations = DTOObjAdapter.convertDtoInvitationList(invitationService.getAllUserInvitations(userModel.getPhoneNumber()));
         } catch (RemoteException e) {
             e.printStackTrace();
         }
