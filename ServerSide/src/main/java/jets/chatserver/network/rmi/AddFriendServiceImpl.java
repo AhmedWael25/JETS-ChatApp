@@ -58,8 +58,6 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
 
             //First Check if Both Users are online
 
-
-
             ClientInterface client1 = currentConnectedUsers.get(participant1);
             ClientInterface client2 = currentConnectedUsers.get(participant2);
 

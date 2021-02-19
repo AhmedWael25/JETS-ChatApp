@@ -2,6 +2,7 @@ package jets.chatserver;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import jets.chatserver.gui.helpers.StageCoordinator;
 import jets.chatserver.network.ServerInit;
 
 public class App extends Application {
@@ -14,7 +15,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
 //        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
 //        stageCoordinator.initStage(primaryStage);
-//        stageCoordinator.switchToLoginScene();
+//        stageCoordinator.switchToServerDashBoard();
 //        primaryStage.show();
 
 
@@ -22,9 +23,10 @@ public class App extends Application {
 
     @Override
     public void init() {
-        // Initialize Database & Network Connections
         //Init Server
-        new ServerInit().serverInit();
+        new Thread(() -> {
+            new ServerInit().serverInit();
+        }).start();
     }
 
     @Override

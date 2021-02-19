@@ -22,14 +22,14 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            <GridPane alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-border-color: grey; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-width: 0.5px;">
+            <GridPane alignment="CENTER_RIGHT" style="-fx-border-color: grey; -fx-border-radius: 10px; -fx-background-radius: 10px; -fx-border-width: 0.5px;">
               <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="240.0" minWidth="10.0" prefWidth="234.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="281.0" minWidth="10.0" prefWidth="229.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="236.0" minWidth="10.0" prefWidth="225.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="49.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="49.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" maxWidth="1.7976931348623157E308" text="Friend Phone" textAlignment="JUSTIFY" wrapText="true">
@@ -57,7 +57,10 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </JFXButton>
-                  <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <VBox alignment="CENTER" spacing="5.0" GridPane.columnIndex="1">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin>
                      <children>
                         <JFXTextField fx:id="phoneTxtField" alignment="CENTER" maxWidth="1.7976931348623157E308">
                            <padding>
@@ -67,11 +70,7 @@
                               <Font size="18.0" />
                            </font>
                         </JFXTextField>
-                        <Label fx:id="feedbackLabel" ellipsisString="" focusTraversable="false">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
+                        <Label fx:id="feedbackLabel" />
                      </children>
                   </VBox>
                </children>
@@ -89,26 +88,60 @@
             </Label>
          </children>
       </StackPane>
-      <StackPane layoutX="14.0" layoutY="183.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-         <children>
-            <ListView fx:id="invitationsListView" focusTraversable="false" style="-fx-border-color: grey; -fx-border-width: 0.4px; -fx-border-radius: 10px; -fx-background-radius: 10px;" StackPane.alignment="CENTER">
-               <padding>
-                  <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
-               </padding>
-            </ListView>
-            <Label alignment="CENTER" graphicTextGap="0.0" prefHeight="41.0" prefWidth="145.0" style="-fx-background-color: white;" text="Friend Requests" StackPane.alignment="BASELINE_CENTER">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <StackPane.margin>
-                  <Insets />
-               </StackPane.margin>
-            </Label>
-         </children>
-      </StackPane>
       <Button mnemonicParsing="false" onAction="#dumdum" text="DumDUm" />
+      <GridPane layoutX="197.0" layoutY="244.0" prefHeight="329.0" prefWidth="746.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="159.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <StackPane prefHeight="440.0" prefWidth="373.0" GridPane.columnIndex="1">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <ListView fx:id="invitationsListView" focusTraversable="false" style="-fx-border-color: grey; -fx-border-width: 0.4px; -fx-border-radius: 10px; -fx-background-radius: 10px;" StackPane.alignment="CENTER">
+                     <padding>
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                     </padding>
+                  </ListView>
+                  <Label alignment="CENTER" graphicTextGap="0.0" prefHeight="41.0" prefWidth="145.0" style="-fx-background-color: white;" text="Friend Requests" StackPane.alignment="BASELINE_CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="440.0" prefWidth="373.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <ListView fx:id="contactsListView" focusTraversable="false" style="-fx-border-color: grey; -fx-border-width: 0.4px; -fx-border-radius: 10px; -fx-background-radius: 10px;" StackPane.alignment="CENTER">
+                     <padding>
+                        <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
+                     </padding>
+                  </ListView>
+                  <Label alignment="CENTER" graphicTextGap="0.0" prefHeight="41.0" prefWidth="145.0" style="-fx-background-color: white;" text="Contacts" StackPane.alignment="BASELINE_CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+            </StackPane>
+         </children>
+      </GridPane>
    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
 </AnchorPane>

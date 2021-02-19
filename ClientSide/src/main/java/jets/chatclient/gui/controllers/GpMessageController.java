@@ -43,6 +43,7 @@ public class GpMessageController {
 
     public void setData(GpMessageModel msg){
         //TODO If I Am the user Bind on ME
+
         GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
         Circle participantImg = gpChatsManager.getParticipantImg(msg.getChatId(), msg.getSenderId());
         userImg.fillProperty().bind(participantImg.fillProperty());

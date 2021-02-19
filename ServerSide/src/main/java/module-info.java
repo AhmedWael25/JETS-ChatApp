@@ -22,10 +22,9 @@ module jets.chatserver {
 
     requires ChatAppCommons;
 
-//    opens jets.chatserver.gui.controllers to javafx.fxml;
+    opens jets.chatserver.gui.controllers to javafx.fxml;
 
     exports  jets.chatserver.DBModels to java.rmi;
-
     exports jets.chatserver.database.dao ;
     exports jets.chatserver;
 }

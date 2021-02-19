@@ -83,8 +83,8 @@ public class GroupChatController implements Initializable {
     private ObservableList<GpMessageModel> msgs = FXCollections.observableArrayList();
 
     //TODO CHange To curr user model
-    private String userIdDummy = "3";
-    private String userName  = "User 3";
+    private String userIdDummy = "1";
+    private String userName  = "User 1";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

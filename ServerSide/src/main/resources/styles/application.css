@@ -1,0 +1,12 @@
+
+.sideMenuBtn-inactive{
+    -fx-background-color:  #636b61;
+    -fx-text-fill: white;
+}
+.sideMenuBtn-inactive:hover{
+    -fx-background-color: #6f756d;
+}
+.sideMenuBtn-active{
+    -fx-background-color:  white;
+    -fx-text-fill:  #636b61;
+}

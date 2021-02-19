@@ -68,6 +68,21 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
     }
 
     @Override
+    public boolean deleteInvitation(String senderId, String receiverId) throws RemoteException {
+
+        try {
+            invitationsDao = InvitationDaoImpl.getInvitationDaoInstance();
+            invitationsDao.deleteInvitation(senderId,receiverId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //CallBack To Remove The Invitation Card From The List
+
+        return false;
+    }
+
+    @Override
     public boolean sendInvitation(InvitationDto invitationDto) throws RemoteException {
 
         String senderId = invitationDto.getSenderId();
@@ -122,5 +137,20 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
             e.printStackTrace();
         }
         return  isUserExist;
+    }
+
+    @Override
+    public boolean isAlreadyInvited(InvitationDto invDto) throws RemoteException {
+
+        boolean isAlreadyInvited = false;
+
+        try {
+            //Switch Sender And Receiver
+            isAlreadyInvited = InvitationDaoImpl.getInvitationDaoInstance().isInviteExists(invDto.getReceiverId(),invDto.getSenderId());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isAlreadyInvited;
     }
 }

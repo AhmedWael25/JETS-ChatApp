@@ -99,6 +99,7 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
                 ClientInterface ci = currentConnectedUsers.get(part);
                 if(ci != null) {
                     ci.sendNewGpMsgToUsers(gpMessageDto);
+
                 }
             }
         } catch (SQLException e) {

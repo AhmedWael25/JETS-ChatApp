@@ -7,6 +7,7 @@ import commons.sharedmodels.P2PChatDto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
@@ -129,4 +130,6 @@ public class P2PChatController implements Initializable {
         });
     };
 
+    public void SendMessageToChat(ActionEvent actionEvent) {
+    }
 }

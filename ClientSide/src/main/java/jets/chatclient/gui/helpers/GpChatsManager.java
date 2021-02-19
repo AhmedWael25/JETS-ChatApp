@@ -21,21 +21,23 @@ public class GpChatsManager {
     private Map<Integer, List<GpMessageModel>> chatMsgs = new ConcurrentHashMap<>();
     private Integer activeChat ;
 
+
+
     public void updateParticipantImg(String id,Image img){
-
         chatsMap.entrySet().forEach(entrySet -> {
-
             entrySet.getValue().getGpParticipants()
                     .stream()
                     .forEach(participantModel -> {
-
                         if (participantModel.getParticipantId().equals(id)){
                             participantModel.setParticipantImage(img);
                         }
-                     });
+                });
         });
-
     }
+
+
+    
+
 
     public Circle getParticipantImg(Integer chatId, String participantId){
         GpChatModel chat = chatsMap.get(chatId);

@@ -79,7 +79,7 @@
                <center>
                   <JFXScrollPane fx:id="msgScrollPane" prefHeight="325.0" prefWidth="233.0" BorderPane.alignment="CENTER">
                      <children>
-                        <JFXListView fx:id="msgListView" prefHeight="310.0" prefWidth="342.0" style="-fx-background-color: #FFFFFF;" />
+                        <JFXListView fx:id="msgListView" focusTraversable="false" prefHeight="310.0" prefWidth="342.0" style="-fx-background-color: #FFFFFF;" />
                      </children>
                   </JFXScrollPane>
                </center>

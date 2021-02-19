@@ -18,6 +18,8 @@ public class DashBoardCoordinator {
 
     private DashBoardCoordinator(){}
 
+
+
     public  void initScreen(Parent parent){
         if(dashboardContainer == null){
             dashboardContainer = parent;
@@ -121,7 +123,30 @@ public class DashBoardCoordinator {
         }
     }
 
+    public  void initAllScreens() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/P2PChat.fxml"));
+        Parent chatScreen = fxmlLoader.load();
+        ScreenData screenData = new ScreenData(fxmlLoader,chatScreen);
+        dashboardScreens.put("chatscreen",screenData);
 
+         fxmlLoader = new FXMLLoader(getClass().getResource("/views/groupChat.fxml"));
+        Parent gpChatScreen = fxmlLoader.load();
+         screenData = new ScreenData(fxmlLoader,gpChatScreen);
+        dashboardScreens.put("gpchatscreen",screenData);
+
+
+         fxmlLoader = new FXMLLoader(getClass().getResource("/views/contactsView.fxml"));
+        Parent groupsScreen = fxmlLoader.load();
+         screenData = new ScreenData(fxmlLoader,groupsScreen);
+        dashboardScreens.put("contactsscreen",screenData);
+
+
+         fxmlLoader = new FXMLLoader(getClass().getResource("/views/userProfile.fxml"));
+        Parent profileScreen = fxmlLoader.load();
+         screenData = new ScreenData(fxmlLoader,profileScreen);
+        dashboardScreens.put("profilescreen",screenData);
+
+    }
 
     public Map<String, ScreenData> getScreens(){
         return  dashboardScreens;

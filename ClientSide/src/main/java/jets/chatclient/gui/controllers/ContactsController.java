@@ -24,6 +24,7 @@ import jets.chatclient.gui.models.guimodels.InvitationViewCell;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -52,10 +53,8 @@ public class ContactsController implements Initializable {
     private ObservableList<Invitation> invitations = FXCollections.observableArrayList();
 
     //TODO Remove When  Current User Mode Is Ready ===
-//    private  String userIdDummy = "7";
     private  String userIdDummy = "1";
     private  String userNameDummy = "sayed2";
-//    private  String userNameDummy = "MySC";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,8 +82,8 @@ public class ContactsController implements Initializable {
 
     @FXML
     void sendInvitation(ActionEvent event) {
-
         new Thread(sendInvitation).start();
+
     }
 
 
@@ -106,6 +105,21 @@ public class ContactsController implements Initializable {
         invitationsListView.setItems(invitations);
     }
 
+    public void deleteInv(Invitation tobeDelInv){
+        Iterator<Invitation> i = invitations.iterator();
+        while(i.hasNext()){
+            Invitation inv = i.next();
+            if(inv.getSenderId().equals(tobeDelInv.getReceiverId())){
+                Platform.runLater(() ->{
+                    i.remove();
+                    invitationsListView.setItems(invitations);
+                });
+                return;
+            }
+        }
+
+    }
+
 
 
     //================== RUNNABLES ===================
@@ -115,12 +129,12 @@ public class ContactsController implements Initializable {
 
 
     Runnable sendInvitation = () -> {
-        //TODO Phone Validation ---Validation Imp.
+        //TODO Phone Validation --- Validation Imp.
         boolean isSent;
         if(phoneTxtField.getText().equals("")  )  {
-            displayFeedBackMsg("You Haven't Entered an Id");
+            displayFailFeedBackMsg("You Haven't Entered an Id");
         }else if(phoneTxtField.getText().equals(userIdDummy)) {
-            displayFeedBackMsg("You Cannot Add Your Self!");
+            displayFailFeedBackMsg("You Cannot Add Your Self!");
         }
         else {
             phoneTxtField.setDisable(true);
@@ -131,20 +145,29 @@ public class ContactsController implements Initializable {
             inv.setSenderName(userNameDummy);
             inv.setReceiverId(receiverId);
             inv.setInvitationContent("You Got a new Friend Request !");
-            InvitationDto invDto = (DTOObjAdapter.convertObjToDto(inv));
+            InvitationDto invDto = DTOObjAdapter.convertObjToDto(inv);
             try {
 
                 if(invitationService.isInviteExists(invDto)){
-                    displayFeedBackMsg("You Already Sent an Invitation to Them");
+                    displayFailFeedBackMsg("You Already Sent an Invitation to Them");
                 } else if (addFriendService.areFriends(invDto.getSenderId(),invDto.getReceiverId())) {
-                    displayFeedBackMsg("You Already Are Friends With Them");
+                    displayFailFeedBackMsg("You Already Are Friends With Them");
                 }
                 else if(!invitationService.isUserExist(receiverId)){
-                    displayFeedBackMsg("This User Doesn't Exist");
+                    displayFailFeedBackMsg("This User Doesn't Exist");
+                }
+                 else if(invitationService.isAlreadyInvited(invDto)){
+                     //If User has already invite Me, Add Users to friend list
+                    //Delete Invite In List Now
+                    System.out.println("User"+ inv.getReceiverId() + "Has Alrdy invited u");
+                    addFriendService.addFriend(invDto.getSenderId(),invDto.getReceiverId());
+                    invitationService.deleteInvitation(invDto.getReceiverId(),invDto.getSenderId());
+                    displaySucessFeedBackMsg("Friend Added !");
+                    deleteInv(inv);
                 }
                 else {
                     isSent =  invitationService.sendInvitation(DTOObjAdapter.convertObjToDto(inv));
-                    displayFeedBackMsg();
+                    displaySucessFeedBackMsg("Invitation Sent!");
                     phoneTxtField.clear();
                 }
             } catch (RemoteException e) {
@@ -155,7 +178,6 @@ public class ContactsController implements Initializable {
         }
     };
 
-
     Runnable fetchUserInvitations = () -> {
 
         List<Invitation> myInvitations = null;
@@ -164,9 +186,6 @@ public class ContactsController implements Initializable {
             myInvitations = DTOObjAdapter.convertDtoInvitationList(invitationService.getAllUserInvitations(userIdDummy));
         } catch (RemoteException e) {
             e.printStackTrace();
-        }
-        for (Invitation fd : invitations){
-            System.out.println("FROM OBX"+fd);
         }
 
         List<Invitation> finalMyInvitations = myInvitations;
@@ -182,16 +201,16 @@ public class ContactsController implements Initializable {
 
     }
 
-    private  void displayFeedBackMsg(String str){
+    private  void displayFailFeedBackMsg(String str){
         Platform.runLater(() ->{
             feedbackLabel.setStyle("-fx-text-fill: #dc3545");
             feedbackLabel.setText(str);
         });
     }
-    private  void displayFeedBackMsg(){
+    private  void displaySucessFeedBackMsg(String str){
         Platform.runLater(() ->{
             feedbackLabel.setStyle("-fx-text-fill: #198754");
-            feedbackLabel.setText("Invitation Sent !");
+            feedbackLabel.setText(str);
         });
     }
 //    private void initNotificationPane(){

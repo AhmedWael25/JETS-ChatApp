@@ -200,11 +200,6 @@ public class GpChatCreationController implements  Initializable {
         return  gpUserDto;
     }
 
-private void closeCreationWindow(){
-    ControllersGetter controllersGetter = ControllersGetter.getInstance();
-    controllersGetter.getGpChatController().closeCreationAlert();
-}
-
     //    ================== RUNNABLES =================
     Runnable fetchFriends = () -> {
 
