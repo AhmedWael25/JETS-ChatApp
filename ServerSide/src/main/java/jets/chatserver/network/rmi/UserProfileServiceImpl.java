@@ -85,6 +85,7 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
                     if(!id.equals(userId)){
                         try {
                             clientInterface.updateUserStatus(userId,userStatus);
+//                            clientInterface.pushStatusNotification(50,"lololo","Avail","isas");
                         } catch (RemoteException e) {
                             e.printStackTrace();
                         }

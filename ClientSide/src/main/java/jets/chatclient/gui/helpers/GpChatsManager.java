@@ -59,6 +59,11 @@ public class GpChatsManager {
         return  c;
     }
 
+    public  Image getChatImg(Integer chatId){
+        GpChatModel chat = chatsMap.get(chatId);
+        return  chat.getgChatImage();
+    }
+
     public  Circle getParticipantStatus(Integer chatId, String participantId){
         GpChatModel chat = chatsMap.get(chatId);
         Circle c = null;

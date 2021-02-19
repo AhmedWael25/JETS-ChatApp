@@ -9,6 +9,7 @@ Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, An
 target/
 #DB Connection Prop. File
 */db.properties
+ServerSide/db.properties
 # Generated files
 .idea//contentModel.xml
 
