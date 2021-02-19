@@ -31,12 +31,14 @@ import jets.chatclient.gui.models.GpChatModel;
 import jets.chatclient.gui.models.GpMessageModel;
 import jets.chatclient.gui.models.guimodels.GPChatMsgViewCell;
 import jets.chatclient.gui.models.guimodels.GpChatViewCell;
+import jets.chatclient.gui.utils.ExportMsgAsHtml;
 
 import java.io.*;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -303,6 +305,10 @@ public class GroupChatController implements Initializable {
             e.printStackTrace();
         }
     };
-
+    public void exportHTML(ActionEvent actionEvent) {
+        List<GpMessageModel> messageList = gpChatsManager.getMsgList(gpChatsManager.getActiveChat());
+        ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();
+        exportMsgAsHtml.exportGroupMessages((ArrayList<GpMessageModel>) messageList);
+    }
 
 }
