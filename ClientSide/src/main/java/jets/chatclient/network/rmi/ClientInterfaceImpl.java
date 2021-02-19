@@ -6,10 +6,16 @@ import commons.sharedmodels.InvitationDto;
 import commons.sharedmodels.P2PMessageDto;
 import commons.sharedmodels.GpMessageDto;
 import commons.sharedmodels.P2PChatDto;
+import commons.utils.NotificationUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Parent;
+import javafx.scene.image.Image;
 import jets.chatclient.gui.controllers.ContactsController;
 import jets.chatclient.gui.controllers.P2PChatController;
 import jets.chatclient.gui.controllers.GroupChatController;
 import jets.chatclient.gui.helpers.ControllersGetter;
+import jets.chatclient.gui.helpers.DashBoardCoordinator;
 import jets.chatclient.gui.helpers.GpChatsManager;
 import jets.chatclient.gui.helpers.ModelsFactory;
 
@@ -56,6 +62,38 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
         P2PChatController p2pChatController = controllersGetter.getP2PChatController();
         p2pChatController.SendMessageToChat(msgDto);
     }
+
+    @Override
+    public void pushGpChatNotification(int gchatId, String senderName, String msg,String chatImg) throws RemoteException {
+        String notificationMsg = senderName+": "+msg;
+        EventHandler<ActionEvent> action = (event)->{
+            DashBoardCoordinator coordinator = DashBoardCoordinator.getInstance();
+            coordinator.switchToGroupScreen();
+            //TODO, Switch to groupChat based on the id
+        };
+        NotificationUtils.showNotification("New Group Msg",notificationMsg,action,chatImg);
+    }
+    @Override
+    public void pushp2pChatNotification(int chatId, String senderName, String msg,String senderImg) throws RemoteException {
+        String notificationMsg = senderName+": "+msg;
+        EventHandler<ActionEvent> action = (event)->{
+            DashBoardCoordinator coordinator = DashBoardCoordinator.getInstance();
+            coordinator.switchToChatScreen();
+            //TODO, Switch to p2pChat based on the id
+        };
+        NotificationUtils.showNotification("New Message",notificationMsg,action,senderImg);
+    }
+    @Override
+    public void pushStatusNotification(int chatId, String senderName, String status, String senderImg) throws RemoteException {
+        String notificationMsg = senderName+"is "+status+" now!";
+        EventHandler<ActionEvent> action = (event)->{
+            DashBoardCoordinator coordinator = DashBoardCoordinator.getInstance();
+            coordinator.switchToChatScreen();
+            //TODO, Switch to p2pChat based on the id
+        };
+        NotificationUtils.showNotification("Status Changed",notificationMsg,action,senderImg);
+    }
+
     @Override
     public void sendNewGpMsgToUsers(GpMessageDto gpMessageDto) throws RemoteException {
 

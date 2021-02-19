@@ -72,15 +72,8 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        //handling password
-        //TODO fetch salt from DB , and add it to userCredintials class
-        String salt="SKgTpccoOReOUvXS/ORKuY1+mC0=";
-        String password="";
-        Optional<String> optionalpassword = HashEncoder.hashPassword(userPassword,salt);
-        if(optionalpassword.isPresent());
-        password=optionalpassword.get();
 
-        if(HashEncoder.verifyPassword(userCredintials.getUserPassword(),password))
+        if(HashEncoder.verifyPassword(userCredintials.getUserPassword(),userPassword))
             return true;
         else return false;
     }
