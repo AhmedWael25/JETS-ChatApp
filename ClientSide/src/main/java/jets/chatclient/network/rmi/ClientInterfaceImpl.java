@@ -64,6 +64,24 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     }
 
     @Override
+    public void sendNewGpFileTpUsers(byte[] fileArr, GpMessageDto gpMessageDto) {
+        GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
+        gpChatsManager.addFileMsg(fileArr,gpMessageDto);
+        System.out.println("FROM MGR" + fileArr.length);
+    }
+
+    @Override
+    public void updateUserStatus(String userId, Integer status) throws RemoteException {
+        GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
+        gpChatsManager.updateParticipantStatus(userId,status);
+    }
+
+    @Override
+    public void updateUserImg(String userId, String imgEncoded) throws RemoteException {
+
+    }
+
+    @Override
     public void forTesting(String userId) throws  RemoteException{
         System.out.println("CallBack to USer of Id : "+ userId);
     }

@@ -19,7 +19,8 @@ public class GpMessageController {
 
     @FXML
     private HBox msgcontainer;
-
+    @FXML
+    private Circle userStatus;
     @FXML
     private Circle userImg;
 
@@ -55,11 +56,14 @@ public class GpMessageController {
         if(msg.getSenderId().equals(userModel.getPhoneNumber())){
             msgcontainer.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
             userModel.bindToUserAvatar(userImg);
+            userModel.bindToUserStatus(userStatus);
             metaDataContainer.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         }else {
             GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
             Circle participantImg = gpChatsManager.getParticipantImg(msg.getChatId(), msg.getSenderId());
             userImg.fillProperty().bind(participantImg.fillProperty());
+            Circle participantStatus = gpChatsManager.getParticipantStatus(msg.getChatId(),msg.getSenderId());
+            userStatus.fillProperty().bind(participantStatus.fillProperty());
         }
 
         msgBody.setText(msg.getMsgContent());

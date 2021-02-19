@@ -90,6 +90,8 @@ public class ChatDashBoardController implements Initializable {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
         currentUserModel.bindToUserAvatar(userImageCircle);
+        currentUserModel.bindToUserStatus(userStatusCircle);
+
         //TODO rmv after Debugging
         System.out.println(currentUserModel);
         dashBoardCoordinator= DashBoardCoordinator.getInstance();

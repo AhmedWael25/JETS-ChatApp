@@ -17,11 +17,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jets.chatclient.gui.helpers.GpChatsManager;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.ServicesFactory;
+import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.GpChatModel;
@@ -29,7 +32,7 @@ import jets.chatclient.gui.models.GpMessageModel;
 import jets.chatclient.gui.models.guimodels.GPChatMsgViewCell;
 import jets.chatclient.gui.models.guimodels.GpChatViewCell;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -102,10 +105,6 @@ public class GroupChatController implements Initializable {
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
         }
-
-
-        //TRY
-
     }
 
     public void createGpChat(ActionEvent actionEvent) throws IOException {
@@ -148,12 +147,71 @@ public class GroupChatController implements Initializable {
 
     }
 
+    public void sendFile(ActionEvent actionEvent) {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        File file = fileChooser.showOpenDialog(null);
+        GpMessageModel msg = createMsgFileModel(file.getName());
+        msgs.add(msg);
+        msgListView.setItems(msgs);
+        if(file != null){
+            new Thread(() ->{
+                try {
+                    FileInputStream fileInputStream = new FileInputStream(file);
+                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                    byte[] fileArr = bufferedInputStream.readAllBytes();
+                    System.out.println("FILE" + fileArr);
+                    gpChatService.sendFile(fileArr,DTOObjAdapter.convertoObjToDto(msg));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
+    }
+    public void receiveFile(byte[] fileArr,GpMessageModel model){
+        Platform.runLater(()->{
+            msgs.add(model);
+            msgListView.setItems(msgs);
+            String fileName = model.getMsgContent();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+            fileChooser.setInitialFileName(fileName);
+            fileChooser.setTitle("Set Incoming File");
+            File file = fileChooser.showSaveDialog(StageCoordinator.getInstance().getPrimaryStage());
+
+            if(file != null){
+                new Thread(() ->{
+                    try {
+                        FileOutputStream fileOutputStream = new FileOutputStream(file);
+                        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream);
+                        bufferedOutputStream.write(fileArr);
+                        bufferedOutputStream.flush();
+                        bufferedOutputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            }
+        });
+    }
+
+
 
     public void addGpChatToList(GpChatDto gpChatDto){
         new Thread(() -> {
+
             GpChatModel gpChatModel = DTOObjAdapter.convertDtoToObj(gpChatDto);
+            //If new chat is to be added, put it on the manager list
             gpChatsManager.addGpChat(gpChatModel);
             Platform.runLater(() ->{
+                //Make Sure that if that is the first one we Add
+                //Make it automatically active
+                if(chats.size() <= 0 ){
+                    gpChatsManager.setActiveChat(gpChatModel.getGpChatId());
+                }
                 chats.add(gpChatModel);
                 chatListView.setItems(chats);
                 typingArea.setDisable(false);
@@ -177,10 +235,12 @@ public class GroupChatController implements Initializable {
         Platform.runLater(() ->{
             msgs.add(model);
             msgListView.setItems(msgs);
-            msgListView.setCellFactory(param -> new GPChatMsgViewCell());
-
+            int index = msgs.size();
+            msgListView.scrollTo(index);
+//            msgListView.setCellFactory(param -> new GPChatMsgViewCell());
         });
     }
+
     public void sendMsg(KeyEvent keyEvent) {
     }
     public  void closeCreationAlert(){
@@ -200,6 +260,19 @@ public class GroupChatController implements Initializable {
 
         return  msg;
     }
+    private GpMessageModel createMsgFileModel(String fileName){
+        GpMessageModel msg = new GpMessageModel();
+
+        msg.setChatId(gpChatsManager.getActiveChat());
+        msg.setMsgType(MsgType.FILE);
+        msg.setSenderName(userModel.getDisplayName());
+        msg.setSenderId(userModel.getPhoneNumber());
+        Date currDate = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat(  "dd-MM-yyyy HH:mm:ss");
+        msg.setTimeStamp(formatter.format(currDate.getTime()));
+        msg.setMsgContent(fileName);
+        return  msg;
+    }
 
     //    ================= RUNNABLES =====================
     Runnable fetchGpChats = () -> {
@@ -207,29 +280,29 @@ public class GroupChatController implements Initializable {
         try {
             System.out.println(userModel.getPhoneNumber());
             gpChatModelList = DTOObjAdapter.convertDtoGpChat(gpChatService.fetchAllUserGpChats(userModel.getPhoneNumber()));
+            //Creat GP chat in manager for model we get
             gpChatsManager.addGpChat(gpChatModelList);
             List<GpChatModel> finalGpChatModelList = gpChatModelList;
             Platform.runLater(() -> {
                 chats.addAll(finalGpChatModelList);
                 chatListView.setItems(chats);
                 chatListView.setCellFactory(param -> new GpChatViewCell());
-                if (chats.size() > 0){
+                msgListView.setCellFactory(param -> new GPChatMsgViewCell());
+
+                //I Still have no chats--If So disable btn and text area
+                //Until a new chat is added
+                if(chats.size() > 0){
                     typingArea.setDisable(false);
                     sendMsgBtn.setDisable(false);
-                    activeChatId = 1;
-                    gpChatsManager.setActiveChat(1);
-
-                    msgs.setAll(gpChatsManager.getActiveChatMsgList());
-                    msgListView.setItems(msgs);
-                    msgListView.setCellFactory(param -> new GPChatMsgViewCell());
-                    if (!msgListView.getItems().isEmpty()) {
-                        msgListView.getSelectionModel().select(0);
-                    }
+                    //Set Active Chat in manager
+                    gpChatsManager.setActiveChat(chats.get(0).getGpChatId());
+                    chatListView.getSelectionModel().select(0);
                 }
-
             });
         } catch (RemoteException e) {
             e.printStackTrace();
         }
     };
+
+
 }

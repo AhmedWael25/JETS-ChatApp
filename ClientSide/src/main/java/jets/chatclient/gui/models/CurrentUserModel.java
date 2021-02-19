@@ -4,6 +4,7 @@ import javafx.beans.property.*;
 import javafx.scene.image.Image;
 
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 public class CurrentUserModel {
@@ -19,11 +20,12 @@ public class CurrentUserModel {
     private StringProperty birthdayDate = new SimpleStringProperty();
     private StringProperty bio = new SimpleStringProperty();
 
-    private Circle userAvatar = new Circle();
 
     private SimpleIntegerProperty availability = new SimpleIntegerProperty();
     private SimpleIntegerProperty status = new SimpleIntegerProperty();
 
+    private Circle userStatus = new Circle();
+    private Circle userAvatar = new Circle();
 
     public Integer getAvailability() {
         return availability.get();
@@ -42,7 +44,21 @@ public class CurrentUserModel {
     }
 
     public void setStatus(Integer status) {
+
+        switch (status){
+            case 1:
+                userStatus.setFill(Paint.valueOf("#14de4a"));
+                break;
+            case 2:
+                userStatus.setFill(Paint.valueOf("#de1414"));
+                break;
+            case 3:
+                userStatus.setFill(Paint.valueOf("#f59a40"));
+                break;
+
+        }
         this.status.set(status);
+
     }
 
     public IntegerProperty statusProperty() {
@@ -120,10 +136,8 @@ public class CurrentUserModel {
     }
 
     public void setImage(Image image) {
-
         this.image.set(image);
         this.userAvatar.setFill(new ImagePattern(image));
-
     }
 
 
@@ -154,6 +168,9 @@ public class CurrentUserModel {
 
     public void bindToUserAvatar(Circle circle){
         circle.fillProperty().bind(userAvatar.fillProperty());
+    }
+    public void  bindToUserStatus(Circle c){
+        c.fillProperty().bind(userStatus.fillProperty());
     }
 
     @Override

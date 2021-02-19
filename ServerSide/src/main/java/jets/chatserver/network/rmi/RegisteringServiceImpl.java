@@ -37,6 +37,8 @@ public class RegisteringServiceImpl extends UnicastRemoteObject implements Regis
         }
     }
 
+
+
     @Override
     public boolean isClientRegistered(String userId) throws RemoteException {
         if(currentConnectedUsers.get(userId) == null){

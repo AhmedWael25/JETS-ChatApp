@@ -34,6 +34,18 @@ public class GpChatsManager {
         });
     }
 
+    public void updateParticipantStatus(String id,Integer status){
+        chatsMap.entrySet().forEach(entrySet -> {
+            entrySet.getValue().getGpParticipants()
+                    .stream()
+                    .forEach(participantModel -> {
+                        if (participantModel.getParticipantId().equals(id)){
+                            participantModel.setParticipantStatus(status);
+                        }
+                    });
+        });
+    }
+
 
     public Circle getParticipantImg(Integer chatId, String participantId){
         GpChatModel chat = chatsMap.get(chatId);
@@ -47,6 +59,17 @@ public class GpChatsManager {
         return  c;
     }
 
+    public  Circle getParticipantStatus(Integer chatId, String participantId){
+        GpChatModel chat = chatsMap.get(chatId);
+        Circle c = null;
+        for (ParticipantModel part : chat.getGpParticipants()){
+            if(part.getParticipantId().equals(participantId)){
+                c =   part.getpStatus();
+                break;
+            }
+        }
+        return  c;
+    }
     public GpChatModel getChat(Integer chatId){
         return  chatsMap.get(chatId);
     }
@@ -56,6 +79,7 @@ public class GpChatsManager {
         msgList.add(msg);
         chatMsgs.put(msg.getChatId(), msgList);
     }
+
 
     public  void addGpChat(GpChatModel gpChatModel){
         chatsMap.put(gpChatModel.getGpChatId(),gpChatModel);
@@ -91,6 +115,16 @@ public class GpChatsManager {
             ControllersGetter controllersGetter = ControllersGetter.getInstance();
             GroupChatController groupChatController = controllersGetter.getGpChatController();
             groupChatController.addMsgToUi(msg);
+        }
+    }
+    public  void addFileMsg(byte[] fileArr,GpMessageDto gpMessageDto){
+        GpMessageModel msg = DTOObjAdapter.convertDtoToObj(gpMessageDto);
+        addMsg(msg);
+        ControllersGetter controllersGetter = ControllersGetter.getInstance();
+        GroupChatController groupChatController = controllersGetter.getGpChatController();
+        System.out.println("ADD MSG "+ msg);
+        if(activeChat.equals(msg.getChatId())){
+            groupChatController.receiveFile(fileArr,msg);
         }
     }
 }

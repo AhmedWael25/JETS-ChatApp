@@ -3,17 +3,22 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="msgcontainer" maxHeight="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="357.0" snapToPixel="false" spacing="10.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="msgcontainer" maxHeight="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="357.0" snapToPixel="false" spacing="5.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Circle fx:id="userImg" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="50.0">
          <HBox.margin>
             <Insets />
          </HBox.margin>
-      </Circle>
+         <children>
+            <Circle fx:id="userImg" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="userStatus" fill="RED" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="BOTTOM_RIGHT" />
+         </children>
+      </StackPane>
       <VBox maxHeight="Infinity">
          <children>
             <Label fx:id="msgBody" maxHeight="Infinity" maxWidth="1.7976931348623157E308" style="-fx-border-radius: 0 10 10 10; -fx-background-radius: 0 10 10 10; -fx-background-color: #D9E8F5;" text="Label" textAlignment="JUSTIFY" wrapText="true">

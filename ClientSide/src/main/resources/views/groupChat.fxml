@@ -97,7 +97,7 @@
                               <Insets right="15.0" />
                            </padding>
                         </JFXTextArea>
-                        <JFXButton fx:id="uploadFilesBtn" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" prefHeight="51.0" prefWidth="53.0" textFill="#f26101" textOverrun="CLIP">
+                        <JFXButton fx:id="uploadFilesBtn" alignment="CENTER" contentDisplay="CENTER" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" onAction="#sendFile" prefHeight="51.0" prefWidth="53.0" textFill="#f26101" textOverrun="CLIP">
                            <graphic>
                               <FontIcon iconColor="#304269" iconLiteral="fas-paperclip" iconSize="20" wrappingWidth="15.799986839294434" />
                            </graphic>

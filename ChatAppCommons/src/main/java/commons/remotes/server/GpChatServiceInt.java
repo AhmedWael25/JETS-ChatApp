@@ -13,4 +13,5 @@ public interface GpChatServiceInt extends Remote {
     List<GpChatDto> fetchAllUserGpChats(String userId) throws RemoteException;
     boolean createGroupChat(GpChatUserDto chatDto) throws  RemoteException;
     boolean sendMessage(GpMessageDto msgDto) throws  RemoteException;
+    boolean sendFile(byte[] fileArr, GpMessageDto messageDto) throws  RemoteException;
 }

@@ -112,11 +112,12 @@ public class DTOObjAdapter {
 
             pModel.setParticipantId(participantDto.getParticipantId());
             pModel.setParticipantName(participantDto.getParticipantName());
-            Circle circle = new Circle();
+//            Circle circle = new Circle();
             Image partImg = ImageEncoderDecoder.getDecodedImage(participantDto.getParticipantImage());
-            circle.setFill(new ImagePattern(partImg));
-            pModel.setParticipantImg(circle);
+//            circle.setFill(new ImagePattern(partImg));
+//            pModel.setParticipantImg(circle);
             pModel.setParticipantImage(partImg);
+            pModel.setParticipantStatus(participantDto.getParticipantStatus());
 
             return pModel;
         }).collect(Collectors.toList());
@@ -172,10 +173,13 @@ public class DTOObjAdapter {
         currentUser.setAvailability(currentUserDto.getAvailability());
         currentUser.setStatus(currentUserDto.getStatus());
 
-        //handling Image conversion
-        byte[] imgBytes = Base64.getDecoder().decode(currentUserDto.getUserImage());
-        currentUser.setImage(new Image(new ByteArrayInputStream(imgBytes)));
+        System.out.println("STATUUUS" + currentUserDto.getStatus());
 
+        //handling Image conversion
+//        byte[] imgBytes = Base64.getDecoder().decode(currentUserDto.getUserImage());
+//        currentUser.setImage(new Image(new ByteArrayInputStream(imgBytes)));
+        Image img = ImageEncoderDecoder.getDecodedImage(currentUserDto.getUserImage());
+        currentUser.setImage(img);
 
         return currentUser;
     }

@@ -86,12 +86,9 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
 
     @Override
     public boolean sendMessage(GpMessageDto gpMessageDto) throws RemoteException {
-
         List<String> participants = null;
         int chatId = gpMessageDto.getChatId();
-
         try {
-
             //Get All Participants
             participants = gpChatDao.getAllParticipantsIdsByChatId(chatId);
             //Prep to call Back only online users.
@@ -101,7 +98,8 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
                 ClientInterface ci = currentConnectedUsers.get(part);
                 if(ci != null) {
                     ci.sendNewGpMsgToUsers(gpMessageDto);
-
+                    //Send notifi
+                    //Method.sendNotificaton(chatid,msgContent,senderName)
                 }
             }
         } catch (SQLException e) {
@@ -111,4 +109,34 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
         return true;
     }
 
+    @Override
+    public boolean sendFile(byte[] fileArr, GpMessageDto gpMessageDto) throws RemoteException {
+
+        List<String> participants = null;
+        int chatId = gpMessageDto.getChatId();
+        try {
+            //Get All Participants
+            participants = gpChatDao.getAllParticipantsIdsByChatId(chatId);
+            //Prep to call Back only online users.
+            //Remove Sender From Receivers List
+            //Send File As Well
+            for (String part : participants){
+                if(part.equals(gpMessageDto.getSenderId())) continue;
+                ClientInterface ci = currentConnectedUsers.get(part);
+                if(ci != null) {
+                    new Thread(() -> {
+                        try {
+                            ci.sendNewGpFileTpUsers(fileArr,gpMessageDto);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }).start();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

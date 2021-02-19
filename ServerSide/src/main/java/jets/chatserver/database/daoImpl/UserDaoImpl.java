@@ -8,7 +8,9 @@ import jets.chatserver.DBModels.DBUser;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDaoImpl implements UserDao {
 
@@ -52,17 +54,15 @@ public class UserDaoImpl implements UserDao {
         while(rs.next()){
             user.setId(rs.getInt("id"));
             user.setPhone(rs.getString("phone"));
-
             user.setDisplayedName(rs.getString("name"));
             user.setGender(rs.getString("gender"));
-            // we don't fetch password
-//            user.setPassword(rs.getString("password"));
             user.setEmail(rs.getString("email"));
             user.setCountry(rs.getString("country"));
             user.setDob(rs.getDate("dob").toString());
             user.setBio(rs.getString("bio"));
             user.setImgEncoded(rs.getString("image"));
-
+            user.setUserStatus(rs.getInt("status"));
+            user.setUserAvail(rs.getInt("availability"));
         }
         pd.close();
         return  user;
@@ -357,6 +357,47 @@ public class UserDaoImpl implements UserDao {
         }
         pd.close();
         return false;
+    }
+
+    @Override
+    public Map<String, Integer> getUsersStatus(List<String> userIds) throws SQLException {
+
+        Map<String, Integer> usersStatus = new HashMap<>();
+
+        StringBuffer buff = new StringBuffer();
+        for (String id : userIds){
+            buff.append(id+",") ;
+        }
+        buff.append("69966996"); //TODO RMV, BUT NOT NOW
+        String query = "SELECT phone, status FROM user WHERE phone IN("+buff.toString()+")";
+
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+       ResultSet rs =  pd.executeQuery();
+
+       while (rs.next()){
+           usersStatus.put(rs.getString("phone"),rs.getInt("status"));
+       }
+       return  usersStatus;
+    }
+
+    @Override
+    public Integer getUserStatus(String userId) throws SQLException {
+        Integer status = 0;
+
+        if(!isUserExist(userId)) return status;
+
+        String query = "SELECT status FROM user WHERE phone = ?";
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,userId);
+        ResultSet rs = pd.executeQuery();
+        while (rs.next()){
+            status = rs.getInt("status");
+        }
+        return  status;
     }
 
 

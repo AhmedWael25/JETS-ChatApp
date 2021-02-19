@@ -5,6 +5,7 @@ import jets.chatserver.DBModels.DBUserCredintials;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
 
@@ -43,5 +44,9 @@ public interface UserDao {
     boolean updateDBUserStatus(int userStatus, String userId) throws SQLException;
 
     boolean updateDBUserPassword(String newPassword, String userId) throws SQLException;
+
+    Map<String ,Integer> getUsersStatus(List<String> userIds) throws  SQLException;
+
+    Integer getUserStatus(String  userId) throws  SQLException;
 
 }

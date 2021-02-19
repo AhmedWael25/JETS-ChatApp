@@ -1,6 +1,7 @@
 package jets.chatserver.network.rmi;
 
 
+import commons.remotes.client.ClientInterface;
 import commons.remotes.server.UserProfileServiceInt;
 import commons.sharedmodels.CurrentUserDto;
 import commons.utils.HashEncoder;
@@ -13,12 +14,21 @@ import jets.chatserver.network.adapters.EntityObjAdapter;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Optional;
 
 
 public class UserProfileServiceImpl extends UnicastRemoteObject implements UserProfileServiceInt {
+
+    Map<String, ClientInterface> currentConnectedUsers = null;
+
     public UserProfileServiceImpl() throws RemoteException {
 
+    }
+
+    public UserProfileServiceImpl(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {
+        super();
+        this.currentConnectedUsers = currentConnectedUsers;
     }
 
     @Override
@@ -68,7 +78,19 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
         {
 
             try {
-                return UserDaoImpl.getUserDaoInstance().updateDBUserStatus(userStatus, userId);
+                boolean isUpdated = UserDaoImpl.getUserDaoInstance().updateDBUserStatus(userStatus, userId);
+                //Call Back All Connected Clients to Update Their Status
+                //Loop on All Online Users And Change
+                currentConnectedUsers.forEach((id, clientInterface) -> {
+                    if(!id.equals(userId)){
+                        try {
+                            clientInterface.updateUserStatus(userId,userStatus);
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                return  isUpdated;
             } catch (SQLException e) {
                 System.out.println("Unable to update User status.");
                 e.printStackTrace();

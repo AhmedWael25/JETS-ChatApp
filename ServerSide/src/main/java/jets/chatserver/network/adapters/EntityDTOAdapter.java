@@ -86,13 +86,13 @@ public class EntityDTOAdapter {
                 participant.setParticipantId(participantId);
                 participant.setParticipantName(UserDaoImpl.getUserDaoInstance().getUserNameById(participantId));
                 participant.setParticipantImage(UserDaoImpl.getUserDaoInstance().getUserEncodedImg(participantId));
+                participant.setParticipantStatus(UserDaoImpl.getUserDaoInstance().getUserStatus(participantId));
                 participantsDto.add(participant);
             }
             gpChatDto.setGpParticipants(participantsDto);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return  gpChatDto;
     }
     public static FriendGpDto convertEntityToFriendDto(DBUser user){

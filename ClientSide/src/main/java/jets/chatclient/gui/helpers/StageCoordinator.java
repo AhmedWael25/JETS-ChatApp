@@ -25,6 +25,14 @@ public class StageCoordinator {
         primaryStage = stage;
     }
 
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public static void setPrimaryStage(Stage primaryStage) {
+        StageCoordinator.primaryStage = primaryStage;
+    }
+
     public static StageCoordinator getInstance() {
         return stageCoordinator;
     }

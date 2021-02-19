@@ -2,15 +2,46 @@ package jets.chatclient.gui.models;
 
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
 public class ParticipantModel {
 
     private String participantId;
     private String participantName;
-    private Circle participantImg;
+    private Circle participantImg = new Circle();
     private Image participantImage;
+    private int participantStatus;
 
+    public Circle getpStatus() {
+        return pStatus;
+    }
+
+    public void setpStatus(Circle pStatus) {
+        this.pStatus = pStatus;
+    }
+
+    private Circle pStatus = new Circle();
+
+
+    public int getParticipantStatus() {
+        return participantStatus;
+    }
+
+    public void setParticipantStatus(int status) {
+        this.participantStatus = participantStatus;
+        switch (status){
+            case 1:
+                pStatus.setFill(Paint.valueOf("#14de4a"));
+                break;
+            case 2:
+                pStatus.setFill(Paint.valueOf("#de1414"));
+                break;
+            case 3:
+                pStatus.setFill(Paint.valueOf("#f59a40"));
+                break;
+        }
+    }
 
     public String getParticipantId() {
         return participantId;

@@ -250,15 +250,20 @@ public class UserProfileController {
             switch (statusComboBox.getValue()) {
                 case "Free":
                     successUpdate = userProfileService.updateUserStatus(1, currentUserModel.getPhoneNumber());
+                    currentUserModel.setStatus(1);
                     System.out.println("Free");
                     break;
                 case "Busy":
                     successUpdate = userProfileService.updateUserStatus(2, currentUserModel.getPhoneNumber());
                     System.out.println("Busy");
+                    currentUserModel.setStatus(2);
+
                     break;
                 case "Away":
                     successUpdate = userProfileService.updateUserStatus(3, currentUserModel.getPhoneNumber());
                     System.out.println("Away");
+                    currentUserModel.setStatus(3);
+
                     break;
                 default:
                     System.out.println("no match");

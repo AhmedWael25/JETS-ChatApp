@@ -44,7 +44,6 @@ public class PasswordViewController implements Initializable {
         modelsFactory = ModelsFactory.getInstance();
         currentUserModel = modelsFactory.getCurrentUserModel();
         Registry reg = modelsFactory.getRegistry();
-        System.out.println("i'm in password controller");
         try {
             signInService = (SignInServiceInt) reg.lookup("SignInService");
         } catch (RemoteException | NotBoundException e) {

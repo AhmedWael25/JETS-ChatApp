@@ -41,7 +41,7 @@ public class ServerInit   {
             reg.rebind("SignUpService", new SignUpServiceImpl());
 
             //UserProfile Services:
-            reg.rebind("UserProfileService", new UserProfileServiceImpl());
+            reg.rebind("UserProfileService", new UserProfileServiceImpl(currentConnectedUsers));
 
             System.out.println("Server Up And Running");
 
@@ -66,8 +66,6 @@ public class ServerInit   {
             List<String> xd = g.getAllParticipantsIdsByChatId(3);
 
             List<DBGpChat> gp =  g.getAllGpChatsOfUser("1");
-
-
 
 //            System.out.println(g.doesUserHasGpChats("5"));
 //            DBGpChat c = new DBGpChat();

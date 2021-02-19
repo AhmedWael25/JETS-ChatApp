@@ -7,6 +7,15 @@ public class ParticipantDto implements Serializable {
     private String participantId;
     private String participantName;
     private String participantImage;
+    private int participantStatus;
+
+    public int getParticipantStatus() {
+        return participantStatus;
+    }
+
+    public void setParticipantStatus(int participantStatus) {
+        this.participantStatus = participantStatus;
+    }
 
     public String getParticipantId() {
         return participantId;
