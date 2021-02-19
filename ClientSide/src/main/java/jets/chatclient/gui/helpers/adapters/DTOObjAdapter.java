@@ -51,7 +51,6 @@ public class DTOObjAdapter {
     public static CurrentUserModel convertDtoToCurrentUser(CurrentUserDto currentUserDto) {
         ModelsFactory modelsFactory = ModelsFactory.getInstance();
         CurrentUserModel currentUser = modelsFactory.getCurrentUserModel();
-
         currentUser.setDisplayName(currentUserDto.getUserName());
         currentUser.setPhoneNumber(currentUserDto.getUserPhone());
         currentUser.setEmailAddress(currentUserDto.getUserEmail());

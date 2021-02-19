@@ -1,22 +1,26 @@
 package jets.chatclient.gui.models;
 
-
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
 
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
 
 public class CurrentUserModel {
 
     private StringProperty displayName = new SimpleStringProperty();
     //TODO handle password availability,shouldn't be stored here
     private StringProperty phoneNumber = new SimpleStringProperty();
+    //    private StringProperty displayName = new SimpleStringProperty();
     private StringProperty emailAddress = new SimpleStringProperty();
     private ObjectProperty<Image> image = new SimpleObjectProperty<Image>();
     private StringProperty gender = new SimpleStringProperty();
     private StringProperty country = new SimpleStringProperty();
     private StringProperty birthdayDate = new SimpleStringProperty();
     private StringProperty bio = new SimpleStringProperty();
+
+    private Circle userAvatar = new Circle();
+
     private SimpleIntegerProperty availability = new SimpleIntegerProperty();
     private SimpleIntegerProperty status = new SimpleIntegerProperty();
 
@@ -44,6 +48,7 @@ public class CurrentUserModel {
     public IntegerProperty statusProperty() {
         return status;
     }
+
 
     public String getDisplayName() {
         return displayName.get();
@@ -115,8 +120,12 @@ public class CurrentUserModel {
     }
 
     public void setImage(Image image) {
+
         this.image.set(image);
+        this.userAvatar.setFill(new ImagePattern(image));
+
     }
+
 
     public String getBirthdayDate() {
         return birthdayDate.get();
@@ -129,7 +138,6 @@ public class CurrentUserModel {
     public void setBirthdayDate(String birthdayDate) {
         this.birthdayDate.set(birthdayDate);
     }
-
     public String getBio() {
         return bio.get();
     }
@@ -142,10 +150,16 @@ public class CurrentUserModel {
         this.bio.set(bio);
     }
 
+
+
+    public void bindToUserAvatar(Circle circle){
+        circle.fillProperty().bind(userAvatar.fillProperty());
+    }
+
     @Override
     public String toString() {
         return "CurrentUserModel{" +
-                "userName=" + displayName +
+                "displayName=" + displayName +
                 ", phoneNumber=" + phoneNumber +
                 ", displayName=" + displayName +
                 ", emailAddress=" + emailAddress +
@@ -156,5 +170,8 @@ public class CurrentUserModel {
                 ", bio=" + bio +
                 '}';
     }
+
+
+
 
 }

@@ -3,7 +3,9 @@ package jets.chatserver.network.rmi;
 
 import commons.remotes.server.UserProfileServiceInt;
 import commons.sharedmodels.CurrentUserDto;
+import commons.utils.HashEncoder;
 import jets.chatserver.DBModels.DBUser;
+import jets.chatserver.DBModels.DBUserCredintials;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.network.adapters.EntityObjAdapter;
@@ -11,7 +13,7 @@ import jets.chatserver.network.adapters.EntityObjAdapter;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
-
+import java.util.Optional;
 
 
 public class UserProfileServiceImpl extends UnicastRemoteObject implements UserProfileServiceInt {
@@ -74,6 +76,25 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
             return false;
         }
 
-    };
+    }
+
+    @Override
+    public boolean updateUserPassword(String oldPassword, String newPassword, String userId) throws RemoteException {
+
+        DBUserCredintials userCredintials;
+        try {
+            UserDao userDao = UserDaoImpl.getUserDaoInstance();
+            userCredintials = userDao.getUserCredentials(userId);
+            if( HashEncoder.verifyPassword(oldPassword,userCredintials.getUserPassword()))
+            {
+               return userDao.updateDBUserPassword(newPassword,userId);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Unable to Update Password.");
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

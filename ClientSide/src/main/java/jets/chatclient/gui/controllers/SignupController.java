@@ -76,13 +76,12 @@ public class SignupController implements Initializable {
         tfPhonenumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
 
         //handling date picker
-
         //age between 16-60
-
         final LocalDate minDate = LocalDate.now().minusYears(60);
         final LocalDate maxDate = LocalDate.now().minusYears(16);
         dpBirthdate.setValue(maxDate.minusYears(1));
         DatePickerUtils.restrictDatePicker(dpBirthdate, minDate, maxDate);
+
 
         registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
 

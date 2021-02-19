@@ -28,10 +28,15 @@ public class Validators {
     final static String invalidPasswordMsg = "password must be 8 chars at least !";
 
 
+
+    //Email regex
+    final static String emailRegex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+    final static String invalidEmailMsg = "Enter a valid Email. !";
+
     //required Msg
     final static String requiredMsg = "Required";
 
-
+//TODO handle this shit
     public static void buttonValidate(JFXButton btn, Parent... fields) {
         btn.setDisable(true);
         for (Parent field : fields) {
@@ -49,6 +54,7 @@ public class Validators {
             }
         }
     }
+
 
     public static JFXTextField addNameValidator(JFXTextField field, FontIcon fi) {
         RegexValidator dispalynameValidator = getRegexValidator(displayNameRegex, invalidDisplayNameMsg);
@@ -75,6 +81,17 @@ public class Validators {
         bindValidation(field, fi);
         return field;
     }
+
+    public static JFXTextField addEmailValidator(JFXTextField field, FontIcon fi) {
+        RegexValidator dispalynameValidator = getRegexValidator(emailRegex, invalidEmailMsg);
+        field.getValidators().add(dispalynameValidator);
+
+        bindValidation(field, fi);
+
+
+        return field;
+    }
+
 
 
     public static void addRequiredValidator(Parent field, FontIcon fi) {
