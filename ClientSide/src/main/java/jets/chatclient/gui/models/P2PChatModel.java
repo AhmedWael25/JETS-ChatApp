@@ -7,10 +7,8 @@ public class P2PChatModel {
     private int chatId;
     private int friendStatus;
     private int friendAvailability;
-    private String msgTime;
     private String friendName;
     private  String friendId;
-    private String msgContent;
     private String chatStartDate;
     private Image friendImg;
 
@@ -46,28 +44,12 @@ public class P2PChatModel {
         this.friendAvailability = friendAvailability;
     }
 
-    public String getMsgTime() {
-        return msgTime;
-    }
-
-    public void setMsgTime(String msgTime) {
-        this.msgTime = msgTime;
-    }
-
     public String getFriendName() {
         return friendName;
     }
 
     public void setFriendName(String friendName) {
         this.friendName = friendName;
-    }
-
-    public String getMsgContent() {
-        return msgContent;
-    }
-
-    public void setMsgContent(String msgContent) {
-        this.msgContent = msgContent;
     }
 
     public String getChatStartDate() {
@@ -92,11 +74,9 @@ public class P2PChatModel {
                 "chatId=" + chatId +
                 ", friendStatus=" + friendStatus +
                 ", friendAvailability=" + friendAvailability +
-                ", msgTime='" + msgTime + '\'' +
                 ", friendName='" + friendName + '\'' +
-                ", msgContent='" + msgContent + '\'' +
                 ", chatStartDate='" + chatStartDate + '\'' +
-                ", friendImg=" + "friendImg" +
+                ", friendImg=" + friendImg +
                 '}';
     }
 }

@@ -11,5 +11,5 @@ public interface P2PChatServiceInt extends Remote {
 
     List<P2PChatDto> fetchAllUserP2PChats(String userId) throws RemoteException;
 
-    void sendMessage(P2PMessageDto msgDto)throws RemoteException;
+    boolean sendMessage(P2PMessageDto msgDto) throws RemoteException;
 }

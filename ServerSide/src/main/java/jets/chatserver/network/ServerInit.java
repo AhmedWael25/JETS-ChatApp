@@ -2,6 +2,7 @@ package jets.chatserver.network;
 
 import commons.remotes.client.ClientInterface;
 import jets.chatserver.DBModels.DBGpChat;
+import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.database.dao.*;
 import jets.chatserver.database.daoImpl.*;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
@@ -42,7 +43,7 @@ public class ServerInit   {
 //            InvitationsDao invitationsDao = InvitationDaoImpl.getInvitationDaoInstance();
 //
 //
-////            invitationsDao.addNewInvitation(inv);
+//            invitationsDao.addNewInvitation(inv);
 //
 //            List<DBInvitations> sender = invitationsDao.getAllUserReceivedInvitations("1");
 //
@@ -60,8 +61,8 @@ public class ServerInit   {
             List<DBGpChat> gp =  g.getAllGpChatsOfUser("1");
 
 
-            System.out.println(g.getGpChatById(2));
-
+//            System.out.println(g.getGpChatById(2));
+//
 //            System.out.println(g.doesUserHasGpChats("5"));
 //            DBGpChat c = new DBGpChat();
 //            c.setGpChatName("omk");

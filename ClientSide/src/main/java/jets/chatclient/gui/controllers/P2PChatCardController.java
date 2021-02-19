@@ -36,7 +36,7 @@ public class P2PChatCardController {
 
     public void setData(P2PChatModel chat){
         friendName.setText(chat.getFriendName());
-        friendImg.setFill(new ImagePattern(chat.getFriendImg()));
+//        friendImg.setFill(new ImagePattern(chat.getFriendImg()));
     }
 
     public AnchorPane getChatCard(){

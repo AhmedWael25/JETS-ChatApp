@@ -42,8 +42,12 @@ public class DTOObjAdapter {
 
         P2PMessageModel msg = new P2PMessageModel();
 
+        msg.setChatId(msgDto.getChatId());
+        msg.setSenderId(msgDto.getSenderId());
+        msg.setReceiverId(msgDto.getReceiverId());
         msg.setMsgBody(msgDto.getMsgBody());
         msg.setMsgTime(msgDto.getMsgTime());
+        msg.setMsgType(msgDto.getMsgType());
 
         return  msg;
     }
@@ -52,8 +56,12 @@ public class DTOObjAdapter {
 
         P2PMessageDto msgDto = new P2PMessageDto();
 
+        msgDto.setChatId(msg.getChatId());
+        msgDto.setSenderId(msg.getSenderId());
+        msgDto.setReceiverId(msg.getReceiverId());
         msgDto.setMsgBody(msg.getMsgBody());
         msgDto.setMsgTime(msg.getMsgTime());
+        msgDto.setMsgType(msg.getMsgType());
 
         return msgDto;
     }
@@ -69,10 +77,6 @@ public class DTOObjAdapter {
         p2pchat.setFriendName(chatDto.getFriendName());
         p2pchat.setFriendId(chatDto.getFriendId());
 
-        //TODO Refactor INTO img utils
-        byte[] dst = Base64.getDecoder().decode(chatDto.getFriendImg());
-        Image img = new Image(new ByteArrayInputStream(dst));
-        p2pchat.setFriendImg(img);
         return  p2pchat;
     }
 

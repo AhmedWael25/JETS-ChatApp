@@ -4,7 +4,7 @@ import javafx.scene.control.ListCell;
 import jets.chatclient.gui.controllers.MessageCardController;
 import jets.chatclient.gui.models.P2PMessageModel;
 
-public class MessageViewCell extends ListCell<P2PMessageModel> {
+public class P2PMsgViewCell extends ListCell<P2PMessageModel> {
 
     @Override
     protected void updateItem(P2PMessageModel msgCard, boolean empty) {

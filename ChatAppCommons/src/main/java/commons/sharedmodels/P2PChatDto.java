@@ -84,10 +84,10 @@ public class P2PChatDto implements Serializable {
                 ", userId='" + userId + '\'' +
                 ", friendId='" + friendId + '\'' +
                 ", friendName='" + friendName + '\'' +
-                ", friendImg='" + "IMG" + '\'' +
+                ", friendImg='" +friendImg+ '\'' +
                 ", chatStartDate='" + chatStartDate + '\'' +
                 ", availability=" + availability +
-                ", status=" + status +
+                ", status=" + "oasmoajdnoasjdadn" +
                 '}';
     }
 }

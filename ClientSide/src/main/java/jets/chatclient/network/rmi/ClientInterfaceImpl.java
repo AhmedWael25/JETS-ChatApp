@@ -12,6 +12,7 @@ import jets.chatclient.gui.controllers.GroupChatController;
 import jets.chatclient.gui.helpers.ControllersGetter;
 import jets.chatclient.gui.helpers.GpChatsManager;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.P2PChatManager;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -50,12 +51,13 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     }
 
     @Override
-    public void sendNewMessageToUser(P2PMessageDto msgDto) throws RemoteException {
+    public void sendNewP2PMessageToUser(P2PMessageDto p2pMsgDto) throws RemoteException {
 
-        ControllersGetter controllersGetter = ControllersGetter.getInstance();
-        P2PChatController p2pChatController = controllersGetter.getP2PChatController();
-        p2pChatController.SendMessageToChat(msgDto);
+        P2PChatManager p2pChatManager = ModelsFactory.getInstance().getP2PChatManager();
+        p2pChatManager.addMsg(p2pMsgDto);
+        System.out.println("From CALL BACK ");
     }
+
     @Override
     public void sendNewGpMsgToUsers(GpMessageDto gpMessageDto) throws RemoteException {
         GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();

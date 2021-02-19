@@ -4,15 +4,14 @@ package jets.chatclient.gui.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import jets.chatclient.gui.helpers.GpChatsManager;
+import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.P2PChatManager;
 import jets.chatclient.gui.models.P2PMessageModel;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Date;
 
 public class MessageCardController {
@@ -39,11 +38,11 @@ public class MessageCardController {
 
     public void setData(P2PMessageModel msg){
         msgBody.setText(msg.getMsgBody());
-        msgTime.setText(new Date().toString());
+        msgTime.setText(msg.getMsgTime());
 
-        byte[] decodeImg = Base64.getDecoder().decode(msg.getFriendImg());
-        Image frndImg = new Image(new ByteArrayInputStream(decodeImg));
-        friendImg.setFill(new ImagePattern(frndImg));
+//        P2PChatManager p2pChatManager = ModelsFactory.getInstance().getP2PChatManager();
+//        Circle partImg = p2pChatManager.getParticipantImg(msg.getChatId(), msg.getSenderId());
+//        friendImg.fillProperty().bind(participantImg.fillProperty());
 
     }
 
