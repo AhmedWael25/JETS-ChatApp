@@ -18,14 +18,13 @@ public class NotificationUtils {
                 .title(title)
                 .text(msg)
                 .graphic(icon)
-                .hideAfter(Duration.seconds(3.0))
+                .hideAfter(Duration.seconds(2.0))
                 .threshold(3,threshold)
                 .position(Pos.BOTTOM_RIGHT)
 //                .darkStyle()
                 .onAction(action)
                 .owner(owner);
         //to run in threads
-        System.out.println("asasasd"+owner);
         Platform.runLater(() -> notificationBuilder.show());
     }
 }

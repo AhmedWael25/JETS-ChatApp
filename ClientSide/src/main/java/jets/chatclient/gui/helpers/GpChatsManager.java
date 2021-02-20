@@ -47,6 +47,20 @@ public class GpChatsManager {
     }
 
 
+    public  void updateParticipantName(String  id, String name){
+        chatsMap.entrySet().forEach(entrySet -> {
+            entrySet.getValue().getGpParticipants()
+                    .stream()
+                    .forEach(participantModel -> {
+                        if (participantModel.getParticipantId().equals(id)){
+                            participantModel.setParticipantName(name);
+                        }
+                    });
+        });
+    }
+
+
+
     public Circle getParticipantImg(Integer chatId, String participantId){
         GpChatModel chat = chatsMap.get(chatId);
         Circle c = null;
