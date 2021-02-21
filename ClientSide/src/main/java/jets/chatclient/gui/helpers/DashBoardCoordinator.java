@@ -1,12 +1,21 @@
 package jets.chatclient.gui.helpers;
 
 import com.mysql.cj.conf.PropertyDefinitions;
+import commons.remotes.server.RegisteringClientInt;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Window;
+import jets.chatclient.App;
+import jets.chatclient.gui.models.CurrentUserModel;
+import jets.chatclient.gui.models.UserCredentials;
+import jets.chatclient.gui.utils.ConfigManager;
 
 import javax.xml.transform.sax.SAXSource;
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,5 +160,9 @@ public class DashBoardCoordinator {
     public Map<String, ScreenData> getScreens(){
         return  dashboardScreens;
     }
+     public void clearScreens(){
+        dashboardScreens.clear();
+        dashboardContainer= null;
+     }
 
 }

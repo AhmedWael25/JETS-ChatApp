@@ -77,28 +77,7 @@ public class RegisterLoginCoordinator {
             ((BorderPane)registerLoginContainer).setCenter(signUpScreen);
         }
     }
-    public void switchToPasswordDialogScreen(){
-        if(registerLoginContainer == null){
-            throw  new RuntimeException("Register and Login Container haven't been init.");
-        }
-        if(!registerLoginScreens.containsKey("passwordDialogScreen")){
-            System.out.println("Create Password Dialog Screen");
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/PasswordDialog.fxml"));
-                Parent passwordDialogScreen = fxmlLoader.load();
-                ScreenData screenData = new ScreenData(fxmlLoader,passwordDialogScreen);
-                registerLoginScreens.put("passwordDialogScreen",screenData);
-                ((BorderPane)registerLoginContainer).setCenter(passwordDialogScreen);
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("Coudlnt load Password Dialog screen");
-            }
-        }else {
-            System.out.println("Loading Password dialog scene");
-            Parent passwordDialogScreen = registerLoginScreens.get("passwordDialogScreen").getView();
-            ((BorderPane)registerLoginContainer).setCenter(passwordDialogScreen);
-        }
-    }
+
     public void switchToGetPasswordScreen(){
         if(registerLoginContainer == null){
             throw  new RuntimeException("Register and Login Container haven't been init.");
@@ -126,6 +105,10 @@ public class RegisterLoginCoordinator {
 
     public Map<String, ScreenData> getScreens(){
         return  registerLoginScreens;
+    }
+    public void clearScreens(){
+        registerLoginScreens.clear();
+        registerLoginContainer = null;
     }
 
 }

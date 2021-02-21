@@ -63,28 +63,21 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
         return registrationStatus.NotRegistered.getValue();
     }
 
+
     @Override
     public boolean checkUserCredentials(String userPhone, String userPassword) throws RemoteException {
         DBUserCredintials userCredintials = new DBUserCredintials();
         try {
             UserDao userDao = UserDaoImpl.getUserDaoInstance();
-             userCredintials = userDao.getUserCredentials(userPhone);
+            userCredintials = userDao.getUserCredentials(userPhone);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        //handling password
-        //TODO fetch salt from DB , and add it to userCredintials class
-        String salt="SKgTpccoOReOUvXS/ORKuY1+mC0=";
-        String password="";
-        Optional<String> optionalpassword = HashEncoder.hashPassword(userPassword,salt);
-        if(optionalpassword.isPresent());
-        password=optionalpassword.get();
 
-        if(HashEncoder.verifyPassword(userCredintials.getUserPassword(),password))
+        if(HashEncoder.verifyPassword(userCredintials.getUserPassword(),userPassword))
             return true;
         else return false;
     }
-
     @Override
     public CurrentUserDto signUserIn(String userPhone) throws RemoteException {
         CurrentUserDto userDto = new CurrentUserDto();

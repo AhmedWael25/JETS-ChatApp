@@ -44,4 +44,6 @@ public interface UserDao {
 
     boolean updateDBUserPassword(String newPassword, String userId) throws SQLException;
 
+    boolean updateDBUserAvailability(int userAvailability, String userId) throws SQLException;
+
 }

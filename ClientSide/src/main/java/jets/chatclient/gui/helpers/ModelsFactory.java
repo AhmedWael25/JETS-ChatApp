@@ -28,6 +28,7 @@ public class ModelsFactory {
 
     public CurrentUserModel getCurrentUserModel() {
         if (currentUserModel == null) {
+            System.out.println("create new userModel");
             currentUserModel = new CurrentUserModel();
         }
         return currentUserModel;
@@ -63,6 +64,9 @@ public class ModelsFactory {
         return  gpChatsManager;
     }
 
-
+   public void resetCurrentUserModel(){
+       System.out.println("current user cleared");
+        currentUserModel =null;
+   }
 
 }

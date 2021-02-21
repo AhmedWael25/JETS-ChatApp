@@ -20,11 +20,11 @@ module jets.chatclient {
     requires org.kordamp.ikonli.materialdesign2;
     requires ChatAppCommons;
     requires java.desktop;
+    requires jakarta.xml.bind;
 
 
     //opens  jets.chatclient;
     opens jets.chatclient.gui.controllers to javafx.fxml;
-    opens jets.chatclient.gui.models to helpers;
-
+    opens jets.chatclient.gui.models to helpers, jakarta.xml.bind;
     exports jets.chatclient;
 }

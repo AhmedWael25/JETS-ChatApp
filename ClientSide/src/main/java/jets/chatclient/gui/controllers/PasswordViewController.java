@@ -62,18 +62,26 @@ public class PasswordViewController implements Initializable {
     public void handleSignIn(ActionEvent event) {
         stageCoordinator = StageCoordinator.getInstance();
         try {
-            //handle password
-            //TODO generate salt automatically
+            //TODO fetch salt from DB
+            String salt="SKgTpccoOReOUvXS/ORKuY1+mC0=";
+            String password="";
+            Optional<String> optionalpassword = HashEncoder.hashPassword(pfPassword.getText(),salt);
+            if(optionalpassword.isPresent());
+            password=optionalpassword.get();
+            boolean verified = signInService.checkUserCredentials(currentUserModel.getPhoneNumber(),password );
 
-            boolean verified = signInService.checkUserCredentials(currentUserModel.getPhoneNumber(), pfPassword.getText());
-            System.out.println(verified);
             if (verified) {
                 CurrentUserDto userDto= signInService.signUserIn(currentUserModel.getPhoneNumber());
+                System.out.println(currentUserModel);
                 DTOObjAdapter.convertDtoToCurrentUser(userDto);
+                System.out.println(currentUserModel);
                 stageCoordinator.switchToChatDashBoard();
+                pfPassword.clear();
+
             }
             else{
                 //TODO handle wrong password here
+
 
             }
 

@@ -1,9 +1,24 @@
 package jets.chatclient;
 
+import commons.remotes.server.RegisteringClientInt;
+import commons.remotes.server.SignInServiceInt;
+import commons.sharedmodels.CurrentUserDto;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
+import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+import jets.chatclient.gui.models.CurrentUserModel;
+import jets.chatclient.gui.models.UserCredentials;
+import jets.chatclient.gui.utils.ConfigManager;
+
+import java.io.File;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 
 public class App extends Application {
 
@@ -15,11 +30,47 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         stageCoordinator.initStage(primaryStage);
-       // stageCoordinator.switchToLoginScene();
-           stageCoordinator.switchToMainScene();
+        stageCoordinator.switchToMainScene();
+        ConfigManager configManager = new ConfigManager();
+
+        if(!configManager.checkIfPasswordSaved()){
+            stageCoordinator.switchToMainScene();
+            System.out.println("user doesn't have credentials stored");
+        }
+
+        else {
+            System.out.println("user has credentials stored");
+             UserCredentials userCredentials = configManager.readConfigFile();
+            SignInServiceInt  signInService=null;
+            try {
+                ModelsFactory modelsFactory = ModelsFactory.getInstance();
+
+                Registry reg = modelsFactory.getRegistry();
+                 signInService = (SignInServiceInt) reg.lookup("SignInService");
+                boolean verified = signInService.checkUserCredentials(userCredentials.getUserPhone(),userCredentials.getEncryptedPassword() );
+
+                if (verified) {
+                    CurrentUserDto userDto= signInService.signUserIn(userCredentials.getUserPhone());
+                    DTOObjAdapter.convertDtoToCurrentUser(userDto);
+                    stageCoordinator.switchToChatDashBoard();
+                }
+                else {
+                    // user password or userPhone has been changed on config file
+                    stageCoordinator.switchToMainScene();
+                }
+
+             } catch (RemoteException | NotBoundException e) {
+                System.out.println("can't find Service");
+                e.printStackTrace();
+            }
+
+
+        }
         primaryStage.setTitle("Connect ChatApp");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/symbol.png").toExternalForm()) );
         primaryStage.show();
+
+
     }
 
 
@@ -32,6 +83,11 @@ public class App extends Application {
     @Override
     public void stop() {
         // Terminate Database & Network Connections
+    }
+
+    public static void closeApp(){
+        Platform.exit();
+
     }
 
 }
