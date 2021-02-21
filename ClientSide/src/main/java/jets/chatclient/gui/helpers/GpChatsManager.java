@@ -62,6 +62,17 @@ public class GpChatsManager {
         });
     }
 
+    public  Image getParticipantAvatar(Integer chatId, String participantId){
+        GpChatModel chat = chatsMap.get(chatId);
+        Image img  = null;
+        for (ParticipantModel part : chat.getGpParticipants()){
+            if(part.getParticipantId().equals(participantId)){
+                img =   part.getParticipantImage();
+                break;
+            }
+        }
+        return  img;
+    }
 
 
     public Circle getParticipantImg(Integer chatId, String participantId){
