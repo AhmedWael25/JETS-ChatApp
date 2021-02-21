@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 public class P2PMessageDto implements Serializable {
 
+    private Integer chatId;
     private String senderId;
     private String receiverId;
     private String msgBody;
+    private MsgType msgType;
     private String msgTime;
 
     private String fontStyle;
@@ -16,12 +18,44 @@ public class P2PMessageDto implements Serializable {
     private Boolean italic;
     private Boolean underline;
 
+    public Integer getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Integer chatId) {
+        this.chatId = chatId;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public void setSenderId(String senderId) {
+        this.senderId = senderId;
+    }
+
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
     public String getMsgBody() {
         return msgBody;
     }
 
     public void setMsgBody(String msgBody) {
         this.msgBody = msgBody;
+    }
+
+    public MsgType getMsgType() {
+        return msgType;
+    }
+
+    public void setMsgType(MsgType msgType) {
+        this.msgType = msgType;
     }
 
     public String getMsgTime() {
@@ -80,28 +114,14 @@ public class P2PMessageDto implements Serializable {
         this.underline = underline;
     }
 
-    public String getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(String senderId) {
-        this.senderId = senderId;
-    }
-
-    public String getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(String receiverId) {
-        this.receiverId = receiverId;
-    }
-
     @Override
     public String toString() {
         return "P2PMessageDto{" +
-                "senderId='" + senderId + '\'' +
+                "chatId=" + chatId +
+                ", senderId='" + senderId + '\'' +
                 ", receiverId='" + receiverId + '\'' +
                 ", msgBody='" + msgBody + '\'' +
+                ", msgType=" + msgType +
                 ", msgTime='" + msgTime + '\'' +
                 ", fontStyle='" + fontStyle + '\'' +
                 ", fontColor='" + fontColor + '\'' +

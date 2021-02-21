@@ -39,7 +39,6 @@ public class SignUpServiceImpl extends UnicastRemoteObject implements SignUpServ
 
     public SignUpServiceImpl() throws RemoteException {
 
-        System.out.println("Registering Service initialized");
     }
 
     @Override
@@ -47,7 +46,6 @@ public class SignUpServiceImpl extends UnicastRemoteObject implements SignUpServ
         try {
             UserDao userDao = UserDaoImpl.getUserDaoInstance();
             if (userDao.isUserExist(userPhone)) {
-                System.out.println(userDao.isUserExist(userPhone));
                 DBUserCredintials userCredintials = userDao.getUserCredentials(userPhone);
                 if (userCredintials.getUserPassword().equals("\"\""))
                     return SignUpServiceImpl.registrationStatus.NotFullyRegistered.getValue();

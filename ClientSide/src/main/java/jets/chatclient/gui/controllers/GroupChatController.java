@@ -98,8 +98,7 @@ public class GroupChatController implements Initializable {
             ServicesFactory servicesFactory =  ServicesFactory.getInstance();
             gpChatService = servicesFactory.getGpChatService();
 
-            typingArea.setDisable(true);
-            sendMsgBtn.setDisable(true);
+            disableControls(true);
             new Thread(fetchGpChats).start();
             setUpActiveChat();
         } catch (RemoteException | NotBoundException e) {
@@ -126,6 +125,7 @@ public class GroupChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
+        if(typingArea.getText().equals("")) return;
         new Thread(() ->{
             //--Construct Message Model Object
             GpMessageModel msg = createMsgModel();
@@ -142,6 +142,8 @@ public class GroupChatController implements Initializable {
                 msgs.add(msg);
                 msgListView.setItems(msgs);
                 typingArea.clear();
+                int index = msgs.size();
+                msgListView.scrollTo(index);
             });
         }).start();
 
@@ -214,8 +216,8 @@ public class GroupChatController implements Initializable {
                 }
                 chats.add(gpChatModel);
                 chatListView.setItems(chats);
-                typingArea.setDisable(false);
-                sendMsgBtn.setDisable(false);
+                disableControls(false);
+
             });
         }).start();
     }
@@ -235,8 +237,8 @@ public class GroupChatController implements Initializable {
         Platform.runLater(() ->{
             msgs.add(model);
             msgListView.setItems(msgs);
-            int index = msgs.size();
-            msgListView.scrollTo(index);
+//            int index = msgs.size();
+//            msgListView.scrollTo(index);
 //            msgListView.setCellFactory(param -> new GPChatMsgViewCell());
         });
     }
@@ -253,10 +255,11 @@ public class GroupChatController implements Initializable {
         msg.setMsgType(MsgType.TEXT);
         msg.setSenderName(userModel.getDisplayName());
         msg.setSenderId(userModel.getPhoneNumber());
+        msg.setMsgContent(typingArea.getText());
+
         Date currDate = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat(  "dd-MM-yyyy HH:mm:ss");
         msg.setTimeStamp(formatter.format(currDate.getTime()));
-        msg.setMsgContent(typingArea.getText());
 
         return  msg;
     }
@@ -278,7 +281,6 @@ public class GroupChatController implements Initializable {
     Runnable fetchGpChats = () -> {
         List<GpChatModel> gpChatModelList = null;
         try {
-            System.out.println(userModel.getPhoneNumber());
             gpChatModelList = DTOObjAdapter.convertDtoGpChat(gpChatService.fetchAllUserGpChats(userModel.getPhoneNumber()));
             //Creat GP chat in manager for model we get
             gpChatsManager.addGpChat(gpChatModelList);
@@ -292,8 +294,7 @@ public class GroupChatController implements Initializable {
                 //I Still have no chats--If So disable btn and text area
                 //Until a new chat is added
                 if(chats.size() > 0){
-                    typingArea.setDisable(false);
-                    sendMsgBtn.setDisable(false);
+                    disableControls(false);
                     //Set Active Chat in manager
                     gpChatsManager.setActiveChat(chats.get(0).getGpChatId());
                     chatListView.getSelectionModel().select(0);
@@ -303,6 +304,13 @@ public class GroupChatController implements Initializable {
             e.printStackTrace();
         }
     };
+
+    private void disableControls(boolean status){
+        typingArea.setDisable(status);
+        sendMsgBtn.setDisable(status);
+        chatOption.setDisable(status);
+        uploadFilesBtn.setDisable(status);
+    }
 
 
 }

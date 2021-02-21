@@ -3,6 +3,7 @@ package jets.chatserver.network.rmi;
 
 import commons.remotes.client.ClientInterface;
 import commons.remotes.server.AddFriendServiceInt;
+import commons.sharedmodels.ContactDto;
 import commons.sharedmodels.FriendGpDto;
 import commons.sharedmodels.P2PChatDto;
 import jets.chatserver.DBModels.DBP2PChat;
@@ -11,6 +12,7 @@ import jets.chatserver.database.dao.FriendsDao;
 import jets.chatserver.database.dao.P2PChatDao;
 import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.P2PChatDaoImpl;
+import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 
 import java.rmi.RemoteException;
@@ -55,7 +57,12 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
 
             //Call Back Client And Add Chat To List Of Current Running Chats.
             // The Chat Will be Added to Both Users OFC
+            //Geet Thee 2 contacts Info First
+            DBUser user1 = UserDaoImpl.getUserDaoInstance().getUserById(participant1);
+            DBUser user2 = UserDaoImpl.getUserDaoInstance().getUserById(participant2);
 
+            ContactDto contact1 = EntityDTOAdapter.convertEntityToDto(user1);
+            ContactDto contact2 = EntityDTOAdapter.convertEntityToDto(user2);
             //First Check if Both Users are online
 
             ClientInterface client1 = currentConnectedUsers.get(participant1);
@@ -65,11 +72,13 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
                 DBP2PChat dbChat1 = p2pChatDao.fetchChatBetweenUsers(participant1, participant2);
                 P2PChatDto chatDto1 = EntityDTOAdapter.convertEntityToDto(dbChat1);
                 client1.sendNewChatToUser(chatDto1);
+                client1.addNewFriend(contact2);
             }
             if(client2 != null){
                 DBP2PChat dbChat2 = p2pChatDao.fetchChatBetweenUsers(participant2, participant1);
                 P2PChatDto chatDto2 = EntityDTOAdapter.convertEntityToDto(dbChat2);
                 client2.sendNewChatToUser(chatDto2);
+                client2.addNewFriend(contact1);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -96,6 +105,22 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
     }
 
     @Override
+    public List<ContactDto> fetchAllContactsByUserId(String userId) throws RemoteException {
+
+        List<ContactDto> contactDtos = new ArrayList<>();
+        try {
+            FriendsDao friendsDao = FriendsDaoImpl.getFriendsDaoInstance();
+            List<DBUser> dbUsers = friendsDao.getAllContacts(userId);
+            contactDtos = dbUsers.parallelStream().map(EntityDTOAdapter::convertEntityToDto)
+                    .collect(Collectors.toList());
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return  contactDtos;
+    }
+
+    @Override
     public boolean areFriends(String userId, String friendId) throws RemoteException {
         boolean areFriend = false;
         try {
@@ -106,5 +131,6 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
         }
         return areFriend;
     }
+
 
 }

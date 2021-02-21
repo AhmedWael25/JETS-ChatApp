@@ -125,37 +125,11 @@
                   </HBox>
                </bottom>
                <top>
-                  <HBox alignment="BASELINE_RIGHT" prefHeight="54.0" prefWidth="342.0" spacing="10.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="342.0" spacing="10.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets />
                      </BorderPane.margin>
                      <children>
-
-                        <JFXButton fx:id="groupMembers" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="284.0" layoutY="10.0" prefHeight="42.0" prefWidth="16.0" ripplerFill="#f26101" textFill="#f26101" HBox.hgrow="ALWAYS">
-
-                           <font>
-                              <Font size="1.0" />
-                           </font>
-                           <graphic>
-                              <FontIcon iconColor="#304269" iconLiteral="fas-users" iconSize="20" layoutX="10.0" layoutY="10.0" textAlignment="CENTER" wrappingWidth="35.99996280670166" />
-                           </graphic>
-                           <HBox.margin>
-                              <Insets top="5.0" />
-                           </HBox.margin>
-                        </JFXButton>
-
-                        <JFXButton fx:id="leaveBtn" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" prefHeight="42.0" prefWidth="16.0" textFill="#f26101" HBox.hgrow="ALWAYS">
-
-                           <font>
-                              <Font size="1.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="-10.0" />
-                           </HBox.margin>
-                           <graphic>
-                              <FontIcon iconColor="#304269" iconLiteral="fas-door-open" iconSize="20" layoutX="10.0" layoutY="10.0" textAlignment="CENTER" wrappingWidth="35.99996280670166" />
-                           </graphic>
-                        </JFXButton>
 
                         <JFXButton fx:id="chatOption" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="309.0" layoutY="10.0" prefHeight="42.0" prefWidth="34.0" textFill="#f26101" HBox.hgrow="ALWAYS">
 

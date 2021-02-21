@@ -19,11 +19,20 @@ public class ModelsFactory {
     private ClientInterface clientInterface = null;
     private Registry registry = null;
     private  GpChatsManager gpChatsManager = null;
+    private  P2PChatManager p2pChatMngr = null;
+    private  ContactsManager contactsManager = null;
 
     private ModelsFactory () { }
 
     public static ModelsFactory getInstance() {
         return instance;
+    }
+
+    public ContactsManager getContactsManager(){
+        if (contactsManager == null) {
+            contactsManager = new ContactsManager();
+        }
+        return contactsManager;
     }
 
     public CurrentUserModel getCurrentUserModel() {
@@ -61,6 +70,13 @@ public class ModelsFactory {
             gpChatsManager = new GpChatsManager();
         }
         return  gpChatsManager;
+    }
+
+    public P2PChatManager getP2PChatManager(){
+        if(p2pChatMngr == null){
+            p2pChatMngr = new P2PChatManager();
+        }
+        return  p2pChatMngr;
     }
 
 

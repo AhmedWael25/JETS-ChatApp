@@ -1,10 +1,10 @@
 package jets.chatclient.gui.models.guimodels;
 
 import javafx.scene.control.ListCell;
-import jets.chatclient.gui.controllers.MessageCardController;
+import jets.chatclient.gui.controllers.P2PMsgCardController;
 import jets.chatclient.gui.models.P2PMessageModel;
 
-public class MessageViewCell extends ListCell<P2PMessageModel> {
+public class P2PMsgViewCell extends ListCell<P2PMessageModel> {
 
     @Override
     protected void updateItem(P2PMessageModel msgCard, boolean empty) {
@@ -14,7 +14,7 @@ public class MessageViewCell extends ListCell<P2PMessageModel> {
             setText(null);
             setGraphic(null);
         }else{
-            MessageCardController msgCardController = new MessageCardController();
+            P2PMsgCardController msgCardController = new P2PMsgCardController();
             msgCardController.setData(msgCard);
             setGraphic(msgCardController.getMsgCard());
         }

@@ -14,7 +14,6 @@ public class P2PChatViewCell extends ListCell<P2PChatModel> {
             setText(null);
             setGraphic(null);
         }else{
-            setStyle("-fx-control-inner-background: #91BED4;");
             P2PChatCardController p2pChatCardController = new P2PChatCardController();
             p2pChatCardController.setData(chatCard);
             setGraphic(p2pChatCardController.getChatCard());

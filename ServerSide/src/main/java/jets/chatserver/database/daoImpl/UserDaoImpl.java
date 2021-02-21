@@ -180,6 +180,8 @@ public class UserDaoImpl implements UserDao {
         user.setGender(rs.getString("gender"));
         user.setImgEncoded(rs.getString("image"));
         user.setCountry(rs.getString("country"));
+        user.setUserAvail(rs.getInt("availability"));
+        user.setUserStatus(rs.getInt("status"));
         return  user;
     }
 

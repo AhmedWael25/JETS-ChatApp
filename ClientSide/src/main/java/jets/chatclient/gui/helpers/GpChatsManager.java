@@ -1,6 +1,8 @@
 package jets.chatclient.gui.helpers;
 
+import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.GpMessageDto;
+import commons.utils.ImageEncoderDecoder;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Circle;
 import jets.chatclient.gui.controllers.GroupChatController;
@@ -22,13 +24,14 @@ public class GpChatsManager {
     private Integer activeChat ;
 
 
-    public void updateParticipantImg(String id,Image img){
+    public void updateParticipantImg(String id,String img){
+        Image newImg = ImageEncoderDecoder.getDecodedImage(img);
         chatsMap.entrySet().forEach(entrySet -> {
             entrySet.getValue().getGpParticipants()
                     .stream()
                     .forEach(participantModel -> {
                         if (participantModel.getParticipantId().equals(id)){
-                            participantModel.setParticipantImage(img);
+                            participantModel.setParticipantImage(newImg);
                         }
                 });
         });
@@ -100,14 +103,16 @@ public class GpChatsManager {
     }
 
 
+//    public  void addGpChat(GpChatDto fto){
+//        GpChatModel model =
+//    }
+
     public  void addGpChat(GpChatModel gpChatModel){
         chatsMap.put(gpChatModel.getGpChatId(),gpChatModel);
     }
 
      public  void addGpChat(List<GpChatModel> gpChatModelList){
-        gpChatModelList.forEach(gpChatModel -> {
-            addGpChat(gpChatModel);
-        });
+        gpChatModelList.forEach(this::addGpChat);
      }
 
     public Integer getActiveChat() {
@@ -129,19 +134,19 @@ public class GpChatsManager {
     public  void addMsg(GpMessageDto gpMessageDto){
         GpMessageModel msg = DTOObjAdapter.convertDtoToObj(gpMessageDto);
         addMsg(msg);
-        System.out.println("ADD MSG "+ msg);
         if(activeChat.equals(msg.getChatId())){
             ControllersGetter controllersGetter = ControllersGetter.getInstance();
             GroupChatController groupChatController = controllersGetter.getGpChatController();
             groupChatController.addMsgToUi(msg);
         }
     }
+
+
     public  void addFileMsg(byte[] fileArr,GpMessageDto gpMessageDto){
         GpMessageModel msg = DTOObjAdapter.convertDtoToObj(gpMessageDto);
         addMsg(msg);
         ControllersGetter controllersGetter = ControllersGetter.getInstance();
         GroupChatController groupChatController = controllersGetter.getGpChatController();
-        System.out.println("ADD MSG "+ msg);
         if(activeChat.equals(msg.getChatId())){
             groupChatController.receiveFile(fileArr,msg);
         }

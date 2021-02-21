@@ -117,6 +117,17 @@ public class EntityDTOAdapter {
         return dbGpChat;
     }
 
+    public static  ContactDto convertEntityToDto(DBUser user){
+        ContactDto dto = new ContactDto();
+
+        dto.setContactId(user.getPhone());
+        dto.setContactName(user.getDisplayedName());
+        dto.setContactImg(user.getImgEncoded());
+        dto.setContactAvail(user.getUserAvail());
+        dto.setContactStatus(user.getUserStatus());
+
+        return  dto;
+    }
 
 
 

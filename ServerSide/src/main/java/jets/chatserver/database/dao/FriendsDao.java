@@ -12,5 +12,5 @@ public interface FriendsDao {
     List<DBUser> getAllFriends(String userId) throws SQLException;
     List<String> getAllFriendsIds(String userId) throws SQLException;
     boolean areFriends(String userId,String friendId) throws SQLException;
-
+    List<DBUser> getAllContacts(String userId) throws  SQLException;
 }

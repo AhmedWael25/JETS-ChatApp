@@ -1,5 +1,6 @@
 package commons.remotes.server;
 
+import commons.sharedmodels.ContactDto;
 import commons.sharedmodels.FriendGpDto;
 
 import java.rmi.Remote;
@@ -11,4 +12,5 @@ public interface AddFriendServiceInt extends Remote {
     boolean addFriend(String userId,String friendId) throws RemoteException;
     List<FriendGpDto> fetchAllFriendsByUserId(String userId)throws RemoteException;
     boolean areFriends(String userId, String  friendId)throws  RemoteException;
+    List<ContactDto> fetchAllContactsByUserId(String userId) throws  RemoteException;
 }

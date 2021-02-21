@@ -47,13 +47,16 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
     }
 
     @Override
-    public void sendMessage(P2PMessageDto msgDto) throws RemoteException {
+    public boolean sendMessage(P2PMessageDto msgDto) throws RemoteException {
 
         String receiverId = msgDto.getReceiverId();
 
         ClientInterface clientInterface = currentConnectedUsers.get(receiverId);
-        clientInterface.sendNewMessageToUser(msgDto);
-    }
+        if(clientInterface != null) {
+            clientInterface.sendNewP2PMessageToUser(msgDto);
+        }
 
+        return true;
+    }
 
 }

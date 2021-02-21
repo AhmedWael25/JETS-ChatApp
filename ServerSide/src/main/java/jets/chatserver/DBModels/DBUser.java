@@ -162,7 +162,7 @@ public class DBUser   {
                 ", dob='" + dob + '\'' +
                 ", bio='" + bio + '\'' +
                 ", registerData='" + registerData + '\'' +
-                ", imgEncoded='" + imgEncoded + '\'' +
+                ", imgEncoded='" + "imgEncoded" + '\'' +
                 ", userStatus=" + userStatus +
                 ", userAvail=" + userAvail +
                 '}';
