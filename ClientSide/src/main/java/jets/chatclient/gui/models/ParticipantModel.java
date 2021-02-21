@@ -29,8 +29,10 @@ public class ParticipantModel {
     }
 
     public void setParticipantStatus(int status) {
-        this.participantStatus = participantStatus;
         switch (status){
+            case 0:
+                pStatus.setFill(Paint.valueOf("#abaaa7"));
+                break;
             case 1:
                 pStatus.setFill(Paint.valueOf("#14de4a"));
                 break;
@@ -41,6 +43,7 @@ public class ParticipantModel {
                 pStatus.setFill(Paint.valueOf("#f59a40"));
                 break;
         }
+
     }
 
     public String getParticipantId() {

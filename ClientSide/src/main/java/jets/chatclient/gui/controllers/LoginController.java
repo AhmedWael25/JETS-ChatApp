@@ -7,6 +7,7 @@ import com.jfoenix.skins.JFXTextFieldSkin;
 import com.jfoenix.skins.ValidationPane;
 import commons.remotes.server.RegisteringClientInt;
 import commons.remotes.server.SignInServiceInt;
+import commons.sharedmodels.CurrentUserDto;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,10 +22,14 @@ import javafx.scene.layout.VBox;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.StageCoordinator;
+import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
+import jets.chatclient.gui.models.UserCredentials;
+import jets.chatclient.gui.utils.ConfigManager;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 
+import java.io.File;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -47,28 +52,38 @@ public class LoginController implements Initializable {
     ModelsFactory modelsFactory;
     StageCoordinator stageCoordinator;
     private RegisterLoginCoordinator registerLoginCoordinator;
+    private ConfigManager configManager;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+         configManager = new ConfigManager();
 
         modelsFactory = ModelsFactory.getInstance();
+        stageCoordinator = StageCoordinator.getInstance();
         currentUserModel = modelsFactory.getCurrentUserModel();
         registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
-        Registry reg = modelsFactory.getRegistry();
+                Registry reg = modelsFactory.getRegistry();
 
-        try {
-            signInService = (SignInServiceInt) reg.lookup("SignInService");
-        } catch (RemoteException | NotBoundException e) {
-            System.out.println("can't find Service");
-            e.printStackTrace();
-        }
-        tfPhonenumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
+                try {
+                    signInService = (SignInServiceInt) reg.lookup("SignInService");
+                } catch (RemoteException | NotBoundException e) {
+                    System.out.println("can't find Service");
+                    e.printStackTrace();
+                }
+                   UserCredentials userCredentials =  configManager.readConfigFile();
+
+                  tfPhonenumber.textProperty().bindBidirectional(currentUserModel.phoneNumberProperty());
+
+                  //read userId from configFile if user signed out
+                 if(userCredentials.getUserPhone()!=null){
+                   System.out.println(userCredentials.getUserPhone());
+                   tfPhonenumber.setText(userCredentials.getUserPhone());}
+
         btnSignIn.requestFocus();
         btnSignIn.requestFocus();
-    }
+            }
 
     public void handleLoginBtnClick(ActionEvent e) {
-        stageCoordinator = StageCoordinator.getInstance();
 
         try {
             System.out.println(currentUserModel.getPhoneNumber());
@@ -107,6 +122,10 @@ public class LoginController implements Initializable {
 
         registerLoginCoordinator.switchToSignupScreen();
     }
+
+
+
+
 
 }
 

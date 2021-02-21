@@ -14,7 +14,6 @@ public class ContactModel {
     private Circle bindableStatus = new Circle();
 
 
-
     private  int contactAvail;
     private  int contactStatus;
 
@@ -65,9 +64,7 @@ public class ContactModel {
 
     public void setContactAvail(int contactAvail) {
         this.contactAvail = contactAvail;
-        if(contactAvail == 0){
-            bindableStatus.setFill(Paint.valueOf("#a6a3a2"));
-        }
+        setContactStatus(contactAvail);
     }
 
     public int getContactStatus() {
@@ -77,10 +74,6 @@ public class ContactModel {
     public void setContactStatus(int contactStatus) {
         this.contactStatus = contactStatus;
 
-        if(contactAvail == 0){
-            bindableStatus.setFill(Paint.valueOf("#a6a3a2"));
-            return;
-        }
         switch (contactStatus){
             case 1:
                 bindableStatus.setFill(Paint.valueOf("#14de4a"));
@@ -90,6 +83,9 @@ public class ContactModel {
                 break;
             case 3:
                 bindableStatus.setFill(Paint.valueOf("#f59a40"));
+                break;
+            case 0:
+                bindableStatus.setFill(Paint.valueOf("#abaaa7"));
                 break;
         }
     }

@@ -48,5 +48,6 @@ public interface UserDao {
     Map<String ,Integer> getUsersStatus(List<String> userIds) throws  SQLException;
 
     Integer getUserStatus(String  userId) throws  SQLException;
+    boolean updateDBUserAvailability(int userAvailability, String userId) throws SQLException;
 
 }

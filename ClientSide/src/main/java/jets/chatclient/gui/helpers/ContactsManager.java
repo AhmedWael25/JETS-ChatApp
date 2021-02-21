@@ -37,17 +37,24 @@ public class ContactsManager {
 
     public  void updateContactImg(String contactId, String imgEncoded){
         ContactModel model = contacts.get(contactId);
-        Image img = ImageEncoderDecoder.getDecodedImage(imgEncoded);
-        model.setContactImage(img);
+        if (model != null) {
+            Image img = ImageEncoderDecoder.getDecodedImage(imgEncoded);
+            model.setContactImage(img);
+        }
     }
     public  void updateContactStatus(String contactId, Integer status){
         ContactModel model = contacts.get(contactId);
-        model.setContactStatus(status);
+        System.out.println("in contact status id0 + "+contactId + model);
+        if(model != null){
+            model.setContactStatus(status);
+        }
     }
 
-    public  void uodateContactName(String contactId, String name){
+    public  void updateContactName(String contactId, String name){
         ContactModel model = contacts.get(contactId);
-        model.setContactName(name);
+        if (model != null){
+            model.setContactName(name);
+        }
     }
 
     public  void addNewContact(ContactDto dto){

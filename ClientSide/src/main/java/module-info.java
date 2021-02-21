@@ -25,7 +25,7 @@ module jets.chatclient {
 
     //opens  jets.chatclient;
     opens jets.chatclient.gui.controllers to javafx.fxml;
-    opens jets.chatclient.gui.models to helpers;
+    opens jets.chatclient.gui.models to helpers, jakarta.xml.bind;
     opens jets.chatclient.gui.utils to jakarta.xml.bind;
 
     exports jets.chatclient;

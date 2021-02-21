@@ -1,12 +1,22 @@
 package jets.chatclient.gui.helpers;
 
+import commons.remotes.server.RegisteringClientInt;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import jets.chatclient.App;
+import jets.chatclient.gui.controllers.ChatDashBoardController;
+import jets.chatclient.gui.models.CurrentUserModel;
+import jets.chatclient.gui.models.UserCredentials;
+import jets.chatclient.gui.utils.ConfigManager;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +25,7 @@ public class StageCoordinator {
     private static Stage primaryStage;
     private static final StageCoordinator stageCoordinator = new StageCoordinator();
     private final Map<String, SceneData> scenes = new HashMap<>();
+    private int flag;
 
     private StageCoordinator() { }
 
@@ -116,11 +127,22 @@ public class StageCoordinator {
             primaryStage.setScene(chatScene);
         }
         //TODO refactor
+        flag =1;
         primaryStage.setResizable(false);
         primaryStage.setHeight(680);
+        flag =1;
+        Window window = primaryStage.getScene().getWindow();
+        window.setOnCloseRequest(e->{
+            if(flag==1) {
+                ExitFromApp.ExitApplication();
+            }
+            else { Runtime rt = Runtime.getRuntime();
+                   rt.exit(0);
+            }
+        });
     }
 
-    /////
+
     public void switchToMainScene() {
         if (primaryStage == null) {
             throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
@@ -145,8 +167,15 @@ public class StageCoordinator {
             Scene MainScene = MainSceneData.getScene();
             primaryStage.setScene(MainScene);
         }
+        flag=0;
         primaryStage.setHeight(600);
         primaryStage.setResizable(false);
+
+    }
+
+    public void clearSceneData(){
+        scenes.clear();
+
     }
 
 }

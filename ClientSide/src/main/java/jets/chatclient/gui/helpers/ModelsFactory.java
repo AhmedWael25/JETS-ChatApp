@@ -37,6 +37,7 @@ public class ModelsFactory {
 
     public CurrentUserModel getCurrentUserModel() {
         if (currentUserModel == null) {
+            System.out.println("create new userModel");
             currentUserModel = new CurrentUserModel();
         }
         return currentUserModel;
@@ -78,7 +79,5 @@ public class ModelsFactory {
         }
         return  p2pChatMngr;
     }
-
-
 
 }

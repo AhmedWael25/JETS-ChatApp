@@ -52,6 +52,9 @@ public class P2PChatModel {
     public void setFriendStatus(int friendStatus) {
         this.friendStatus = friendStatus;
         switch (friendStatus){
+            case 0:
+                status.setFill(Paint.valueOf("#abaaa7"));
+                break;
             case 1:
                 status.setFill(Paint.valueOf("#14de4a"));
                 break;

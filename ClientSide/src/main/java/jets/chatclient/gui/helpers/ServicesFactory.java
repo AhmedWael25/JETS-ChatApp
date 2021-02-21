@@ -38,4 +38,9 @@ public class ServicesFactory {
     public GpChatServiceInt getGpChatService() throws RemoteException, NotBoundException{
         return (GpChatServiceInt) reg.lookup("GroupChatService");
     }
+    public UpdateStatusServiceInt getUpdateService() throws  RemoteException , NotBoundException{
+        return (UpdateStatusServiceInt) reg.lookup("UpdateStatusService");
+    }
+
+
 }

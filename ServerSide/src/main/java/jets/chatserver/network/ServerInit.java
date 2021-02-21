@@ -43,6 +43,7 @@ public class ServerInit   {
 
             //UserProfile Services:
             reg.rebind("UserProfileService", new UserProfileServiceImpl(currentConnectedUsers));
+            reg.rebind("UpdateStatusService", new UpdateStatusService(currentConnectedUsers));
 
             System.out.println("Server Up And Running");
 
@@ -60,15 +61,15 @@ public class ServerInit   {
 //            }
 
             FriendsDao f = FriendsDaoImpl.getFriendsDaoInstance();
-            System.out.println(f.areFriends("1","2"));
-
-
-            GpChatDao g = GpChatDaoImpl.getGpChatDaoInstance();
-            List<String> xd = g.getAllParticipantsIdsByChatId(3);
-
-            List<DBGpChat> gp =  g.getAllGpChatsOfUser("1");
-
-            System.out.println(f.getAllContacts("1"));
+//            System.out.println(f.areFriends("1","2"));
+//
+//
+//            GpChatDao g = GpChatDaoImpl.getGpChatDaoInstance();
+//            List<String> xd = g.getAllParticipantsIdsByChatId(3);
+//
+//            List<DBGpChat> gp =  g.getAllGpChatsOfUser("1");
+//
+//            System.out.println(f.getAllContacts("1"));
 
 //            System.out.println(g.getGpChatById(2));
 //

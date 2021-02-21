@@ -14,4 +14,9 @@ public interface RegisteringClientInt extends Remote {
     void registerClient(ClientInterface clientInterface , String UserId) throws RemoteException;
     void disconnectClient(ClientInterface clientInterface , String UserId) throws RemoteException;
     boolean isClientRegistered(String userId) throws  RemoteException;
+
+    void disconnectClient( String UserId) throws RemoteException;
+    String getEncryptedPassword(String userPhone) throws RemoteException;
+
+
 }

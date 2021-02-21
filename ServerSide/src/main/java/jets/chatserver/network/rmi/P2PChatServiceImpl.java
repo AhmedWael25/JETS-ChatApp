@@ -53,6 +53,14 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
 
         ClientInterface clientInterface = currentConnectedUsers.get(receiverId);
         if(clientInterface != null) {
+            //Check if user is busy
+            //bot generate Kalam
+            //sadkjsndk
+            /*
+            * BOT:
+            * asjdnkasjnds
+            *
+            * */
             clientInterface.sendNewP2PMessageToUser(msgDto);
         }
 

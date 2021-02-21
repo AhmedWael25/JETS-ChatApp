@@ -81,7 +81,7 @@ public class DTOObjAdapter {
         p2pchat.setChatId(chatDto.getChatId());
         p2pchat.setChatStartDate(chatDto.getChatStartDate());
         p2pchat.setFriendStatus(chatDto.getStatus());
-        p2pchat.setFriendAvailability(chatDto.getAvailability());
+//        p2pchat.setFriendAvailability(chatDto.getAvailability());
         p2pchat.setFriendName(chatDto.getFriendName());
         p2pchat.setFriendId(chatDto.getFriendId());
 
@@ -227,7 +227,7 @@ public class DTOObjAdapter {
 
         model.setContactId(dto.getContactId());
         model.setContactName(dto.getContactName());
-        model.setContactAvail(dto.getContactAvail());
+//        model.setContactAvail(dto.getContactAvail());
         model.setContactStatus(dto.getContactStatus());
 
         Image img = ImageEncoderDecoder.getDecodedImage(dto.getContactImg());

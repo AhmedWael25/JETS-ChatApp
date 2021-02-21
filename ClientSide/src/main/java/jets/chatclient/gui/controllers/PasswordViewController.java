@@ -72,12 +72,17 @@ public class PasswordViewController implements Initializable {
 
             if (verified) {
                 CurrentUserDto userDto= signInService.signUserIn(currentUserModel.getPhoneNumber());
+                System.out.println(currentUserModel);
                 DTOObjAdapter.convertDtoToCurrentUser(userDto);
+                System.out.println(currentUserModel);
                 stageCoordinator.switchToChatDashBoard();
+
+                pfPassword.clear();
 
             }
             else{
                 //TODO handle wrong password here
+
 
             }
 

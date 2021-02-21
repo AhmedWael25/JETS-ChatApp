@@ -189,6 +189,9 @@ public class CurrentUserModel {
     }
 
 
+    public void clear() {
+        this.setPhoneNumber("");
 
 
+    }
 }
