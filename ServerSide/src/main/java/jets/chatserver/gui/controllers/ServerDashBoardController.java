@@ -2,21 +2,25 @@ package jets.chatserver.gui.controllers;
 
 import com.jfoenix.controls.JFXButton;
 import commons.remotes.server.RegisteringClientInt;
+import eu.hansolo.tilesfx.Tile;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.XYChart;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Paint;
+import javafx.scene.paint.*;
 import javafx.scene.shape.Circle;
+import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.gui.utils.Chatrs;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.net.URL;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.util.*;
 
 public class ServerDashBoardController implements Initializable {
 
@@ -42,7 +46,8 @@ public class ServerDashBoardController implements Initializable {
     private JFXButton settingsBtn;
 
     private RegisteringClientInt registeringClientService;
-//
+
+    //
 //    @FXML
 //    void switchedToGPChatPane(ActionEvent event) {
 //        dashBoardCoordinator.switchToGpChatScreen();
@@ -99,41 +104,90 @@ public class ServerDashBoardController implements Initializable {
 //         } catch (RemoteException  | NotBoundException e) {
 //            e.printStackTrace();
 //        }
+
+        try {
+            Map<String, Integer> countryusers = UserDaoImpl.getUserDaoInstance().getUsersperCounry();
+            int males = UserDaoImpl.getUserDaoInstance().getGenderCount("male");
+            int females = UserDaoImpl.getUserDaoInstance().getGenderCount("female");
+            int online = UserDaoImpl.getUserDaoInstance().getAvailabilityCount(1);
+            int offline = UserDaoImpl.getUserDaoInstance().getAvailabilityCount(0);
+
+
+            Tile genderTile = Chatrs.getDonutChartTile("Gender", "this is numbr of males/femaless", "male", males, "female", females);
+            Tile avaiTile = Chatrs.getDonutChartTile("Availability", "this is numbr of On/Off", "online", online, "female", offline);
+//            List<XYChart.Data> dataList= getXYData(countryusers);
+//            XYChart.Data[] data=new XYChart.Data[dataList.size()];
+//            for(int i=0;i<dataList.size();i++)
+//                data[i]=dataList.get(i);
+
+//            Tile chartTile= Chatrs.getLineChartTile("User/Country",data) ;
+
+            HBox hBox = new HBox();
+//            hBox.getChildren().add(genderTile);
+//            hBox.getChildren().add(avaiTile);
+//
+//            hBox.getChildren().add(chartTile);
+
+            borderContainer.setCenter(hBox);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
-    private void activateBtn(JFXButton btn){
+    List<XYChart.Data>  getXYData(Map<String, Integer> countryUsers) {
+        List<XYChart.Data> data = null;
+        int i = 0;
+        Integer othersSum = 0;
+
+        Iterator<Map.Entry<String, Integer>> iterator = countryUsers.entrySet().iterator();
+
+        while (iterator.hasNext()) {
+//            if (i < 5) {
+                data.add(new XYChart.Data(iterator.next().getKey(), iterator.next().getValue()));
+//                i++;
+//            }
+//            else {
+//                othersSum += iterator.next().getValue();
+//            }
+        }
+//        data.add(new XYChart.Data("others", othersSum));
+
+        return data;
+    }
+
+    private void activateBtn(JFXButton btn) {
         deActivateAllBtns();
         ObservableList<String> btnStyleClasses = btn.getStyleClass();
-        if (!btnStyleClasses.contains("sideMenuBtn-active")){
+        if (!btnStyleClasses.contains("sideMenuBtn-active")) {
             btnStyleClasses.add("sideMenuBtn-active");
 
-            if (!btn.equals(profileBtn)){
+            if (!btn.equals(profileBtn)) {
                 FontIcon n = (FontIcon) btn.getGraphic();
                 n.setIconColor(Paint.valueOf("#636b61"));
             }
         }
-        if (btnStyleClasses.contains("sideMenuBtn-inactive")){
+        if (btnStyleClasses.contains("sideMenuBtn-inactive")) {
             btnStyleClasses.remove("sideMenuBtn-inactive");
         }
 
     }
 
-    private  void deActivateBtn(JFXButton btn){
+    private void deActivateBtn(JFXButton btn) {
         ObservableList<String> btnStyleClasses = btn.getStyleClass();
-        if (!btnStyleClasses.contains("sideMenuBtn-inactive")){
+        if (!btnStyleClasses.contains("sideMenuBtn-inactive")) {
             btnStyleClasses.add("sideMenuBtn-inactive");
 
-            if (!btn.equals(profileBtn)){
+            if (!btn.equals(profileBtn)) {
                 FontIcon n = (FontIcon) btn.getGraphic();
                 n.setIconColor(Paint.valueOf("#ffffff"));
             }
         }
-        if (btnStyleClasses.contains("sideMenuBtn-active")){
+        if (btnStyleClasses.contains("sideMenuBtn-active")) {
             btnStyleClasses.remove("sideMenuBtn-active");
         }
     }
 
-    private  void deActivateAllBtns(){
+    private void deActivateAllBtns() {
 
         deActivateBtn(profileBtn);
         deActivateBtn(chatBtn);

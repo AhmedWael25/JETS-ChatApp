@@ -13,10 +13,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-//        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-//        stageCoordinator.initStage(primaryStage);
-//        stageCoordinator.switchToServerDashBoard();
-//        primaryStage.show();
+        StageCoordinator stageCoordinator = StageCoordinator.getInstance();
+        stageCoordinator.initStage(primaryStage);
+        stageCoordinator.switchToServerDashBoard();
+        primaryStage.show();
 
 
     }

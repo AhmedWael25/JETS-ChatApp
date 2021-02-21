@@ -14,6 +14,16 @@ module jets.chatserver {
     requires java.rmi;
 
 
+    requires eu.hansolo.tilesfx;
+//    requires eu.hansolo.tilesfx.addons;
+//    requires eu.hansolo.tilesfx.chart;
+//    requires eu.hansolo.tilesfx.colors;
+//    requires eu.hansolo.tilesfx.events;
+//    requires eu.hansolo.tilesfx.fonts;
+//    requires eu.hansolo.tilesfx.icons;
+//    requires eu.hansolo.tilesfx.skins;
+//    requires eu.hansolo.tilesfx.tools;
+
     requires org.kordamp.ikonli.core;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.ikonli.fontawesome5;

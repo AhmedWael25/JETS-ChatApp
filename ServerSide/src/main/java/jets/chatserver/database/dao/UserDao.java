@@ -49,4 +49,8 @@ public interface UserDao {
 
     Integer getUserStatus(String  userId) throws  SQLException;
 
+    Map<String,Integer> getUsersperCounry() throws SQLException;
+    Integer getGenderCount(String gender) throws SQLException;
+    Integer getAvailabilityCount(Integer availability) throws SQLException;
+
 }

@@ -7,10 +7,7 @@ import jets.chatserver.DBModels.DBUser;
 
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UserDaoImpl implements UserDao {
 
@@ -398,6 +395,42 @@ public class UserDaoImpl implements UserDao {
             status = rs.getInt("status");
         }
         return  status;
+    }
+
+    @Override
+    public Map<String, Integer> getUsersperCounry() throws SQLException {
+        Map <String, Integer> numUsers = new LinkedHashMap<>();
+        String query="SELECT country, COUNT(*)  FROM user GROUP BY country ORDER BY COUNT(*) DESC ";
+        PreparedStatement pd = conn.prepareStatement(query);
+        ResultSet rs = pd.executeQuery();
+        while (rs.next()){
+            numUsers.put(rs.getString(1),rs.getInt(2));
+        }
+        return numUsers;
+    }
+
+    @Override
+    public Integer getGenderCount(String gender) throws SQLException {
+        Integer count = -1;
+        String query="SELECT COUNT(*)  FROM user WHERE gender=? ";
+        PreparedStatement pd = conn.prepareStatement(query);
+        pd.setString(1,gender);
+        ResultSet rs = pd.executeQuery();
+        if (rs.next())
+           count= rs.getInt(1);
+        return count;
+    }
+
+    @Override
+    public Integer getAvailabilityCount(Integer availability) throws SQLException {
+        Integer count = -1;
+        String query="SELECT COUNT(*)  FROM user WHERE availability=? ";
+        PreparedStatement pd = conn.prepareStatement(query);
+        pd.setInt(1,availability);
+        ResultSet rs = pd.executeQuery();
+        if (rs.next())
+            count= rs.getInt(1);
+        return count;
     }
 
 
