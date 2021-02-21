@@ -6,6 +6,9 @@ import eu.hansolo.tilesfx.chart.ChartData;
 import eu.hansolo.tilesfx.skins.BarChartItem;
 import javafx.scene.chart.XYChart;
 
+import java.util.List;
+import java.util.Map;
+
 public class Chatrs {
     static ChartData chartData1;
     static ChartData chartData2;
@@ -28,11 +31,11 @@ public class Chatrs {
         return donutChartTile;
     }
 
-    public static Tile getLineChartTile(String title,XYChart.Data ... xValues) {
+    public static Tile getLineChartTile(String title, List<XYChart.Data> data) {
         lineChartData = new XYChart.Series();
         lineChartData.setName("number of users");
-        for (XYChart.Data xValue :xValues)
-        lineChartData.getData().add(xValue);
+        for (XYChart.Data value :data)
+        lineChartData.getData().add(value);
 
         Tile lineChartTile = TileBuilder.create()
                 .skinType(Tile.SkinType.SMOOTHED_CHART)

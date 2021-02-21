@@ -115,18 +115,16 @@ public class ServerDashBoardController implements Initializable {
 
             Tile genderTile = Chatrs.getDonutChartTile("Gender", "this is numbr of males/femaless", "male", males, "female", females);
             Tile avaiTile = Chatrs.getDonutChartTile("Availability", "this is numbr of On/Off", "online", online, "female", offline);
-//            List<XYChart.Data> dataList= getXYData(countryusers);
-//            XYChart.Data[] data=new XYChart.Data[dataList.size()];
-//            for(int i=0;i<dataList.size();i++)
-//                data[i]=dataList.get(i);
 
-//            Tile chartTile= Chatrs.getLineChartTile("User/Country",data) ;
+            System.out.println(countryusers);
+            System.out.println(getXYData(countryusers));
+            Tile chartTile= Chatrs.getLineChartTile("User/Country",getXYData(countryusers)) ;
 
             HBox hBox = new HBox();
 //            hBox.getChildren().add(genderTile);
 //            hBox.getChildren().add(avaiTile);
-//
-//            hBox.getChildren().add(chartTile);
+
+            hBox.getChildren().add(chartTile);
 
             borderContainer.setCenter(hBox);
         } catch (SQLException throwables) {
@@ -135,22 +133,25 @@ public class ServerDashBoardController implements Initializable {
     }
 
     List<XYChart.Data>  getXYData(Map<String, Integer> countryUsers) {
-        List<XYChart.Data> data = null;
+        List<XYChart.Data> data =new ArrayList<>();
         int i = 0;
         Integer othersSum = 0;
+        
 
         Iterator<Map.Entry<String, Integer>> iterator = countryUsers.entrySet().iterator();
 
         while (iterator.hasNext()) {
-//            if (i < 5) {
+            if (i < 5) {
+
+                System.out.println();
                 data.add(new XYChart.Data(iterator.next().getKey(), iterator.next().getValue()));
-//                i++;
-//            }
-//            else {
-//                othersSum += iterator.next().getValue();
-//            }
+                i++;
+            }
+            else {
+                othersSum += iterator.next().getValue();
+            }
         }
-//        data.add(new XYChart.Data("others", othersSum));
+        data.add(new XYChart.Data("others", othersSum));
 
         return data;
     }

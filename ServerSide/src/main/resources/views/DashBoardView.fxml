@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Text?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-
-<AnchorPane prefHeight="547.0" prefWidth="859.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="views.DashBoardView">
+<AnchorPane prefHeight="547.0" prefWidth="859.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="487.0" prefWidth="675.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <effect>
@@ -37,7 +36,7 @@
                         <StackPane>
                            <children>
                               <FontIcon iconColor="WHITE" iconLiteral="far-bell" iconSize="14" />
-                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-border-radius: 100; -fx-border-color: green;" text="8">
+                              <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="20.0" style="-fx-background-color: white; -fx-text-fill: black; -fx-border-radius: 100; -fx-background-radius: 100;" text="8">
                                  <StackPane.margin>
                                     <Insets bottom="40.0" left="30.0" />
                                  </StackPane.margin>
