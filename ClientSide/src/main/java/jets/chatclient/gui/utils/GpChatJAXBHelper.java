@@ -1,7 +1,9 @@
 package jets.chatclient.gui.utils;
 
-import jakarta.xml.bind.annotation.*;
-import jets.chatclient.gui.models.GpMessageModel;
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.util.List;
 
@@ -12,13 +14,13 @@ public class GpChatJAXBHelper {
 
 
     @XmlElement(name = "message")
-    private List<GpMessageModel>  gpMessage = null;
+    private List<ModifiedGpMessageModel>  gpMessage = null;
 
-    public List<GpMessageModel> getGpMessage() {
+    public List<ModifiedGpMessageModel> getGpMessage() {
         return gpMessage;
     }
 
-    public void setGpMessage(List<GpMessageModel> gpMessage) {
+    public void setGpMessage(List<ModifiedGpMessageModel> gpMessage) {
         this.gpMessage = gpMessage;
     }
 }

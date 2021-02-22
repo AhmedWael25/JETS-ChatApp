@@ -1,11 +1,13 @@
 package jets.chatclient.gui.utils;
 
-
-
+import jets.chatclient.gui.helpers.GpChatsManager;
+import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.GpMessageModel;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -21,6 +23,12 @@ import jakarta.xml.bind.Marshaller;
 import jakarta.xml.bind.PropertyException;
 
 public class ExportMsgAsHtml{
+
+    ModelsFactory modelsFactory;
+    CurrentUserModel currentUserModel;
+    ModifiedGpMessageModel modifiedMessage;
+    GpChatsManager gpChatsManager;
+
     
     private void xmlTransformer(DOMResult res, String xsltPath, String outputHtmlPath) {
         try {
@@ -78,18 +86,18 @@ public class ExportMsgAsHtml{
         return res;
     }
 
-    public void exportGroupMessages(ArrayList<GpMessageModel> gpMessages){
-        Class<GpChatJAXBHelper> toBeboundClass = jets.chatclient.gui.utils.GpChatJAXBHelper.class;
-        String xsltPath = getClass().getResource("/xslt/GroupMessagesTransformer.xslt").getPath();
-       // String xsltPath = "src\\main\\resources\\xslt\\GroupMessagesTransformer.xslt";
-        String outputHtmlPath = "GpMessages.html";
-        
-        GpChatJAXBHelper gpmessages = new GpChatJAXBHelper();
-        gpmessages.setGpMessage(gpMessages);
-
-        DOMResult res = marshalingToDom(gpmessages, toBeboundClass);
-        xmlTransformer(res, xsltPath, outputHtmlPath);
-    }
+//    public void exportGroupMessages(ArrayList<GpMessageModel> gpMessages){
+//        Class<GpChatJAXBHelper> toBeboundClass = jets.chatclient.gui.utils.GpChatJAXBHelper.class;
+//        String xsltPath = getClass().getResource("/xslt/GroupMessagesTable.xslt").getPath();
+//       // String xsltPath = "src\\main\\resources\\xslt\\GroupMessagesTable.xslt";
+//        String outputHtmlPath = "GpMessages.html";
+//
+//        GpChatJAXBHelper gpmessages = new GpChatJAXBHelper();
+//        gpmessages.setGpMessage(gpMessages);
+//
+//        DOMResult res = marshalingToDom(gpmessages, toBeboundClass);
+//        xmlTransformer(res, xsltPath, outputHtmlPath);
+//    }
 
 
     // public void exportP2PMessages(ArrayList<GpMessageModel> p2pMessages){
@@ -103,6 +111,47 @@ public class ExportMsgAsHtml{
     //     DOMResult res = marshalingToDom(gpmessages, toBeboundClass);
     //     xmlTransformer(res, xsltPath, outputHtmlPath);
     // }
-    
-    
+
+
+
+    public void exportGroupMessages(ArrayList<GpMessageModel> gpMessages){
+        // Generate Modified message Model.
+        List<ModifiedGpMessageModel> modifiedGpMsgList = new ArrayList<ModifiedGpMessageModel>();
+        modifiedGpMsgList =  generateModifiedGpChatList(gpMessages);
+
+        Class<GpChatJAXBHelper> toBeboundClass = jets.chatclient.gui.utils.GpChatJAXBHelper.class;
+        String xsltPath = getClass().getResource("/xslt/GpChatStyle.xslt").getPath();
+        // String xsltPath = "src\\main\\resources\\xslt\\GroupMessagesTable.xslt";
+        String outputHtmlPath = "GpMessages.html";
+
+        GpChatJAXBHelper gpmessages = new GpChatJAXBHelper();
+        gpmessages.setGpMessage(modifiedGpMsgList);
+
+        DOMResult res = marshalingToDom(gpmessages, toBeboundClass);
+        xmlTransformer(res, xsltPath, outputHtmlPath);
+    }
+
+
+
+
+    List<ModifiedGpMessageModel> generateModifiedGpChatList(List<GpMessageModel> GpMessagesList) {
+        List<ModifiedGpMessageModel> modifiedGpMsgList = new ArrayList<ModifiedGpMessageModel>();
+        modelsFactory = ModelsFactory.getInstance();
+        currentUserModel = modelsFactory.getCurrentUserModel();
+        for (GpMessageModel message : GpMessagesList) {
+            modifiedMessage = new ModifiedGpMessageModel();
+
+            if (message.getSenderId().equals(currentUserModel.getPhoneNumber())) {
+                modifiedMessage.fillwithGpMessageModel(message, true);
+            } else {
+                modifiedMessage.fillwithGpMessageModel(message, false);
+            }
+
+            modifiedGpMsgList.add(modifiedMessage);
+        }
+
+        return modifiedGpMsgList;
+    }
+
+
 }

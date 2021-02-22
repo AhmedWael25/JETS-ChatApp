@@ -14,6 +14,7 @@
                         <th>Message Content</th>
                         <th>Time Stamp</th>
                         <th>Chat ID</th>
+                        <th>From Current User</th>
                     </tr>
                     <xsl:for-each select="gpmessages/message">
                         <xsl:sort select="timeStamp" />
@@ -35,6 +36,10 @@
 
                             <td>
                                 <xsl:value-of select="chatId" />
+                            </td>
+
+                            <td>
+                                <xsl:value-of select="fromCurrentUser" />
                             </td>
 
                         </tr>
