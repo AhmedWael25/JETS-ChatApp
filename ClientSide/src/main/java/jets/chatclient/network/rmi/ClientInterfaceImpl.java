@@ -181,8 +181,13 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     }
 
     @Override
-    public void forTesting(String userId) throws  RemoteException{
-        System.out.println("CallBack to USer of Id : "+ userId);
+    public String LivenessTest() throws  RemoteException{
+        return  "ACK";
+    }
+
+    @Override
+    public void ReInitAllPages() throws RemoteException {
+
     }
 
 

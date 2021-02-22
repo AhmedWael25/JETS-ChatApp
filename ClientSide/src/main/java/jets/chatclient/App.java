@@ -8,7 +8,9 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import jets.chatclient.gui.helpers.LivenessChecker;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
@@ -28,6 +30,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        new LivenessChecker().initLivenessChecker();
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         stageCoordinator.initStage(primaryStage);
         stageCoordinator.switchToMainScene();
@@ -43,10 +46,7 @@ public class App extends Application {
              UserCredentials userCredentials = configManager.readConfigFile();
             SignInServiceInt  signInService=null;
             try {
-                ModelsFactory modelsFactory = ModelsFactory.getInstance();
-
-                Registry reg = modelsFactory.getRegistry();
-                 signInService = (SignInServiceInt) reg.lookup("SignInService");
+                 signInService = ServicesFactory.getInstance().getSignInService();
                 boolean verified = signInService.checkUserCredentials(userCredentials.getUserPhone(),userCredentials.getEncryptedPassword() );
 
                 if (verified) {
@@ -66,6 +66,7 @@ public class App extends Application {
 
 
         }
+
         primaryStage.setTitle("Connect ChatApp");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/symbol.png").toExternalForm()) );
         primaryStage.show();

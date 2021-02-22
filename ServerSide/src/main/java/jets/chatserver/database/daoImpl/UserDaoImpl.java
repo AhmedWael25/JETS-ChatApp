@@ -221,8 +221,9 @@ public class UserDaoImpl implements UserDao {
         pd.setString(5,dbUser.getCountry());
         pd.setString(6,dbUser.getDob());
         pd.setString(7,dbUser.getImgEncoded());
-        pd.setInt(8,dbUser.getUserStatus());
-        pd.setInt(9,dbUser.getUserAvail());
+        //TODO CHnaged to be def of 0
+        pd.setInt(8,0);
+        pd.setInt(9,0);
 
         int rowCount = pd.executeUpdate();
         if (rowCount == 1){

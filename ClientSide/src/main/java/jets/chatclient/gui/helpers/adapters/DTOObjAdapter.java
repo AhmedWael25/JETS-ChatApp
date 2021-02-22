@@ -212,7 +212,6 @@ public class DTOObjAdapter {
         userDto.setDob(user.getUserDateOfBirth());
         userDto.setStatus(user.getUserStatus());
         userDto.setAvailability(user.geUserAvailability());
-        //TODO handle user Image & BD
         return userDto;
     }
 
