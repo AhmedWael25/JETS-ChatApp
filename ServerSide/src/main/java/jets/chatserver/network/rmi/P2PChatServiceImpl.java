@@ -7,6 +7,7 @@ import commons.sharedmodels.P2PChatDto;
 import jets.chatserver.DBModels.DBP2PChat;
 import jets.chatserver.database.dao.P2PChatDao;
 import jets.chatserver.database.daoImpl.P2PChatDaoImpl;
+import jets.chatserver.gui.helpers.chatBotManager;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 
 import java.rmi.RemoteException;
@@ -53,15 +54,14 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
 
         ClientInterface clientInterface = currentConnectedUsers.get(receiverId);
         if(clientInterface != null) {
-            //Check if user is busy
-            //bot generate Kalam
-            //sadkjsndk
-            /*
-            * BOT:
-            * asjdnkasjnds
-            *
-            * */
+                //Check if user is busy
+            chatBotManager botManager =  new chatBotManager();
+
+            String botMsg = botManager.sendMsgToBots(msgDto.getMsgBody());
+            msgDto.setMsgBody("Bot: " + botMsg);
+
             clientInterface.sendNewP2PMessageToUser(msgDto);
+
         }
 
         return true;

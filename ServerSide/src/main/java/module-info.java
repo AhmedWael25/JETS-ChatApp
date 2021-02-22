@@ -21,6 +21,7 @@ module jets.chatserver {
 
 
     requires ChatAppCommons;
+    requires ab;
 
     opens jets.chatserver.gui.controllers to javafx.fxml;
 
