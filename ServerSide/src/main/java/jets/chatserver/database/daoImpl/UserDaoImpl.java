@@ -403,6 +403,7 @@ public class UserDaoImpl implements UserDao {
         String query="SELECT country, COUNT(*)  FROM user GROUP BY country ORDER BY COUNT(*) DESC ";
         PreparedStatement pd = conn.prepareStatement(query);
         ResultSet rs = pd.executeQuery();
+
         while (rs.next()){
             numUsers.put(rs.getString(1),rs.getInt(2));
         }

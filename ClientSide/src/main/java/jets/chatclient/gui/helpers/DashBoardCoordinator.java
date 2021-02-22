@@ -12,144 +12,146 @@ import java.util.Map;
 
 public class DashBoardCoordinator {
 
-    private  static  Parent dashboardContainer;
+    private static Parent dashboardContainer;
     private static final DashBoardCoordinator dashBoardCoordinator = new DashBoardCoordinator();
     private final Map<String, ScreenData> dashboardScreens = new HashMap<>();
 
-    private DashBoardCoordinator(){}
+    private DashBoardCoordinator() {
+    }
 
 
-
-    public  void initScreen(Parent parent){
-        if(dashboardContainer == null){
+    public void initScreen(Parent parent) {
+        if (dashboardContainer == null) {
             dashboardContainer = parent;
-        }
-        else {
+        } else {
             //TODO remove after debugging
             System.out.println("Screen has already been initialized");
         }
     }
 
-    public static DashBoardCoordinator getInstance(){
-        return  dashBoardCoordinator;
+    public static DashBoardCoordinator getInstance() {
+        return dashBoardCoordinator;
     }
 
-    public void switchToChatScreen(){
-        if(dashboardContainer == null){
-            throw  new RuntimeException("DashBoard Container haven't been init.");
+    public void switchToChatScreen() {
+        if (dashboardContainer == null) {
+            throw new RuntimeException("DashBoard Container haven't been init.");
         }
-        if(!dashboardScreens.containsKey("chatscreen")){
+        if (!dashboardScreens.containsKey("chatscreen")) {
             System.out.println("Created New Chat Screen");
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/P2PChat.fxml"));
                 Parent chatScreen = fxmlLoader.load();
-                ScreenData screenData = new ScreenData(fxmlLoader,chatScreen);
-                dashboardScreens.put("chatscreen",screenData);
-                ((BorderPane)dashboardContainer).setCenter(chatScreen);
+                ScreenData screenData = new ScreenData(fxmlLoader, chatScreen);
+                dashboardScreens.put("chatscreen", screenData);
+                ((BorderPane) dashboardContainer).setCenter(chatScreen);
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Couldn't load chat screen");
             }
-        }else {
+        } else {
             System.out.println("loading new CHt screen");
             Parent chatScreen = dashboardScreens.get("chatscreen").getView();
-            ((BorderPane)dashboardContainer).setCenter(chatScreen);
+            ((BorderPane) dashboardContainer).setCenter(chatScreen);
         }
     }
-    public  void switchToGpChatScreen(){
-        if(dashboardContainer == null){
-            throw  new RuntimeException("DashBoard Container haven't been init.");
+
+    public void switchToGpChatScreen() {
+        if (dashboardContainer == null) {
+            throw new RuntimeException("DashBoard Container haven't been init.");
         }
-        if(!dashboardScreens.containsKey("gpchatscreen")){
+        if (!dashboardScreens.containsKey("gpchatscreen")) {
             System.out.println("Created New gp chat Screen");
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/groupChat.fxml"));
                 Parent gpChatScreen = fxmlLoader.load();
-                ScreenData screenData = new ScreenData(fxmlLoader,gpChatScreen);
-                dashboardScreens.put("gpchatscreen",screenData);
-                ((BorderPane)dashboardContainer).setCenter(gpChatScreen);
+                ScreenData screenData = new ScreenData(fxmlLoader, gpChatScreen);
+                dashboardScreens.put("gpchatscreen", screenData);
+                ((BorderPane) dashboardContainer).setCenter(gpChatScreen);
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Couldn't load Prof screen");
             }
-        }else {
+        } else {
             System.out.println("Loading New gp chat screen");
             Parent gpChatScreen = dashboardScreens.get("gpchatscreen").getView();
-            ((BorderPane)dashboardContainer).setCenter(gpChatScreen);
+            ((BorderPane) dashboardContainer).setCenter(gpChatScreen);
         }
     }
-    public void switchToGroupScreen(){
-        if(dashboardContainer == null){
-            throw  new RuntimeException("DashBoard Container haven't been init.");
+
+    public void switchToGroupScreen() {
+        if (dashboardContainer == null) {
+            throw new RuntimeException("DashBoard Container haven't been init.");
         }
-        if(!dashboardScreens.containsKey("contactsscreen")){
+        if (!dashboardScreens.containsKey("contactsscreen")) {
             System.out.println("Created Contacts Screen");
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/contactsView.fxml"));
                 Parent groupsScreen = fxmlLoader.load();
-                ScreenData screenData = new ScreenData(fxmlLoader,groupsScreen);
-                dashboardScreens.put("contactsscreen",screenData);
-                ((BorderPane)dashboardContainer).setCenter(groupsScreen);
+                ScreenData screenData = new ScreenData(fxmlLoader, groupsScreen);
+                dashboardScreens.put("contactsscreen", screenData);
+                ((BorderPane) dashboardContainer).setCenter(groupsScreen);
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Coudlnt load Contacts screen");
             }
-        }else {
+        } else {
             System.out.println("Loading  Contacts screen");
             Parent groupsScreen = dashboardScreens.get("contactsscreen").getView();
-            ((BorderPane)dashboardContainer).setCenter(groupsScreen);
+            ((BorderPane) dashboardContainer).setCenter(groupsScreen);
         }
     }
-    public  void switchToProfileScreen(){
-        if(dashboardContainer == null){
-            throw  new RuntimeException("DashBoard Container haven't been init.");
+
+    public void switchToProfileScreen() {
+        if (dashboardContainer == null) {
+            throw new RuntimeException("DashBoard Container haven't been init.");
         }
-        if(!dashboardScreens.containsKey("profilescreen")){
+        if (!dashboardScreens.containsKey("profilescreen")) {
             System.out.println("Created New Profile Screen");
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/userProfile.fxml"));
                 Parent profileScreen = fxmlLoader.load();
-                ScreenData screenData = new ScreenData(fxmlLoader,profileScreen);
-                dashboardScreens.put("profilescreen",screenData);
-                ((BorderPane)dashboardContainer).setCenter(profileScreen);
+                ScreenData screenData = new ScreenData(fxmlLoader, profileScreen);
+                dashboardScreens.put("profilescreen", screenData);
+                ((BorderPane) dashboardContainer).setCenter(profileScreen);
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Couldn't load Prof screen");
             }
-        }else {
+        } else {
             System.out.println("Loading New Profil screen");
             Parent profileScreen = dashboardScreens.get("profilescreen").getView();
-            ((BorderPane)dashboardContainer).setCenter(profileScreen);
+            ((BorderPane) dashboardContainer).setCenter(profileScreen);
         }
     }
 
-    public  void initAllScreens() throws IOException {
+    public void initAllScreens() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/P2PChat.fxml"));
         Parent chatScreen = fxmlLoader.load();
-        ScreenData screenData = new ScreenData(fxmlLoader,chatScreen);
-        dashboardScreens.put("chatscreen",screenData);
+        ScreenData screenData = new ScreenData(fxmlLoader, chatScreen);
+        dashboardScreens.put("chatscreen", screenData);
 
-         fxmlLoader = new FXMLLoader(getClass().getResource("/views/groupChat.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("/views/groupChat.fxml"));
         Parent gpChatScreen = fxmlLoader.load();
-         screenData = new ScreenData(fxmlLoader,gpChatScreen);
-        dashboardScreens.put("gpchatscreen",screenData);
+        screenData = new ScreenData(fxmlLoader, gpChatScreen);
+        dashboardScreens.put("gpchatscreen", screenData);
 
 
-         fxmlLoader = new FXMLLoader(getClass().getResource("/views/contactsView.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("/views/contactsView.fxml"));
         Parent groupsScreen = fxmlLoader.load();
-         screenData = new ScreenData(fxmlLoader,groupsScreen);
-        dashboardScreens.put("contactsscreen",screenData);
+        screenData = new ScreenData(fxmlLoader, groupsScreen);
+        dashboardScreens.put("contactsscreen", screenData);
 
 
-         fxmlLoader = new FXMLLoader(getClass().getResource("/views/userProfile.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("/views/userProfile.fxml"));
         Parent profileScreen = fxmlLoader.load();
-         screenData = new ScreenData(fxmlLoader,profileScreen);
-        dashboardScreens.put("profilescreen",screenData);
+        screenData = new ScreenData(fxmlLoader, profileScreen);
+        dashboardScreens.put("profilescreen", screenData);
 
     }
 
-    public Map<String, ScreenData> getScreens(){
-        return  dashboardScreens;
+    public Map<String, ScreenData> getScreens() {
+        return dashboardScreens;
     }
 
 }

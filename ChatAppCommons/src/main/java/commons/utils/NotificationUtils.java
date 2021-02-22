@@ -18,7 +18,7 @@ public class NotificationUtils {
                 .title(title)
                 .text(msg)
                 .graphic(icon)
-                .hideAfter(Duration.seconds(3.0))
+                .hideAfter(Duration.INDEFINITE)
                 .threshold(3,threshold)
                 .position(Pos.BOTTOM_RIGHT)
 //                .darkStyle()

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import eu.hansolo.tilesfx.tools.FlowGridPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatserver.gui.controllers.StatsController">
+   <children>
+      <FlowGridPane fx:id="container" hgap="10.0" noOfCols="2" noOfRows="2" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <rowConstraints>
+            <RowConstraints maxHeight="276.66664123535156" minHeight="20.0" prefHeight="261.99998474121094" valignment="CENTER" vgrow="ALWAYS" />
+            <RowConstraints maxHeight="195.33334350585938" minHeight="20.0" prefHeight="138.00001525878906" valignment="CENTER" vgrow="ALWAYS" />
+         </rowConstraints>
+         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="333.33331298828125" minWidth="60.0" prefWidth="333.33331298828125" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="294.0" minWidth="60.0" prefWidth="266.66668701171875" />
+         </columnConstraints>
+      </FlowGridPane>
+   </children>
+</AnchorPane>

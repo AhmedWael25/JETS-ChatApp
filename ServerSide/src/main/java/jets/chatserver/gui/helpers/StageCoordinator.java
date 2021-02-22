@@ -37,7 +37,7 @@ public class StageCoordinator {
         if (!scenes.containsKey("dashboard")) {
             try {
                 System.out.println("Created New Server DashBoard Scene");
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/ServerDashBoardView.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/DashBoardView.fxml"));
                 Parent dashboardView = fxmlLoader.load();
                 Scene  dashBoardScene = new Scene(dashboardView);
                 SceneData dashBoardSceneData = new SceneData(fxmlLoader, dashboardView, dashBoardScene);
