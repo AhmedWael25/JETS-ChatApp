@@ -64,8 +64,6 @@ public class P2PChatManager {
         List<P2PMessageModel> msgList = messages.getOrDefault(msg.getChatId(), new ArrayList<>());
         msgList.add(msg);
         messages.put(msg.getChatId(), msgList);
-        System.out.println(messages);
-        System.out.println("IN ADD MSSG1" + msgList);
     }
 
     public void addMsg(P2PMessageDto p2pMsgDto){
@@ -103,5 +101,25 @@ public class P2PChatManager {
         P2PChatModel chat = chatsMap.get(chatId);
         return  chat.getStatus();
     }
+    public  String getParticipantName(Integer chatId){
+        P2PChatModel chat = chatsMap.get(chatId);
+        String  str = new String();
+        if(chat != null){
+            str =  chat.getFriendName();
+        }
+        return  str;
+    }
+
+
+    public  Image getParticipantImage(Integer chatId){
+        P2PChatModel chat = chatsMap.get(chatId);
+        Image  img = null;
+        if(chat != null){
+            img =  chat.getFriendImg();
+        }
+        return  img;
+    }
+
+
 
 }

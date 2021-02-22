@@ -67,5 +67,24 @@ public class ContactsManager {
 
     }
 
+    public String getFriendName(String friendId){
+        ContactModel model = contacts.get(friendId);
+        String name = new String();
+        if (model != null){
+            name = model.getContactName();
+        }
+        return  name;
+    }
+
+    public  Image getFriendImage(String friendId){
+        ContactModel model = contacts.get(friendId);
+        Image img = null;
+        if(model != null){
+            img = model.getContactImage();
+        }
+        return  img;
+    }
+
+
 
 }

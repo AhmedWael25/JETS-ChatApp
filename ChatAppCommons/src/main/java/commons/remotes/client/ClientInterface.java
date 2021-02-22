@@ -1,6 +1,7 @@
 package commons.remotes.client;
 
 import commons.sharedmodels.*;
+import javafx.scene.image.Image;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -28,9 +29,11 @@ public interface ClientInterface extends Remote {
 
     void sendNewMessageToUser(P2PMessageDto msgDto) throws RemoteException;
 
-    void pushGpChatNotification(int gchatId, String senderName, String msg,String chatImg) throws RemoteException;
-    void pushp2pChatNotification(int chatId, String senderName, String msg, String senderImg) throws RemoteException;
-    void pushStatusNotification(int chatId, String senderName, String status, String senderImg) throws RemoteException;
+    void pushGpChatNotification(int gchatId, String senderName, String msg,Image chatImg) throws RemoteException;
+    void pushp2pChatNotification(int chatId, String senderName, String msg, Image senderImg) throws RemoteException;
+    void pushStatusNotification(String friendName, Image img ) throws RemoteException;
+
+    void notifyUserIsOnline(String  userId) throws  RemoteException;
 
     void forTesting(String userId) throws  RemoteException;
 
