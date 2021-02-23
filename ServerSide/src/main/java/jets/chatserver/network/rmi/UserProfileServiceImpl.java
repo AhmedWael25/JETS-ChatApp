@@ -64,7 +64,19 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
     public boolean updateProfilePic(String newImageString, String userId) throws RemoteException {
 
         try {
-            return UserDaoImpl.getUserDaoInstance().updateDBUserPhoto(newImageString, userId);
+            boolean isUpdated =  UserDaoImpl.getUserDaoInstance().updateDBUserPhoto(newImageString, userId);
+
+
+            currentConnectedUsers.forEach((id, clientInterface) -> {
+                if(!id.equals(userId)){
+                    try {
+                        clientInterface.updateUserImg(userId,newImageString);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            return isUpdated;
         } catch (SQLException e) {
             System.out.println("Unable to User photo.");
             e.printStackTrace();
@@ -76,7 +88,6 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
     public boolean updateUserStatus(int userStatus, String userId) throws RemoteException{
 
         {
-
             try {
                 boolean isUpdated = UserDaoImpl.getUserDaoInstance().updateDBUserStatus(userStatus, userId);
                 //Call Back All Connected Clients to Update Their Status

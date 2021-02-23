@@ -82,11 +82,11 @@ public class UsersController implements Initializable {
         return (o, oldVal, newVal) ->
                 tableView.setPredicate(personProp -> {
                     final Person person = personProp.getValue();
-                    return person.phone.get().contains(newVal)
-                            || person.name.get().contains(newVal)
-                            || person.gender.get().contains(newVal)
-                            || person.country.get().contains(newVal)
-                            || person.email.get().contains(newVal);
+                    return person.phone.get().toLowerCase().contains(newVal.toLowerCase())
+                            || person.name.get().toLowerCase().contains(newVal.toLowerCase())
+                            || person.gender.get().toLowerCase().contains(newVal.toLowerCase())
+                            || person.country.get().toLowerCase().contains(newVal.toLowerCase())
+                            || person.email.get().toLowerCase().contains(newVal.toLowerCase());
                 });
     }
 

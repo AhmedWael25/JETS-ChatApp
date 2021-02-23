@@ -47,6 +47,7 @@ public class CurrentUserModel {
 
         switch (status){
             case 1:
+            case 0:
                 userStatus.setFill(Paint.valueOf("#14de4a"));
                 break;
             case 2:
@@ -189,6 +190,9 @@ public class CurrentUserModel {
     }
 
 
+    public void clear() {
+        this.setPhoneNumber("");
 
 
+    }
 }

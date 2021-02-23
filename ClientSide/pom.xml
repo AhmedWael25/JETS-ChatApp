@@ -16,6 +16,19 @@
             <artifactId>ChatAppCommons</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>3.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
     </dependencies>
 
 
@@ -74,6 +87,8 @@
                         <option>javafx.graphics/com.sun.javafx.stage=com.jfoenix</option>
                         <option>--add-exports</option>
                         <option>javafx.base/com.sun.javafx.event=com.jfoenix</option>
+                        <option>--add-exports</option>
+                        <option>javafx.graphics/com.sun.javafx.scene=com.jfoenix</option>
                     </options>
                 </configuration>
             </plugin>

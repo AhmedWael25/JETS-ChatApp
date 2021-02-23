@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXListView?>
-<?import com.jfoenix.controls.JFXScrollPane?>
-<?import com.jfoenix.controls.JFXTextArea?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import org.kordamp.ikonli.javafx.FontIcon?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
 
-<AnchorPane fx:id="gpChatMainContainer" prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.GroupChatController">
+<AnchorPane fx:id="gpChatMainContainer" prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.GroupChatController">
    <children>
       <GridPane prefHeight="434.0" prefWidth="583.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -125,26 +115,14 @@
                   </HBox>
                </bottom>
                <top>
-                  <HBox alignment="BASELINE_RIGHT" prefHeight="54.0" prefWidth="342.0" spacing="10.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="342.0" spacing="10.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets />
                      </BorderPane.margin>
                      <children>
 
-                        <JFXButton fx:id="groupMembers" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="284.0" layoutY="10.0" prefHeight="42.0" prefWidth="16.0" ripplerFill="#f26101" textFill="#f26101" HBox.hgrow="ALWAYS">
 
-                           <font>
-                              <Font size="1.0" />
-                           </font>
-                           <graphic>
-                              <FontIcon iconColor="#304269" iconLiteral="fas-users" iconSize="20" layoutX="10.0" layoutY="10.0" textAlignment="CENTER" wrappingWidth="35.99996280670166" />
-                           </graphic>
-                           <HBox.margin>
-                              <Insets top="5.0" />
-                           </HBox.margin>
-                        </JFXButton>
-
-                        <JFXButton fx:id="leaveBtn" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" prefHeight="42.0" prefWidth="16.0" textFill="#f26101" HBox.hgrow="ALWAYS">
+                        <JFXButton fx:id="leaveBtn" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" onAction="#exportHTML" prefHeight="42.0" prefWidth="16.0" textFill="#f26101" HBox.hgrow="ALWAYS">
 
                            <font>
                               <Font size="1.0" />
@@ -155,19 +133,6 @@
                            <graphic>
                               <FontIcon iconColor="#304269" iconLiteral="fas-door-open" iconSize="20" layoutX="10.0" layoutY="10.0" textAlignment="CENTER" wrappingWidth="35.99996280670166" />
                            </graphic>
-                        </JFXButton>
-
-                        <JFXButton fx:id="chatOption" buttonType="RAISED" ellipsisString="" focusTraversable="false" graphicTextGap="0.0" layoutX="309.0" layoutY="10.0" prefHeight="42.0" prefWidth="34.0" textFill="#f26101" HBox.hgrow="ALWAYS">
-
-                           <font>
-                              <Font size="1.0" />
-                           </font>
-                           <graphic>
-                              <FontIcon iconColor="#304269" iconLiteral="fas-ellipsis-v" iconSize="20" text="" textAlignment="RIGHT" wrappingWidth="14.400024890899658" />
-                           </graphic>
-                           <HBox.margin>
-                              <Insets right="8.0" />
-                           </HBox.margin>
                         </JFXButton>
                      </children>
                      <padding>

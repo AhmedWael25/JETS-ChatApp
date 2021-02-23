@@ -1,11 +1,8 @@
 package jets.chatclient.network.rmi;
 
 import commons.remotes.client.ClientInterface;
-import commons.sharedmodels.GpChatDto;
-import commons.sharedmodels.InvitationDto;
-import commons.sharedmodels.P2PMessageDto;
-import commons.sharedmodels.GpMessageDto;
-import commons.sharedmodels.P2PChatDto;
+import commons.sharedmodels.*;
+import commons.utils.ImageEncoderDecoder;
 import commons.utils.NotificationUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +12,10 @@ import jets.chatclient.gui.controllers.ContactsController;
 import jets.chatclient.gui.controllers.P2PChatController;
 import jets.chatclient.gui.controllers.GroupChatController;
 import jets.chatclient.gui.helpers.*;
+import jets.chatclient.gui.helpers.ControllersGetter;
+import jets.chatclient.gui.helpers.GpChatsManager;
+import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.P2PChatManager;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -42,6 +43,10 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
         ControllersGetter controllersGetter = ControllersGetter.getInstance();
         P2PChatController p2pChatController = controllersGetter.getP2PChatController();
         p2pChatController.addNewChatToList(chatDto);
+
+        P2PChatManager manager = ModelsFactory.getInstance().getP2PChatManager();
+//        manager.addP2PChat(chatDto);
+
     }
 
     @Override
@@ -50,32 +55,28 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
         ControllersGetter controllersGetter = ControllersGetter.getInstance();
         GroupChatController groupChatController = controllersGetter.getGpChatController();
         groupChatController.addGpChatToList(gpChatDto);
-
-
     }
 
     @Override
-    public void sendNewMessageToUser(P2PMessageDto msgDto) throws RemoteException {
-
-        ControllersGetter controllersGetter = ControllersGetter.getInstance();
-        P2PChatController p2pChatController = controllersGetter.getP2PChatController();
-        p2pChatController.SendMessageToChat(msgDto);
-
-
+    public void addNewFriend(ContactDto contactDto) throws RemoteException {
+        ContactsManager manager = ModelsFactory.getInstance().getContactsManager();
+        manager.addNewContact(contactDto);
     }
 
+
     @Override
-    public void pushGpChatNotification(int gchatId, String senderName, String msg,String chatImg) throws RemoteException {
+    public void pushGpChatNotification(int gchatId, String senderName, String msg,Image chatImg) throws RemoteException {
         String notificationMsg = senderName+": "+msg;
         EventHandler<ActionEvent> action = (event)->{
             DashBoardCoordinator coordinator = DashBoardCoordinator.getInstance();
             coordinator.switchToGroupScreen();
             //TODO, Switch to groupChat based on the id
         };
-        NotificationUtils.showNotification("New Group Msg",notificationMsg,action, StageCoordinator.getPrimaryStage(),"asdasds");
+        NotificationUtils.showNotification("New Group Msg",notificationMsg,action, StageCoordinator.getPrimaryStage(),chatImg);
     }
+
     @Override
-    public void pushp2pChatNotification(int chatId, String senderName, String msg,String senderImg) throws RemoteException {
+    public void pushp2pChatNotification(int chatId, String senderName, String msg,Image senderImg) throws RemoteException {
         String notificationMsg = senderName+": "+msg;
         EventHandler<ActionEvent> action = (event)->{
             DashBoardCoordinator coordinator = DashBoardCoordinator.getInstance();
@@ -84,50 +85,118 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
         };
         NotificationUtils.showNotification("New Message",notificationMsg,action, StageCoordinator.getPrimaryStage(),senderImg);
     }
+
+
     @Override
-    public void pushStatusNotification(int chatId, String senderName, String status, String senderImg) throws RemoteException {
-        String notificationMsg = senderName+"is "+status+" now!";
-        EventHandler<ActionEvent> action = (event)->{
-//            DashBoardCoordinator coordinator = DashBoardCoordinator.getInstance();
-//            coordinator.switchToChatScreen();
-            //TODO, Switch to p2pChat based on the id
-            System.out.println("El7amdulaaaaaah");
-        };
-        NotificationUtils.showNotification("Status Changed",notificationMsg,action, StageCoordinator.getPrimaryStage(),senderImg);
+    public void notifyUserIsOnline(String friendId) throws RemoteException {
+
+        ContactsManager contactsManager = ModelsFactory.getInstance().getContactsManager();
+        String friendName = contactsManager.getFriendName(friendId);
+        Image img = contactsManager.getFriendImage(friendId);
+        pushStatusNotification(friendName,img);
     }
 
+    @Override
+    public void pushStatusNotification(String friendName, Image img ) throws RemoteException {
+        EventHandler<ActionEvent> action = (event)->{
+            DashBoardCoordinator coordinator = DashBoardCoordinator.getInstance();
+            coordinator.switchToChatScreen();
+        };
+        NotificationUtils.showNotification("Welcome Your Friend!" ,friendName+" Has Gone ONLINE!",action, StageCoordinator.getPrimaryStage(),img);
+    }
+
+    @Override
+    public void sendNewP2PMessageToUser(P2PMessageDto p2pMsgDto) throws RemoteException {
+
+        P2PChatManager p2PChatManager = ModelsFactory.getInstance().getP2PChatManager();
+        p2PChatManager.addMsg(p2pMsgDto);
+        //Push Notification
+        //If msg incoming from active chat dont send NOTI
+        //Otherwise Send Noti
+        Integer activeChat = p2PChatManager.getActiveP2PChat();
+        Integer chatIdFromMsg = p2pMsgDto.getChatId();
+
+        if(!activeChat.equals(chatIdFromMsg)){
+            String senderName = p2PChatManager.getParticipantName(chatIdFromMsg);
+            Image img = p2PChatManager.getParticipantImage(chatIdFromMsg);
+            if(p2pMsgDto.getMsgType() == MsgType.TEXT){
+                pushp2pChatNotification(chatIdFromMsg,senderName,p2pMsgDto.getMsgBody(),img);
+            }else {
+                String fileName = p2pMsgDto.getMsgBody().split(";")[0];
+                pushp2pChatNotification(chatIdFromMsg,senderName," FILE : "+fileName,img);
+            }
+        }
+    }
     @Override
     public void sendNewGpMsgToUsers(GpMessageDto gpMessageDto) throws RemoteException {
 
         GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
         gpChatsManager.addMsg(gpMessageDto);
-        pushGpChatNotification(gpMessageDto.getChatId(), gpMessageDto.getSenderName(), gpMessageDto.getMsgContent(),"asasas");
+
+        Integer activeChat = gpChatsManager.getActiveChat();
+        Integer chatIdFromMsg = gpMessageDto.getChatId();
+        if(!activeChat.equals(chatIdFromMsg)){
+            String senderName = gpMessageDto.getSenderName();
+            Image img = gpChatsManager.getChatImg(chatIdFromMsg);
+            if(gpMessageDto.getMsgType() == MsgType.TEXT){
+                pushGpChatNotification(chatIdFromMsg,senderName,gpMessageDto.getMsgContent(),img);
+            }else {
+                String fileName = gpMessageDto.getMsgContent().split(";")[0];
+                pushp2pChatNotification(chatIdFromMsg,senderName," FILE : "+fileName,img);
+            }
+        }
     }
+
 
     @Override
     public void sendNewGpFileTpUsers(byte[] fileArr, GpMessageDto gpMessageDto) {
         GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
         gpChatsManager.addFileMsg(fileArr,gpMessageDto);
-
-
-
-        System.out.println("FROM MGR" + fileArr.length);
     }
+
+
 
     @Override
     public void updateUserStatus(String userId, Integer status) throws RemoteException {
         GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
         gpChatsManager.updateParticipantStatus(userId,status);
+
+        P2PChatManager p2PChatManager = ModelsFactory.getInstance().getP2PChatManager();
+        p2PChatManager.updateFriendStatus(userId,status);
+
+        ContactsManager contactsManager = ModelsFactory.getInstance().getContactsManager();
+        contactsManager.updateContactStatus(userId,status);
     }
 
     @Override
     public void updateUserImg(String userId, String imgEncoded) throws RemoteException {
 
+        //Update in GP manager
+        GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
+        gpChatsManager.updateParticipantImg(userId,imgEncoded);
+        //Update in P2P Manager
+        P2PChatManager p2PChatManager = ModelsFactory.getInstance().getP2PChatManager();
+        p2PChatManager.updateFriendImg(userId,imgEncoded);
+        //Update in contact list
+
+        ContactsManager contactsManager = ModelsFactory.getInstance().getContactsManager();
+        contactsManager.updateContactImg(userId,imgEncoded);
+
     }
 
     @Override
-    public void forTesting(String userId) throws  RemoteException{
-        System.out.println("CallBack to USer of Id : "+ userId);
+    public void sendNewMessageToUser(P2PMessageDto msgDto) throws RemoteException {
+
+    }
+
+    @Override
+    public String LivenessTest() throws  RemoteException{
+        return  "ACK";
+    }
+
+    @Override
+    public void ReInitAllPages() throws RemoteException {
+
     }
 
 

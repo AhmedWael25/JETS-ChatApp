@@ -115,9 +115,6 @@ public class GpChatDaoImpl implements GpChatDao {
 
     @Override
     public synchronized int createGroupChat(DBGpChat dbGpChat) throws SQLException {
-
-
-
         //Fetch Last ID In Table
         String query = "SELECT id FROM gpchats ORDER BY id DESC LIMIT 1";
         PreparedStatement pd = conn.prepareStatement(query,

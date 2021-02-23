@@ -19,6 +19,8 @@ public class ModelsFactory {
     private ClientInterface clientInterface = null;
     private Registry registry = null;
     private  GpChatsManager gpChatsManager = null;
+    private  P2PChatManager p2pChatMngr = null;
+    private  ContactsManager contactsManager = null;
 
     private ModelsFactory () { }
 
@@ -26,8 +28,16 @@ public class ModelsFactory {
         return instance;
     }
 
+    public ContactsManager getContactsManager(){
+        if (contactsManager == null) {
+            contactsManager = new ContactsManager();
+        }
+        return contactsManager;
+    }
+
     public CurrentUserModel getCurrentUserModel() {
         if (currentUserModel == null) {
+            System.out.println("create new userModel");
             currentUserModel = new CurrentUserModel();
         }
         return currentUserModel;
@@ -63,6 +73,11 @@ public class ModelsFactory {
         return  gpChatsManager;
     }
 
-
+    public P2PChatManager getP2PChatManager(){
+        if(p2pChatMngr == null){
+            p2pChatMngr = new P2PChatManager();
+        }
+        return  p2pChatMngr;
+    }
 
 }

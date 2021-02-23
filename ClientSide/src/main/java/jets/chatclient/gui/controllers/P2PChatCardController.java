@@ -6,6 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import jets.chatclient.gui.helpers.GpChatsManager;
+import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.P2PChatManager;
 import jets.chatclient.gui.models.P2PChatModel;
 
 import java.io.IOException;
@@ -35,8 +38,16 @@ public class P2PChatCardController {
     }
 
     public void setData(P2PChatModel chat){
+
         friendName.setText(chat.getFriendName());
-        friendImg.setFill(new ImagePattern(chat.getFriendImg()));
+        P2PChatManager p2PChatManager = ModelsFactory.getInstance().getP2PChatManager();
+
+        Circle c1 = p2PChatManager.getFriendImg(chat.getChatId());
+        friendImg.fillProperty().bind(c1.fillProperty());
+
+        Circle c2 = p2PChatManager.getFriendStatus(chat.getChatId());
+        friendStatus.fillProperty().bind(c2.fillProperty());
+
     }
 
     public AnchorPane getChatCard(){

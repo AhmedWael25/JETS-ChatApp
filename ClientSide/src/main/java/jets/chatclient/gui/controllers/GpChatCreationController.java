@@ -97,13 +97,18 @@ public class GpChatCreationController implements  Initializable {
             errorMsg = "";
         }else {
             errorLabel.setText("");
-            //TODO If Valid Creat Chat Through Services
             try {
 
                 GpChatUserDto dto = collectDataIntoDto();
                 ServicesFactory servicesFactory = ServicesFactory.getInstance();
                 gpChatService  = servicesFactory.getGpChatService();
                 gpChatService.createGroupChat(dto);
+
+                gpNameField.clear();
+                gpChatImg.setFill(new ImagePattern(new Image(defImg.toURI().toString())));
+                friendsListView.getSourceItems().addAll(userFriends);
+                friendsListView.getTargetItems().clear();
+
             } catch (IOException | NotBoundException e) {
                 e.printStackTrace();
             }

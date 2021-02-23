@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import commons.remotes.server.AddFriendServiceInt;
 import commons.remotes.server.InvitationServiceInt;
-import commons.sharedmodels.CurrentUserDto;
 import commons.sharedmodels.InvitationDto;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -16,11 +15,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
+import jets.chatclient.gui.helpers.ContactsManager;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
+import jets.chatclient.gui.models.ContactModel;
 import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.Invitation;
+import jets.chatclient.gui.models.guimodels.ContactViewCell;
 import jets.chatclient.gui.models.guimodels.InvitationViewCell;
 
 import java.net.URL;
@@ -38,6 +40,7 @@ public class ContactsController implements Initializable {
     @FXML
     public AnchorPane contactsScreenContainer;
     public Label feedbackLabel;
+    public ListView<ContactModel> contactsListView;
     @FXML
     private JFXButton sendInvitationBtn;
 
@@ -53,13 +56,15 @@ public class ContactsController implements Initializable {
     private AddFriendServiceInt addFriendService;
     private ModelsFactory modelsFactory = ModelsFactory.getInstance();
     private ObservableList<Invitation> invitations = FXCollections.observableArrayList();
+    private ObservableList<ContactModel> contacts = FXCollections.observableArrayList();
 
     private CurrentUserModel userModel ;
-
+    private ContactsManager contactsManager;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         userModel = ModelsFactory.getInstance().getCurrentUserModel();
+        contactsManager = ModelsFactory.getInstance().getContactsManager();
         System.out.println("Test Chat View initialized");
 
         //Initialize Services
@@ -71,6 +76,7 @@ public class ContactsController implements Initializable {
             addFriendService = servicesFactory.getAddFriendService();
 
             new Thread(fetchUserInvitations).start();
+            new Thread(fetchAlluserContacts).start();
 
         } catch (RemoteException | NotBoundException e) {
             e.printStackTrace();
@@ -87,7 +93,12 @@ public class ContactsController implements Initializable {
         new Thread(sendInvitation).start();
 
     }
-
+    public void addContactToList(ContactModel model){
+        Platform.runLater(() ->{
+            contacts.add(model);
+            contactsListView.setItems(contacts);
+        });
+    }
 
     public void addInvitationToList(InvitationDto invitationDto){
         new Thread(()->{
@@ -125,8 +136,21 @@ public class ContactsController implements Initializable {
 
 
     //================== RUNNABLES ===================
-    Runnable addInvitationToList = () -> {
+    Runnable fetchAlluserContacts = () -> {
+        try {
 
+            List<ContactModel> contactsList = DTOObjAdapter.convertDtoContactsList(addFriendService.fetchAllContactsByUserId(userModel.getPhoneNumber()));
+            contactsManager.addContacts(contactsList);
+            System.out.println(contactsList);
+
+            Platform.runLater(() -> {
+                contacts.addAll(contactsList);
+                contactsListView.setItems(contacts);
+                contactsListView.setCellFactory( param -> new ContactViewCell());
+            });
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     };
 
 
@@ -181,7 +205,6 @@ public class ContactsController implements Initializable {
     };
 
     Runnable fetchUserInvitations = () -> {
-
         List<Invitation> myInvitations = null;
         try {
             //TODO Should be Changed to Current User model ID(PHONE)
@@ -189,7 +212,6 @@ public class ContactsController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
         List<Invitation> finalMyInvitations = myInvitations;
         Platform.runLater(() ->{
             invitations.addAll(finalMyInvitations);
@@ -197,7 +219,6 @@ public class ContactsController implements Initializable {
             invitationsListView.setCellFactory(param  -> new InvitationViewCell());
         });
     };
-
 
     public void dumdum(ActionEvent actionEvent){
 

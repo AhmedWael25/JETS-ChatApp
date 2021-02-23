@@ -1,18 +1,33 @@
 package jets.chatclient.gui.models;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 
 public class P2PChatModel {
 
     private int chatId;
     private int friendStatus;
     private int friendAvailability;
-    private String msgTime;
     private String friendName;
     private  String friendId;
-    private String msgContent;
     private String chatStartDate;
     private Image friendImg;
+    Circle avatar = new Circle();
+    Circle status = new Circle();
+
+    public Circle getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Circle avatar) {
+        this.avatar = avatar;
+    }
+
+    public Circle getStatus() {
+        return status;
+    }
 
     public int getChatId() {
         return chatId;
@@ -36,6 +51,20 @@ public class P2PChatModel {
 
     public void setFriendStatus(int friendStatus) {
         this.friendStatus = friendStatus;
+        switch (friendStatus){
+            case 0:
+                status.setFill(Paint.valueOf("#abaaa7"));
+                break;
+            case 1:
+                status.setFill(Paint.valueOf("#14de4a"));
+                break;
+            case 2:
+                status.setFill(Paint.valueOf("#de1414"));
+                break;
+            case 3:
+                status.setFill(Paint.valueOf("#f59a40"));
+                break;
+        }
     }
 
     public int getFriendAvailability() {
@@ -46,28 +75,12 @@ public class P2PChatModel {
         this.friendAvailability = friendAvailability;
     }
 
-    public String getMsgTime() {
-        return msgTime;
-    }
-
-    public void setMsgTime(String msgTime) {
-        this.msgTime = msgTime;
-    }
-
     public String getFriendName() {
         return friendName;
     }
 
     public void setFriendName(String friendName) {
         this.friendName = friendName;
-    }
-
-    public String getMsgContent() {
-        return msgContent;
-    }
-
-    public void setMsgContent(String msgContent) {
-        this.msgContent = msgContent;
     }
 
     public String getChatStartDate() {
@@ -84,6 +97,7 @@ public class P2PChatModel {
 
     public void setFriendImg(Image friendImg) {
         this.friendImg = friendImg;
+        avatar.setFill(new ImagePattern(friendImg));
     }
 
     @Override
@@ -92,11 +106,9 @@ public class P2PChatModel {
                 "chatId=" + chatId +
                 ", friendStatus=" + friendStatus +
                 ", friendAvailability=" + friendAvailability +
-                ", msgTime='" + msgTime + '\'' +
                 ", friendName='" + friendName + '\'' +
-                ", msgContent='" + msgContent + '\'' +
                 ", chatStartDate='" + chatStartDate + '\'' +
-                ", friendImg=" + "friendImg" +
+                ", friendImg=" + friendImg +
                 '}';
     }
 }

@@ -64,6 +64,8 @@ public class FriendsDaoImpl  implements FriendsDao {
         return friends;
     }
 
+
+
     //TESTED ALL GOOD
     @Override
     public List<String> getAllFriendsIds(String userId) throws SQLException {
@@ -101,5 +103,17 @@ public class FriendsDaoImpl  implements FriendsDao {
             return  true;
         }
         return  false;
+    }
+
+    @Override
+    public List<DBUser> getAllContacts(String userId) throws SQLException {
+
+        List<DBUser> contacts = null;
+        List<String> friendIds = getAllFriendsIds(userId);
+
+        UserDao userDao = UserDaoImpl.getUserDaoInstance();
+        contacts = userDao.getUsersFromIds(friendIds);
+
+        return contacts;
     }
 }

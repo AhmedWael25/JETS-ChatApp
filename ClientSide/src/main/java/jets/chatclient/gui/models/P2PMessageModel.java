@@ -1,14 +1,16 @@
 package jets.chatclient.gui.models;
 
 
+import commons.sharedmodels.MsgType;
+
 public class P2PMessageModel {
 
+    private Integer chatId;
     private String senderId;
     private String receiverId;
     private String msgBody;
-    private String friendImg;
+    private MsgType msgType;
     private String msgTime;
-
 
     private String fontStyle;
     private String fontColor;
@@ -16,6 +18,14 @@ public class P2PMessageModel {
     private Boolean bold;
     private Boolean italic;
     private Boolean underline;
+
+    public Integer getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Integer chatId) {
+        this.chatId = chatId;
+    }
 
     public String getSenderId() {
         return senderId;
@@ -41,12 +51,12 @@ public class P2PMessageModel {
         this.msgBody = msgBody;
     }
 
-    public String getFriendImg() {
-        return friendImg;
+    public MsgType getMsgType() {
+        return msgType;
     }
 
-    public void setFriendImg(String friendImg) {
-        this.friendImg = friendImg;
+    public void setMsgType(MsgType msgType) {
+        this.msgType = msgType;
     }
 
     public String getMsgTime() {
@@ -108,10 +118,11 @@ public class P2PMessageModel {
     @Override
     public String toString() {
         return "P2PMessageModel{" +
-                "senderId='" + senderId + '\'' +
+                "chatId=" + chatId +
+                ", senderId='" + senderId + '\'' +
                 ", receiverId='" + receiverId + '\'' +
                 ", msgBody='" + msgBody + '\'' +
-                ", friendImg='" + "img" + '\'' +
+                ", msgType=" + msgType +
                 ", msgTime='" + msgTime + '\'' +
                 ", fontStyle='" + fontStyle + '\'' +
                 ", fontColor='" + fontColor + '\'' +

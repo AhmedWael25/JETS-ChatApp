@@ -200,6 +200,8 @@ public class UserDaoImpl implements UserDao {
         user.setGender(rs.getString("gender"));
         user.setImgEncoded(rs.getString("image"));
         user.setCountry(rs.getString("country"));
+        user.setUserAvail(rs.getInt("availability"));
+        user.setUserStatus(rs.getInt("status"));
         return  user;
     }
 
@@ -239,8 +241,9 @@ public class UserDaoImpl implements UserDao {
         pd.setString(5,dbUser.getCountry());
         pd.setString(6,dbUser.getDob());
         pd.setString(7,dbUser.getImgEncoded());
-        pd.setInt(8,dbUser.getUserStatus());
-        pd.setInt(9,dbUser.getUserAvail());
+        //TODO CHnaged to be def of 0
+        pd.setInt(8,0);
+        pd.setInt(9,0);
 
         int rowCount = pd.executeUpdate();
         if (rowCount == 1){
@@ -404,6 +407,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Integer getUserStatus(String userId) throws SQLException {
+
         Integer status = 0;
 
         if(!isUserExist(userId)) return status;
@@ -412,12 +416,15 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement pd = conn.prepareStatement(query,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
+
         pd.setString(1,userId);
         ResultSet rs = pd.executeQuery();
+
         while (rs.next()){
             status = rs.getInt("status");
         }
-        return  status;
+
+        return status;
     }
 
     @Override
@@ -482,9 +489,40 @@ public class UserDaoImpl implements UserDao {
         if (rowCount == 1){
             pd.close();
             System.out.println("Database updated successfully.");
+            System.out.println("status is " + userStatus);
             return  true;
         }
         pd.close();
         return false;
     }
+    @Override
+    public boolean updateDBUserAvailability(int userAvailability, String userId) throws SQLException {
+        //Check if the updated phone number is valid or not
+        boolean isUserExist = isUserExist(userId);
+        if (!isUserExist){
+            System.out.println("User does not exist.");
+            return false;
+        }
+        //The Query Statement
+        String query = "UPDATE user SET availability=? WHERE phone=? ";
+
+        //Set the prepared statement
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setInt(1, userAvailability);
+
+        pd.setString(2, userId);
+
+        //Execute, check the result and return
+        int rowCount = pd.executeUpdate();
+        if (rowCount == 1){
+            pd.close();
+            System.out.println("Database updated successfully.");
+            return  true;
+        }
+        pd.close();
+        return false;
+    }
+
 }

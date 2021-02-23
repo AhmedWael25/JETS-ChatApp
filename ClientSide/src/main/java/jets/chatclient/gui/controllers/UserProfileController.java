@@ -218,15 +218,16 @@ public class UserProfileController {
                 System.out.println("You have not choose any file!");
                 return;
             }
+
             // Encode Image to Send It
             String encodedImage = ImageEncoderDecoder.getEncodedImage(newImageFile);
             // Call server service and send your photo
             boolean updateState = userProfileService.updateProfilePic(encodedImage, currentUserModel.getPhoneNumber());
             //check the returned boolean and update your user model depends on it.
+            System.out.println(updateState);
             if (updateState) {
                 System.out.println("Photo updated Successfully.");
                 setProfilePic(newImageFile.getCanonicalPath());
-
             }
         } catch (RemoteException remEx) {
             System.out.println(remEx.getMessage());

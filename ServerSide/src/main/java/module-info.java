@@ -23,6 +23,7 @@ module jets.chatserver {
     requires org.kordamp.ikonli.materialdesign2;
 
     requires ChatAppCommons;
+    requires ab;
 
     opens jets.chatserver.gui.controllers to javafx.fxml;
 

@@ -1,7 +1,9 @@
 package jets.chatclient.gui.models.guimodels;
 
+import commons.sharedmodels.MsgType;
 import javafx.scene.control.ListCell;
 import jets.chatclient.gui.controllers.GpMessageController;
+import jets.chatclient.gui.controllers.GpMessageFileController;
 import jets.chatclient.gui.models.GpMessageModel;
 
 public class GPChatMsgViewCell extends ListCell<GpMessageModel> {
@@ -14,9 +16,16 @@ public class GPChatMsgViewCell extends ListCell<GpMessageModel> {
             setText(null);
             setGraphic(null);
         }else{
-            GpMessageController gpMessageController = new GpMessageController();
-            gpMessageController.setData(item);
-            setGraphic(gpMessageController.getMsgCard());
+
+            if(item.getMsgType() == MsgType.TEXT){
+                GpMessageController gpMessageController = new GpMessageController();
+                gpMessageController.setData(item);
+                setGraphic(gpMessageController.getMsgCard());
+            }else {
+                GpMessageFileController gpMessageFileController = new GpMessageFileController();
+                gpMessageFileController.setData(item);
+                setGraphic(gpMessageFileController.getMsgCard());
+            }
         }
     }
 }

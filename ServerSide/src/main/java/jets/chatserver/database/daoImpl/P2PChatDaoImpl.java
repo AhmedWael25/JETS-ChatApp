@@ -1,13 +1,10 @@
 package jets.chatserver.database.daoImpl;
 
 import jets.chatserver.DBModels.DBP2PChat;
-import jets.chatserver.DBModels.DBUser;
 import jets.chatserver.database.DataSourceFactory;
 import jets.chatserver.database.dao.P2PChatDao;
 
 import javax.sql.DataSource;
-import javax.xml.transform.Result;
-import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -93,7 +90,20 @@ public class P2PChatDaoImpl implements P2PChatDao {
         ResultSet rs = pd.executeQuery();
 
         while(rs.next()){
-            DBP2PChat chat = getP2PChatFromRs(rs);
+            DBP2PChat chat = getP2PChatFromRsUser1(rs);
+            dbp2PChats.add(chat);
+        }
+
+         query = "SELECT * FROM p2pchats WHERE part2_id = ?";
+         pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        pd.setString(1,userId);
+
+        rs = pd.executeQuery();
+
+        while(rs.next()){
+            DBP2PChat chat = getP2PChatFromRsUser2(rs);
             dbp2PChats.add(chat);
         }
         pd.close();
@@ -111,9 +121,19 @@ public class P2PChatDaoImpl implements P2PChatDao {
         pd.setString(2,participant2);
 
         ResultSet rs = pd.executeQuery();
-        while (rs.next()){
-            dbp2PChat = getP2PChatFromRs(rs);
+       if(rs.next()) {
+           dbp2PChat = getP2PChatFromRsUser1(rs);
+       }else{
+            query = "SELECT * FROM p2pchats WHERE part1_id = ? AND part2_id = ?";
+            pd = conn.prepareStatement(query,
+                   ResultSet.TYPE_SCROLL_SENSITIVE,
+                   ResultSet.CONCUR_UPDATABLE);
+           pd.setString(1,participant2);
+           pd.setString(2,participant1);
+           rs = pd.executeQuery();
+           if(rs.next()) dbp2PChat = getP2PChatFromRsUser2(rs);
         }
+        pd.close();
         return dbp2PChat;
     }
 
@@ -131,16 +151,12 @@ public class P2PChatDaoImpl implements P2PChatDao {
         pd.setString(2,participant2);
         pd.executeUpdate();
 
-        pd.setString(1,participant2);
-        pd.setString(2,participant1);
-        pd.executeUpdate();
-
         pd.close();
         return true;
     }
 
 
-    private DBP2PChat getP2PChatFromRs(ResultSet rs) throws SQLException {
+    private DBP2PChat getP2PChatFromRsUser1(ResultSet rs) throws SQLException {
         DBP2PChat dbp2PChat = new DBP2PChat();
         dbp2PChat.setChatId(rs.getInt("chat_id"));
         dbp2PChat.setFirstParticipant(rs.getString("part1_id"));
@@ -148,6 +164,19 @@ public class P2PChatDaoImpl implements P2PChatDao {
         dbp2PChat.setChatStartDate(rs.getString("startdate"));
         return dbp2PChat;
     }
+
+
+    private DBP2PChat getP2PChatFromRsUser2(ResultSet rs) throws SQLException {
+        DBP2PChat dbp2PChat = new DBP2PChat();
+        dbp2PChat.setChatId(rs.getInt("chat_id"));
+        dbp2PChat.setFirstParticipant(rs.getString("part2_id"));
+        dbp2PChat.setSecondParticipant(rs.getString("part1_id"));
+        dbp2PChat.setChatStartDate(rs.getString("startdate"));
+        return dbp2PChat;
+    }
+
+
+
 
 
 }
