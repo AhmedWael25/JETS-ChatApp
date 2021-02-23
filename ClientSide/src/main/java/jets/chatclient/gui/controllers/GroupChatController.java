@@ -314,7 +314,6 @@ public class GroupChatController implements Initializable {
         uploadFilesBtn.setDisable(status);
     }
 
-
     public void exportHTML(ActionEvent actionEvent) {
         List<GpMessageModel> messageList = gpChatsManager.getMsgList(gpChatsManager.getActiveChat());
         ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();

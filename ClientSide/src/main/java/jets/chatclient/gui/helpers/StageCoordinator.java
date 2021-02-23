@@ -170,10 +170,10 @@ public class StageCoordinator {
         flag=0;
         primaryStage.setHeight(600);
         primaryStage.setResizable(false);
-
     }
 
     public  void switchToSplash(){
+        flag=0;
         if (primaryStage == null) {
             throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
         }

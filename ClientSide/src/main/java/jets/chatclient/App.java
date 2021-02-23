@@ -1,5 +1,6 @@
 package jets.chatclient;
 
+import commons.remotes.client.ClientInterface;
 import commons.remotes.server.RegisteringClientInt;
 import commons.remotes.server.SignInServiceInt;
 import commons.sharedmodels.CurrentUserDto;
@@ -30,7 +31,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        new LivenessChecker().initLivenessChecker();
+
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         stageCoordinator.initStage(primaryStage);
         stageCoordinator.switchToMainScene();
@@ -58,13 +59,10 @@ public class App extends Application {
                     // user password or userPhone has been changed on config file
                     stageCoordinator.switchToMainScene();
                 }
-
              } catch (RemoteException | NotBoundException e) {
                 System.out.println("can't find Service");
                 e.printStackTrace();
             }
-
-
         }
 
         primaryStage.setTitle("Connect ChatApp");
@@ -75,10 +73,12 @@ public class App extends Application {
     }
 
 
-
     @Override
     public void init() {
         // Initialize Database & Network Connections
+        ClientInterface xd = ModelsFactory.getInstance().getClient();
+        new LivenessChecker().initLivenessChecker();
+
     }
 
     @Override

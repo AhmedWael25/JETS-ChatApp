@@ -102,8 +102,8 @@ public class LoginController implements Initializable {
             }
 
         } catch (RemoteException remoteException) {
-            System.out.println("can't check credentials");
-            remoteException.printStackTrace();
+            //TODO server down label
+            System.out.println("Server Down");
         }
         //TODO change the flow, passoword>> chatDashboards
 

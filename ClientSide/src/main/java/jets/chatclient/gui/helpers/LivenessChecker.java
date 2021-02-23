@@ -1,6 +1,7 @@
 package jets.chatclient.gui.helpers;
 
 import commons.remotes.server.ClientLivenessServiceInt;
+import commons.remotes.server.RegisteringClientInt;
 import javafx.application.Platform;
 
 import java.rmi.NotBoundException;
@@ -32,8 +33,14 @@ public class LivenessChecker {
             @Override
             public void run() {
                 try {
-                    if(serverDown[0] ==true) ServicesFactory.getInstance().reInitServiceFactory();
+                    if(serverDown[0] ==true){
+//                        RegisteringClientInt registeringClientInt = ServicesFactory.getInstance().getRegisterClientService();
+//                        registeringClientInt.registerClient(ModelsFactory.getInstance().getClient(),ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
+                        ServicesFactory.getInstance().reInitServiceFactory();
+                    }
 
+//                    RegisteringClientInt registeringClientInt = ServicesFactory.getInstance().getRegisterClientService();
+//                    registeringClientInt.registerClient(ModelsFactory.getInstance().getClient(),ModelsFactory.getInstance().getCurrentUserModel().getPhoneNumber());
                      livenessService.checkServerLiveness();
                     //If it reached here, then it's a normal operation
                     serverDown[0] = false;
@@ -46,8 +53,8 @@ public class LivenessChecker {
                         });
                         switchedToScene[0] = true;
                     }
-                } catch (RemoteException e) {
-                    e.printStackTrace();
+                } catch (RemoteException  e) {
+//                    e.printStackTrace();
                     serverDown[0] = true;
                         System.out.println("IN CTH");
                         Platform.runLater(() ->{

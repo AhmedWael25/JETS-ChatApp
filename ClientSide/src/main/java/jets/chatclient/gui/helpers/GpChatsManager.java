@@ -49,7 +49,6 @@ public class GpChatsManager {
         });
     }
 
-
     public  void updateParticipantName(String  id, String name){
         chatsMap.entrySet().forEach(entrySet -> {
             entrySet.getValue().getGpParticipants()
