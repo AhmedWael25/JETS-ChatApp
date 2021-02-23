@@ -171,20 +171,7 @@ public class ChatDashBoardController implements Initializable {
 
     @FXML
     private void exitApp(){
-      /* try {
-          String userPassword =  registeringClientService.getEncryptedPassword(currentUserModel.getPhoneNumber());
-            System.out.println(userPassword);
-          String userPhone = currentUserModel.getPhoneNumber();
-            UserCredentials userCredentials = new UserCredentials(userPhone,userPassword);
-          ConfigManager configManager = new ConfigManager();
-          configManager.createConfigFile(userCredentials);
-          registeringClientService.disconnectClient(userPhone);
-            App.closeApp();
-            Runtime rt = Runtime.getRuntime();
-            rt.exit(0);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        } */
+
         ExitFromApp.ExitApplication();
     }
 
