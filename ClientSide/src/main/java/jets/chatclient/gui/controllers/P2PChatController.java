@@ -177,11 +177,7 @@ public class P2PChatController implements Initializable {
             messages.add(msgModel);
             msgListView.setItems(messages);
             msgListView.setCellFactory(param -> new P2PMsgViewCell());
-//            int index = messages.size();
-//            msgListView.scrollTo(index);
-//            System.out.println("MSG SENT TO UT");
-//            System.out.println(activeP2PChatId);
-//            System.out.println(p2pChatManager.getActiveP2PChat());
+
 
         });
     }
