@@ -78,7 +78,6 @@ public class App extends Application {
         // Initialize Database & Network Connections
         ClientInterface xd = ModelsFactory.getInstance().getClient();
         new LivenessChecker().initLivenessChecker();
-
     }
 
     @Override

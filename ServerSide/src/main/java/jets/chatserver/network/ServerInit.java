@@ -42,6 +42,7 @@ public class ServerInit   {
             reg.rebind("UserProfileService", new UserProfileServiceImpl(currentConnectedUsers));
             reg.rebind("UpdateStatusService", new UpdateStatusService(currentConnectedUsers));
             reg.rebind("ClientLivenessService", new ClientLivenessService());
+            reg.rebind("FileDownloadService", new FileDownloadServiceImpl());
             System.out.println("Server Up And Running");
             System.out.println("=================================== TESTING AREA ==================");
 

@@ -45,7 +45,6 @@ public class LivenessChecker {
                     //If it reached here, then it's a normal operation
                     serverDown[0] = false;
 
-                    System.out.println("In Try");
                     if(serverDown[0] == false && switchedToScene[0] == false){
                         System.out.println("In Finally");
                         Platform.runLater(() ->{

@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.P2PChatController">
+<AnchorPane fx:id="P2PChatContainer" prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.P2PChatController">
    <children>
       <GridPane prefHeight="434.0" prefWidth="583.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>

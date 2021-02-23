@@ -7,7 +7,6 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="56.0" prefWidth="239.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane layoutX="1.0" layoutY="5.0" prefHeight="42.0" prefWidth="46.0">
@@ -24,9 +23,9 @@
             </Circle>
          </children>
       </StackPane>
-      <Label fx:id="friendName" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="56.0" layoutY="8.0" prefHeight="40.0" prefWidth="171.0" style="-fx-background-color: #587dc5; -fx-background-radius: 20px;" text="Name" textFill="#304269">
+      <Label fx:id="friendName" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="56.0" layoutY="8.0" prefHeight="40.0" prefWidth="171.0" text="Name" textFill="#304269">
          <font>
-            <Font name="Britannic Bold" size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
    </children>

@@ -35,7 +35,6 @@ public class ClientLivenessService extends UnicastRemoteObject implements Client
         scheduledService.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                System.out.println("From LivenessService");
                 Iterator<Map.Entry<String, ClientInterface>> iter = currentConnectedUsers.entrySet().iterator();
                 while (iter.hasNext()){
                     Map.Entry<String,ClientInterface> entry = iter.next();
