@@ -11,18 +11,10 @@
 
 
     <repositories>
-
-        <repository>
-            <id>Central</id>
-            <name>Central Repository</name>
-            <url>https://repo1.maven.org/maven2/</url>
-        </repository>
-
         <repository>
             <id>JCenter</id>
             <url>https://jcenter.bintray.com</url>
         </repository>
-
     </repositories>
 
     <dependencies>
@@ -39,8 +31,6 @@
         </dependency>
 
     </dependencies>
-
-
 
     <build>
         <plugins>

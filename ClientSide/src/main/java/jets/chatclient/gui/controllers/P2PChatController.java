@@ -105,18 +105,10 @@ public class P2PChatController implements Initializable {
     public void sendMessage(ActionEvent actionEvent){
         if(typingArea.getText().equals("")) return;
         new Thread(() -> {
-            System.out.println(activeP2PChatId);
-            System.out.println(p2pChatManager.getActiveP2PChat());
-
 
             P2PMessageModel msgModel = createMsgModel();
-            // sent Message through network
-            try {
-                p2pChatService.sendMessage(DTOObjAdapter.convertObjToDto(msgModel));
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
             p2pChatManager.addMsg(msgModel);
+
             Platform.runLater(()->{
                 messages.add(msgModel);
                 msgListView.setItems(messages);
@@ -124,6 +116,15 @@ public class P2PChatController implements Initializable {
                 int index = messages.size();
                 msgListView.scrollTo(index);
             });
+
+            // sent Message through network
+            try {
+                p2pChatService.sendMessage(DTOObjAdapter.convertObjToDto(msgModel));
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+
+
         }).start();
     }
 

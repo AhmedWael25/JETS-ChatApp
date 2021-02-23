@@ -83,7 +83,7 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
                     msgDto.setReceiverId(senderId);
                     msgDto.setSenderId(receiverId);
 
-                    new Thread().sleep(3000);
+                    new Thread().sleep(500);
                     receiverInterface.sendNewP2PMessageToUser(msgDto);
                     senderInterface.sendNewP2PMessageToUser(msgDto);
                 }
