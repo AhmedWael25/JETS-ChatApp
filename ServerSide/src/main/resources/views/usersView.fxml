@@ -4,37 +4,43 @@
 <?import com.jfoenix.controls.JFXTreeTableColumn?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane fx:id="root" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatserver.gui.controllers.UsersController">
-    <VBox prefHeight="500.0" prefWidth="800.0" spacing="10">
-        <children>
-         <HBox alignment="CENTER">
-            <children>
-               <Label styleClass="title-label" text="DataBase Users" />
-               <Label fx:id="treeTableViewCount" alignment="CENTER_RIGHT" minWidth="80" styleClass="title-label" textAlignment="RIGHT" />
-               <StackPane HBox.hgrow="ALWAYS">
+
+<AnchorPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatserver.gui.controllers.UsersController">
+   <children>
+      <StackPane fx:id="root" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <VBox prefHeight="500.0" prefWidth="800.0" spacing="10">
+              <children>
+               <HBox alignment="CENTER">
                   <children>
-                     <StackPane maxWidth="200" StackPane.alignment="CENTER_RIGHT">
+                     <Label styleClass="title-label" text="DataBase Users" />
+                     <Label fx:id="treeTableViewCount" alignment="CENTER_RIGHT" minWidth="80" styleClass="title-label" textAlignment="RIGHT" />
+                     <StackPane HBox.hgrow="ALWAYS">
                         <children>
-                           <JFXTextField fx:id="searchField" promptText="Search..." />
+                           <StackPane maxWidth="200" StackPane.alignment="CENTER_RIGHT">
+                              <children>
+                                 <JFXTextField fx:id="searchField" promptText="Search..." />
+                              </children>
+                           </StackPane>
                         </children>
                      </StackPane>
                   </children>
-               </StackPane>
-            </children>
-         </HBox>
-            <JFXTreeTableView fx:id="treeTableView">
-                <columns>
-                    <JFXTreeTableColumn fx:id="phoneEditableColumn" minWidth="133.0" prefWidth="120.0" resizable="false" text="Phone" />
-                    <JFXTreeTableColumn fx:id="nameEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Name" />
-                    <JFXTreeTableColumn fx:id="genderEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Gender" />
-               <JFXTreeTableColumn fx:id="emailEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Email" />
-               <JFXTreeTableColumn fx:id="countryEditableColumn" minWidth="133" prefWidth="120.0" text="Country" />
-                </columns>
-            </JFXTreeTableView>
-        </children>
-    </VBox>
-</StackPane>
+               </HBox>
+                  <JFXTreeTableView fx:id="treeTableView">
+                      <columns>
+                          <JFXTreeTableColumn fx:id="phoneEditableColumn" minWidth="133.0" prefWidth="120.0" resizable="false" text="Phone" />
+                          <JFXTreeTableColumn fx:id="nameEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Name" />
+                          <JFXTreeTableColumn fx:id="genderEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Gender" />
+                     <JFXTreeTableColumn fx:id="emailEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Email" />
+                     <JFXTreeTableColumn fx:id="countryEditableColumn" minWidth="133" prefWidth="120.0" text="Country" />
+                      </columns>
+                  </JFXTreeTableView>
+              </children>
+          </VBox>
+      </StackPane>
+   </children>
+</AnchorPane>

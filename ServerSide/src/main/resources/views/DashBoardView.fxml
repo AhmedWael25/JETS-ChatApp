@@ -18,7 +18,7 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatserver.gui.controllers.DashBoardController">
    <children>
-      <VBox prefHeight="487.0" prefWidth="675.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <effect>
             <DropShadow />
          </effect>
@@ -65,7 +65,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <VBox maxWidth="-Infinity" prefHeight="500.0" prefWidth="199.0" style="-fx-background-color: #304269; -fx-border-color: white; -fx-border-width: 0px 2px 0px 0px;">
+                  <VBox maxWidth="-Infinity" minWidth="200.0" prefHeight="500.0" prefWidth="199.0" style="-fx-background-color: #304269; -fx-border-color: white; -fx-border-width: 0px 2px 0px 0px;">
                      <children>
                         <HBox prefHeight="68.0" prefWidth="209.0" style="-fx-background-color: white; -fx-border-image-width: 2px 2px 0px 0px;">
                            <padding>
@@ -136,7 +136,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <BorderPane fx:id="scieneContainer" prefHeight="500.0" prefWidth="600.0" />
+                  <BorderPane fx:id="scieneContainer" />
                </children>
             </HBox>
          </children>
