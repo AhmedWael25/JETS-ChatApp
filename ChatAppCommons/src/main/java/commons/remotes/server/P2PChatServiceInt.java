@@ -5,6 +5,7 @@ import commons.sharedmodels.P2PChatDto;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface P2PChatServiceInt extends Remote {

@@ -27,6 +27,7 @@ import jets.chatclient.gui.models.guimodels.P2PMsgViewCell;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 

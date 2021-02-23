@@ -6,8 +6,11 @@ import commons.sharedmodels.P2PMessageDto;
 import commons.sharedmodels.P2PChatDto;
 import jets.chatserver.DBModels.DBP2PChat;
 import jets.chatserver.database.dao.P2PChatDao;
+import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.P2PChatDaoImpl;
-import jets.chatserver.gui.helpers.chatBotManager;
+import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.gui.helpers.ChatBotManager;
+import jets.chatserver.gui.helpers.ModelsFactory;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 
 import java.rmi.RemoteException;
@@ -21,6 +24,7 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
 
     Map<String, ClientInterface> currentConnectedUsers = null;
     P2PChatDao chatDao = null;
+    UserDao userDao = null;
 
     protected P2PChatServiceImpl() throws RemoteException {
     }
@@ -28,6 +32,11 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
         super();
         this.currentConnectedUsers = currentConnectedUsers;
 
+        try {
+            userDao = UserDaoImpl.getUserDaoInstance();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override
@@ -35,7 +44,7 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
 
         List<P2PChatDto> p2pChatsDtos = null;
         try {
-            P2PChatDao  chatDao = P2PChatDaoImpl.getP2PChatDaoInstance();
+            P2PChatDao chatDao = P2PChatDaoImpl.getP2PChatDaoInstance();
             List<DBP2PChat> DBp2pChats = chatDao.fetchAllChatsByUserId(userId);
 
             p2pChatsDtos =  DBp2pChats.parallelStream().map(EntityDTOAdapter::convertEntityToDto)
@@ -50,21 +59,39 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
     @Override
     public boolean sendMessage(P2PMessageDto msgDto) throws RemoteException {
 
-        String receiverId = msgDto.getReceiverId();
+        ClientInterface receiverInterface = currentConnectedUsers.get(msgDto.getReceiverId());
 
-        ClientInterface clientInterface = currentConnectedUsers.get(receiverId);
-        if(clientInterface != null) {
-                //Check if user is busy
-            chatBotManager botManager =  new chatBotManager();
+        try {
+            // check user availability
+            if (receiverInterface != null) {
 
-            String botMsg = botManager.sendMsgToBots(msgDto.getMsgBody());
-            msgDto.setMsgBody("Bot: " + botMsg);
+                receiverInterface.sendNewP2PMessageToUser(msgDto);
 
-            clientInterface.sendNewP2PMessageToUser(msgDto);
+                //Check if the user is busy to call chatBot
+                if (userDao.getUserStatus(msgDto.getReceiverId()) == 2) {
 
+                    ClientInterface senderInterface = currentConnectedUsers.get(msgDto.getSenderId());
+
+                    // init chatBot
+                    ChatBotManager botManager = ModelsFactory.getInstance().getChatBotManager();
+                    String botMsg = botManager.sendMsgToBots(msgDto.getMsgBody());
+                    msgDto.setMsgBody("Bot: " + botMsg);
+
+                    //swap
+                    String senderId = msgDto.getSenderId();
+                    String receiverId = msgDto.getReceiverId();
+                    msgDto.setReceiverId(senderId);
+                    msgDto.setSenderId(receiverId);
+
+                    new Thread().sleep(3000);
+                    receiverInterface.sendNewP2PMessageToUser(msgDto);
+                    senderInterface.sendNewP2PMessageToUser(msgDto);
+                }
+            }
+        } catch (SQLException | InterruptedException e) {
+            e.printStackTrace();
         }
 
         return true;
     }
-
 }

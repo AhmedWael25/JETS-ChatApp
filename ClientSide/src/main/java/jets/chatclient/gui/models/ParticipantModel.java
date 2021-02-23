@@ -17,7 +17,7 @@ public class ParticipantModel {
         return pStatus;
     }
 
-    public void setpStatus(Circle pStatus) {
+    public void setStatus(Circle pStatus) {
         this.pStatus = pStatus;
     }
 

@@ -386,6 +386,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Integer getUserStatus(String userId) throws SQLException {
+
         Integer status = 0;
 
         if(!isUserExist(userId)) return status;
@@ -394,12 +395,15 @@ public class UserDaoImpl implements UserDao {
         PreparedStatement pd = conn.prepareStatement(query,
                 ResultSet.TYPE_SCROLL_SENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
+
         pd.setString(1,userId);
         ResultSet rs = pd.executeQuery();
+
         while (rs.next()){
             status = rs.getInt("status");
         }
-        return  status;
+
+        return status;
     }
 
 
@@ -427,6 +431,7 @@ public class UserDaoImpl implements UserDao {
         if (rowCount == 1){
             pd.close();
             System.out.println("Database updated successfully.");
+            System.out.println("status is " + userStatus);
             return  true;
         }
         pd.close();
