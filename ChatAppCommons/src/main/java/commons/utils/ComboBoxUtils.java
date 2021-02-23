@@ -9,19 +9,9 @@ import java.util.List;
 public class ComboBoxUtils {
     public static void fillComboBox(JFXComboBox<String> comboBox , List<String> values){
 
-//        values.stream().forEach(o -> comboBox.getItems().add(new Label(o.toString())));
         values.stream().forEach(o -> comboBox.getItems().add(o));
         comboBox.setEditable(true);
-//        comboBox.setConverter(new StringConverter<Label>() {
-//            @Override
-//            public String toString(Label object) {
-//                return object==null?"": object.getText();
-//            }
-//            @Override
-//            public Label fromString(String string) {
-//                return new Label(string);
-//            }
-//        });
+
     }
 
     public static void makeComboSearchable(JFXComboBox<String> comboBox){

@@ -36,24 +36,7 @@ public class Validators {
     //required Msg
     final static String requiredMsg = "Required";
 
-//TODO handle this shit
-    public static void buttonValidate(JFXButton btn, Parent... fields) {
-        btn.setDisable(true);
-        for (Parent field : fields) {
-            if (field instanceof JFXComboBox) {
-                btn.setDisable(((JFXComboBox<String>) field).validate() ? false : true);
-            }
-            if (field instanceof JFXDatePicker) {
-                btn.setDisable(((JFXDatePicker) field).validate() ? false : true);
-            }
-            if (field instanceof JFXTextField) {
-                btn.setDisable(((JFXTextField) field).validate() ? false : true);
-            }
-            if (field instanceof JFXPasswordField) {
-                btn.setDisable(((JFXPasswordField) field).validate() ? false : true);
-            }
-        }
-    }
+
 
 
     public static JFXTextField addNameValidator(JFXTextField field, FontIcon fi) {

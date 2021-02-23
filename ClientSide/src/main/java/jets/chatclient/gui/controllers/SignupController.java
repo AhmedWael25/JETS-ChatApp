@@ -94,7 +94,6 @@ public class SignupController implements Initializable {
         ComboBoxUtils.makeComboSearchable(cbCountry);
 
 
-        Validators.buttonValidate(btnRegister,tfDisplayname,tfPhonenumber,cbCountry,cbGender,dpBirthdate);
 
         Validators.addNameValidator(tfDisplayname, fiDisplayName);
         Validators.addPhoneNumberValidator(tfPhonenumber, fiPhoneNumber);
@@ -115,6 +114,8 @@ public class SignupController implements Initializable {
 
 
     public void handleSignupBtnClick(ActionEvent e) {
+        if (!validate())
+            return;
         User user;
         try {
 
@@ -196,6 +197,9 @@ public class SignupController implements Initializable {
 
         return user;
 
+    }
+    boolean validate(){
+       return tfPhonenumber.validate()&tfDisplayname.validate()&cbCountry.validate()&cbGender.validate()&pfPassword.validate();
     }
 }
 

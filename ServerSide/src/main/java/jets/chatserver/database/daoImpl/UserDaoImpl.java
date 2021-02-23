@@ -1,6 +1,7 @@
 package jets.chatserver.database.daoImpl;
 
 import jets.chatserver.DBModels.DBUserCredintials;
+import jets.chatserver.DBModels.UserData;
 import jets.chatserver.database.DataSourceFactory;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.DBModels.DBUser;
@@ -103,6 +104,28 @@ public class UserDaoImpl implements UserDao {
 
         while (rs.next()){
             DBUser user = getUserFromRs(rs);
+            users.add(user);
+        }
+        pd.close();
+        return users;
+    }
+
+    public List<UserData> getUsersforDashBoard() throws SQLException {
+        List<UserData> users = new ArrayList<>();
+        String query = "SELECT * FROM user";
+
+        PreparedStatement pd = conn.prepareStatement(query,
+                ResultSet.TYPE_SCROLL_SENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
+        ResultSet rs = pd.executeQuery();
+
+        while (rs.next()){
+            UserData user = new UserData();
+            user.setPhone(rs.getString("phone"));
+            user.setName(rs.getString("name"));
+            user.setEmail(rs.getString("email"));
+            user.setGender(rs.getString("gender"));
+            user.setCountry(rs.getString("country"));
             users.add(user);
         }
         pd.close();

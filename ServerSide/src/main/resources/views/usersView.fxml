@@ -1,8 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableColumn?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatserver.gui.controllers.UsersController">
-
-</AnchorPane>
+<StackPane fx:id="root" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatserver.gui.controllers.UsersController">
+    <VBox prefHeight="500.0" prefWidth="800.0" spacing="10">
+        <children>
+         <HBox alignment="CENTER">
+            <children>
+               <Label styleClass="title-label" text="DataBase Users" />
+               <Label fx:id="treeTableViewCount" alignment="CENTER_RIGHT" minWidth="80" styleClass="title-label" textAlignment="RIGHT" />
+               <StackPane HBox.hgrow="ALWAYS">
+                  <children>
+                     <StackPane maxWidth="200" StackPane.alignment="CENTER_RIGHT">
+                        <children>
+                           <JFXTextField fx:id="searchField" promptText="Search..." />
+                        </children>
+                     </StackPane>
+                  </children>
+               </StackPane>
+            </children>
+         </HBox>
+            <JFXTreeTableView fx:id="treeTableView">
+                <columns>
+                    <JFXTreeTableColumn fx:id="phoneEditableColumn" minWidth="133.0" prefWidth="120.0" resizable="false" text="Phone" />
+                    <JFXTreeTableColumn fx:id="nameEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Name" />
+                    <JFXTreeTableColumn fx:id="genderEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Gender" />
+               <JFXTreeTableColumn fx:id="emailEditableColumn" minWidth="133" prefWidth="120.0" resizable="false" text="Email" />
+               <JFXTreeTableColumn fx:id="countryEditableColumn" minWidth="133" prefWidth="120.0" text="Country" />
+                </columns>
+            </JFXTreeTableView>
+        </children>
+    </VBox>
+</StackPane>

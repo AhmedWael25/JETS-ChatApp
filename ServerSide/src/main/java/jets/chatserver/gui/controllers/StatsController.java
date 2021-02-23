@@ -17,6 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 import java.net.URL;
 import java.sql.SQLException;
@@ -58,7 +59,7 @@ public class StatsController implements Initializable {
         timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (now > lastTimerCall + 2_000_000_000L) {
+                if (now > lastTimerCall + 1_000_000_000L) {
                     try {
                         countryusers = UserDaoImpl.getUserDaoInstance().getUsersperCounry();
                         males = UserDaoImpl.getUserDaoInstance().getGenderCount("male");
@@ -97,6 +98,7 @@ public class StatsController implements Initializable {
                 .animated(true)
                 .smoothing(false)
                 .backgroundColor(Tile.GRAY)
+                .foregroundColor(Tile.DARK_BLUE)
                 .build();
 
 
@@ -105,6 +107,8 @@ public class StatsController implements Initializable {
                 .skinType(Tile.SkinType.CUSTOM)
                 .prefSize(300, 250)
                 .title("Users Per Country")
+                .backgroundColor(Tile.GRAY)
+                .foregroundColor(Tile.DARK_BLUE)
                 .animated(true)
                 .build();
 
@@ -115,6 +119,8 @@ public class StatsController implements Initializable {
                 .text("this is number of males/females")
                 .animated(true)
                 .textVisible(true)
+                .backgroundColor(Tile.GRAY)
+                .foregroundColor(Tile.DARK_BLUE)
                 .chartData(malesData, femalesData)
                 .build();
 
@@ -125,6 +131,8 @@ public class StatsController implements Initializable {
                 .text("this is number of online/offline Users.")
                 .animated(true)
                 .textVisible(true)
+                .backgroundColor(Color.GRAY)
+                .foregroundColor(Tile.DARK_BLUE)
                 .chartData(onlineUsersData, offlineUsersData)
                 .build();
 
@@ -143,11 +151,21 @@ public class StatsController implements Initializable {
 
         XYChart.Data value;
         Map.Entry<String, Integer> curr;
+        int i =0;
+        int countOthers=0;
         while (iterator.hasNext()) {
             curr = iterator.next();
-            value = new XYChart.Data(curr.getKey(), curr.getValue());
-            lineChartData.getData().add(value);
+            if(i<5) {
+                value = new XYChart.Data(curr.getKey(), curr.getValue());
+                lineChartData.getData().add(value);
+                i++;
+            }
+            else {
+                countOthers+=curr.getValue();
+            }
         }
+        lineChartData.getData().add(new XYChart.Data("othres", countOthers));
+
         countrychartTile.setSeries(lineChartData);
     }
 
