@@ -7,6 +7,7 @@ import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.database.dao.InvitationsDao;
 import jets.chatserver.database.daoImpl.InvitationDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.gui.helpers.ModelsFactory;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 
 import java.rmi.RemoteException;
@@ -21,8 +22,9 @@ public class InvitationServiceImpl extends UnicastRemoteObject implements Invita
     Map<String, ClientInterface> currentConnectedUsers = null;
     InvitationsDao invitationsDao = null;
 
-    protected InvitationServiceImpl() throws RemoteException {
+    public InvitationServiceImpl() throws RemoteException {
         super();
+        currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
     }
 
 

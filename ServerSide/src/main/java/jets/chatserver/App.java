@@ -16,9 +16,9 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         stageCoordinator.initStage(primaryStage);
-        stageCoordinator.switchToServerDashBoard();
         primaryStage.setTitle("Connect ChatApp Server");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/symbol.png").toExternalForm()) );
+        stageCoordinator.switchToServerDashBoard();
         primaryStage.show();
 
 

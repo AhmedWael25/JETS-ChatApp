@@ -5,6 +5,7 @@ import commons.remotes.server.RegisteringClientInt;
 import jets.chatserver.DBModels.DBUserCredintials;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.gui.helpers.ModelsFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -15,8 +16,9 @@ public class RegisteringServiceImpl extends UnicastRemoteObject implements Regis
 
     Map<String, ClientInterface> currentConnectedUsers = null;
 
-    protected RegisteringServiceImpl() throws RemoteException {
+    public RegisteringServiceImpl() throws RemoteException {
         super();
+        currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
     }
 
 

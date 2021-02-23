@@ -9,6 +9,7 @@ import jets.chatserver.DBModels.DBUser;
 import jets.chatserver.DBModels.DBUserCredintials;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.gui.helpers.ModelsFactory;
 import jets.chatserver.network.adapters.EntityObjAdapter;
 
 import java.rmi.RemoteException;
@@ -23,7 +24,8 @@ public class UserProfileServiceImpl extends UnicastRemoteObject implements UserP
     Map<String, ClientInterface> currentConnectedUsers = null;
 
     public UserProfileServiceImpl() throws RemoteException {
-
+        super();
+        currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
     }
 
     public UserProfileServiceImpl(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {

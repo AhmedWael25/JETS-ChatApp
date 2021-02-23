@@ -13,6 +13,7 @@ import jets.chatserver.database.dao.P2PChatDao;
 import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.P2PChatDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.gui.helpers.ModelsFactory;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 
 import java.rmi.RemoteException;
@@ -30,6 +31,12 @@ public class AddFriendServiceImpl extends UnicastRemoteObject implements AddFrie
 
     public AddFriendServiceImpl() throws RemoteException {
         super();
+        currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
+        try {
+            friendsDao = FriendsDaoImpl.getFriendsDaoInstance();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public AddFriendServiceImpl(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {

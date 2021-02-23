@@ -35,6 +35,9 @@ public interface ClientInterface extends Remote {
 
     void notifyUserIsOnline(String  userId) throws  RemoteException;
 
+    void pushServerAnnouncements (String serverMsg,String serverImg) throws RemoteException;
+
+
     String LivenessTest() throws  RemoteException;
     //For When the Server disconnects and connects back again
     void ReInitAllPages() throws  RemoteException;

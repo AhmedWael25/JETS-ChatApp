@@ -28,7 +28,14 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
     P2PChatDao chatDao = null;
     UserDao userDao = null;
 
-    protected P2PChatServiceImpl() throws RemoteException {
+    public P2PChatServiceImpl() throws RemoteException {
+        super();
+        currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
+        try {
+            userDao = UserDaoImpl.getUserDaoInstance();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
     public P2PChatServiceImpl(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {
         super();

@@ -7,6 +7,7 @@ import jets.chatserver.database.dao.*;
 import jets.chatserver.database.daoImpl.*;
 
 import jets.chatserver.gui.helpers.ModelsFactory;
+import jets.chatserver.gui.controllers.ServerAnnouncementsController;
 import jets.chatserver.network.rmi.*;
 
 import java.rmi.RemoteException;
@@ -21,26 +22,27 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerInit   {
 
+    public static Map<String, ClientInterface> currentConnectedUsers ;
+
+
     public void  serverInit(){
 
-        Map<String, ClientInterface> currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
+         currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
 
         try{
             Registry reg = LocateRegistry.createRegistry(3000);
 
             //TODO Refactor Into Fact./ServiceCreator
             //=========This is Where you will bind all your services>
-            reg.rebind("AddFriendService",new AddFriendServiceImpl(currentConnectedUsers));
-            reg.rebind("InvitationService",new InvitationServiceImpl(currentConnectedUsers));
-            reg.rebind("RegisteringService",new RegisteringServiceImpl(currentConnectedUsers));
-            reg.rebind("P2PChatService",new P2PChatServiceImpl(currentConnectedUsers));
-            reg.rebind("GroupChatService",new GpChatServiceImpl(currentConnectedUsers));
-            //registering users services
+            reg.rebind("AddFriendService",new AddFriendServiceImpl());
+            reg.rebind("InvitationService",new InvitationServiceImpl());
+            reg.rebind("RegisteringService",new RegisteringServiceImpl());
+            reg.rebind("P2PChatService",new P2PChatServiceImpl());
+            reg.rebind("GroupChatService",new GpChatServiceImpl());
             reg.rebind("SignInService",new SignInServiceImpl());
             reg.rebind("SignUpService", new SignUpServiceImpl());
-            //UserProfile Services:
-            reg.rebind("UserProfileService", new UserProfileServiceImpl(currentConnectedUsers));
-            reg.rebind("UpdateStatusService", new UpdateStatusService(currentConnectedUsers));
+            reg.rebind("UserProfileService", new UserProfileServiceImpl());
+            reg.rebind("UpdateStatusService", new UpdateStatusService());
             reg.rebind("ClientLivenessService", new ClientLivenessService());
             reg.rebind("FileDownloadService", new FileDownloadServiceImpl());
             System.out.println("Server Up And Running");

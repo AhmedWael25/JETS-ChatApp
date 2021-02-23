@@ -11,6 +11,7 @@ import jets.chatserver.database.dao.GpChatDao;
 import jets.chatserver.database.daoImpl.FileDaoImpl;
 import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.GpChatDaoImpl;
+import jets.chatserver.gui.helpers.ModelsFactory;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 
 import java.rmi.RemoteException;
@@ -26,7 +27,9 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
     Map<String, ClientInterface> currentConnectedUsers = null;
     GpChatDao gpChatDao = null;
 
-    protected GpChatServiceImpl() throws RemoteException {
+    public GpChatServiceImpl() throws RemoteException {
+        super();
+        currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
     }
 
     public GpChatServiceImpl(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {

@@ -4,6 +4,7 @@ import commons.remotes.client.ClientInterface;
 import commons.remotes.server.UpdateStatusServiceInt;
 import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.gui.helpers.ModelsFactory;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -15,7 +16,9 @@ public class UpdateStatusService   extends UnicastRemoteObject implements Update
 
     Map<String, ClientInterface> currentConnectedUsers = null;
 
-    protected UpdateStatusService() throws RemoteException {
+    public UpdateStatusService() throws RemoteException {
+        super();
+        currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
     }
 
     public UpdateStatusService(Map<String, ClientInterface> currentConnectedUsers) throws RemoteException {

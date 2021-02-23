@@ -26,10 +26,25 @@ public class NotificationUtils {
                 .hideAfter(Duration.seconds(2.0))
                 .threshold(2,threshold)
                 .position(Pos.TOP_CENTER)
-
-
-//                .darkStyle()
                 .onAction(action)
+                .owner(owner);
+        //to run in threads
+        Platform.runLater(() -> notificationBuilder.show());
+    }
+    public static void showServerNotification(String msg,Object owner,String serverImg){
+
+      ImageView icon = new ImageView(ImageEncoderDecoder.getDecodedImage(serverImg)) ;
+      icon.setFitWidth(30);
+      icon.setFitHeight(30);
+        Notifications threshold = Notifications.create().darkStyle().title("ANNOUNCEMENT");
+        Notifications notificationBuilder = Notifications.create()
+                .title("ANNOUNCEMENT")
+                .graphic(icon)
+                .text(msg)
+                .hideAfter(Duration.INDEFINITE)
+                .threshold(3,threshold)
+                .position(Pos.BOTTOM_RIGHT)
+                .darkStyle()
                 .owner(owner);
         //to run in threads
         Platform.runLater(() -> notificationBuilder.show());

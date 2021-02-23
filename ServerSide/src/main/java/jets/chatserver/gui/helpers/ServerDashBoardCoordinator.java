@@ -59,7 +59,7 @@ public class ServerDashBoardCoordinator {
             System.out.println("Created New Announce Screen");
             try {
                 //TODO Add screen url
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/announcsView.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/ServerAnnouncementsView.fxml"));
                 Parent chatScreen = fxmlLoader.load();
                 ScreenData screenData = new ScreenData(fxmlLoader,chatScreen);
                 dashboardScreens.put("announceScreen",screenData);
@@ -130,7 +130,7 @@ public class ServerDashBoardCoordinator {
         ScreenData screenData = new ScreenData(fxmlLoader,chatScreen);
         dashboardScreens.put("statsScreen",screenData);
 
-        fxmlLoader = new FXMLLoader(getClass().getResource("/views/announcsView.fxml"));
+        fxmlLoader = new FXMLLoader(getClass().getResource("/views/ServerAnnouncementsView.fxml"));
         chatScreen = fxmlLoader.load();
         screenData = new ScreenData(fxmlLoader,chatScreen);
         dashboardScreens.put("announceScreen",screenData);
