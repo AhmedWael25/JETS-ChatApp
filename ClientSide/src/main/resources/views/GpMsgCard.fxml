@@ -21,7 +21,7 @@
       </StackPane>
       <VBox maxHeight="Infinity">
          <children>
-            <Label fx:id="msgBody" maxHeight="Infinity" maxWidth="1.7976931348623157E308" style="-fx-border-radius: 0 10 10 10; -fx-background-radius: 0 10 10 10; -fx-background-color: #D9E8F5;" text="Label" textAlignment="JUSTIFY" wrapText="true">
+            <Label fx:id="msgContent" maxHeight="Infinity" maxWidth="1.7976931348623157E308" style="-fx-border-radius: 0 10 10 10; -fx-background-radius: 0 10 10 10; -fx-background-color: #D9E8F5;" text="Label" textAlignment="JUSTIFY" wrapText="true">
                <font>
                   <Font size="15.0" />
                </font>

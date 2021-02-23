@@ -19,10 +19,12 @@ import jets.chatclient.gui.helpers.P2PChatManager;
 import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
+import jets.chatclient.gui.models.GpMessageModel;
 import jets.chatclient.gui.models.P2PMessageModel;
 import jets.chatclient.gui.models.P2PChatModel;
 import jets.chatclient.gui.models.guimodels.P2PChatViewCell;
 import jets.chatclient.gui.models.guimodels.P2PMsgViewCell;
+import jets.chatclient.gui.utils.ExportMsgAsHtml;
 
 import java.net.URL;
 import java.rmi.NotBoundException;
@@ -216,5 +218,11 @@ public class P2PChatController implements Initializable {
         uploadFilesBtn.setDisable(status);
     }
 
+    public void exportHTML(ActionEvent actionEvent) {
+        List<P2PMessageModel> messageList = p2pChatManager.getMsgList(p2pChatManager.getActiveP2PChat());
+        ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();
+        exportMsgAsHtml.exportP2PMessages((ArrayList<P2PMessageModel>) messageList);
+
+    }
 
 }

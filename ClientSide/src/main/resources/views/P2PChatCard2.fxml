@@ -39,7 +39,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="msgTime" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="55.0" prefWidth="110.0" text="Time" textFill="#a19999">
+            <Label fx:id="timeStamp" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" prefHeight="55.0" prefWidth="110.0" text="Time" textFill="#a19999">
                <font>
                   <Font size="14.0" />
                </font>

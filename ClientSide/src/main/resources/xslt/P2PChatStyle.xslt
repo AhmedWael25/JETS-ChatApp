@@ -103,11 +103,11 @@
                 </style>
             </head>
             <body>
-                <h2>Group Chat Message Messages</h2>
+                <h2>Peer To Peer Messages</h2>
 
                 <div class="container">
 
-                    <xsl:for-each select="messages/message">
+                    <xsl:for-each select="P2PMessages/message">
                         <xsl:sort select="timeStamp"/>
 
                         <xsl:choose>
@@ -136,6 +136,7 @@
 
                             <xsl:otherwise>
                                 <div class="message">
+                                    <!--attribute value template >> ="{some expression here}" -->
                                     <img src="{imagePath}" alt="Avatar" class="right"/>
                                     <div class="right-header">
                                         <strong>

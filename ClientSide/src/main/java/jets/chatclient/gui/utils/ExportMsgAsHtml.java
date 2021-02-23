@@ -1,13 +1,12 @@
 package jets.chatclient.gui.utils;
 
-import jets.chatclient.gui.helpers.GpChatsManager;
-import jets.chatclient.gui.helpers.ModelsFactory;
-import jets.chatclient.gui.models.CurrentUserModel;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
+import jakarta.xml.bind.PropertyException;
 import jets.chatclient.gui.models.GpMessageModel;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import jets.chatclient.gui.models.P2PMessageModel;
+import org.w3c.dom.Document;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -16,18 +15,13 @@ import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import org.w3c.dom.Document;
-import jakarta.xml.bind.JAXBContext;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.bind.Marshaller;
-import jakarta.xml.bind.PropertyException;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExportMsgAsHtml{
 
-    ModelsFactory modelsFactory;
-    CurrentUserModel currentUserModel;
-    ModifiedGpMessageModel modifiedMessage;
-    GpChatsManager gpChatsManager;
+    ExportMsgUtils exportMsgUtils = new ExportMsgUtils();
 
     
     private void xmlTransformer(DOMResult res, String xsltPath, String outputHtmlPath) {
@@ -86,38 +80,30 @@ public class ExportMsgAsHtml{
         return res;
     }
 
-//    public void exportGroupMessages(ArrayList<GpMessageModel> gpMessages){
-//        Class<GpChatJAXBHelper> toBeboundClass = jets.chatclient.gui.utils.GpChatJAXBHelper.class;
-//        String xsltPath = getClass().getResource("/xslt/GroupMessagesTable.xslt").getPath();
-//       // String xsltPath = "src\\main\\resources\\xslt\\GroupMessagesTable.xslt";
-//        String outputHtmlPath = "GpMessages.html";
-//
-//        GpChatJAXBHelper gpmessages = new GpChatJAXBHelper();
-//        gpmessages.setGpMessage(gpMessages);
-//
-//        DOMResult res = marshalingToDom(gpmessages, toBeboundClass);
-//        xmlTransformer(res, xsltPath, outputHtmlPath);
-//    }
 
+    public void exportP2PMessages(ArrayList<P2PMessageModel> peersMessages){
+        // Generate Modified message Model.
+        List<P2PMessageModelAdaptor> modifiedP2PMsgList = new ArrayList<P2PMessageModelAdaptor>();
+        modifiedP2PMsgList =  exportMsgUtils.generateModifiedP2PChatList(peersMessages);
 
-    // public void exportP2PMessages(ArrayList<GpMessageModel> p2pMessages){
-    //     Class<P2PChatJAXBHelper> toBeboundClass = jets.chatclient.gui.models.P2PChatJAXBHelper.class;
-    //     String xsltPath = "src\\main\\resources\\P2Prules.xslt";
-    //     String outputHtmlPath = "P2PMessages.html";
-        
-    //     P2PChatJAXBHelper p2pmessages = new P2PChatJAXBHelper();
-    //     gpmessages.setP2PMessage(p2pMessages);
+        Class<P2PChatJAXBHelper> toBeboundClass = jets.chatclient.gui.utils.P2PChatJAXBHelper.class;
+        String xsltPath = getClass().getResource("/xslt/P2PChatStyle.xslt").getPath();
 
-    //     DOMResult res = marshalingToDom(gpmessages, toBeboundClass);
-    //     xmlTransformer(res, xsltPath, outputHtmlPath);
-    // }
+        String outputHtmlPath = "P2PMessages.html";
+
+        P2PChatJAXBHelper p2PMessages = new P2PChatJAXBHelper();
+        p2PMessages.setP2PMessage(modifiedP2PMsgList);
+
+        DOMResult res = marshalingToDom(p2PMessages, toBeboundClass);
+        xmlTransformer(res, xsltPath, outputHtmlPath);
+    }
 
 
 
     public void exportGroupMessages(ArrayList<GpMessageModel> gpMessages){
         // Generate Modified message Model.
-        List<ModifiedGpMessageModel> modifiedGpMsgList = new ArrayList<ModifiedGpMessageModel>();
-        modifiedGpMsgList =  generateModifiedGpChatList(gpMessages);
+        List<GpMessageModelAdaptor> modifiedGpMsgList = new ArrayList<GpMessageModelAdaptor>();
+        modifiedGpMsgList =  exportMsgUtils.generateModifiedGpChatList(gpMessages);
 
         Class<GpChatJAXBHelper> toBeboundClass = jets.chatclient.gui.utils.GpChatJAXBHelper.class;
         String xsltPath = getClass().getResource("/xslt/GpChatStyle.xslt").getPath();
@@ -130,28 +116,5 @@ public class ExportMsgAsHtml{
         DOMResult res = marshalingToDom(gpmessages, toBeboundClass);
         xmlTransformer(res, xsltPath, outputHtmlPath);
     }
-
-
-
-
-    List<ModifiedGpMessageModel> generateModifiedGpChatList(List<GpMessageModel> GpMessagesList) {
-        List<ModifiedGpMessageModel> modifiedGpMsgList = new ArrayList<ModifiedGpMessageModel>();
-        modelsFactory = ModelsFactory.getInstance();
-        currentUserModel = modelsFactory.getCurrentUserModel();
-        for (GpMessageModel message : GpMessagesList) {
-            modifiedMessage = new ModifiedGpMessageModel();
-
-            if (message.getSenderId().equals(currentUserModel.getPhoneNumber())) {
-                modifiedMessage.fillwithGpMessageModel(message, true);
-            } else {
-                modifiedMessage.fillwithGpMessageModel(message, false);
-            }
-
-            modifiedGpMsgList.add(modifiedMessage);
-        }
-
-        return modifiedGpMsgList;
-    }
-
 
 }
