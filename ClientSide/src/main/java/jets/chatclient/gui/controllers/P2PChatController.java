@@ -29,6 +29,7 @@ import jets.chatclient.gui.models.P2PMessageModel;
 import jets.chatclient.gui.models.P2PChatModel;
 import jets.chatclient.gui.models.guimodels.P2PChatViewCell;
 import jets.chatclient.gui.models.guimodels.P2PMsgViewCell;
+import jets.chatclient.gui.utils.ExportMsgAsHtml;
 
 import java.io.*;
 import java.net.URL;
@@ -276,6 +277,7 @@ public class P2PChatController implements Initializable {
 
     private P2PMessageModel createMsgFileModel(String fileName){
 
+
         P2PMessageModel msg = new P2PMessageModel();
 
         msg.setChatId(p2pChatManager.getActiveP2PChat());
@@ -290,9 +292,11 @@ public class P2PChatController implements Initializable {
 
         return msg;
     }
-
-
-    public void exportChat(ActionEvent actionEvent) {
+    public void exportHTML(ActionEvent actionEvent) {
+        List<P2PMessageModel> messageList = p2pChatManager.getMsgList(p2pChatManager.getActiveP2PChat());
+        ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();
+        exportMsgAsHtml.exportP2PMessages((ArrayList<P2PMessageModel>) messageList);
 
     }
+
 }

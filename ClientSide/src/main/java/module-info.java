@@ -21,6 +21,7 @@ module jets.chatclient {
     requires ChatAppCommons;
     requires java.desktop;
     requires jakarta.xml.bind;
+    requires javafx.swing;
 
 
     //opens  jets.chatclient;

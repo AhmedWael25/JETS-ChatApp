@@ -8,19 +8,18 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 
-@XmlRootElement(name = "messages")
+@XmlRootElement(name = "P2PMessages")
 @XmlAccessorType (XmlAccessType.FIELD)
-public class GpChatJAXBHelper {
-
+public class P2PChatJAXBHelper {
 
     @XmlElement(name = "message")
-    private List<GpMessageModelAdaptor>  gpMessage = null;
+    private List<P2PMessageModelAdaptor>  p2PMessage = null;
 
-    public List<GpMessageModelAdaptor> getGpMessage() {
-        return gpMessage;
+    public List<P2PMessageModelAdaptor> getP2PMessage() {
+        return p2PMessage;
     }
 
-    public void setGpMessage(List<GpMessageModelAdaptor> gpMessage) {
-        this.gpMessage = gpMessage;
+    public void setP2PMessage(List<P2PMessageModelAdaptor> p2PMessage) {
+        this.p2PMessage = p2PMessage;
     }
 }
