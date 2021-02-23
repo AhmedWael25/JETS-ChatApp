@@ -107,7 +107,7 @@
 
 }
 
-.testbutton1 +.testbutton2{
+.testbutton1, .testbutton2{
     -fx-border-color: green;
     -fx-background-color: green;
 }

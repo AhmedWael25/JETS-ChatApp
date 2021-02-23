@@ -106,21 +106,6 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     }
 
     @Override
-    public void sendNewGpMsgToUsers(GpMessageDto gpMessageDto) throws RemoteException {
-
-        GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
-        gpChatsManager.addMsg(gpMessageDto);
-
-        Integer activeChat = gpChatsManager.getActiveChat();
-        Integer chatIdFromMsg = gpMessageDto.getChatId();
-        if(!activeChat.equals(chatIdFromMsg)){
-            String SenderName = gpMessageDto.getSenderName();
-            Image img = gpChatsManager.getChatImg(chatIdFromMsg);
-            pushGpChatNotification(chatIdFromMsg,SenderName,gpMessageDto.getMsgContent(),img);
-        }
-    }
-
-    @Override
     public void sendNewP2PMessageToUser(P2PMessageDto p2pMsgDto) throws RemoteException {
 
         P2PChatManager p2PChatManager = ModelsFactory.getInstance().getP2PChatManager();
@@ -134,7 +119,31 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
         if(!activeChat.equals(chatIdFromMsg)){
             String senderName = p2PChatManager.getParticipantName(chatIdFromMsg);
             Image img = p2PChatManager.getParticipantImage(chatIdFromMsg);
-            pushp2pChatNotification(chatIdFromMsg,senderName,p2pMsgDto.getMsgBody(),img);
+            if(p2pMsgDto.getMsgType() == MsgType.TEXT){
+                pushp2pChatNotification(chatIdFromMsg,senderName,p2pMsgDto.getMsgBody(),img);
+            }else {
+                String fileName = p2pMsgDto.getMsgBody().split(";")[0];
+                pushp2pChatNotification(chatIdFromMsg,senderName," FILE : "+fileName,img);
+            }
+        }
+    }
+    @Override
+    public void sendNewGpMsgToUsers(GpMessageDto gpMessageDto) throws RemoteException {
+
+        GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
+        gpChatsManager.addMsg(gpMessageDto);
+
+        Integer activeChat = gpChatsManager.getActiveChat();
+        Integer chatIdFromMsg = gpMessageDto.getChatId();
+        if(!activeChat.equals(chatIdFromMsg)){
+            String senderName = gpMessageDto.getSenderName();
+            Image img = gpChatsManager.getChatImg(chatIdFromMsg);
+            if(gpMessageDto.getMsgType() == MsgType.TEXT){
+                pushGpChatNotification(chatIdFromMsg,senderName,gpMessageDto.getMsgContent(),img);
+            }else {
+                String fileName = gpMessageDto.getMsgContent().split(";")[0];
+                pushp2pChatNotification(chatIdFromMsg,senderName," FILE : "+fileName,img);
+            }
         }
     }
 
@@ -181,8 +190,13 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     }
 
     @Override
-    public void forTesting(String userId) throws  RemoteException{
-        System.out.println("CallBack to USer of Id : "+ userId);
+    public String LivenessTest() throws  RemoteException{
+        return  "ACK";
+    }
+
+    @Override
+    public void ReInitAllPages() throws RemoteException {
+
     }
 
 

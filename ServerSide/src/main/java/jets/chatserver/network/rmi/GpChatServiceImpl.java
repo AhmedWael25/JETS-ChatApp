@@ -6,7 +6,10 @@ import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.GpChatUserDto;
 import commons.sharedmodels.GpMessageDto;
 import jets.chatserver.DBModels.DBGpChat;
+import jets.chatserver.database.dao.FileDao;
 import jets.chatserver.database.dao.GpChatDao;
+import jets.chatserver.database.daoImpl.FileDaoImpl;
+import jets.chatserver.database.daoImpl.FriendsDaoImpl;
 import jets.chatserver.database.daoImpl.GpChatDaoImpl;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 
@@ -117,20 +120,21 @@ public class GpChatServiceImpl extends UnicastRemoteObject implements GpChatServ
         try {
             //Get All Participants
             participants = gpChatDao.getAllParticipantsIdsByChatId(chatId);
-            //Prep to call Back only online users.
-            //Remove Sender From Receivers List
-            //Send File As Well
+
+            //Upload File To Db
+            String senderId = gpMessageDto.getSenderId();
+            String fileName = gpMessageDto.getMsgContent();
+            FileDao fileDao = FileDaoImpl.getFileDaoInstance();
+            int fileId = fileDao.saveFile(fileArr,chatId,senderId,fileName);
+            String fileIdentifier = fileName+";"+fileId;
+            gpMessageDto.setMsgContent(fileIdentifier);
             for (String part : participants){
                 if(part.equals(gpMessageDto.getSenderId())) continue;
                 ClientInterface ci = currentConnectedUsers.get(part);
                 if(ci != null) {
-                    new Thread(() -> {
-                        try {
-                            ci.sendNewGpFileTpUsers(fileArr,gpMessageDto);
-                        } catch (RemoteException e) {
-                            e.printStackTrace();
-                        }
-                    }).start();
+
+                    ci.sendNewGpMsgToUsers(gpMessageDto);
+
                 }
             }
         } catch (SQLException e) {

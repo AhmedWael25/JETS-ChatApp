@@ -5,8 +5,10 @@ import commons.remotes.server.P2PChatServiceInt;
 import commons.sharedmodels.P2PMessageDto;
 import commons.sharedmodels.P2PChatDto;
 import jets.chatserver.DBModels.DBP2PChat;
+import jets.chatserver.database.dao.FileDao;
 import jets.chatserver.database.dao.P2PChatDao;
 import jets.chatserver.database.dao.UserDao;
+import jets.chatserver.database.daoImpl.FileDaoImpl;
 import jets.chatserver.database.daoImpl.P2PChatDaoImpl;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.gui.helpers.ChatBotManager;
@@ -56,6 +58,8 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
         return p2pChatsDtos;
     }
 
+
+
     @Override
     public boolean sendMessage(P2PMessageDto msgDto) throws RemoteException {
 
@@ -90,8 +94,40 @@ public class P2PChatServiceImpl extends UnicastRemoteObject implements P2PChatSe
             }
         } catch (SQLException | InterruptedException e) {
             e.printStackTrace();
+        String receiverId = msgDto.getReceiverId();
+
         }
 
         return true;
     }
+
+    @Override
+    public boolean sendFile(byte[] file, P2PMessageDto msgDto) {
+
+        new Thread(() ->{
+
+            try {
+                String receiverId = msgDto.getReceiverId();
+                ClientInterface clientInterface = currentConnectedUsers.get(receiverId);
+                if (clientInterface != null){
+                    FileDao fileDao = FileDaoImpl.getFileDaoInstance();
+                    String senderId = msgDto.getSenderId();
+                    Integer chatId = msgDto.getChatId();
+                    String filename = msgDto.getMsgBody();
+                    Integer fileId = fileDao.saveFile(file,chatId,senderId,filename);
+
+                    System.out.println(fileId);
+                    String fileIdentefier = filename+";"+fileId;
+                    msgDto.setMsgBody(fileIdentefier);
+                    clientInterface.sendNewP2PMessageToUser(msgDto);
+                    System.out.println(msgDto);
+                }
+            } catch (SQLException | RemoteException throwables) {
+                throwables.printStackTrace();
+            }
+        }).start();
+
+        return  false;
+    }
+
 }

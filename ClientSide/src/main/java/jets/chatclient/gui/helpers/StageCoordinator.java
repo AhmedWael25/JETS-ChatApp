@@ -170,12 +170,40 @@ public class StageCoordinator {
         flag=0;
         primaryStage.setHeight(600);
         primaryStage.setResizable(false);
+    }
 
+    public  void switchToSplash(){
+        flag=0;
+        if (primaryStage == null) {
+            throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
+        }
+
+        if (!scenes.containsKey("splash")) {
+            try {
+                System.out.println("Created New Splash");
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/Splash2.fxml"));
+                Parent splashView = fxmlLoader.load();
+                Scene splashScene = new Scene(splashView);
+                SceneData splashSceneData = new SceneData(fxmlLoader, splashView, splashScene);
+                scenes.put("splash", splashSceneData);
+                primaryStage.setScene(splashScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("IO Exception: Couldn't load 'Signup View' FXML file");
+            }
+        } else {
+            System.out.println("Loaded Existing Scene");
+            SceneData splashData = scenes.get("splash");
+            Scene splashScene = splashData.getScene();
+            primaryStage.setScene(splashScene);
+        }
+        primaryStage.setResizable(false);
+        primaryStage.setHeight(400);
+        primaryStage.setWidth(400);
     }
 
     public void clearSceneData(){
         scenes.clear();
-
     }
 
 }

@@ -13,7 +13,7 @@ public class ServicesFactory {
     private Registry reg;
 
     private ServicesFactory() throws RemoteException {
-        reg = LocateRegistry.getRegistry(3000);
+        reg = LocateRegistry.getRegistry("localhost",3000);
     };
 
     public static ServicesFactory getInstance() throws RemoteException {
@@ -21,6 +21,10 @@ public class ServicesFactory {
             return  new ServicesFactory();
         }
         return servicesFactory;
+    }
+
+    public  void reInitServiceFactory() throws RemoteException {
+        reg = LocateRegistry.getRegistry("localhost",3000);
     }
 
     public RegisteringClientInt getRegisterClientService() throws RemoteException, NotBoundException {
@@ -40,6 +44,16 @@ public class ServicesFactory {
     }
     public UpdateStatusServiceInt getUpdateService() throws  RemoteException , NotBoundException{
         return (UpdateStatusServiceInt) reg.lookup("UpdateStatusService");
+    }
+    public  ClientLivenessServiceInt getlivenessService() throws  RemoteException,NotBoundException{
+        return (ClientLivenessServiceInt) reg.lookup("ClientLivenessService");
+    }
+
+    public  SignInServiceInt getSignInService() throws  RemoteException, NotBoundException{
+        return (SignInServiceInt) reg.lookup("SignInService");
+    }
+    public FileDownloadServiceInt getFileDownloadService() throws  RemoteException, NotBoundException{
+        return (FileDownloadServiceInt) reg.lookup("FileDownloadService");
     }
 
 

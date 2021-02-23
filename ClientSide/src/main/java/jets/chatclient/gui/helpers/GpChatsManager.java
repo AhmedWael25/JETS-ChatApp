@@ -49,7 +49,6 @@ public class GpChatsManager {
         });
     }
 
-
     public  void updateParticipantName(String  id, String name){
         chatsMap.entrySet().forEach(entrySet -> {
             entrySet.getValue().getGpParticipants()
@@ -62,7 +61,7 @@ public class GpChatsManager {
         });
     }
 
-    public  Image getParticipantAvatar(Integer chatId, String participantId){
+    public Image getParticipantAvatar(Integer chatId, String participantId){
         GpChatModel chat = chatsMap.get(chatId);
         Image img  = null;
         for (ParticipantModel part : chat.getGpParticipants()){

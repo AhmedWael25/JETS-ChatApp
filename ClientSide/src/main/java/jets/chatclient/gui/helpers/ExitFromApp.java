@@ -18,8 +18,7 @@ public class ExitFromApp {
          RegisteringClientInt registeringClientService = null;
          ModelsFactory modelsFactory = ModelsFactory.getInstance();
          CurrentUserModel currentUserModel = modelsFactory.getCurrentUserModel();
-         Registry reg = modelsFactory.getRegistry();
-         registeringClientService = (RegisteringClientInt) reg.lookup("RegisteringService");
+         registeringClientService = ServicesFactory.getInstance().getRegisterClientService();
          String userPassword = registeringClientService.getEncryptedPassword(currentUserModel.getPhoneNumber());
          System.out.println(userPassword);
          String userPhone = currentUserModel.getPhoneNumber();

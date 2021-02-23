@@ -29,6 +29,7 @@ import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.GpChatModel;
 import jets.chatclient.gui.models.GpMessageModel;
+import jets.chatclient.gui.models.P2PMessageModel;
 import jets.chatclient.gui.models.guimodels.GPChatMsgViewCell;
 import jets.chatclient.gui.models.guimodels.GpChatViewCell;
 import jets.chatclient.gui.utils.ExportMsgAsHtml;
@@ -153,28 +154,38 @@ public class GroupChatController implements Initializable {
 
     public void sendFile(ActionEvent actionEvent) {
 
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         File file = fileChooser.showOpenDialog(null);
-        GpMessageModel msg = createMsgFileModel(file.getName());
-        msgs.add(msg);
-        msgListView.setItems(msgs);
-        if(file != null){
-            new Thread(() ->{
-                try {
-                    FileInputStream fileInputStream = new FileInputStream(file);
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-                    byte[] fileArr = bufferedInputStream.readAllBytes();
-                    System.out.println("FILE" + fileArr);
-                    gpChatService.sendFile(fileArr,DTOObjAdapter.convertoObjToDto(msg));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+        if(file == null) return;
+        long sizeInMb = file.length() / (1024 * 1024);
+        if(sizeInMb > 1024 ){
+            displayFileLargerAlert();
+            return;
         }
+        new Thread(() ->{
+            try {
+                FileInputStream fileInputStream = new FileInputStream(file);
+                BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+                byte[] fileArr = bufferedInputStream.readAllBytes();
+
+                GpMessageModel msgModel = createMsgFileModel(file.getName());
+                gpChatService.sendFile(fileArr,DTOObjAdapter.convertoObjToDto(msgModel));
+                gpChatsManager.addMsg(msgModel);
+                Platform.runLater(() ->{
+                    msgs.add(msgModel);
+                    msgListView.setItems(msgs);
+                    int index = msgs.size();
+                    msgListView.scrollTo(index);
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
+
+
     public void receiveFile(byte[] fileArr,GpMessageModel model){
         Platform.runLater(()->{
             msgs.add(model);
@@ -183,7 +194,7 @@ public class GroupChatController implements Initializable {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
             fileChooser.setInitialFileName(fileName);
-            fileChooser.setTitle("Set Incoming File");
+            fileChooser.setTitle("DOWn Incoming File");
             File file = fileChooser.showSaveDialog(StageCoordinator.getInstance().getPrimaryStage());
 
             if(file != null){
@@ -313,7 +324,24 @@ public class GroupChatController implements Initializable {
         leaveBtn.setDisable(status);
         uploadFilesBtn.setDisable(status);
     }
+    private  void displayFileLargerAlert(){
+        JFXAlert alert = new JFXAlert((Stage) gpChatMainContainer.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(true);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new Label("File Upload"));
+        Label body = new Label("Maximum Allowed Size is 1GB.");
+        layout.setBody(body);
 
+        JFXButton closeButton = new JFXButton("Cancel");
+        closeButton.getStyleClass().add("dialog-accept");
+        closeButton.setStyle("-fx-text-fill: orange;-fx-font-size: 16");
+        closeButton.setOnAction(event -> alert.hide());
+
+        layout.setActions(closeButton);
+        alert.setContent(layout);
+        alert.show();
+    }
 
     public void exportHTML(ActionEvent actionEvent) {
         List<GpMessageModel> messageList = gpChatsManager.getMsgList(gpChatsManager.getActiveChat());

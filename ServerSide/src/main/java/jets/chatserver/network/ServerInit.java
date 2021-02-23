@@ -6,6 +6,7 @@ import jets.chatserver.DBModels.DBInvitations;
 import jets.chatserver.database.dao.*;
 import jets.chatserver.database.daoImpl.*;
 
+import jets.chatserver.gui.helpers.ModelsFactory;
 import jets.chatserver.network.rmi.*;
 
 import java.rmi.RemoteException;
@@ -22,7 +23,7 @@ public class ServerInit   {
 
     public void  serverInit(){
 
-        Map<String, ClientInterface> currentConnectedUsers = new ConcurrentHashMap<>();
+        Map<String, ClientInterface> currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
 
         try{
             Registry reg = LocateRegistry.createRegistry(3000);
@@ -34,52 +35,19 @@ public class ServerInit   {
             reg.rebind("RegisteringService",new RegisteringServiceImpl(currentConnectedUsers));
             reg.rebind("P2PChatService",new P2PChatServiceImpl(currentConnectedUsers));
             reg.rebind("GroupChatService",new GpChatServiceImpl(currentConnectedUsers));
-
             //registering users services
             reg.rebind("SignInService",new SignInServiceImpl());
-
-
             reg.rebind("SignUpService", new SignUpServiceImpl());
-
             //UserProfile Services:
             reg.rebind("UserProfileService", new UserProfileServiceImpl(currentConnectedUsers));
             reg.rebind("UpdateStatusService", new UpdateStatusService(currentConnectedUsers));
-
+            reg.rebind("ClientLivenessService", new ClientLivenessService());
+            reg.rebind("FileDownloadService", new FileDownloadServiceImpl());
             System.out.println("Server Up And Running");
+            System.out.println("=================================== TESTING AREA ==================");
 
-            //===================Testing AREA for all DAOS
-            System.out.println("=================================== TESTING INVITAATIONS==================");
-//            InvitationsDao invitationsDao = InvitationDaoImpl.getInvitationDaoInstance();
-//
-//
-//            invitationsDao.addNewInvitation(inv);
-//
-//            List<DBInvitations> sender = invitationsDao.getAllUserReceivedInvitations("1");
-//
-//            for(DBInvitations userin : sender){
-//                System.out.println(userin);
-//            }
 
             FriendsDao f = FriendsDaoImpl.getFriendsDaoInstance();
-//            System.out.println(f.areFriends("1","2"));
-//
-//
-//            GpChatDao g = GpChatDaoImpl.getGpChatDaoInstance();
-//            List<String> xd = g.getAllParticipantsIdsByChatId(3);
-//
-//            List<DBGpChat> gp =  g.getAllGpChatsOfUser("1");
-//
-//            System.out.println(f.getAllContacts("1"));
-
-//            System.out.println(g.getGpChatById(2));
-//
-//            System.out.println(g.doesUserHasGpChats("5"));
-//            DBGpChat c = new DBGpChat();
-//            c.setGpChatName("omk");
-//            c.setGpChatAdminId("2");
-//            c.setParticipantsId(new ArrayList<>(Arrays.asList(new String[]{"1","4"})));
-//            c.setGpChatImg("asas");
-//            GpChatDaoImpl.getGpChatDaoInstance().createGroupChat(c);
 
         }catch (RemoteException | SQLException e){
             e.printStackTrace();

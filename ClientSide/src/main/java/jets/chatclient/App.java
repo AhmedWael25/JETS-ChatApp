@@ -1,5 +1,6 @@
 package jets.chatclient;
 
+import commons.remotes.client.ClientInterface;
 import commons.remotes.server.RegisteringClientInt;
 import commons.remotes.server.SignInServiceInt;
 import commons.sharedmodels.CurrentUserDto;
@@ -8,7 +9,9 @@ import javafx.application.Platform;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import jets.chatclient.gui.helpers.LivenessChecker;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
@@ -28,6 +31,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         stageCoordinator.initStage(primaryStage);
         stageCoordinator.switchToMainScene();
@@ -43,10 +47,7 @@ public class App extends Application {
              UserCredentials userCredentials = configManager.readConfigFile();
             SignInServiceInt  signInService=null;
             try {
-                ModelsFactory modelsFactory = ModelsFactory.getInstance();
-
-                Registry reg = modelsFactory.getRegistry();
-                 signInService = (SignInServiceInt) reg.lookup("SignInService");
+                 signInService = ServicesFactory.getInstance().getSignInService();
                 boolean verified = signInService.checkUserCredentials(userCredentials.getUserPhone(),userCredentials.getEncryptedPassword() );
 
                 if (verified) {
@@ -58,14 +59,12 @@ public class App extends Application {
                     // user password or userPhone has been changed on config file
                     stageCoordinator.switchToMainScene();
                 }
-
              } catch (RemoteException | NotBoundException e) {
                 System.out.println("can't find Service");
                 e.printStackTrace();
             }
-
-
         }
+
         primaryStage.setTitle("Connect ChatApp");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/symbol.png").toExternalForm()) );
         primaryStage.show();
@@ -74,10 +73,11 @@ public class App extends Application {
     }
 
 
-
     @Override
     public void init() {
         // Initialize Database & Network Connections
+        ClientInterface xd = ModelsFactory.getInstance().getClient();
+        new LivenessChecker().initLivenessChecker();
     }
 
     @Override
