@@ -31,6 +31,7 @@ public interface ClientInterface extends Remote {
     void pushp2pChatNotification(int chatId, String senderName, String msg, String senderImg) throws RemoteException;
     void pushStatusNotification(int chatId, String senderName, String status, String senderImg) throws RemoteException;
 
+    void pushServerAnnouncements (String serverMsg,String serverImg) throws RemoteException;
     void forTesting(String userId) throws  RemoteException;
 
 }

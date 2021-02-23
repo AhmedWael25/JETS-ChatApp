@@ -5,6 +5,7 @@ import jets.chatserver.DBModels.DBGpChat;
 import jets.chatserver.database.dao.*;
 import jets.chatserver.database.daoImpl.*;
 
+import jets.chatserver.gui.controllers.ServerAnnouncementsController;
 import jets.chatserver.network.rmi.*;
 
 import java.rmi.RemoteException;
@@ -18,10 +19,12 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServerInit   {
+    public static Map<String, ClientInterface> currentConnectedUsers = new ConcurrentHashMap<>();
+
 
     public void  serverInit(){
 
-        Map<String, ClientInterface> currentConnectedUsers = new ConcurrentHashMap<>();
+    //    Map<String, ClientInterface> currentConnectedUsers = new ConcurrentHashMap<>();
 
         try{
             Registry reg = LocateRegistry.createRegistry(3000);
@@ -75,9 +78,13 @@ public class ServerInit   {
 //            c.setGpChatImg("asas");
 //            GpChatDaoImpl.getGpChatDaoInstance().createGroupChat(c);
 
+            ServerAnnouncementsController serverAnnouncementsController = new ServerAnnouncementsController();
+            serverAnnouncementsController.setCurrentConnectedUsers(currentConnectedUsers);
         }catch (RemoteException | SQLException e){
             e.printStackTrace();
         }
+
+
 
     }
 }

@@ -55,6 +55,32 @@ public class StageCoordinator {
         }
     }
 
+    public void switchToServerAnnouncment() {
+        if (primaryStage == null) {
+            throw new RuntimeException("Stage Coordinator should be initialized with a Stage before it could be used");
+        }
+
+        if (!scenes.containsKey("announ")) {
+            try {
+                System.out.println("Created New Server announ Scene");
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/views/ServerAnnouncementsView.fxml"));
+                Parent announView = fxmlLoader.load();
+                Scene  announScene = new Scene(announView);
+                SceneData dashBoardSceneData = new SceneData(fxmlLoader, announView, announScene);
+                scenes.put("announ", dashBoardSceneData);
+                primaryStage.setScene(announScene);
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("IO Exception: Couldn't load 'DashBoard' FXML file");
+            }
+        } else {
+            System.out.println("Loaded Existing Scene");
+            SceneData dashBoardSceneData = scenes.get("announ");
+            Scene signupScene = dashBoardSceneData.getScene();
+            primaryStage.setScene(signupScene);
+        }
+    }
+
 
 
 }

@@ -15,7 +15,7 @@ public class App extends Application {
     public void start(Stage primaryStage) {
         StageCoordinator stageCoordinator = StageCoordinator.getInstance();
         stageCoordinator.initStage(primaryStage);
-        stageCoordinator.switchToServerDashBoard();
+        stageCoordinator.switchToServerAnnouncment();
         primaryStage.show();
 
 

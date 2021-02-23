@@ -97,6 +97,14 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
     }
 
     @Override
+    public void pushServerAnnouncements(String serverMsg, String serverImg) throws RemoteException {
+        String notificationMsg = serverMsg;
+        NotificationUtils.showServerNotification(notificationMsg, StageCoordinator.getPrimaryStage(),serverImg);
+
+    }
+
+
+    @Override
     public void sendNewGpMsgToUsers(GpMessageDto gpMessageDto) throws RemoteException {
 
         GpChatsManager gpChatsManager = ModelsFactory.getInstance().getGpChatsManager();
