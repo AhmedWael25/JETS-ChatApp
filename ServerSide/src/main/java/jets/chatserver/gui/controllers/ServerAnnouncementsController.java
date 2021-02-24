@@ -5,6 +5,7 @@ import commons.remotes.client.ClientInterface;
 import commons.utils.ImageEncoderDecoder;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
 import jets.chatserver.gui.helpers.ModelsFactory;
 import jets.chatserver.network.ServerInit;
@@ -19,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class ServerAnnouncementsController implements Initializable {
 
+    public Label emptyDt;
     Map<String, ClientInterface> currentConnectedUsers = null;
     @FXML
     private JFXTextArea announcementMsg;
@@ -34,6 +36,10 @@ public class ServerAnnouncementsController implements Initializable {
 
     @FXML
     public boolean sendAnnouncement(){
+        if(!announcementMsg.validate()){
+            return false;
+        }
+        if(!announcementMsg.getText().equals("")){
       currentConnectedUsers=  ServerInit.currentConnectedUsers;
         String serverImage = "";
         ImageEncoderDecoder imageEncoderDecoder = new ImageEncoderDecoder();
@@ -51,9 +57,10 @@ public class ServerAnnouncementsController implements Initializable {
                     e.printStackTrace();
                 }
 
-        });
-        return  true;
-
+        });         return  true;
+        }
+        emptyDt.setText("Please Enter Your Message");
+     return false;
     }
     }
 

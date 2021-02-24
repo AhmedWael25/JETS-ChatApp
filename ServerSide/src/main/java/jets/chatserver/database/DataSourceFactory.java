@@ -22,7 +22,7 @@ public class DataSourceFactory {
             dbDataSource = new MysqlDataSource();
             dbDataSource.setURL("jdbc:mysql://localhost:3306/chatapp");
             dbDataSource.setUser("root");
-            dbDataSource.setPassword("admin");
+            dbDataSource.setPassword("1234");
             return dbDataSource;
         } else {
             return dbDataSource;

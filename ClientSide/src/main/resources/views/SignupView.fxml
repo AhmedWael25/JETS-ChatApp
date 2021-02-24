@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -50,11 +51,12 @@
                 <FontIcon fx:id="fiPassword" iconColor="#636b61" iconLiteral="fas-lock" iconSize="25" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS" />
                 <FontIcon fx:id="fiCalendar" iconColor="#636b61" iconLiteral="fas-calendar-alt" iconSize="25" layoutX="10.0" layoutY="127.0" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" GridPane.vgrow="ALWAYS" />
                 <FontIcon fx:id="fiGender" iconColor="#636b61" iconLiteral="fas-venus-mars" iconSize="25" wrappingWidth="26.83331298828125" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#handleSignupBtnClick" prefHeight="35.0" prefWidth="104.0" ripplerFill="#d9e8f5" style="-fx-background-color: #304269;" text="Register" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                <JFXButton fx:id="btnRegister" buttonType="RAISED" onAction="#handleSignupBtnClick" prefHeight="35.0" prefWidth="82.0" ripplerFill="#d9e8f5" style="-fx-background-color: #304269;" text="Register" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                     <GridPane.margin>
                         <Insets right="10.0" />
                     </GridPane.margin>
                 </JFXButton>
+            <Label fx:id="invalidDt" prefHeight="25.0" prefWidth="184.0" text="" textFill="#d73838" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             </children>
         </GridPane>
         <JFXButton fx:id="btnSignIn" onAction="#handleLoginBtnClick" prefHeight="39.0" prefWidth="294.0" ripplerFill="#d9e8f5" text="Already have an account? signin" textFill="#304269">

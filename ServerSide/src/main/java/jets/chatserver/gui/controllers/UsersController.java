@@ -53,12 +53,14 @@ public class UsersController implements Initializable {
     private static final String PREFIX = "( ";
     private static final String POSTFIX = " )";
     public FontIcon ftPhone;
+    public Label registerLb;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Validators.addPhoneNumberValidator(userPhoneNum,ftPhone);
         setupTableView();
     }
-//    Validators.addPhoneNumberValidator(userPhoneNum,ftPhone);
+
     private <T> void setupCellValueFactory(JFXTreeTableColumn<Person, T> column, Function<Person, ObservableValue<T>> mapper) {
         column.setCellValueFactory((TreeTableColumn.CellDataFeatures<Person, T> param) -> {
             if (column.validateValue(param)) {
@@ -147,9 +149,10 @@ public class UsersController implements Initializable {
             userDao.addUser(dbUser);
             System.out.println("new user added by admin");
             userPhoneNum.clear();
+            registerLb.setText("");
         }
         else{
-            System.out.println("user already exist");
+            registerLb.setText("Phone number is already registered");
 
     } }
 

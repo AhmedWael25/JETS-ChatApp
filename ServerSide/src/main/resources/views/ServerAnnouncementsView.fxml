@@ -2,24 +2,35 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
- fx:controller="jets.chatserver.gui.controllers.ServerAnnouncementsController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatserver.gui.controllers.ServerAnnouncementsController">
    <children>
       <Region prefHeight="400.0" prefWidth="103.0" />
       <VBox prefHeight="400.0" prefWidth="385.0">
          <children>
             <BorderPane prefHeight="185.0" prefWidth="560.0">
                <bottom>
-                  <JFXTextArea fx:id="announcementMsg" prefHeight="108.0" prefWidth="385.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER" />
+                  <JFXTextArea fx:id="announcementMsg" onKeyPressed="#sendAnnouncement" prefHeight="108.0" prefWidth="385.0" promptText="Your message" style="-fx-background-color: #cdc9c9;" unFocusColor="#cdc9c917" BorderPane.alignment="CENTER" />
                </bottom>
+               <top>
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="95.0" prefWidth="380.0" text="Server Announcements" textFill="#304269" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </top>
+               <left>
+                  <Region prefHeight="24.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+               </left>
             </BorderPane>
             <JFXButton fx:id="announcementBtn" onAction="#sendAnnouncement" prefHeight="45.0" prefWidth="459.0" style="-fx-background-color: #304269;" text="Send " textFill="WHITE" />
+            <Label fx:id="emptyDt" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="385.0" text=" " textFill="#f80b0b" />
          </children>
       </VBox>
    </children>
