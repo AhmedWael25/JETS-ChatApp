@@ -17,16 +17,12 @@ public class DataSourceFactory {
         if(dbDataSource == null) {
             Properties props = new Properties();
             FileInputStream fis = null;
-            try {
-                fis = new FileInputStream("db.properties");
-                props.load(fis);
-                dbDataSource = new MysqlDataSource();
-                dbDataSource.setURL(props.getProperty("MYSQL_DB_URL"));
-                dbDataSource.setUser(props.getProperty("MYSQL_DB_USERNAME"));
-                dbDataSource.setPassword(props.getProperty("MYSQL_DB_PASSWORD"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            //                fis = new FileInputStream("./db/db.properties");
+//                props.load(fis);
+            dbDataSource = new MysqlDataSource();
+            dbDataSource.setURL("jdbc:mysql://localhost:3306/chatapp");
+            dbDataSource.setUser("root");
+            dbDataSource.setPassword("admin");
             return dbDataSource;
         } else {
             return dbDataSource;

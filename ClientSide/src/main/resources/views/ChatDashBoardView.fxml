@@ -17,9 +17,6 @@
 <StackPane fx:id="mainContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="669.0" prefWidth="1081.0" stylesheets="@../styles/application.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.ChatDashBoardController">
    <children>
       <BorderPane fx:id="borderContainer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
-         <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </center>
          <left>
             <GridPane prefHeight="669.0" prefWidth="112.0" style="-fx-background-color: #D9E8F5; -fx-border-style: none solid none none; -fx-border-color: grey; -fx-border-width: 0.5px;" BorderPane.alignment="CENTER">
               <columnConstraints>
@@ -135,6 +132,9 @@
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>
+                           <padding>
+                              <Insets top="10.0" />
+                           </padding>
                         </JFXButton>
                      </children>
                   </AnchorPane>
