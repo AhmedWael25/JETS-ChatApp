@@ -36,6 +36,7 @@ import javafx.stage.Stage;
 
 import javafx.util.Duration;
 import jets.chatclient.gui.helpers.ModelsFactory;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 import org.kordamp.ikonli.javafx.FontIcon;
@@ -295,7 +296,7 @@ public class UserProfileController {
         Registry reg = modelsFactory.getRegistry();
 
         try {
-            userProfileService = (UserProfileServiceInt) reg.lookup("UserProfileService");
+            userProfileService = ServicesFactory.getInstance().getUpdateProfileService();
         } catch (RemoteException | NotBoundException e) {
             System.out.println("can't find Service");
             e.printStackTrace();

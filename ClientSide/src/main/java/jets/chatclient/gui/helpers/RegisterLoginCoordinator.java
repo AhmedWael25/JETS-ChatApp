@@ -111,5 +111,9 @@ public class RegisterLoginCoordinator {
         registerLoginContainer = null;
     }
 
+    public  void  clearSignUpScreen(){
+        registerLoginScreens.remove("signUpScreen");
+    }
+
 }
 

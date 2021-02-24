@@ -81,8 +81,8 @@ public class LoginController implements Initializable {
                    System.out.println(userCredentials.getUserPhone());
                    tfPhonenumber.setText(userCredentials.getUserPhone());}
 
-        btnSignIn.requestFocus();
-        btnSignIn.requestFocus();
+                    btnSignIn.requestFocus();
+                    btnSignIn.requestFocus();
             }
 
     public void handleLoginBtnClick(ActionEvent e) {
@@ -99,6 +99,7 @@ public class LoginController implements Initializable {
                     handleinvalidPhoneNumber(currentUserModel.getPhoneNumber());
                     break;
                 case 3://user registered by admin(no data saved for user)
+                    registerLoginCoordinator.clearSignUpScreen();
                     registerLoginCoordinator.switchToSignupScreen();
                     break;
                 case -1 :
@@ -119,13 +120,11 @@ public class LoginController implements Initializable {
 
     private void handleinvalidPhoneNumber(String phoneNumber) {
         errText.setText("There's no user with such ID!.");
-
-//        registerLoginCoordinator.switchToGetPasswordScreen();
     }
-
 
     public void handleSignupBtnClick(ActionEvent e) {
 
+        registerLoginCoordinator.clearSignUpScreen();
         registerLoginCoordinator.switchToSignupScreen();
     }
 
