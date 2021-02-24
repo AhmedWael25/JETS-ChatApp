@@ -51,7 +51,7 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
             if (userDao.isUserExist(userPhone)) {
                 System.out.println(userDao.isUserExist(userPhone));
                 DBUserCredintials userCredintials = userDao.getUserCredentials(userPhone);
-                if (userCredintials.getUserPassword().equals("\"\""))
+                if (userCredintials.getUserPassword().equals(""))
                     return registrationStatus.NotFullyRegistered.getValue();
                 else
                     return registrationStatus.Registered.getValue();

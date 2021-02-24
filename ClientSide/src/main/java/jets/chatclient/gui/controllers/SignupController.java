@@ -28,6 +28,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Arrays;
 
@@ -93,6 +94,9 @@ public class SignupController implements Initializable {
         ComboBoxUtils.fillComboBox(cbCountry, countries);
         ComboBoxUtils.makeComboSearchable(cbCountry);
 
+       //  cbCountry.getItems().addAll()
+
+
 
 
         Validators.addNameValidator(tfDisplayname, fiDisplayName);
@@ -140,8 +144,10 @@ public class SignupController implements Initializable {
                 case 3://user registered by admin(no data saved for user)
                     user = getUserData();
                     currentUserDto = DTOObjAdapter.convertToUserDto(user);
-                    if (signUpService.signUpUser(currentUserDto))
+                    if (signUpService.signUpUser(currentUserDto)){
                         System.out.println("user updated Successfully");
+                       registerLoginCoordinator.switchToLoginScreen();
+                    }
                     else System.out.println("user registration failed");
                     break;
 

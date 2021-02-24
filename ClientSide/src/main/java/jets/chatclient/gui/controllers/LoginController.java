@@ -97,6 +97,7 @@ public class LoginController implements Initializable {
                     handleinvalidPhoneNumber(currentUserModel.getPhoneNumber());
                     break;
                 case 3://user registered by admin(no data saved for user)
+
                     registerLoginCoordinator.switchToSignupScreen();
                     break;
             }

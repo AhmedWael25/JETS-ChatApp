@@ -51,7 +51,8 @@ public class ConfigManager {
             userCredentials = (UserCredentials) unmarshaller.unmarshal(new FileReader("config.xml"));
 
         } catch (JAXBException | IOException e) {
-            e.printStackTrace();
+            userCredentials = new UserCredentials("","");
+
         }
         return userCredentials;
     }
