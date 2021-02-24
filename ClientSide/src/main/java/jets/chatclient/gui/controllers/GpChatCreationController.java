@@ -1,36 +1,26 @@
 package jets.chatclient.gui.controllers;
 
 
-import com.jfoenix.controls.JFXAlert;
-import com.jfoenix.controls.JFXDialog;
 import commons.remotes.server.AddFriendServiceInt;
 import commons.remotes.server.GpChatServiceInt;
-import commons.sharedmodels.GpChatDto;
 import commons.sharedmodels.GpChatUserDto;
 import commons.utils.ImageEncoderDecoder;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.FileChooser;
-import jets.chatclient.gui.helpers.ControllersGetter;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.ServicesFactory;
-import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.LineNumberInputStream;
+import java.io.InputStream;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -41,7 +31,6 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 import jets.chatclient.gui.models.FriendModel;
@@ -70,19 +59,28 @@ public class GpChatCreationController implements  Initializable {
     List<FriendModel> groupTargetFriends;
     List<FriendModel> groupSourceFriends;
     private String errorMsg = "";
-    private File imgFile;
-    private File defImg ;
-    private String encodedImg;
+    private String defImgEncoded;
+    private String choosenImgEncoded;
+    Image defaultImg;
+    File choosenImgFile;
 
     private CurrentUserModel userModel ;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        userModel = ModelsFactory.getInstance().getCurrentUserModel();
 
-        defImg = new File(getClass().getResource("/images/van.jpg").getPath());
-        imgFile = defImg;
-        gpChatImg.setFill(new ImagePattern(new Image(imgFile.toURI().toString())));
+        userModel = ModelsFactory.getInstance().getCurrentUserModel();
+        try {
+            InputStream inputStream = getClass().getResourceAsStream("/images/van.jpg");
+            byte[] buff = inputStream.readAllBytes();
+            defImgEncoded = ImageEncoderDecoder.getEncodedImage(buff);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        defaultImg = ImageEncoderDecoder.getDecodedImage(defImgEncoded);
+        gpChatImg.setFill(new ImagePattern(defaultImg));
 
         new Thread(fetchFriends).start();
 
@@ -105,7 +103,7 @@ public class GpChatCreationController implements  Initializable {
                 gpChatService.createGroupChat(dto);
 
                 gpNameField.clear();
-                gpChatImg.setFill(new ImagePattern(new Image(defImg.toURI().toString())));
+                gpChatImg.setFill(new ImagePattern(defaultImg));
                 friendsListView.getSourceItems().addAll(userFriends);
                 friendsListView.getTargetItems().clear();
 
@@ -116,25 +114,30 @@ public class GpChatCreationController implements  Initializable {
     }
 
     @FXML
-    void gpImgChange(ActionEvent event) {
+    void gpImgChange(ActionEvent event) throws IOException {
 
+        errorLabel.setText("");
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
                 .add(new FileChooser.ExtensionFilter("images", "*.png", "*.jpg" ,"*.jpeg "));
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        imgFile = fileChooser.showOpenDialog(null);
+        choosenImgFile = fileChooser.showOpenDialog(null);
 
-        if(imgFile == null) {
-            imgFile = defImg;
+        if(choosenImgFile == null) {
+            return;
         }
-
-        if(imgFile.length() > 1000000){
+        if(choosenImgFile.length() > 1000000){
             //TODO File Is To Large.. Only allowed 1 MB Images
             showErrorMsg("File Is Too Large, Maximum Size Allowed is 1MB.");
             return;
         }
-        errorLabel.setText("");
-        gpChatImg.setFill(new ImagePattern(new Image(imgFile.toURI().toString())));
+        choosenImgEncoded = ImageEncoderDecoder.getEncodedImage(choosenImgFile);
+        if(choosenImgEncoded.equals("")) {
+            showErrorMsg("Image is Not Supported or corrupted, Pick Another");
+            choosenImgEncoded = defImgEncoded;
+            return;
+        }
+        gpChatImg.setFill(new ImagePattern(new Image(choosenImgFile.toURI().toString())));
 
     }
 
@@ -187,14 +190,13 @@ public class GpChatCreationController implements  Initializable {
     private GpChatUserDto collectDataIntoDto() throws IOException {
         GpChatUserDto gpUserDto = new GpChatUserDto();
 
-        gpUserDto.setChatName(gpNameField.getText());
-        String str = null;
-        if (imgFile == null){
-             str = ImageEncoderDecoder.getEncodedImage(defImg);
+        if(!choosenImgEncoded.equals("")){
+            gpUserDto.setChatImage(choosenImgEncoded);
         }else {
-            str = ImageEncoderDecoder.getEncodedImage(imgFile);
+            gpUserDto.setChatImage(defImgEncoded);
         }
-        gpUserDto.setChatImage(str);
+        gpUserDto.setChatName(gpNameField.getText());
+
         gpUserDto.setAdminId(userModel.getPhoneNumber() );
 
         List<String> userIds = new ArrayList<>();
@@ -208,7 +210,6 @@ public class GpChatCreationController implements  Initializable {
 
     //    ================== RUNNABLES =================
     Runnable fetchFriends = () -> {
-
         try {
             ServicesFactory servicesFactory = ServicesFactory.getInstance();
             friendService = servicesFactory.getAddFriendService();

@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.User;
@@ -20,6 +21,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -69,7 +71,7 @@ public class SignupController implements Initializable {
         Registry reg = modelsFactory.getRegistry();
 
         try {
-            signUpService = (SignUpServiceInt) reg.lookup("SignUpService");
+            signUpService = ServicesFactory.getInstance().getSignUpService();
         } catch (RemoteException | NotBoundException e) {
             System.out.println("can't find sign up Service");
             e.printStackTrace();
@@ -168,8 +170,11 @@ public class SignupController implements Initializable {
         String userDefaultImage = "";
         ImageEncoderDecoder imageEncoderDecoder = new ImageEncoderDecoder();
         try {
-            File f = new File(getClass().getResource("/images/userDefaultImage.png").getPath());
-            userDefaultImage = imageEncoderDecoder.getEncodedImage(f);
+            String defPath = "/images/userDefaultImage.png";
+            InputStream inputStream = getClass().getResourceAsStream(defPath);
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+            userDefaultImage = imageEncoderDecoder.getEncodedImage(buffer);
         } catch (IOException e) {
             e.printStackTrace();
         }

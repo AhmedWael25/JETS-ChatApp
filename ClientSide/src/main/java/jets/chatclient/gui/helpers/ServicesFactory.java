@@ -56,5 +56,9 @@ public class ServicesFactory {
         return (FileDownloadServiceInt) reg.lookup("FileDownloadService");
     }
 
+    public  SignUpServiceInt getSignUpService() throws  RemoteException, NotBoundException{
+        return (SignUpServiceInt) reg.lookup("SignUpService");
+    }
+
 
 }

@@ -28,6 +28,7 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -130,8 +131,12 @@ public class UsersController implements Initializable {
         String userDefaultImage = "";
         ImageEncoderDecoder imageEncoderDecoder = new ImageEncoderDecoder();
         try {
-            File f = new File(getClass().getResource("/images/userDefaultImage.png").getPath());
-            userDefaultImage = imageEncoderDecoder.getEncodedImage(f);
+            String defPath = "/images/userDefaultImage.png";
+            InputStream inputStream = getClass().getResourceAsStream(defPath);
+            byte[] buffer = new byte[inputStream.available()];
+            inputStream.read(buffer);
+            userDefaultImage = imageEncoderDecoder.getEncodedImage(buffer);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
