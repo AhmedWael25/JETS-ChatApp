@@ -20,7 +20,7 @@ public class App extends Application {
         primaryStage.setTitle("Connect ChatApp Server");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/symbol.png").toExternalForm()) );
        stageCoordinator.switchToServerDashBoard();
-
+        primaryStage.setResizable(false);
         primaryStage.show();
 
 

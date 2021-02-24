@@ -72,7 +72,7 @@
                         <children>
                            <JFXTextField fx:id="userPhoneNum" alignment="CENTER" prefHeight="25.0" prefWidth="123.0" promptText="User Phone Number" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                            <FontIcon fx:id="ftPhone" iconLiteral="fas-phone" wrappingWidth="42.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                           <JFXButton alignment="BASELINE_CENTER" onAction="#addUser" prefHeight="25.0" prefWidth="135.0" style="-fx-background-color: #4059a9;" text="Add User" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                           <JFXButton alignment="BASELINE_CENTER" onAction="#addUser" prefHeight="25.0" prefWidth="135.0" style="-fx-background-color: #4059a9;" text="Add User" textFill="#f8f8f8" GridPane.columnIndex="3" GridPane.rowIndex="8" />
                         </children>
                      </GridPane>
                   </children>

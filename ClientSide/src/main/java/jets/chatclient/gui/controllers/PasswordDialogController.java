@@ -73,9 +73,6 @@ public class PasswordDialogController {
     }
 
 
-
-
-
     @FXML
     void closeWithoutConfirm(ActionEvent event) {
         // get a handle to the stage
@@ -198,6 +195,7 @@ public class PasswordDialogController {
         wrongLabel.setStyle("-fx-text-fill: #36ec0d");
         wrongLabel.setText(msg);
         wrongLabel.setVisible(true);
+        wrongIcon.setVisible(false);
     }
 
     void failNotification(String msg){

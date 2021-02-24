@@ -93,7 +93,7 @@ public class StatsController implements Initializable {
 
         lineChartTile = TileBuilder.create()
                 .skinType(Tile.SkinType.SMOOTHED_CHART)
-                .prefSize(300, 300)
+                .prefSize(450, 450)
                 .title("User/Country")
                 .animated(true)
                 .smoothing(false)
@@ -105,7 +105,7 @@ public class StatsController implements Initializable {
 
         countryFlagsTile = TileBuilder.create()
                 .skinType(Tile.SkinType.CUSTOM)
-                .prefSize(300, 250)
+                .prefSize(450, 450)
                 .title("Users Per Country")
                 .backgroundColor(Tile.GRAY)
                 .foregroundColor(Tile.DARK_BLUE)
@@ -114,7 +114,7 @@ public class StatsController implements Initializable {
 
         genderTile = TileBuilder.create()
                 .skinType(Tile.SkinType.DONUT_CHART)
-                .prefSize(300, 250)
+                .prefSize(450, 450)
                 .title("Gender")
                 .text("this is number of males/females")
                 .animated(true)
@@ -126,7 +126,7 @@ public class StatsController implements Initializable {
 
         avaiTile = TileBuilder.create()
                 .skinType(Tile.SkinType.DONUT_CHART)
-                .prefSize(300, 250)
+                .prefSize(450, 450)
                 .title("Availability")
                 .text("this is number of online/offline Users.")
                 .animated(true)
@@ -209,8 +209,9 @@ public class StatsController implements Initializable {
     }
 
     private HBox getCountryItem(final Flag flag, final String text, final String data) {
-     //   ImageView imageView = new ImageView(flag.getImage(22));
-      //  HBox.setHgrow(imageView, Priority.NEVER);
+
+        ImageView imageView = new ImageView(flag.getImage(22));
+        HBox.setHgrow(imageView, Priority.NEVER);
 
         Label name = new Label(text);
         name.setTextFill(Tile.FOREGROUND);
@@ -226,9 +227,10 @@ public class StatsController implements Initializable {
         views.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(views, Priority.NEVER);
 
-        HBox hBox = new HBox(5, name, spacer, views);
+        HBox hBox = new HBox(5,imageView, name, spacer, views);
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.setFillHeight(true);
+
 
         return hBox;
     }

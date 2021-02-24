@@ -21,12 +21,19 @@ public class AvailabilityController implements Initializable {
                 .prefSize(300, 400)
                 .title("Server Availability")
                 .animated(true)
+                .flatUI(true)
                 .build();
+        switchTile.setActive(true);
         container.setCenter(switchTile);
 
-        switchTile.setOnSwitchPressed(e -> System.out.println("Switch pressed"));
-        switchTile.setOnSwitchReleased(e -> System.out.println("Switch released"));
+        switchTile.setOnSwitchPressed(e -> {
 
+        });
+        switchTile.setOnSwitchReleased(e -> {
+
+        });
 
     }
+
+
 }
