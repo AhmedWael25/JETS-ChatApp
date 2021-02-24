@@ -36,6 +36,16 @@ public class Validators {
     //required Msg
     final static String requiredMsg = "Required";
 
+
+    //IP regex
+    final static String IPAddressRegex = "(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])" + "\\." +
+                            "(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])" + "\\." +
+                            "(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])" + "\\." +
+                            "(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])";
+
+    final static String invalidIPAddressMsg = "Enter a valid IP!";
+
+
 //TODO handle this shit
     public static void buttonValidate(JFXButton btn, Parent... fields) {
         btn.setDisable(true);
@@ -88,6 +98,15 @@ public class Validators {
 
         bindValidation(field, fi);
 
+
+        return field;
+    }
+
+    public static JFXTextField addIPlValidator(JFXTextField field, FontIcon fi) {
+        RegexValidator dispalynameValidator = getRegexValidator(IPAddressRegex, invalidIPAddressMsg);
+        field.getValidators().add(dispalynameValidator);
+
+        bindValidation(field, fi);
 
         return field;
     }

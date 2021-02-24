@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.kordamp.ikonli.javafx.*?>
+
+<AnchorPane prefHeight="596.0" prefWidth="786.0" style="-fx-background-color: #D9E8F5;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.IPCheckController">
+   <children>
+      <VBox alignment="CENTER" layoutX="260.0" layoutY="129.0" prefHeight="342.0" prefWidth="265.0" spacing="30.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="243.0" spacing="25.0">
+               <children>
+                  <FontIcon fx:id="hostIcon" iconColor="#636b61" iconLiteral="fas-server" iconSize="30" wrappingWidth="25.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </FontIcon>
+                  <JFXTextField fx:id="hostContainer" focusColor="#f26101" focusTraversable="false" prefColumnCount="40" prefHeight="35.0" prefWidth="240.0" promptText="IP Address" style="-fx-prompt-text-fill: #787474;" unFocusColor="#304269">
+                     <font>
+                        <Font name="Dosis Regular" size="15.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets bottom="5.0" />
+                     </HBox.margin>
+                  </JFXTextField>
+               </children>
+            </HBox>
+            <JFXButton buttonType="RAISED" contentDisplay="CENTER" ellipsisString="" focusTraversable="false" onAction="#connectButton" prefHeight="42.0" prefWidth="155.0" style="-fx-background-color: #304269;" text="Connect" textFill="#f26101">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="15.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+      <ImageView fitHeight="106.0" fitWidth="215.0" layoutX="288.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/connect2.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
