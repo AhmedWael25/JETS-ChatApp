@@ -118,8 +118,7 @@ public class LoginController implements Initializable {
     }
 
     private void handleinvalidPhoneNumber(String phoneNumber) {
-        System.out.println("There's no user with phone number: " + phoneNumber);
-        //TODO change the flow, passoword>> chatDashboard
+        errText.setText("There's no user with such ID!.");
 
 //        registerLoginCoordinator.switchToGetPasswordScreen();
     }

@@ -7,8 +7,10 @@ import commons.remotes.server.SignUpServiceInt;
 import commons.sharedmodels.CurrentUserDto;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
 import jets.chatclient.gui.helpers.ServicesFactory;
@@ -56,6 +58,7 @@ public class SignupController implements Initializable {
     public FontIcon fiPassword;
     public FontIcon fiCalendar;
     public FontIcon fiGender;
+    public Label invalidDt;
     private RegisterLoginCoordinator registerLoginCoordinator;
     public SignUpServiceInt signUpService;
 
@@ -130,31 +133,20 @@ public class SignupController implements Initializable {
             System.out.println(UserRegStatus);
             switch (UserRegStatus) {
                 case 1: //user registered
-                    System.out.println("User already registered");
+                    invalidDt.setText("Phone number already registered");
                     break;
-                case 2: //user registration successful
+                case 2:
+                case 3: //user registration successful
                     user = getUserData();
                     CurrentUserDto currentUserDto = DTOObjAdapter.convertToUserDto(user);
-                    System.out.println(currentUserDto);
                     if (signUpService.signUpUser(currentUserDto)) {
-                        System.out.println("user Registered Successfully");
                         registerLoginCoordinator.switchToLoginScreen();
-                    } else //user registration failed
+                    } else
                         System.out.println("user registration failed");
                     break;
 
-                case 3://user registered by admin(no data saved for user)
-                    user = getUserData();
-                    currentUserDto = DTOObjAdapter.convertToUserDto(user);
-                    if (signUpService.signUpUser(currentUserDto)){
-                        System.out.println("user updated Successfully");
-                       registerLoginCoordinator.switchToLoginScreen();
-                    }
-                    else System.out.println("user registration failed");
-                    break;
-
                 case 4:
-                    System.out.println("username already exist");
+                    invalidDt.setText("Username has already been taken");
 
             }
 

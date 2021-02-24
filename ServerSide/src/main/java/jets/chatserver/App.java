@@ -3,6 +3,7 @@ package jets.chatserver;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import jets.chatserver.gui.helpers.ServerDashBoardCoordinator;
 import jets.chatserver.gui.helpers.StageCoordinator;
 import jets.chatserver.network.ServerInit;
@@ -22,6 +23,13 @@ public class App extends Application {
        stageCoordinator.switchToServerDashBoard();
         primaryStage.setResizable(false);
         primaryStage.show();
+
+
+        Window window = primaryStage.getScene().getWindow();
+        window.setOnCloseRequest(e->{
+            Runtime rt = Runtime.getRuntime();
+            rt.exit(0);
+        });
 
 
     }

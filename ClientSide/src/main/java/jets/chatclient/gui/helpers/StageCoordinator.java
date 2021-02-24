@@ -169,7 +169,6 @@ public class StageCoordinator {
         }
         flag=0;
         primaryStage.setHeight(600);
-        primaryStage.setHeight(800);
         primaryStage.setResizable(false);
     }
 
@@ -201,6 +200,8 @@ public class StageCoordinator {
         primaryStage.setResizable(false);
         primaryStage.setHeight(400);
         primaryStage.setWidth(400);
+        primaryStage.setMaxHeight(400);
+        primaryStage.setMaxWidth(400);
     }
 
     public void clearSceneData(){

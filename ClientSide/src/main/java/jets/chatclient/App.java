@@ -25,7 +25,16 @@ import java.rmi.registry.Registry;
 
 public class App extends Application {
 
+    public static String serverIp = "127.0.0.1";
+
     public static void main(String[] args) {
+
+        if(args.length > 0){
+            serverIp = args[0];
+            System.out.println("==>>>>>>>>>>>>>"+args + args[0]);
+        }else {
+            System.out.println("DEFAAAAAAAAAAAUL");
+        }
         launch(args);
     }
 

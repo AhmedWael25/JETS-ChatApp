@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
@@ -46,9 +47,9 @@ public class PasswordViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         modelsFactory = ModelsFactory.getInstance();
         currentUserModel = modelsFactory.getCurrentUserModel();
-        Registry reg = modelsFactory.getRegistry();
+
         try {
-            signInService = (SignInServiceInt) reg.lookup("SignInService");
+            signInService = ServicesFactory.getInstance().getSignInService();
         } catch (RemoteException | NotBoundException e) {
             System.out.println("can't find Service");
             e.printStackTrace();

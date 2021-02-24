@@ -1,6 +1,7 @@
 package jets.chatclient.gui.helpers;
 
 import commons.remotes.server.*;
+import jets.chatclient.App;
 
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -13,7 +14,7 @@ public class ServicesFactory {
     private Registry reg;
 
     private ServicesFactory() throws RemoteException {
-        reg = LocateRegistry.getRegistry("localhost",3000);
+        reg = LocateRegistry.getRegistry(App.serverIp,3000);
     };
 
     public static ServicesFactory getInstance() throws RemoteException {
