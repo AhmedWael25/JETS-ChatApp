@@ -303,7 +303,7 @@ public class GroupChatController implements Initializable {
         msg.setMsgType(MsgType.TEXT);
         msg.setSenderName(userModel.getDisplayName());
         msg.setSenderId(userModel.getPhoneNumber());
-        msg.setMsgContent(typingArea.getText());
+        msg.setMsgContent(typingArea.getText().trim());
 
         Date currDate = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat(  "dd-MM-yyyy HH:mm:ss");
