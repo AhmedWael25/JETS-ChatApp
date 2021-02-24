@@ -1,5 +1,7 @@
 package jets.chatserver.network.rmi;
 
+import com.mysql.cj.xdevapi.Client;
+import commons.remotes.client.ClientInterface;
 import commons.remotes.server.SignInServiceInt;
 import commons.sharedmodels.CurrentUserDto;
 import commons.utils.HashEncoder;
@@ -7,15 +9,20 @@ import jets.chatserver.DBModels.DBUser;
 import jets.chatserver.DBModels.DBUserCredintials;
 import jets.chatserver.database.dao.UserDao;
 import jets.chatserver.database.daoImpl.UserDaoImpl;
+import jets.chatserver.gui.helpers.ModelsFactory;
 import jets.chatserver.network.adapters.EntityDTOAdapter;
 import jets.chatserver.network.adapters.EntityObjAdapter;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Optional;
 
 public class SignInServiceImpl extends UnicastRemoteObject implements SignInServiceInt {
+
+
+    Map<String, ClientInterface> currentConnectedUsers;
 
     enum registrationStatus {
         Registered(1), NotRegistered(2), NotFullyRegistered(3);
@@ -39,7 +46,7 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
 
     public SignInServiceImpl() throws RemoteException {
         super();
-        System.out.println("SignIn service Intialized");
+        currentConnectedUsers = ModelsFactory.getInstance().getCurrentConnectedUsers();
     }
 
 
@@ -47,11 +54,15 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
     @Override
     public Integer checkUserCredentials(String userPhone) throws RemoteException {
         try {
+
+            boolean isUserSingedIn = currentConnectedUsers.containsKey(userPhone);
+            if(isUserSingedIn) return  -1;
+
             UserDao userDao = UserDaoImpl.getUserDaoInstance();
             if (userDao.isUserExist(userPhone)) {
                 System.out.println(userDao.isUserExist(userPhone));
                 DBUserCredintials userCredintials = userDao.getUserCredentials(userPhone);
-                if (userCredintials.getUserPassword().equals("\"\""))
+                if (userCredintials.getUserPassword().equals(""))
                     return registrationStatus.NotFullyRegistered.getValue();
                 else
                     return registrationStatus.Registered.getValue();
@@ -68,6 +79,9 @@ public class SignInServiceImpl extends UnicastRemoteObject implements SignInServ
     public boolean checkUserCredentials(String userPhone, String userPassword) throws RemoteException {
         DBUserCredintials userCredintials = new DBUserCredintials();
         try {
+            boolean isUserSingedIn = currentConnectedUsers.containsKey(userPhone);
+            if(isUserSingedIn) return  false;
+
             UserDao userDao = UserDaoImpl.getUserDaoInstance();
             userCredintials = userDao.getUserCredentials(userPhone);
         } catch (SQLException throwables) {

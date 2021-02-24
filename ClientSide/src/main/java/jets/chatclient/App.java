@@ -37,14 +37,14 @@ public class App extends Application {
         stageCoordinator.switchToMainScene();
         ConfigManager configManager = new ConfigManager();
 
-        if(!configManager.checkIfPasswordSaved()){
+        UserCredentials userCredentials = configManager.readConfigFile();
+
+        if(userCredentials.getUserPhone().equals("")||!configManager.checkIfPasswordSaved() ){
             stageCoordinator.switchToMainScene();
-            System.out.println("user doesn't have credentials stored");
         }
 
         else {
             System.out.println("user has credentials stored");
-             UserCredentials userCredentials = configManager.readConfigFile();
             SignInServiceInt  signInService=null;
             try {
                  signInService = ServicesFactory.getInstance().getSignInService();
@@ -54,11 +54,10 @@ public class App extends Application {
                     CurrentUserDto userDto= signInService.signUserIn(userCredentials.getUserPhone());
                     DTOObjAdapter.convertDtoToCurrentUser(userDto);
                     stageCoordinator.switchToChatDashBoard();
-                }
-                else {
-                    // user password or userPhone has been changed on config file
+                }else {
                     stageCoordinator.switchToMainScene();
                 }
+                
              } catch (RemoteException | NotBoundException e) {
                 System.out.println("can't find Service");
                 e.printStackTrace();

@@ -3,6 +3,7 @@ package jets.chatserver;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import jets.chatserver.gui.helpers.ServerDashBoardCoordinator;
 import jets.chatserver.gui.helpers.StageCoordinator;
 import jets.chatserver.network.ServerInit;
 
@@ -18,7 +19,8 @@ public class App extends Application {
         stageCoordinator.initStage(primaryStage);
         primaryStage.setTitle("Connect ChatApp Server");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/symbol.png").toExternalForm()) );
-        stageCoordinator.switchToServerDashBoard();
+       stageCoordinator.switchToServerDashBoard();
+
         primaryStage.show();
 
 

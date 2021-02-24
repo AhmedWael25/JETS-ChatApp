@@ -209,8 +209,8 @@ public class StatsController implements Initializable {
     }
 
     private HBox getCountryItem(final Flag flag, final String text, final String data) {
-        ImageView imageView = new ImageView(flag.getImage(22));
-        HBox.setHgrow(imageView, Priority.NEVER);
+     //   ImageView imageView = new ImageView(flag.getImage(22));
+      //  HBox.setHgrow(imageView, Priority.NEVER);
 
         Label name = new Label(text);
         name.setTextFill(Tile.FOREGROUND);
@@ -226,7 +226,7 @@ public class StatsController implements Initializable {
         views.setAlignment(Pos.CENTER_RIGHT);
         HBox.setHgrow(views, Priority.NEVER);
 
-        HBox hBox = new HBox(5, imageView, name, spacer, views);
+        HBox hBox = new HBox(5, name, spacer, views);
         hBox.setAlignment(Pos.CENTER_LEFT);
         hBox.setFillHeight(true);
 

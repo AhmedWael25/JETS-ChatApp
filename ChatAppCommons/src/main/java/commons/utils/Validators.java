@@ -56,6 +56,9 @@ public class Validators {
         bindValidation(field, fi);
         return field;
     }
+    //
+
+
 
     public static JFXPasswordField addPasswordValidator(JFXPasswordField field, FontIcon fi) {
 

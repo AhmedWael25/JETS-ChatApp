@@ -21,6 +21,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
+import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.helpers.adapters.DTOObjAdapter;
 import jets.chatclient.gui.models.CurrentUserModel;
@@ -62,10 +63,9 @@ public class LoginController implements Initializable {
         stageCoordinator = StageCoordinator.getInstance();
         currentUserModel = modelsFactory.getCurrentUserModel();
         registerLoginCoordinator = RegisterLoginCoordinator.getInstance();
-                Registry reg = modelsFactory.getRegistry();
 
                 try {
-                    signInService = (SignInServiceInt) reg.lookup("SignInService");
+                    signInService = ServicesFactory.getInstance().getSignInService();
                 } catch (RemoteException | NotBoundException e) {
                     System.out.println("can't find Service");
                     e.printStackTrace();
@@ -98,6 +98,9 @@ public class LoginController implements Initializable {
                     break;
                 case 3://user registered by admin(no data saved for user)
                     registerLoginCoordinator.switchToSignupScreen();
+                    break;
+                case -1 :
+                    System.out.println("already signed in");
                     break;
             }
 

@@ -47,7 +47,7 @@ public class SignUpServiceImpl extends UnicastRemoteObject implements SignUpServ
             UserDao userDao = UserDaoImpl.getUserDaoInstance();
             if (userDao.isUserExist(userPhone)) {
                 DBUserCredintials userCredintials = userDao.getUserCredentials(userPhone);
-                if (userCredintials.getUserPassword().equals("\"\""))
+                if (userCredintials.getUserPassword().equals(""))
                     return SignUpServiceImpl.registrationStatus.NotFullyRegistered.getValue();
                 else
                     return SignUpServiceImpl.registrationStatus.Registered.getValue();
