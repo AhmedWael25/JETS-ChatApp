@@ -29,6 +29,11 @@
                         <JFXTextField fx:id="tfPhonenumber" focusColor="#304269" labelFloat="true" onAction="#handleLoginBtnClick" prefHeight="25.0" prefWidth="218.0" promptText="Phone Number" unFocusColor="#636b61" />
                      </children>
                   </HBox>
+      <Label fx:id="errText" alignment="CENTER" prefHeight="17.0" prefWidth="505.0" style="-fx-text-fill: red;">
+         <padding>
+            <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+         </padding>
+      </Label>
                   <JFXButton fx:id="btnSignIn" buttonType="RAISED" onAction="#handleLoginBtnClick" prefHeight="35.0" prefWidth="104.0" ripplerFill="#d9e8f5" style="-fx-background-color: #304269;" text="Sign In" textFill="WHITE" />
                   <JFXButton fx:id="btnSignUp" onAction="#handleSignupBtnClick" prefHeight="39.0" prefWidth="294.0" ripplerFill="#d9e8f5" text="Don't have an account? signup" textFill="#304269">
                      <font>

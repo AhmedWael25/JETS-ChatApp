@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -45,6 +46,7 @@ public class LoginController implements Initializable {
     public JFXTextField tfPhonenumber;
     public JFXButton btnSignUp;
 
+    public Label errText;
 
     public JFXButton btnSignIn;
 
@@ -88,7 +90,7 @@ public class LoginController implements Initializable {
         try {
             System.out.println(currentUserModel.getPhoneNumber());
             int UserRegStatus = signInService.checkUserCredentials(currentUserModel.getPhoneNumber());
-            System.out.println(UserRegStatus);
+
             switch (UserRegStatus) {
                 case 1: //user registered // redirect to password
                     registerLoginCoordinator.switchToGetPasswordScreen();
@@ -100,12 +102,14 @@ public class LoginController implements Initializable {
                     registerLoginCoordinator.switchToSignupScreen();
                     break;
                 case -1 :
+                    errText.setText("User is Already SignedIn!");
                     System.out.println("already signed in");
                     break;
             }
 
         } catch (RemoteException remoteException) {
             //TODO server down label
+            errText.setText("Server is Down, Try reconnecting later");
             System.out.println("Server Down");
         }
         //TODO change the flow, passoword>> chatDashboards

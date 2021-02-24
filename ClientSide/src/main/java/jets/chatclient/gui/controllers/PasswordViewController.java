@@ -9,6 +9,7 @@ import commons.utils.NotificationUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import jets.chatclient.gui.helpers.ModelsFactory;
 import jets.chatclient.gui.helpers.RegisterLoginCoordinator;
@@ -32,6 +33,7 @@ public class PasswordViewController implements Initializable {
     public JFXButton btnSignup;
 
     public SignInServiceInt signInService;
+    public Label errText;
     CurrentUserModel currentUserModel;
     ModelsFactory modelsFactory;
     StageCoordinator stageCoordinator;
@@ -82,8 +84,7 @@ public class PasswordViewController implements Initializable {
             }
             else{
                 //TODO handle wrong password here
-
-
+                errText.setText("Password is Wrong!");
             }
 
         } catch (RemoteException e) {
