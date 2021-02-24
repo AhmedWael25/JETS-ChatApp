@@ -13,6 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -114,7 +116,9 @@ public class P2PChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent){
-        if(typingArea.getText().equals("")) return;
+
+        if(typingArea.getText().isBlank()) return;
+
         new Thread(() -> {
 
             P2PMessageModel msgModel = createMsgModel();
@@ -134,9 +138,43 @@ public class P2PChatController implements Initializable {
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-
-
         }).start();
+    }
+
+    public void sendMsgByKey(KeyEvent keyEvent) {
+
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+
+            if (!typingArea.getText().isBlank()) {
+
+                if (keyEvent.isAltDown()) {
+                    typingArea.appendText("\n");
+                } else {
+
+                    new Thread(() -> {
+
+                        P2PMessageModel msgModel = createMsgModel();
+                        p2pChatManager.addMsg(msgModel);
+
+                        Platform.runLater(() -> {
+                            messages.add(msgModel);
+                            msgListView.setItems(messages);
+                            typingArea.clear();
+                            int index = messages.size();
+                            msgListView.scrollTo(index);
+                        });
+
+                        // sent Message through network
+                        try {
+                            p2pChatService.sendMessage(DTOObjAdapter.convertObjToDto(msgModel));
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+
+                    }).start();
+                }
+            }
+        }
     }
 
 
@@ -195,7 +233,7 @@ public class P2PChatController implements Initializable {
         msg.setMsgType(MsgType.TEXT);
         msg.setSenderId(userModel.getPhoneNumber());
         msg.setReceiverId(p2pChatManager.getParticipantId(p2pChatManager.getActiveP2PChat()));
-        msg.setMsgBody(typingArea.getText());
+        msg.setMsgBody(typingArea.getText().trim());
 
         Date currentDate = new Date();
         SimpleDateFormat formatDate = new SimpleDateFormat(  "dd-MM-yyyy HH:mm:ss");
@@ -250,9 +288,6 @@ public class P2PChatController implements Initializable {
     };
 
 
-
-
-
     private void disableControls(boolean status){
         typingArea.setDisable(status);
         sendMsgBtn.setDisable(status);
@@ -296,6 +331,7 @@ public class P2PChatController implements Initializable {
 
         return msg;
     }
+
     public void exportHTML(ActionEvent actionEvent) {
         List<P2PMessageModel> messageList = p2pChatManager.getMsgList(p2pChatManager.getActiveP2PChat());
         ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();

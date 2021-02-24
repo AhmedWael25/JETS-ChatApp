@@ -23,10 +23,13 @@
             </Circle>
          </children>
       </StackPane>
-      <Label fx:id="friendName" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="56.0" layoutY="8.0" prefHeight="40.0" prefWidth="171.0" text="Name" textFill="#304269">
+      <Label fx:id="friendName" alignment="BASELINE_LEFT" graphicTextGap="0.0" layoutX="55.0" layoutY="3.0" prefHeight="40.0" prefWidth="170.0" text="Name" textFill="#304269">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="Britannic Bold" size="15.0" />
          </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
       </Label>
    </children>
 </AnchorPane>

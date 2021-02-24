@@ -1,0 +1,11 @@
+#msgListView, #msgListView .list-cell:odd, #msgListView .list-cell:even {
+    -fx-background-color: #f5f5f5;
+}
+
+#chatListView .list-cell:odd, #chatListView .list-cell:even {
+    -fx-cell-size: 56px;
+}
+
+#typingArea {
+    -fx-prompt-text-fill: #787474;
+}
