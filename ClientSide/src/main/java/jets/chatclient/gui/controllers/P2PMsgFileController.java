@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import jets.chatclient.gui.helpers.ModelsFactory;
@@ -14,6 +16,7 @@ import jets.chatclient.gui.helpers.ServicesFactory;
 import jets.chatclient.gui.helpers.StageCoordinator;
 import jets.chatclient.gui.models.CurrentUserModel;
 import jets.chatclient.gui.models.P2PMessageModel;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.*;
 import java.rmi.NotBoundException;
@@ -90,6 +93,10 @@ public class P2PMsgFileController {
 
         if(msg.getSenderId().equals(userModel.getPhoneNumber())) {
             msgcontainer.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            msgBody.setStyle("-fx-background-color: #304269; -fx-border-radius:  0 10 10 10 ; -fx-background-radius: 0 10 10 10;");
+            msgBody.setTextFill(Color.WHITE);
+            FontIcon fontIcon = (FontIcon) msgBody.getGraphic();
+            fontIcon.setIconColor(Paint.valueOf("#fff"));
             userModel.bindToUserAvatar(userImg);
             msgTimestamp.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
             //If Am the sender dont allow the download

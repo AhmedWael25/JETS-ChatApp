@@ -38,6 +38,33 @@ public class Validators {
 
 
 
+    final static String IPAddressRegex = "(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])" + "\\." +
+                            "(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])" + "\\." +
+                            "(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])" + "\\." +
+                            "(\\d{1,2}|(0|1)\\d{2}|2[0-4]\\d|25[0-5])";
+
+    final static String invalidIPAddressMsg = "Enter a valid IP!";
+
+
+//TODO handle this shit
+    public static void buttonValidate(JFXButton btn, Parent... fields) {
+        btn.setDisable(true);
+        for (Parent field : fields) {
+            if (field instanceof JFXComboBox) {
+                btn.setDisable(((JFXComboBox<String>) field).validate() ? false : true);
+            }
+            if (field instanceof JFXDatePicker) {
+                btn.setDisable(((JFXDatePicker) field).validate() ? false : true);
+            }
+            if (field instanceof JFXTextField) {
+                btn.setDisable(((JFXTextField) field).validate() ? false : true);
+            }
+            if (field instanceof JFXPasswordField) {
+                btn.setDisable(((JFXPasswordField) field).validate() ? false : true);
+            }
+        }
+    }
+
 
     public static JFXTextField addNameValidator(JFXTextField field, FontIcon fi) {
         RegexValidator dispalynameValidator = getRegexValidator(displayNameRegex, invalidDisplayNameMsg);
@@ -74,6 +101,15 @@ public class Validators {
 
         bindValidation(field, fi);
 
+
+        return field;
+    }
+
+    public static JFXTextField addIPlValidator(JFXTextField field, FontIcon fi) {
+        RegexValidator dispalynameValidator = getRegexValidator(IPAddressRegex, invalidIPAddressMsg);
+        field.getValidators().add(dispalynameValidator);
+
+        bindValidation(field, fi);
 
         return field;
     }

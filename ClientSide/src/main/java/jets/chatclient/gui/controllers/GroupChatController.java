@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -128,7 +129,9 @@ public class GroupChatController implements Initializable {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
-        if(typingArea.getText().equals("")) return;
+
+        if(typingArea.getText().isBlank()) return;
+
         new Thread(() ->{
             //--Construct Message Model Object
             GpMessageModel msg = createMsgModel();
@@ -149,11 +152,46 @@ public class GroupChatController implements Initializable {
                 msgListView.scrollTo(index);
             });
         }).start();
-
     }
 
-    public void sendFile(ActionEvent actionEvent) {
+    public void sendMsgByKey(KeyEvent keyEvent) {
 
+        if (keyEvent.getCode() == KeyCode.ENTER) {
+
+            if (!typingArea.getText().isBlank()) {
+
+                if (keyEvent.isAltDown()) {
+                    typingArea.appendText("\n");
+                } else {
+
+                    new Thread(() -> {
+                        //--Construct Message Model Object
+                        GpMessageModel msg = createMsgModel();
+                        //--Send Msg Over The Network
+                        try {
+                            gpChatService.sendMessage(DTOObjAdapter.convertoObjToDto(msg));
+                        } catch (RemoteException e) {
+                            e.printStackTrace();
+                        }
+                        //--Add To List Of Messages
+                        //--Add In Gp Chat Manager
+                        gpChatsManager.addMsg(msg);
+                        Platform.runLater(() -> {
+                            msgs.add(msg);
+                            msgListView.setItems(msgs);
+                            typingArea.clear();
+                            int index = msgs.size();
+                            msgListView.scrollTo(index);
+                        });
+                    }).start();
+                }
+            }
+        }
+    }
+
+
+
+    public void sendFile(ActionEvent actionEvent) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
@@ -213,8 +251,6 @@ public class GroupChatController implements Initializable {
         });
     }
 
-
-
     public void addGpChatToList(GpChatDto gpChatDto){
         new Thread(() -> {
 
@@ -250,17 +286,16 @@ public class GroupChatController implements Initializable {
         Platform.runLater(() ->{
             msgs.add(model);
             msgListView.setItems(msgs);
-//            int index = msgs.size();
-//            msgListView.scrollTo(index);
-//            msgListView.setCellFactory(param -> new GPChatMsgViewCell());
+            int index = msgs.size();
+            msgListView.scrollTo(index);
+            msgListView.setCellFactory(param -> new GPChatMsgViewCell());
         });
     }
 
-    public void sendMsg(KeyEvent keyEvent) {
-    }
     public  void closeCreationAlert(){
         alert.hide();
     }
+
     private GpMessageModel createMsgModel(){
         GpMessageModel msg = new GpMessageModel();
 
@@ -268,7 +303,7 @@ public class GroupChatController implements Initializable {
         msg.setMsgType(MsgType.TEXT);
         msg.setSenderName(userModel.getDisplayName());
         msg.setSenderId(userModel.getPhoneNumber());
-        msg.setMsgContent(typingArea.getText());
+        msg.setMsgContent(typingArea.getText().trim());
 
         Date currDate = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat(  "dd-MM-yyyy HH:mm:ss");
@@ -276,6 +311,7 @@ public class GroupChatController implements Initializable {
 
         return  msg;
     }
+
     private GpMessageModel createMsgFileModel(String fileName){
         GpMessageModel msg = new GpMessageModel();
 

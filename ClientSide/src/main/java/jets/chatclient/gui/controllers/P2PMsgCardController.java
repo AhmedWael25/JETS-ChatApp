@@ -3,9 +3,14 @@ package jets.chatclient.gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import jets.chatclient.gui.helpers.GpChatsManager;
 import jets.chatclient.gui.helpers.ModelsFactory;
@@ -50,6 +55,8 @@ public class P2PMsgCardController {
 
         if(msg.getSenderId().equals(userModel.getPhoneNumber())) {
             msgcontainer.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            msgBody.setStyle("-fx-background-color: #304269; -fx-border-radius:  0 10 10 10 ; -fx-background-radius: 0 10 10 10;");
+            msgBody.setTextFill(Color.WHITE);
             userModel.bindToUserAvatar(userImg);
             msgTimestamp.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);
         }
