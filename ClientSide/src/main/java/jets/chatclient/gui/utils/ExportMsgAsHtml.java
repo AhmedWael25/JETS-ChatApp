@@ -16,6 +16,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class ExportMsgAsHtml{
            
             // Use a Transformer for output
             TransformerFactory transformFactory = TransformerFactory.newInstance();
-            StreamSource stylesource = new StreamSource(xsltPath);
+            InputStream inputStream = getClass().getResourceAsStream(xsltPath);
+            StreamSource stylesource = new StreamSource(inputStream);
             Transformer transformer = transformFactory.newTransformer(stylesource);
 
             DOMSource source = new DOMSource((Document) res.getNode());
@@ -87,7 +89,7 @@ public class ExportMsgAsHtml{
         modifiedP2PMsgList =  exportMsgUtils.generateModifiedP2PChatList(peersMessages);
 
         Class<P2PChatJAXBHelper> toBeboundClass = jets.chatclient.gui.utils.P2PChatJAXBHelper.class;
-        String xsltPath = getClass().getResource("/xslt/P2PChatStyle.xslt").getPath();
+        String xsltPath = "/xslt/P2PChatStyle.xslt";
 
         String outputHtmlPath = "P2PMessages.html";
 
@@ -106,7 +108,7 @@ public class ExportMsgAsHtml{
         modifiedGpMsgList =  exportMsgUtils.generateModifiedGpChatList(gpMessages);
 
         Class<GpChatJAXBHelper> toBeboundClass = jets.chatclient.gui.utils.GpChatJAXBHelper.class;
-        String xsltPath = getClass().getResource("/xslt/GpChatStyle.xslt").getPath();
+        String xsltPath = "/xslt/GpChatStyle.xslt";
         // String xsltPath = "src\\main\\resources\\xslt\\GroupMessagesTable.xslt";
         String outputHtmlPath = "GpMessages.html";
 

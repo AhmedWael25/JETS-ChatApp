@@ -67,8 +67,6 @@ public class App extends Application {
         primaryStage.setTitle("Connect ChatApp");
         primaryStage.getIcons().add(new Image(getClass().getResource("/images/symbol.png").toExternalForm()) );
         primaryStage.show();
-
-
     }
 
 
