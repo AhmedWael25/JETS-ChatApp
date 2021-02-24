@@ -115,8 +115,8 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
         //Otherwise Send Noti
         Integer activeChat = p2PChatManager.getActiveP2PChat();
         Integer chatIdFromMsg = p2pMsgDto.getChatId();
-
-        if(!activeChat.equals(chatIdFromMsg)){
+        DashBoardCoordinator dashboard = DashBoardCoordinator.getInstance();
+        if(!activeChat.equals(chatIdFromMsg ) ||  !dashboard.isInChatScreen()){
             String senderName = p2PChatManager.getParticipantName(chatIdFromMsg);
             Image img = p2PChatManager.getParticipantImage(chatIdFromMsg);
             if(p2pMsgDto.getMsgType() == MsgType.TEXT){
@@ -142,7 +142,8 @@ public class ClientInterfaceImpl extends UnicastRemoteObject implements ClientIn
 
         Integer activeChat = gpChatsManager.getActiveChat();
         Integer chatIdFromMsg = gpMessageDto.getChatId();
-        if(!activeChat.equals(chatIdFromMsg)){
+        DashBoardCoordinator dashboard = DashBoardCoordinator.getInstance();
+        if(!activeChat.equals(chatIdFromMsg) || !dashboard.isInGpChatScreen()){
             String senderName = gpMessageDto.getSenderName();
             Image img = gpChatsManager.getChatImg(chatIdFromMsg);
             if(gpMessageDto.getMsgType() == MsgType.TEXT){

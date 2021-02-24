@@ -24,6 +24,7 @@ public class DashBoardCoordinator {
     private static Parent dashboardContainer;
     private static final DashBoardCoordinator dashBoardCoordinator = new DashBoardCoordinator();
     private final Map<String, ScreenData> dashboardScreens = new HashMap<>();
+    private String currScreen;
 
     private DashBoardCoordinator() {
     }
@@ -43,6 +44,7 @@ public class DashBoardCoordinator {
     }
 
     public void switchToChatScreen() {
+        currScreen = "chatscreen";
         if (dashboardContainer == null) {
             throw new RuntimeException("DashBoard Container haven't been init.");
         }
@@ -66,6 +68,7 @@ public class DashBoardCoordinator {
     }
 
     public void switchToGpChatScreen() {
+        currScreen = "gpchatscreen";
         if (dashboardContainer == null) {
             throw new RuntimeException("DashBoard Container haven't been init.");
         }
@@ -89,6 +92,7 @@ public class DashBoardCoordinator {
     }
 
     public void switchToGroupScreen() {
+        currScreen = "contactsscreen";
         if (dashboardContainer == null) {
             throw new RuntimeException("DashBoard Container haven't been init.");
         }
@@ -112,6 +116,7 @@ public class DashBoardCoordinator {
     }
 
     public void switchToProfileScreen() {
+        currScreen = "profilescreen";
         if (dashboardContainer == null) {
             throw new RuntimeException("DashBoard Container haven't been init.");
         }
@@ -165,6 +170,22 @@ public class DashBoardCoordinator {
      public void clearScreens(){
         dashboardScreens.clear();
         dashboardContainer= null;
+     }
+
+     public boolean isInChatScreen(){
+        return currScreen.equals("chatscreen");
+     }
+
+     public  boolean isInGpChatScreen(){
+        return currScreen.equals("gpchatscreen");
+     }
+
+     public  boolean isInProfileScreen(){
+         return currScreen.equals("profilescreen");
+     }
+
+     public boolean isInContactsScreen(){
+         return currScreen.equals("contactsscreen");
      }
 
 }

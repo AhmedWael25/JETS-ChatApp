@@ -343,10 +343,34 @@ public class GroupChatController implements Initializable {
         alert.show();
     }
 
+    private void displayExportingDoneAlert(){
+        JFXAlert alert = new JFXAlert((Stage) gpChatMainContainer.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(true);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new Label("Chat Export"));
+        Label body = new Label("Your Chat Has Been Exported. \n Check it OUT!");
+        layout.setBody(body);
+
+        JFXButton closeButton = new JFXButton("Cancel");
+        closeButton.getStyleClass().add("dialog-accept");
+        closeButton.setStyle("-fx-text-fill: orange;-fx-font-size: 18;-fx-background-color: white ");
+        closeButton.setOnAction(event -> alert.hide());
+
+        layout.setActions(closeButton);
+        alert.setContent(layout);
+        alert.show();
+    }
+
     public void exportHTML(ActionEvent actionEvent) {
-        List<GpMessageModel> messageList = gpChatsManager.getMsgList(gpChatsManager.getActiveChat());
-        ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();
-        exportMsgAsHtml.exportGroupMessages((ArrayList<GpMessageModel>) messageList);
+
+        new Thread(() ->{
+            List<GpMessageModel> messageList = gpChatsManager.getMsgList(gpChatsManager.getActiveChat());
+            ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();
+            exportMsgAsHtml.exportGroupMessages((ArrayList<GpMessageModel>) messageList);
+            Platform.runLater(this::displayExportingDoneAlert);
+        }).start();
+
     }
 
 }

@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import org.kordamp.ikonli.javafx.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXScrollPane?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane fx:id="gpChatMainContainer" prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.GroupChatController">
+<AnchorPane fx:id="gpChatMainContainer" prefHeight="596.0" prefWidth="786.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.GroupChatController">
    <children>
       <GridPane prefHeight="434.0" prefWidth="583.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -27,18 +36,10 @@
                            <font>
                               <Font size="1.0" />
                            </font>
-                           <graphic>
-                              <FontIcon iconColor="#304269" iconLiteral="fas-search" iconSize="15" text="" textAlignment="CENTER" wrappingWidth="32.199951171875" />
-                           </graphic>
                            <HBox.margin>
                               <Insets left="10.0" right="-10.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXTextField fx:id="searchChatField" focusColor="#f26101" focusTraversable="false" minWidth="26.0" prefHeight="26.0" prefWidth="186.0" promptText="Search" style="-fx-prompt-text-fill: #304269;" unFocusColor="#a7aab7" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets bottom="5.0" left="10.0" right="10.0" />
-                           </HBox.margin>
-                        </JFXTextField>
                      </children>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" />
@@ -128,15 +129,15 @@
                               <Font size="1.0" />
                            </font>
                            <HBox.margin>
-                              <Insets right="-10.0" />
+                              <Insets right="10.0" />
                            </HBox.margin>
                            <graphic>
-                              <FontIcon iconColor="#304269" iconLiteral="fas-door-open" iconSize="20" layoutX="10.0" layoutY="10.0" textAlignment="CENTER" wrappingWidth="35.99996280670166" />
+                              <FontIcon iconColor="#304269" iconLiteral="fas-save" iconSize="40" layoutX="10.0" layoutY="10.0" textAlignment="CENTER" wrappingWidth="35.99996280670166" />
                            </graphic>
                         </JFXButton>
                      </children>
                      <padding>
-                        <Insets right="5.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </HBox>
                </top>

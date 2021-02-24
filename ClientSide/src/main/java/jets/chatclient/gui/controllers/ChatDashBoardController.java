@@ -63,7 +63,7 @@ public class ChatDashBoardController implements Initializable {
     private RegisterLoginCoordinator registerLoginCoordinator;
     private RegisteringClientInt registeringClientService;
     private CurrentUserModel currentUserModel;
-    private   ModelsFactory modelsFactory;
+    private  ModelsFactory modelsFactory;
 
     @FXML
     void switchedToGPChatPane(ActionEvent event) {
@@ -103,11 +103,11 @@ public class ChatDashBoardController implements Initializable {
         currentUserModel.bindToUserAvatar(userImageCircle);
         currentUserModel.bindToUserStatus(userStatusCircle);
         try {
-            dashBoardCoordinator= DashBoardCoordinator.getInstance();
+            dashBoardCoordinator = DashBoardCoordinator.getInstance();
             dashBoardCoordinator.initScreen(borderContainer);
             dashBoardCoordinator.initAllScreens();
-            dashBoardCoordinator.switchToGpChatScreen();
-            activateBtn(groupChatBtn);
+            dashBoardCoordinator.switchToChatScreen();
+            activateBtn(chatBtn);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -134,7 +134,10 @@ public class ChatDashBoardController implements Initializable {
 
             if (!btn.equals(profileBtn)){
                 FontIcon n = (FontIcon) btn.getGraphic();
-                n.setIconColor(Paint.valueOf("#636b61"));
+                n.setIconColor(Paint.valueOf("#F26101"));
+            }
+            if(btn.equals(profileBtn)){
+                userImageCircle.setStroke(Paint.valueOf("#F26101"));
             }
         }
         if (btnStyleClasses.contains("sideMenuBtn-inactive")){
@@ -150,7 +153,10 @@ public class ChatDashBoardController implements Initializable {
 
             if (!btn.equals(profileBtn)){
                 FontIcon n = (FontIcon) btn.getGraphic();
-                n.setIconColor(Paint.valueOf("#ffffff"));
+                n.setIconColor(Paint.valueOf("#304269"));
+            }
+            if(btn.equals(profileBtn)){
+                userImageCircle.setStroke(Paint.valueOf("#304269"));
             }
         }
         if (btnStyleClasses.contains("sideMenuBtn-active")){
@@ -159,12 +165,11 @@ public class ChatDashBoardController implements Initializable {
     }
 
     private  void deActivateAllBtns(){
-
         deActivateBtn(profileBtn);
         deActivateBtn(chatBtn);
         deActivateBtn(groupChatBtn);
         deActivateBtn(groupsBtn);
-        deActivateBtn(settingsBtn);
+        deActivateBtn(signOutBtn);
     }
 
 
@@ -210,8 +215,5 @@ public class ChatDashBoardController implements Initializable {
             } catch (FileNotFoundException | RemoteException | NotBoundException e) {
                 e.printStackTrace();
             }
-
-
-
     }
 }

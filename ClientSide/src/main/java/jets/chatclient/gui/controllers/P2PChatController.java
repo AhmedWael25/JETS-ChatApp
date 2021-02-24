@@ -278,6 +278,24 @@ public class P2PChatController implements Initializable {
         alert.setContent(layout);
         alert.show();
     }
+    private void displayExportingDoneAlert(){
+        JFXAlert alert = new JFXAlert((Stage) P2PChatContainer.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(true);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new Label("Chat Export"));
+        Label body = new Label("Your Chat Has Been Exported. \n Check it OUT!");
+        layout.setBody(body);
+
+        JFXButton closeButton = new JFXButton("Cancel");
+        closeButton.getStyleClass().add("dialog-accept");
+        closeButton.setStyle("-fx-text-fill: orange;-fx-font-size: 18;-fx-background-color: white ");
+        closeButton.setOnAction(event -> alert.hide());
+
+        layout.setActions(closeButton);
+        alert.setContent(layout);
+        alert.show();
+    }
 
     private P2PMessageModel createMsgFileModel(String fileName){
 
@@ -297,10 +315,12 @@ public class P2PChatController implements Initializable {
         return msg;
     }
     public void exportHTML(ActionEvent actionEvent) {
-        List<P2PMessageModel> messageList = p2pChatManager.getMsgList(p2pChatManager.getActiveP2PChat());
-        ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();
-        exportMsgAsHtml.exportP2PMessages((ArrayList<P2PMessageModel>) messageList);
-
+        new Thread(() ->{
+            List<P2PMessageModel> messageList = p2pChatManager.getMsgList(p2pChatManager.getActiveP2PChat());
+            ExportMsgAsHtml exportMsgAsHtml = new ExportMsgAsHtml();
+            exportMsgAsHtml.exportP2PMessages((ArrayList<P2PMessageModel>) messageList);
+            Platform.runLater(this::displayExportingDoneAlert);
+        }).start();
     }
 
 }
