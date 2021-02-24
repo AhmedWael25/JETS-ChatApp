@@ -23,11 +23,11 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="96.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="137.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="120.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="182.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="137.0" minHeight="10.0" prefHeight="115.0" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
@@ -37,7 +37,7 @@
                            <graphic>
                               <StackPane>
                                  <children>
-                                    <Circle fx:id="userImageCircle" fill="#fcfcfc" radius="30.0" stroke="#304269" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" />
+                                    <Circle fx:id="userImageCircle" fill="#fcfcfc" radius="30.0" stroke="#304269" strokeLineCap="ROUND" strokeLineJoin="ROUND" strokeType="INSIDE" strokeWidth="2.0" />
                                     <Circle fx:id="userStatusCircle" fill="#d00d30" radius="9.0" stroke="#0d0d0d" strokeType="INSIDE" StackPane.alignment="BOTTOM_RIGHT" />
                                  </children>
                               </StackPane>

@@ -15,11 +15,11 @@
             <Insets />
          </HBox.margin>
          <children>
-            <Circle fx:id="userImg" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0">
+            <Circle fx:id="userImg" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5">
                <StackPane.margin>
                   <Insets left="5.0" />
                </StackPane.margin></Circle>
-            <Circle fx:id="userStatus" fill="RED" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="BOTTOM_RIGHT" />
+            <Circle fx:id="userStatus" fill="RED" radius="8.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" StackPane.alignment="BOTTOM_RIGHT" />
          </children>
       </StackPane>
       <VBox maxHeight="Infinity">

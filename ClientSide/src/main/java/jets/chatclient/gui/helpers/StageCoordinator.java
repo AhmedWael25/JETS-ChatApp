@@ -127,9 +127,9 @@ public class StageCoordinator {
             primaryStage.setScene(chatScene);
         }
         //TODO refactor
-        flag =1;
-        primaryStage.setResizable(false);
-        primaryStage.setHeight(680);
+        primaryStage.setResizable(true);
+        primaryStage.setMinHeight(680);
+        primaryStage.setMinWidth(1080);
         flag =1;
         Window window = primaryStage.getScene().getWindow();
         window.setOnCloseRequest(e->{
@@ -169,6 +169,7 @@ public class StageCoordinator {
         }
         flag=0;
         primaryStage.setHeight(600);
+        primaryStage.setHeight(800);
         primaryStage.setResizable(false);
     }
 

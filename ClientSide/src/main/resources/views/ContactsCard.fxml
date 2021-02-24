@@ -16,8 +16,8 @@
             <Insets />
          </HBox.margin>
          <children>
-            <Circle fx:id="userImg" fill="DODGERBLUE" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-            <Circle fx:id="userStatus" fill="RED" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="BOTTOM_RIGHT" />
+            <Circle fx:id="userImg" fill="DODGERBLUE" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" />
+            <Circle fx:id="userStatus" fill="RED" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" StackPane.alignment="BOTTOM_RIGHT" />
          </children>
       </StackPane>
       <VBox alignment="CENTER" maxHeight="Infinity">

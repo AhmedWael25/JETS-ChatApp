@@ -19,9 +19,9 @@
 
 <AnchorPane prefHeight="477.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jets.chatclient.gui.controllers.UserProfileController">
    <children>
-      <SplitPane dividerPositions="0.34523809523809523" layoutX="-4.599999904632568" layoutY="-6.199999809265137" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.35" focusTraversable="false" layoutX="-4.599999904632568" layoutY="-6.199999809265137" scaleShape="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
-            <VBox fx:id="leftVBox" alignment="TOP_CENTER" pickOnBounds="false" prefHeight="434.0" prefWidth="234.0" snapToPixel="false" spacing="30.0" SplitPane.resizableWithParent="false">
+            <VBox fx:id="leftVBox" alignment="TOP_CENTER" maxWidth="350.0" minWidth="350.0" pickOnBounds="false" prefHeight="434.0" prefWidth="350.0" snapToPixel="false" spacing="50.0" SplitPane.resizableWithParent="false">
                <children>
                   <AnchorPane maxHeight="156.0" maxWidth="160.0" prefHeight="149.0" prefWidth="119.0">
                      <children>
@@ -63,7 +63,7 @@
                         <JFXTextArea fx:id="bioTextArea" layoutY="33.0" prefHeight="57.0" prefWidth="164.0" unFocusColor="#4d4d4d" wrapText="true" />
                      </children>
                   </Group>
-                  <HBox fillHeight="false" prefHeight="33.0" prefWidth="358.0" spacing="30.0">
+                  <HBox alignment="CENTER" fillHeight="false" prefHeight="33.0" prefWidth="358.0" spacing="30.0">
                      <children>
                         <Label prefHeight="25.0" prefWidth="80.0" text="Status" textFill="#4b4b5799">
                            <font>
@@ -88,7 +88,7 @@
                <children>
                   <BorderPane fx:id="rightSidePane" layoutX="18.0" prefHeight="435.0" prefWidth="399.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                      <top>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="376.0" spacing="15.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER_LEFT">
+                        <HBox alignment="CENTER_RIGHT" nodeOrientation="RIGHT_TO_LEFT" prefHeight="54.0" prefWidth="376.0" spacing="20.0" style="-fx-background-color: #D9E8F5;" BorderPane.alignment="CENTER_LEFT">
                            <BorderPane.margin>
                               <Insets />
                            </BorderPane.margin>
@@ -101,7 +101,7 @@
                                     <FontIcon fx:id="notificationIcon" iconColor="#d73838" iconLiteral="fas-exclamation-triangle" iconSize="20" visible="false" />
                                  </graphic>
                               </Label>
-                              <Label fx:id="phoneNumberLabel" minWidth="125.0" textFill="#4b4b5799">
+                              <Label fx:id="phoneNumberLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="10.0" minWidth="125.0" textFill="#4b4b5799">
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font>

@@ -5,6 +5,7 @@ import com.jfoenix.controls.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
@@ -221,6 +222,8 @@ public class UserProfileController {
 
             // Encode Image to Send It
             String encodedImage = ImageEncoderDecoder.getEncodedImage(newImageFile);
+            if(encodedImage.equals("")) return;
+
             // Call server service and send your photo
             boolean updateState = userProfileService.updateProfilePic(encodedImage, currentUserModel.getPhoneNumber());
             //check the returned boolean and update your user model depends on it.
@@ -303,8 +306,19 @@ public class UserProfileController {
 
         //----------------- load the default pic -------------------//
         if(currentUserModel.getImage() == null){
-            URL imageUrl = this.getClass().getResource("/images/userDefaultImage.png");
-            setProfilePic(imageUrl.getPath());
+            //TODO CHANGE
+
+            String defImageUrl = "/images/userDefaultImage.png";
+            InputStream inputStream = getClass().getResourceAsStream(defImageUrl);
+            String imgEncoded = null;
+
+            try {
+                byte[] buffer = inputStream.readAllBytes();
+                imgEncoded = ImageEncoderDecoder.getEncodedImage(buffer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            setProfilePic(imgEncoded);
         }else{
             profilePic.setFill(new ImagePattern(currentUserModel.getImage()));
         }
@@ -338,12 +352,12 @@ public class UserProfileController {
 
     }
 
-    private void setProfilePic(String imagePath) {
+    private void setProfilePic(String imgEncoded) {
 
-        Image im = new Image("file:" + imagePath, false);
-        profilePic.setFill(new ImagePattern(im));
+        Image img = ImageEncoderDecoder.getDecodedImage(imgEncoded);
+        profilePic.setFill(new ImagePattern(img));
         //Update the current user value
-        currentUserModel.setImage(im);
+        currentUserModel.setImage(img);
 
     }
 
