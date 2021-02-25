@@ -169,6 +169,11 @@ public class StageCoordinator {
         }
         flag=0;
         primaryStage.setHeight(600);
+        primaryStage.setWidth(800);
+        primaryStage.setMaxWidth(800);
+        primaryStage.setMaxHeight(600);
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(800);
         primaryStage.setResizable(false);
     }
 
@@ -200,6 +205,8 @@ public class StageCoordinator {
         primaryStage.setResizable(false);
         primaryStage.setHeight(400);
         primaryStage.setWidth(400);
+        primaryStage.setMinWidth(400);
+        primaryStage.setMinHeight(400);
         primaryStage.setMaxHeight(400);
         primaryStage.setMaxWidth(400);
     }
