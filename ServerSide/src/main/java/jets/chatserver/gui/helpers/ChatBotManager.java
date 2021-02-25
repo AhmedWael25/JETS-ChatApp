@@ -4,6 +4,8 @@ import org.alicebot.ab.Bot;
 import org.alicebot.ab.Chat;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ChatBotManager {
 
@@ -28,11 +30,27 @@ public class ChatBotManager {
 
     private static String getPath() {
 
-        File currDir = new File(".");
-        String path = currDir.getAbsolutePath();
-        String resourcePath = path + File.separator + "src" + File.separator + "main" + File.separator + "resources";
-
-        return resourcePath;
+        File botPath = new File("resources");
+        System.out.println(botPath.getAbsolutePath());
+        System.out.println(botPath.getName());
+        return  botPath.getAbsolutePath();
+//
+//        InputStream inputStream = ChatBotManager.class.getResourceAsStream("/bots.super");
+//        try {
+//
+//            File f = File.createTempFile("temp",".tmp");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//
+//
+//        File currDir = new File("super");
+//        String path = currDir.getAbsolutePath();
+//        String resourcePath = path + File.separator + "src" + File.separator + "main" + File.separator + "resources";
+//
+//        return resourcePath;
     }
 
 }

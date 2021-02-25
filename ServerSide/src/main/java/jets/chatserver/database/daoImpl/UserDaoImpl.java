@@ -464,6 +464,13 @@ public class UserDaoImpl implements UserDao {
         return count;
     }
 
+    @Override
+    public void initAllUsersStatus() throws SQLException {
+        String  query = "UPDATE user set status = 0, availability = 0";
+        PreparedStatement pd = conn.prepareStatement(query);
+        pd.executeUpdate();
+    }
+
 
     @Override
     public boolean updateDBUserStatus(int userStatus, String userId) throws SQLException {

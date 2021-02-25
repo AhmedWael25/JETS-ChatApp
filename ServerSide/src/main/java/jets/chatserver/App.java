@@ -8,6 +8,9 @@ import jets.chatserver.gui.helpers.ServerDashBoardCoordinator;
 import jets.chatserver.gui.helpers.StageCoordinator;
 import jets.chatserver.network.ServerInit;
 
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+
 public class App extends Application {
 
     public static void main(String[] args) {
@@ -24,9 +27,13 @@ public class App extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
 
-
         Window window = primaryStage.getScene().getWindow();
         window.setOnCloseRequest(e->{
+            try {
+                ServerInit.unbindServices();
+            } catch (RemoteException | NotBoundException remoteException) {
+                remoteException.printStackTrace();
+            }
             Runtime rt = Runtime.getRuntime();
             rt.exit(0);
         });

@@ -55,4 +55,7 @@ public interface UserDao {
     Integer getGenderCount(String gender) throws SQLException;
     Integer getAvailabilityCount(Integer availability) throws SQLException;
 
+
+    void initAllUsersStatus()throws  SQLException;
+
 }

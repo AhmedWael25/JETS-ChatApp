@@ -4,6 +4,7 @@ import commons.remotes.client.ClientInterface;
 import commons.sharedmodels.*;
 import commons.utils.ImageEncoderDecoder;
 import commons.utils.NotificationUtils;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
